@@ -1,0 +1,16 @@
+---prefab_Border---
+
+Components :: [[BorderSprite]]
+
+---prefabcomponent_BorderSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.0,
+    "pivotY": 0.5,
+    "sprite": "haven/borders",
+    "frame": 1,
+    "layer": "top",
+    "allowBatch": true
+}

@@ -1,0 +1,202 @@
+---item_20 Medical Spa---
+Type :: Equippable
+Slot :: Active
+Icon :: items_721
+Gun Definition :: [[Medical Spa]]
+Rarity :: Legendary
+
+On use, place a recovery field on the ground that recovers your allies health for 8 seconds. Recovery area and effect duration are increased by Buff Synergy levels.
+
+The finest relaxation this side of the Pale Moon.
+
+---gundef_Medical Spa---
+Fire Speed :: 45.0
+Bullets In Chamber :: -1
+Reload Speed :: 0.0
+Sprite :: items_721
+Fire Event :: medicalspa
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Medical Spa]]
+
+---spike_Medical Spa---
+Auras :: [[Medical Spa]]
+Abilities :: [[Medical Spa Pool I]]
+
+---aura_Medical Spa---
+Type :: Debuff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:MedicalSpa]]
+
+---ability_Medical Spa Basic---
+Bullet Definition :: [[medicalspabasic]]
+Max Range :: 100.0
+Auras :: [[Heal I]] [[Medical Resistance]]
+Blocked By Auras :: [[Medical Resistance]]
+
+---bulletdef_medicalspabasic---
+sprite GreenPool 2
+potency 0
+fire 0 relative 0
+	aoedot
+	damageFriendly
+	radius 2
+	timedFill 40
+	damageEvery 40
+	wait 40
+	vanish
+
+---ability_Medical Spa Pool I---
+Bullet Definition :: [[medicalspaI]]
+Max Range :: 100.0
+Auras :: [[Heal II]] [[Medical Resistance]]
+Blocked By Auras :: [[Medical Resistance]]
+
+---bulletdef_medicalspaI---
+sprite GreenPool 4
+potency 0
+fire 0 relative 0
+	aoedot
+	damageFriendly
+	radius 4
+	timedFill 40
+	damageEvery 40
+	wait 40
+	vanish
+
+---ability_Medical Spa Pool II---
+Bullet Definition :: [[medicalspaII]]
+Max Range :: 100.0
+Auras :: [[Heal III]] [[Medical Resistance]]
+Blocked By Auras :: [[Medical Resistance]]
+
+---bulletdef_medicalspaII---
+sprite GreenPool 6
+potency 0
+fire 0 relative 0
+	aoedot
+	damageFriendly
+	radius 6
+	timedFill 40
+	damageEvery 40
+	wait 40
+	vanish
+
+---ability_Medical Spa Pool III---
+Bullet Definition :: [[medicalspaIII]]
+Max Range :: 100.0
+Auras :: [[Heal IV]] [[Medical Resistance]]
+Blocked By Auras :: [[Medical Resistance]]
+
+---bulletdef_medicalspaIII---
+sprite GreenPool 8
+potency 0
+fire 0 relative 0
+	aoedot
+	damageFriendly
+	radius 8
+	timedFill 40
+	damageEvery 40
+	wait 40
+	vanish
+
+---aura_Heal I---
+Type :: Debuff
+Icon :: statusicons_31
+Duration :: 8.0
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Heal]]
+
+---aura_Heal II---
+Type :: Debuff
+Icon :: statusicons_31
+Duration :: 9.0
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Heal]]
+
+---aura_Heal III---
+Type :: Debuff
+Icon :: statusicons_31
+Duration :: 10.0
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Heal]]
+
+---aura_Heal IV---
+Type :: Debuff
+Icon :: statusicons_31
+Duration :: 11.0
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Heal]]
+
+---auradealdamage_Heal---
+Damage Type :: Heal
+Potency :: -22
+
+---script_MedicalSpa_FireWeapon---
+if abilityId == auraAbilityId {
+    // Get all nearby entities and filter for allies
+    allNearby := getNearbyEntities(myEntityId)
+    alliesHealed := 0
+
+    // Check for synergy enhancement
+    if is_undefined(scriptVars["hasBuffSynergyI"]) {
+        scriptVars["hasBuffSynergyI"] = false
+        scriptVars["hasBuffSynergyII"] = false
+        scriptVars["hasBuffSynergyIII"] = false
+        scriptVars["hasBuffSynergyIV"] = false
+    }
+
+    auras := getAurasOnEntity(myEntityId)
+    for j := 0; j < len(auras); j++ {
+       if (auras[j]["name"] == "Restoration Synergy I") {
+        log("Has Buff Synergy I unlocked!")
+        scriptVars["hasBuffSynergyI"] = true
+       } 
+
+       if (auras[j]["name"] == "Restoration Synergy II") {
+        log("Has Buff Synergy II unlocked!")
+        scriptVars["hasBuffSynergyII"] = true
+       } 
+
+        if (auras[j]["name"] == "Restoration Synergy III") {
+        log("Has Buff Synergy III unlocked!")
+        scriptVars["hasBuffSynergyIII"] = true
+       } 
+
+    }
+
+    if (scriptVars["hasBuffSynergyIII"]) {
+        useAbilityAtPosition(myEntityId, "Medical Spa Pool III", entityPosition(myEntityId))
+        addAuraToEntity(myEntityId, "Medical Resistance", auraAbilityId, myEntityId)
+    } else if (scriptVars["hasBuffSynergyII"]) {
+        useAbilityAtPosition(myEntityId, "Medical Spa Pool II", entityPosition(myEntityId))
+        addAuraToEntity(myEntityId, "Medical Resistance", auraAbilityId, myEntityId)
+    } else if (scriptVars["hasBuffSynergyI"]) {
+        useAbilityAtPosition(myEntityId, "Medical Spa Pool I", entityPosition(myEntityId))
+        addAuraToEntity(myEntityId, "Medical Resistance", auraAbilityId, myEntityId)
+    } else {
+        // Create the basic medical spa at player position (original smaller version)
+        addAuraToEntity(myEntityId, "Medical Resistance", auraAbilityId, myEntityId)
+        useAbilityAtPosition(myEntityId, "Medical Spa Basic", entityPosition(myEntityId))
+    }
+}
+
+---aura_Medical Resistance---
+Type :: Buff
+Duration :: 60.0
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Icon :: 
+Existing :: DontApply
+Definitions :: [[Custom:MedicalResistance]]

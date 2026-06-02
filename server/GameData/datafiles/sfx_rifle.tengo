@@ -1,0 +1,42 @@
+---prefab_sfxriflea---
+
+Components :: [[SFXRifleA]]
+
+---prefabcomponent_SFXRifleA---
+
+Component :: Sound
+
+{
+    "sources": ["sfxrifle/riflea1.wav", "sfxrifle/riflea2.wav", "sfxrifle/riflea3.wav", "sfxrifle/riflea4.wav"],
+    "select": "random",
+    "randomPitch": 0.15,
+    "channel": "gfx"
+}
+
+---prefab_sfxrifleb---
+
+Components :: [[SFXRifleB]]
+
+---prefabcomponent_SFXRifleB---
+
+Component :: Sound
+
+{
+    "sources": ["sfxrifle/rifleb1.wav", "sfxrifle/rifleb2.wav", "sfxrifle/rifleb3.wav"],
+    "select": "random",
+    "randomPitch": 0.15,
+    "channel": "gfx"
+}
+
+---prefab_sfxriflereload---
+
+Components :: [[SFXRifleReload]]
+
+---prefabcomponent_SFXRifleReload---
+
+Component :: Sound
+
+{
+    "sources": ["sfxrifle/riflereload.wav"],
+    "channel": "gfx"
+}

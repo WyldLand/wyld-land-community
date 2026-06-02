@@ -1,0 +1,62 @@
+---item_42 Precise Striker---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Precise Striker]]
+Rarity :: Legendary
+
+Fires a three-shot burst that spirals through the air in a mesmerizing pattern.
+
+They call it a triple-tap. Watch the bullets weave together like a deadly dance through the void.
+
+---gundef_Precise Striker---
+Fire Speed :: 0.3
+Bullets In Chamber :: 22
+Reload Speed :: 1.3
+Sprite :: weapons_106
+Fire Event :: assaultriflee
+Reload Event :: assaultriflereload
+Bullet Definition :: [[precisestriker]]
+Archetype :: AssaultRifle
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: SemiAuto
+Bullet Lifetime :: 1.1
+
+---bulletdef_precisestriker---
+sprite Custom12
+color 1
+potency 55
+fire 18 relative 0
+	wait 2
+	direction relative 15
+	wait 2
+	direction relative -30
+	wait 2
+	direction relative 30
+	wait 2
+	direction relative -15
+	wait 2
+	repeat
+wait 1
+fire 18 relative 0
+	wait 4
+	direction relative -15
+	wait 2
+	direction relative 30
+	wait 2
+	direction relative -30
+	wait 2
+	direction relative 15
+	wait 2
+	repeat
+wait 1
+fire 18 relative 0
+	wait 6
+	direction relative 15
+	wait 2
+	direction relative -30
+	wait 2
+	direction relative 30
+	wait 2
+	direction relative -15
+	wait 2
+	repeat

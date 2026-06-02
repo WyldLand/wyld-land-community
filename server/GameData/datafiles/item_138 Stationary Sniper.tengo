@@ -1,0 +1,111 @@
+---item_138 Stationary Sniper---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Stationary Sniper]]
+Rarity :: Exotic
+Durability :: 5
+
+Creates a targeting zone with first bullet of every magazine. Shots fired while standing in your own zone deal significantly more damage.
+
+The best hunters know when to roam and when to claim their territory.
+
+---gundef_Stationary Sniper---
+Fire Speed :: 1.2
+Bullets In Chamber :: 6
+Reload Speed :: 2.0
+Sprite :: weapons_103
+Fire Event :: riflea
+Reload Event :: riflereload
+Bullet Definition :: [[stationarysniper]]
+Archetype :: LongRangeRifle
+Muzzle VFX :: Muzzle 0.60
+Fire Type :: SemiAuto
+Bullet Lifetime :: 1.5
+Innate Spikes :: [[Stationary Damage]]
+
+---bulletdef_stationarysniper---
+sprite Rifle14
+color 3
+potency 192
+fire 40 relative -1 1
+
+---ability_Stationary Zone---
+Bullet Definition :: [[stationaryzone]]
+Max Range :: 100.0
+Cooldown :: 0.0
+
+---bulletdef_stationaryzone---
+sprite BluePool 4
+potency 0
+fire 0 relative 0
+	aoedot
+	radius 4
+	damageEvery 0
+	wait 100
+	vanish
+
+---spike_Stationary Damage---
+Auras :: [[Stationary Damage]]
+
+Creates a targeting zone with first bullet of every magazine. Shots fired while standing in your zone deal significantly more damage.
+
+---aura_Stationary Damage---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:StationaryDamage]]
+
+---script_StationaryDamage_Equipped---
+// Initialize variables when gun is first equipped
+scriptVars["initialized"] = true
+scriptVars["zonePosition"] = [0, 0, 0]
+scriptVars["hasZone"] = false
+
+---script_StationaryDamage_FireWeapon---
+// When the weapon is fired
+if abilityId == auraAbilityId {
+    // Check if this is the first bullet of the clip
+    if gunState["BulletsFired"] == 0 {
+        // Create a zone at the player's position
+        playerPosition := entityPosition(myEntityId)
+        useAbilityAtPosition(myEntityId, "Stationary Zone", playerPosition)
+        scriptVars["zonePosition"] = playerPosition
+        scriptVars["hasZone"] = true
+        showVfxAtPosition(myEntityId, "EnergyBurst", playerPosition)
+    }
+    
+    // Mark the gun as active whenever it's fired
+    scriptVars["isActive"] = true
+    scriptVars["lastActivationTime"] = globalTick
+}
+
+---script_StationaryDamage_ReloadWeapon---
+// When reloading, mark the gun as active
+if abilityId == auraAbilityId {
+    scriptVars["isActive"] = true
+    scriptVars["lastActivationTime"] = globalTick
+}
+
+---script_StationaryDamage_DamageDealt---
+// This script runs when damage is dealt, which gives us access to the target entity
+if abilityId == auraAbilityId {
+    // Check if player is inside the zone
+    if !is_undefined(scriptVars["zonePosition"]) {
+        playerPos := entityPosition(myEntityId)
+        distToZoneCenter := distToPoint(myEntityId, scriptVars["zonePosition"])
+        
+        // If player is within 4 units of zone center (the zone radius)
+        if distToZoneCenter <= 5.0 {
+            // Calculate extra damage
+            extraDamage := damage 
+            
+            // Apply extra damage directly to ensure it works
+            attackEntity(myEntityId, damageSenderId, extraDamage, -99)
+            
+            // Show visual effect at target
+            showVfxAtPosition(damageSenderId, "MediumHit", damagePosition)
+        }
+    }
+}

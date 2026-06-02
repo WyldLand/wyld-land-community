@@ -1,0 +1,15 @@
+---prefab_Shield---
+
+Components :: [[ShieldSprite]]
+
+---prefabcomponent_ShieldSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "vfx/Shield",
+    "play": "default"
+     
+}

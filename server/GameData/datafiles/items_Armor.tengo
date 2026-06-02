@@ -1,0 +1,242 @@
+---item_99 Worn Down Padding---
+Type :: Equippable
+Slot :: Armor
+Icon :: items_316
+Rarity :: Uncommon
+Meta :: player/hero
+
+It looks pretty old and worn, but at least it will keep you alive.
+
+---item_95 Reinforced Plates---
+Type :: Equippable
+Slot :: Armor
+Icon :: items_332
+Rarity :: Rare
+Gun Definition :: [[Reinforced Plates]]
+Meta :: player/hero4
+
+Reduces incoming damage by 5%.
+
+---gundef_Reinforced Plates---
+Fire Speed :: 0
+Bullets In Chamber :: 1
+Reload Speed :: 15.0
+Sprite :: items_349
+Fire Event :: 
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Reinforced Plates]]
+
+---spike_Reinforced Plates---
+Auras :: [[Reinforced Plates]]
+
+---aura_Reinforced Plates---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:ReinforcedPlates]]
+
+---script_ReinforcedPlates_IncomingDamage---
+additionalDamage = int(-0.05 * float(damage))
+
+---item_96 Reactive Armor---
+Type :: Equippable
+Slot :: Armor
+Icon :: items_350
+Rarity :: Legendary
+Gun Definition :: [[Reactive Armor]]
+Meta :: player/hero3
+
+When hit, 20% chance to reflect 50% of the damage back to the attacker.
+
+---gundef_Reactive Armor---
+Fire Speed :: 0
+Bullets In Chamber :: 1
+Reload Speed :: 15.0
+Sprite :: items_348
+Fire Event :: 
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Reactive Armor]]
+
+---spike_Reactive Armor---
+Auras :: [[Reactive Armor]]
+
+---aura_Reactive Armor---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:ReactiveArmor]]
+
+---script_ReactiveArmor_IncomingDamage---
+rand := import("rand")
+
+if rand.float() < 0.20 {
+    reflectedDamage := int(0.5 * float(damage))
+    attackEntity(myEntityId, damageSenderId, reflectedDamage, auraAbilityId)
+    showVfxAtPosition(myEntityId, "GainBuff", entityPosition(myEntityId))
+}
+
+---item_97 Adaptive Plating---
+Type :: Equippable
+Slot :: Armor
+Icon :: items_337
+Rarity :: Legendary
+Gun Definition :: [[Adaptive Plating]]
+Meta :: player/hero2
+
+Gains resistance to the last type of damage taken, reducing that damage by 30% for 10 seconds. 60-second cooldown.
+
+---gundef_Adaptive Plating---
+Fire Speed :: 0
+Bullets In Chamber :: 1
+Reload Speed :: 15.0
+Sprite :: items_350
+Fire Event :: 
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Adaptive Plating]]
+
+---spike_Adaptive Plating---
+Auras :: [[Adaptive Plating]]
+
+---aura_Adaptive Plating---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:AdaptivePlating]]
+
+---script_AdaptivePlating_IncomingDamage---
+if is_undefined(scriptVars["lastAdaptiveActivation"]) {
+    scriptVars["lastAdaptiveActivation"] = 0
+}
+
+if !is_undefined(scriptVars["lastDamageType"]) && scriptVars["lastDamageType"] == damageType {
+	additionalDamage = int(-0.30 * float(damage))
+}
+
+if scriptVars["lastAdaptiveActivation"] >= 60.0 {
+	scriptVars["lastDamageType"] = damageType
+	scriptVars["lastAdaptiveActivation"] = 0.0
+}
+
+---script_AdaptivePlating_Tick---
+if is_undefined(scriptVars["lastAdaptiveActivation"]) {
+    scriptVars["lastAdaptiveActivation"] = 0
+}
+
+scriptVars["lastAdaptiveActivation"] += 1.0
+
+if scriptVars["lastAdaptiveActivation"] >= 10.0 {
+	scriptVars["lastDamageType"] = "None"
+}
+
+---item_98 Void Embrace---
+Type :: Equippable
+Slot :: Armor
+Icon :: items_352
+Rarity :: Exotic
+Gun Definition :: [[Void Embrace]]
+Meta :: player/hero5
+
+When health drops below 20%, become invulnerable for 3 seconds and heal for 30% of max health. 60-second cooldown.
+
+---gundef_Void Embrace---
+Fire Speed :: 0
+Bullets In Chamber :: 1
+Reload Speed :: 15.0
+Sprite :: items_352
+Fire Event :: 
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Void Embrace]]
+
+---spike_Void Embrace---
+Auras :: [[Void Embrace]]
+
+---aura_Void Embrace---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:VoidEmbrace]]
+
+---script_VoidEmbrace_Tick---
+
+if is_undefined(scriptVars["lastVoidEmbrace"]) {
+    scriptVars["lastVoidEmbrace"] = globalTick
+}
+
+---script_VoidEmbrace_IncomingDamage---
+if is_undefined(scriptVars["lastVoidEmbrace"]) {
+    scriptVars["lastVoidEmbrace"] = globalTick
+}
+
+currentHealth := getPoints(myEntityId, "hp", "current") - damage
+maxHealth := getPoints(myEntityId, "hp", "max")
+
+if currentHealth < (0.2 * float(maxHealth)) && globalTick - scriptVars["lastVoidEmbrace"] > 1200 {
+    addAuraToEntity(myEntityId, "Void Shield", auraAbilityId, myEntityId)
+    healAmount := int(0.3 * float(maxHealth))
+    attackEntity(myEntityId, myEntityId, -healAmount, auraAbilityId)
+    scriptVars["lastVoidEmbrace"] = globalTick
+    showVfxAtPosition(myEntityId, "VoidEmbrace", entityPosition(myEntityId))
+    additionalDamage = -1 * damage
+}
+
+---aura_Void Shield---
+Type :: Buff
+Duration :: 3
+Icon :: statusicons_3
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:VoidShield]]
+
+---script_VoidShield_IncomingDamage---
+additionalDamage = -1 * damage
+
+---item_301 Flame Guard---
+Type :: Equippable
+Slot :: Armor
+Icon :: items_334
+Rarity :: Legendary
+NoRandomDrop :: true
+Gun Definition :: [[Flame Guard]]
+Meta :: player/hero3
+
+Reduces incoming Burn damage by 30%.
+
+Forged from heat-resistant alloys and infused with fire-retardant compounds, this armor keeps you cool under pressure.
+
+---gundef_Flame Guard---
+Fire Speed :: 0
+Bullets In Chamber :: 1
+Reload Speed :: 15.0
+Sprite :: items_334
+Fire Event :: 
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Flame Guard]]
+
+---spike_Flame Guard---
+Auras :: [[Flame Guard]]
+
+---aura_Flame Guard---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:FlameGuardArmor]]
+
+---script_FlameGuardArmor_IncomingDamage---
+if damageType == "Burn" {
+	additionalDamage = int(-0.30 * float(damage))
+}

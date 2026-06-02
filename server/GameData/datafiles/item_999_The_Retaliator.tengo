@@ -1,0 +1,88 @@
+---item_999 The Retaliator---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[The Retaliator]]
+Rarity :: Exotic
+Durability :: 4
+
+Every bullet is a promise. Reloading is the fulfillment.
+
+---gundef_The Retaliator---
+Fire Speed :: 0.2
+Bullets In Chamber :: 10
+Reload Speed :: 1.5
+Sprite :: weapons_40
+Fire Event :: assaultriflea
+Reload Event :: assaultriflereload
+Bullet Definition :: [[retaliator]]
+Archetype :: Automatic
+Innate Spikes :: [[The Retaliator]]
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: FullAuto
+Bullet Lifetime :: 1.2
+
+---bulletdef_retaliator---
+sprite Custom12
+potency 80
+fire 15 relative 0 0
+
+---spike_The Retaliator---
+Auras :: [[The Retaliator]]
+Icon ::
+
+On reload, deals bonus damage to all enemies hit by the previous clip.
+
+---aura_The Retaliator---
+Type :: Buff
+Duration :: -1
+Definitions :: [[Custom:The Retaliator]]
+
+---script_The Retaliator_DamageDealt---
+// When this weapon deals damage, record the enemy hit.
+itemDef := itemDefintionForSlot(myEntityId, abilityId+1)
+if !is_undefined(itemDef) && itemDef.name == "The Retaliator" {
+	if is_undefined(scriptVars["hitEnemies"]) {
+		scriptVars["hitEnemies"] = []
+	}
+
+	// Check if enemy is already in the list
+	isAlreadyHit := false
+	for i := 0; i < len(scriptVars["hitEnemies"]); i++ {
+		if scriptVars["hitEnemies"][i] == damageSenderId {
+			isAlreadyHit = true
+			break
+		}
+	}
+
+	if !isAlreadyHit {
+		// Don't add dead enemies
+		if getPoints(damageSenderId, "hp", "current") > 0 {
+			 scriptVars["hitEnemies"] = scriptVars["hitEnemies"] + [damageSenderId]
+		}
+	}
+}
+
+---script_The Retaliator_Reload---
+// When this weapon is reloaded, deal damage to all marked enemies.
+itemDef := itemDefintionForSlot(myEntityId, abilityId+1)
+if !is_undefined(itemDef) && itemDef.name == "The Retaliator" {
+	if !is_undefined(scriptVars["hitEnemies"]) {
+		hitList := scriptVars["hitEnemies"]
+		if len(hitList) > 0 {
+			// Announce the effect
+			say(myEntityId, "Retaliation!", "The Retaliator")
+		}
+
+		for i := 0; i < len(hitList); i++ {
+			enemyId := hitList[i]
+			// Check if enemy is still alive and in the same room
+			if !isEntityDead(enemyId) && entityRoom(myEntityId) == entityRoom(enemyId) {
+				// Deal 150 bonus damage
+				attackEntity(myEntityId, enemyId, 150, auraAbilityId)
+				showVfxAtPosition(myEntityId, "PowerSpike", entityPosition(enemyId))
+			}
+		}
+	}
+	// Clear the list for the next clip
+	scriptVars["hitEnemies"] = []
+}

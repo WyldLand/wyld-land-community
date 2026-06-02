@@ -1,0 +1,34 @@
+---item_53 Strike Field---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Strike Field]]
+Rarity :: Rare
+
+The "shotgun" of CHARGED weapons.
+
+---gundef_Strike Field---
+Fire Speed :: 0.2
+Charge Time :: 0.50
+Bullets In Chamber :: 12
+Reload Speed :: 1.5
+Sprite :: weapons_52
+Fire Event :: fusionriflec
+Reload Event :: fusionriflereload
+Charge Event :: chargeshort
+Bullet Definition :: [[strikefield]]
+Archetype :: Shotgun
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: FullAuto
+Bullet Lifetime :: 0.35
+
+---bulletdef_strikefield---
+sprite Lance14
+color 1
+potency 13
+fire 40 relative -8 8
+fire 40 relative -8 8
+wait 1
+fire 40 relative -8 8
+fire 40 relative -8 8
+fire 40 relative -8 8
+

@@ -1,0 +1,15 @@
+---prefab_Teleport5---
+
+Components :: [[Teleport5Sprite]] [[TeleportSound]]
+
+---prefabcomponent_Teleport5Sprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.90,
+    "sprite": "vfx/Teleport5",
+    "play": "default"
+     
+}

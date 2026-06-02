@@ -1,0 +1,102 @@
+---item_1501 Volatile Marksman---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Stun Gun]]
+Rarity :: Rare
+Durability :: 5
+
+15% chance on hit to stun enemies, stopping their movement for 2 seconds.
+
+A weapon designed for crowd control, delivering paralyzing shocks to incapacitate foes.
+
+---gundef_Stun Gun---
+Fire Speed :: 0.4
+Bullets In Chamber :: 8
+Reload Speed :: 1.5
+Sprite :: weapons_35
+Fire Event :: pistol
+Reload Event :: pistolreload
+Bullet Definition :: [[stungun]]
+Archetype :: Pistol
+Innate Spikes :: [[Stun Gun]]
+Muzzle VFX :: Muzzle 0.55
+
+---bulletdef_stungun---
+sprite Lance14
+color 6
+potency 95
+fire 16 relative -1 1
+
+---spike_Stun Gun---
+Auras :: [[Stun Gun]]
+Icon :: 
+
+15% chance on hit to stun enemies for 2 seconds.
+
+---aura_Stun Gun---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:StunGun]]
+
+---script_StunGun_DamageDealt---
+rand := import("rand")
+
+if abilityId == auraAbilityId {
+	if rand.float() < 0.15 {  // 15% chance
+		addAuraToEntity(myEntityId, "Stunned", -99, damageSenderId)
+	}
+}
+
+---aura_Stunned---
+Type :: Debuff
+Icon :: statusicons_11
+Duration :: 2.0
+Max Stacks :: 1
+Time Per Tick :: 0.1
+Definitions :: [[Custom:Stunned]]
+
+---script_Stunned_Equipped---
+// Store original speed and set initial stun state
+if is_undefined(scriptVars["originalSpeed"]) {
+	scriptVars["originalSpeed"] = getPoints(myEntityId, "speed", "current")
+}
+scriptVars["isStunned"] = true
+// Force immediate stop
+setSpeed(myEntityId, 0.0)
+stopPathfinding(myEntityId)
+// Change AI behavior to override monster scripts
+changeAttackBehaviour(myEntityId, "Stationary")
+
+---script_Stunned_Tick---
+// Continuously enforce the stun every 0.1 seconds
+scriptVars["isStunned"] = true
+setSpeed(myEntityId, 0.0)
+stopPathfinding(myEntityId)
+// Prevent any movement by constantly resetting collision to ignore player layer temporarily
+// This stops AI from trying to pathfind or move
+changeAttackBehaviour(myEntityId, "Stationary")
+
+---script_Stunned_Expire---
+// Restore original state when stun expires
+scriptVars["isStunned"] = false
+if !is_undefined(scriptVars["originalSpeed"]) {
+	setSpeed(myEntityId, scriptVars["originalSpeed"])
+} else {
+	// Fallback to a default speed if we somehow lost the original
+	setSpeed(myEntityId, 1.0)
+}
+// Restore normal AI behavior
+changeAttackBehaviour(myEntityId, "")
+
+---script_Stunned_MonsterAI---
+// This script should be applied to all monsters to check for stun
+// Add this to your base monster prefab or individual monster scripts
+if !is_undefined(scriptVars["isStunned"]) && scriptVars["isStunned"] {
+	// Override any movement the monster AI might try to do
+	setSpeed(myEntityId, 0.0)
+	stopPathfinding(myEntityId)
+	deciderState = DeciderHandledAll  // Prevent other AI scripts from running
+}

@@ -1,0 +1,118 @@
+---mob_Elite Assassin---
+Prefab :: eliteassassin
+Range Behavior :: Short Ranged
+Abilities :: [[Elite Slash]] [[Assassin Step]]
+Speed :: 750
+Type :: Normal
+
+---prefab_eliteassassin---
+
+Components :: [[EliteAssassinSprite]] [[EliteAssassinCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_EliteAssassinCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+    "position": [0.0, 0.6],
+    "size": [1.0, 1.2]
+}
+
+---prefabcomponent_EliteAssassinSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.165,
+    "pivotY": 1.0,
+    "sprite": "darkforest1/eliteassassin",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_sfxeliteassassinAttack---
+
+Components :: [[SFXAssassinAttack]]
+
+---ability_Elite Slash---
+Bullet Definition :: [[eliteslash]]
+Cooldown :: 0.5
+VFX Charging :: trigger:Attack*
+Cast Time :: 0.35
+Lock Time :: 0.25
+Auras :: [[Burn]]
+
+---bulletdef_eliteslash---
+sprite Custom11
+potency 100
+nway speed:7 bullets:5 spread:45 angle:0 directionType:relative
+wait 3
+nway speed:6 bullets:3 spread:25 angle:0 directionType:relative
+
+---ability_Assassin Step---
+Bullet Definition :: [[assassinstep]]
+Cooldown :: 4.0
+VFX Cast :: trigger:Attack*
+Lock Time :: 0.75
+Cast Time :: 0.5
+Auras :: [[Burn]]
+
+---bulletdef_assassinstep---
+sprite CirclePool 2
+potency 150
+fire 0 relative 0
+	aoeexplosion
+	radius 2
+	timedFill 15
+	damageEvery 15
+	wait 15
+	vfx MiniExplosion 2
+	wait 1
+	vanish
+wait 15
+sprite Basic
+potency 75
+radial bullets:12 speed:6
+	wait 60
+	vanish
+
+
+---script_eliteassassin_Monster---
+if is_undefined(scriptVars["timeSinceAttack"]) {
+	scriptVars["timeSinceAttack"] = 0.0
+	scriptVars["timeSinceassassinstep"] = 0.0
+	scriptVars["aggression"] = 0.0
+}
+
+if targetEntityId > 0 && !isDead {
+	scriptVars["timeSinceAttack"] += delta
+	scriptVars["timeSinceassassinstep"] += delta
+	scriptVars["aggression"] += delta * 0.1
+	
+	targetDist := distToEntity(myEntityId, targetEntityId)
+	
+	if castingAction == 0 {
+		// Main attack pattern
+		if scriptVars["timeSinceAttack"] > 0.5 && targetDist < 5.0 {
+			useAbilityAtTarget(myEntityId, "Elite Slash", targetEntityId, 1.0)
+			scriptVars["timeSinceAttack"] = 0.0
+		} 
+		
+		// Special abilities based on distance and aggression
+		if scriptVars["timeSinceassassinstep"] > 5.0 && targetDist > 8.0 {
+			useAbilityAtTarget(myEntityId, "Assassin Step", targetEntityId, 0.5)
+			scriptVars["timeSinceassassinstep"] = 0.0
+			scriptVars["aggression"] = 0.0
+		}
+	}
+}

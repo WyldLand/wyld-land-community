@@ -1,0 +1,42 @@
+---item_64 Handcannon---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Handcannon]]
+Rarity :: Legendary
+
+Watch out for the kickback. It's a real doozy.
+
+Shots knock enemies back with tremendous force.
+
+---gundef_Handcannon---
+Fire Speed :: 0.5
+Bullets In Chamber :: 6
+Reload Speed :: 1.2
+Sprite :: weapons_92
+Fire Event :: pistolc
+Reload Event :: pistolreload
+Bullet Definition :: [[handcannon]]
+Archetype :: Handgun
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: SemiAuto
+Bullet Lifetime :: 1.2
+Innate Spikes :: [[Handcannon Knockback]]
+
+---bulletdef_handcannon---
+sprite PlayerBulletBullet10
+potency 160
+fire 14 relative -2 2
+
+---spike_Handcannon Knockback---
+Auras :: [[Handcannon Knockback]]
+Icon :: 
+
+Shots knock enemies back with tremendous force.
+
+---aura_Handcannon Knockback---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:HandcannonKnockback]]

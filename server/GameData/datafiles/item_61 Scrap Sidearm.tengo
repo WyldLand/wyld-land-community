@@ -1,0 +1,26 @@
+---item_61 Scrap Sidearm---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Scrap Sidearm]]
+Rarity :: Uncommon
+
+Take metal. Accelerate to target.
+
+---gundef_Scrap Sidearm---
+Fire Speed :: 0.3
+Bullets In Chamber :: 10
+Reload Speed :: 1
+Sprite :: weapons_60
+Fire Event :: pistola
+Reload Event :: pistolreload
+Bullet Definition :: [[sidearm]]
+Archetype :: Handgun
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: SemiAuto
+Bullet Lifetime :: 1.0
+
+---bulletdef_sidearm---
+sprite PlayerBullet
+potency 66
+fire 16 relative -2 2
+

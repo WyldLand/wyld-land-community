@@ -1,0 +1,122 @@
+---mob_Glimmerfern Sprout---
+Prefab :: glimmerfern
+MobScript :: harvestable
+Range Behavior :: Stationary
+Bounding Box :: 0.0 0.0 0.5 0.5
+Speed :: 3000
+Type :: Friendly
+Options :: nodeathsmoke
+Interaction Timer :: 5.0
+Interaction Label :: Harvesting
+
+---prefab_glimmerfern---
+
+Components :: [[GlimmerfernSprite]] [[PlantCollider]] [[Monster]] [[UsableObject]]
+
+---prefabcomponent_PlantCollider---
+
+Component :: Collider
+
+{
+    "layer": "Friendly",
+    "position": [0.0, 0.0],
+    "size": [0.5, 0.5]
+}
+
+---prefabcomponent_GlimmerfernSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "haven/plants",
+    "frame": 4
+}
+
+---script_harvestable_Monster---
+
+if !scriptVars.wasCollected && len(usedByEntities) > 0 {
+    prefabName := getPrefabNameOfEntity(myEntityId)
+    showVfxAtPosition(myEntityId, "CatchFish", entityPosition(myEntityId))
+    if prefabName == "glimmerfern" {
+        giveItemToPlayer(usedByEntities[0], 157)
+    } else if prefabName == "umbrelmorel" {
+        giveItemToPlayer(usedByEntities[0], 158)
+    } else if prefabName == "sunpetalbloom" {
+        giveItemToPlayer(usedByEntities[0], 159)
+    } else if prefabName == "ironwoodsapling" {
+        giveItemToPlayer(usedByEntities[0], 160)
+    }
+    killEntity(myEntityId)
+    scriptVars.wasCollected = true
+}
+
+---mob_Umbrel Morel---
+Prefab :: umbrelmorel
+MobScript :: harvestable
+Range Behavior :: Stationary
+Bounding Box :: 0.0 0.0 0.5 0.5
+Speed :: 3000
+Type :: Friendly
+Options :: nodeathsmoke
+Interaction Timer :: 5.0
+Interaction Label :: Harvesting
+
+---prefab_umbrelmorel---
+Components :: [[UmbrelMorelSprite]] [[PlantCollider]] [[Monster]] [[UsableObject]]
+
+---prefabcomponent_UmbrelMorelSprite---
+Component :: Sprite
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "haven/plants",
+    "frame": 2
+}
+
+---mob_Sunpetal Bloom---
+Prefab :: sunpetalbloom
+MobScript :: harvestable
+Range Behavior :: Stationary
+Bounding Box :: 0.0 0.0 0.5 0.5
+Speed :: 3000
+Type :: Friendly
+Options :: nodeathsmoke
+Interaction Timer :: 5.0
+Interaction Label :: Harvesting
+
+---prefab_sunpetalbloom---
+Components :: [[SunpetalBloomSprite]] [[PlantCollider]] [[Monster]] [[UsableObject]]
+
+---prefabcomponent_SunpetalBloomSprite---
+Component :: Sprite
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "haven/plants",
+    "frame": 3
+}
+
+---mob_Ironwood Sapling---
+Prefab :: ironwoodsapling
+MobScript :: harvestable
+Range Behavior :: Stationary
+Bounding Box :: 0.0 0.0 0.5 0.5
+Speed :: 3000
+Type :: Friendly
+Options :: nodeathsmoke
+Interaction Timer :: 5.0
+Interaction Label :: Harvesting
+
+---prefab_ironwoodsapling---
+Components :: [[IronwoodSaplingSprite]] [[PlantCollider]] [[Monster]] [[UsableObject]]
+
+---prefabcomponent_IronwoodSaplingSprite---
+Component :: Sprite
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "haven/plants",
+    "frame": 1
+}

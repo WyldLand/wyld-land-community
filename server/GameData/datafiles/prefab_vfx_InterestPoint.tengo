@@ -1,0 +1,18 @@
+---prefab_InterestPoint---
+
+Components :: [[InterestPointSprite]] [[Indicator]]
+
+---prefabcomponent_InterestPointSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "vfx/InterestPoint",
+    "animations": [
+        {
+            "name": "default"
+        }
+    ]
+}

@@ -1,0 +1,36 @@
+---item_74 Hidden Message---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Hidden Message]]
+Rarity :: Rare
+
+Keep your secrets close to your chest, and reveal them at the right moment.
+
+---gundef_Hidden Message---
+Fire Speed :: 0.3
+Bullets In Chamber :: 8
+Reload Speed :: 1.6
+Sprite :: weapons_72
+Fire Event :: shotgunb
+Reload Event :: shotgunreload
+Bullet Definition :: [[hiddenmessage]]
+Archetype :: Shotgun
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: SemiAuto
+Bullet Lifetime :: 1
+
+---bulletdef_hiddenmessage---
+sprite Custom11
+potency 21
+fire 10 relative 0
+	piercing 2
+	wait 7
+	fire hiddenmessagespread
+	wait 1
+	vanish
+
+---bulletdef_hiddenmessagespread---
+potency 24
+sprite Custom10
+nway speed:12 bullets:3 spread:20 directionType:relative angle:0
+nway speed:10 bullets:3 spread:40 directionType:relative angle:0

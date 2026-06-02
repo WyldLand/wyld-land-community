@@ -1,0 +1,57 @@
+---aura_PlayerDealtDamage---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:PlayerDealtDamage]]
+
+---script_PlayerDealtDamage_DamageDealt---
+rand := import("rand")
+math := import("math")
+
+if abilityId >= 0 && abilityId <= 3 {
+
+	itemDef := itemDefintionForSlot(myEntityId, abilityId+1)
+
+	if !is_undefined(itemDef) {
+
+		burnChanceStat := getStat(myEntityId, "BurnChance")
+		if burnChanceStat > 0 {
+			burnChance := float(burnChanceStat) / 1000.0
+			burnChance = burnChance * math.min(1.0, itemDef.fireSpeed*2.0)
+			if rand.float() < burnChance {
+				addAuraToEntity(myEntityId, "Burn", -11, damageSenderId)
+			}
+		}
+
+		slowChanceStat := getStat(myEntityId, "SlowChance")
+		if slowChanceStat > 0 {
+			slowChance := float(slowChanceStat) / 1000.0
+			slowChance = slowChance * math.min(1.0, itemDef.fireSpeed*2.0)
+			if rand.float() < slowChance {
+				addAuraToEntity(myEntityId, "Slow", -12, damageSenderId)
+			}
+		}
+
+		// NOTE: Assuming "Leech" stat exists. The provided files show "LeechDamage" and "LeechAffinity". Using "Leech" as per the Go code.
+		leechStat := getStat(myEntityId, "Leech")
+		if leechStat > 0 {
+			if is_undefined(scriptVars["lastLeechBombSpawnTick"]) {
+				scriptVars["lastLeechBombSpawnTick"] = -9999
+			}
+
+			// 1 second cooldown (20 ticks)
+			if globalTick - scriptVars["lastLeechBombSpawnTick"] > 20 {
+				leechChance := math.min(0.25, float(leechStat) / 1000.0)
+				leechChance = leechChance * math.min(1.0, itemDef.fireSpeed*2.0)
+				if rand.float() < leechChance {
+					// NOTE: Cannot calculate leechLevel from item stats, hardcoding to 10.
+					leechLevel := (itemDef.attack / 25) * 10
+					newEntId := summonEntity("leechbomb", damagePosition, leechLevel)
+					setVisibility(newEntId, [getCharacterId(myEntityId)])
+					scriptVars["lastLeechBombSpawnTick"] = globalTick
+				}
+			}
+		}
+	}
+}

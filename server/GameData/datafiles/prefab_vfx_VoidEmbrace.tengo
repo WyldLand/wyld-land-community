@@ -1,0 +1,15 @@
+---prefab_VoidEmbrace---
+
+Components :: [[VoidEmbraceSprite]]
+
+---prefabcomponent_VoidEmbraceSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "vfx/VoidEmbrace",
+    "play": "default"
+     
+}

@@ -1,0 +1,38 @@
+---item_38 Beam Field---
+Type :: Equippable
+Slot :: Active
+Icon :: items_549
+Gun Definition :: [[Beam Field]]
+Rarity :: Rare
+
+On use, setup an area field that Slows enemy targets while they move through it.
+
+Strategic control of the battlefield is a key differentiator in most victory scenarios.
+
+---gundef_Beam Field---
+Fire Speed :: 15.0
+Bullets In Chamber :: -1
+Reload Speed :: 0.0
+Sprite :: items_549
+Fire Event :: tripmine
+Reload Event :: 
+Archetype :: EquippableItem
+Bullet Definition :: [[beamfield]]
+Ability Definition :: [[Beam Field]]
+
+---bulletdef_beamfield---
+sprite BluePool 2
+potency 0
+fire 0 relative 0
+	aoedot
+	radius 2
+	damageEvery 10
+	wait 81
+	vanish
+
+---ability_Beam Field---
+Cooldown :: -1
+Auras :: [[Slow]]
+Lock Time :: 0.0
+Cast Time :: 0.0
+

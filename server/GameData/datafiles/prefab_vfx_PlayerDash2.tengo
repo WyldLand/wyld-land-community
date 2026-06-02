@@ -1,0 +1,16 @@
+---prefab_PlayerDash2---
+
+Components :: [[PlayerDash2Sprite]]
+
+---prefabcomponent_PlayerDash2Sprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.1,
+    "pivotY": 1.0,
+    "sprite": "vfx/PlayerDash2",
+    "play": "default",
+    "allowBatch": true
+     
+}

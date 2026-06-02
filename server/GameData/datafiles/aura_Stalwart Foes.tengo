@@ -1,0 +1,14 @@
+---aura_Stalwart Foes---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[AuraAffectStat/Stalwart Foes Attack]] [[AuraAffectStat/Stalwart Foes Vitality]]
+
+---auraaffectstat_Stalwart Foes Attack---
+Stat :: Damage
+Boost :: 10.0
+
+---auraaffectstat_Stalwart Foes Vitality---
+Stat :: Vitality 
+Boost :: 20.0

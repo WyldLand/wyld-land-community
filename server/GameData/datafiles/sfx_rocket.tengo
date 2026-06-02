@@ -1,0 +1,27 @@
+---prefab_sfxrocketa---
+
+Components :: [[SFXRocketA]]
+
+---prefabcomponent_SFXRocketA---
+
+Component :: Sound
+
+{
+    "sources": ["sfxrocket/rocketa1.wav", "sfxrocket/rocketa2.wav", "sfxrocket/rocketa3.wav"],
+    "select": "random",
+    "randomPitch": 0.15,
+    "channel": "gfx"
+}
+
+---prefab_sfxrocketreload---
+
+Components :: [[SFXRocketReload]]
+
+---prefabcomponent_SFXRocketReload---
+
+Component :: Sound
+
+{
+    "sources": ["sfxrocket/rocketreload.wav"],
+    "channel": "gfx"
+}

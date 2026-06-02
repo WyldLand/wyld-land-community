@@ -1,0 +1,9 @@
+---achievement_Long Live the King---
+Kill :: [[Mobs/Red King|Red King]]@1
+Tags :: NoDamage
+Title :: The King
+XP :: 50
+ResetOnDeath :: False
+
+Take out the Red King without taking any damage.
+

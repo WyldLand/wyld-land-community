@@ -1,0 +1,93 @@
+---mob_Laserthumper---
+Prefab :: laserthumper
+Range Behavior :: Medium Ranged
+Abilities :: [[Chest Laser]]
+Speed :: 150
+Type :: Elite
+
+---prefab_laserthumper---
+
+Components :: [[LaserThumperSprite]] [[LaserThumperCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_LaserThumperCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+	"position": [-0.125, 0.875],
+    "size": [1.0, 1.75]
+}
+
+---prefabcomponent_LaserThumperSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.6,
+    "pivotY": 1.0,
+    "sprite": "darkforest2/laserthumper",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+
+---ability_Chest Laser---
+Bullet Definition :: [[chestlaser]] [[particlespawner]]
+Cooldown :: 2.5
+VFX Charging :: trigger:Attack*
+Cast Time :: 1.0
+Lock Time :: 0.5
+
+---bulletdef_chestlaser---
+sprite Laser14
+color 4
+potency 0
+fire 230 relative 0
+	piercing 100
+sprite Invisible
+potency 150
+wait 3
+fire 230 relative 0
+	radius 0.6
+	piercing 100
+wait 3
+fire 230 relative 0
+	radius 0.6
+	piercing 100
+wait 3
+fire 230 relative 0
+	radius 0.6
+	piercing 100
+	wait 10
+	vanish
+
+---bulletdef_particlespawner---
+sprite Invisible
+potency 0
+fire 20 relative 0
+	fire driftparticles
+	wait 3
+	fire driftparticles
+	wait 3
+	fire driftparticles
+	wait 3
+	fire driftparticles
+	vanish
+
+---bulletdef_driftparticles---
+sprite Custom9
+color 1
+potency 75
+repeat bullets:6 speed:2.5 angle:-45 maxAngle:45 delay:2 directionType:relative
+	wait 120
+	vanish

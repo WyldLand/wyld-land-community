@@ -1,0 +1,41 @@
+---mob_World Portal---
+Prefab :: worldportal
+Range Behavior :: Stationary
+Speed :: 500
+Type :: Friendly
+Options :: noaggronearby
+
+---prefab_worldportal---
+
+Components :: [[WorldPortalSprite]] [[WorldPortalCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_WorldPortalCollider---
+
+Component :: Collider
+
+{
+    "layer": "Dynamic",
+    "position": [0.0, 1.28],
+    "size": [6.125, 2.8125]
+}
+
+---prefabcomponent_WorldPortalSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "haven/worldportal",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}

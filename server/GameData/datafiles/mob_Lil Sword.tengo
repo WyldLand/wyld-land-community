@@ -1,0 +1,72 @@
+---mob_Lil Sword---
+Prefab :: lilsword
+Range Behavior :: Short Ranged
+Abilities :: [[Lil Slash]]
+Type :: Normal
+
+---prefab_lilsword---
+
+Components :: [[LilSwordSprite]] [[LilSwordCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_LilSwordCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+    "position": [0.0, 0.75],
+    "size": [1.0, 1.5]
+}
+
+---prefabcomponent_LilSwordSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.291,
+    "pivotY": 0.894,
+    "sprite": "darkforest4/lilsword",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_sfxlilswordAttack---
+
+Components :: [[SFXLilSwordAttack]]
+
+---prefabcomponent_SFXLilSwordAttack---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest4/lilswordAttack1.wav", "darkforest4/lilswordAttack2.wav"],
+    "select": "random",
+	"spatial": true
+}
+
+---ability_Lil Slash---
+Bullet Definition :: [[lilslash]]
+VFX Cast :: trigger:Attack*
+Lock Time :: 0.75
+Cooldown :: 2.0
+
+---bulletdef_lilslash---
+repeat bullets:6 speed:10 angle:-50 directionType:relative angleChange:4
+wait 2
+repeat bullets:6 speed:10 angle:-30 directionType:relative angleChange:4
+wait 2
+repeat bullets:6 speed:10 angle:-10 directionType:relative angleChange:4
+wait 2
+repeat bullets:6 speed:10 angle:10 directionType:relative angleChange:4
+wait 2
+repeat bullets:6 speed:10 angle:30 directionType:relative angleChange:4
+

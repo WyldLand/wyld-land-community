@@ -1,0 +1,26 @@
+---prefab_sfxlocaldash---
+
+Components :: [[SFXLocalDash]]
+
+---prefabcomponent_SFXLocalDash---
+
+Component :: Sound
+
+{
+    
+    "sources": ["sfxlocaldash/Dash1.wav", "sfxlocaldash/Dash2.wav", "sfxlocaldash/Dash3.wav"],
+    "select": "random"
+}
+
+---prefab_sfxDashCharged---
+
+Components :: [[SFXDashCharged]]
+
+---prefabcomponent_SFXDashCharged---
+
+Component :: Sound
+
+{
+    
+    "sources": ["sfxlocaldash/DashCharged.wav"]
+}

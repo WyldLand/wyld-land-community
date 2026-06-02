@@ -1,0 +1,57 @@
+---prefab_sfxshotguna---
+
+Components :: [[SFXShotgunA]]
+
+---prefabcomponent_SFXShotgunA---
+
+Component :: Sound
+
+{
+    "sources": ["sfxshotgun/GUNTech_Sci Fi Shotgun Fire Heavy_01.wav", "sfxshotgun/GUNTech_Sci Fi Shotgun Fire Heavy_02.wav"],
+    "select": "random",
+    "randomPitch": 0.15,
+    "channel": "gfx"
+}
+
+---prefab_sfxshotgunb---
+
+Components :: [[SFXShotgunB]]
+
+---prefabcomponent_SFXShotgunB---
+
+Component :: Sound
+
+{
+    "sources": ["sfxshotgun/GUNTech_Sci Fi Shotgun Fire_03.wav", "sfxshotgun/GUNTech_Sci Fi Shotgun Fire_04.wav", "sfxshotgun/GUNTech_Sci Fi Shotgun Fire_05.wav", "sfxshotgun/GUNTech_Sci Fi Shotgun Fire_06.wav"],
+    "select": "random",
+    "randomPitch": 0.15,
+    "channel": "gfx"
+}
+
+---prefab_sfxshotgunc---
+
+Components :: [[SFXShotgunC]]
+
+---prefabcomponent_SFXShotgunC---
+
+Component :: Sound
+
+{
+    "sources": ["sfxshotgun/GUNTech_Tormentor Shotgun Fire_04.wav", "sfxshotgun/GUNTech_Tormentor Shotgun Fire_05.wav", "sfxshotgun/GUNTech_Tormentor Shotgun Fire_06.wav"],
+    "select": "random",
+    "randomPitch": 0.15,
+    "channel": "gfx"
+}
+
+---prefab_sfxshotgunreload---
+
+Components :: [[SFXShotgunReload]]
+
+---prefabcomponent_SFXShotgunReload---
+
+Component :: Sound
+
+{
+    "sources": ["sfxshotgun/GUNMech_Insert Clip_04.wav"],
+    "channel": "gfx"
+}

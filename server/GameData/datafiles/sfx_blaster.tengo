@@ -1,0 +1,74 @@
+---prefab_sfxblastera---
+
+Components :: [[SFXBlasterA]]
+
+---prefabcomponent_SFXBlasterA---
+
+Component :: Sound
+
+{
+    "sources": ["sfxblaster/blastera1.wav", "sfxblaster/blastera2.wav", "sfxblaster/blastera3.wav"],
+    "select": "all",
+    "randomPitch": 0.15,
+    "delay": [0.0, 0.10, 0.20],
+    "channel": "gfx"
+}
+
+---prefab_sfxblasterb---
+
+Components :: [[SFXBlasterB]]
+
+---prefabcomponent_SFXBlasterB---
+
+Component :: Sound
+
+{
+    "sources": ["sfxblaster/blasterb1.wav", "sfxblaster/blasterb2.wav", "sfxblaster/blasterb3.wav", "sfxblaster/blasterb4.wav"],
+    "select": "all",
+    "delay": [0.0, 0.12, 0.22],
+    "randomPitch": 0.15,
+    "channel": "gfx"
+}
+
+---prefab_sfxblasterc---
+
+Components :: [[SFXBlasterC]]
+
+---prefabcomponent_SFXBlasterC---
+
+Component :: Sound
+
+{
+    "sources": ["sfxblaster/blasterc1.wav"],
+    "select": "random",
+    "randomPitch": 0.15,
+    "channel": "gfx"
+}
+
+---prefab_sfxblasterd---
+
+Components :: [[SFXBlasterD]]
+
+---prefabcomponent_SFXBlasterD---
+
+Component :: Sound
+
+{
+    "sources": ["sfxblaster/blasterd1.wav", "sfxblaster/blasterd2.wav", "sfxblaster/blasterd3.wav"],
+    "select": "random",
+    "randomPitch": 0.15,
+    "channel": "gfx"
+}
+
+---prefab_sfxblasterreload---
+
+Components :: [[SFXBlasterReload]]
+
+---prefabcomponent_SFXBlasterReload---
+
+Component :: Sound
+
+{
+    "sources": ["sfxblaster/blasterreload.wav"],
+    "channel": "gfx"
+}

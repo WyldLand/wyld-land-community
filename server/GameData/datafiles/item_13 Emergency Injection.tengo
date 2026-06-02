@@ -1,0 +1,64 @@
+---item_13 Emergency Injection---
+Type :: Equippable
+Slot :: Passive
+Icon :: items_716
+Gun Definition :: [[Emergency Injection]]
+
+When reduced to low health, receive a healing shot. Can only occur every so often.
+
+Don't leave home without it. Brought to you by SafeCo!
+
+---gundef_Emergency Injection---
+Fire Speed :: 0
+Bullets In Chamber :: 1
+Reload Speed :: 15.0
+Sprite :: items_716
+Fire Event :: 
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Emergency Injection]]
+
+---spike_Emergency Injection---
+Auras :: [[Emergency Injection]]
+
+---aura_Emergency Injection---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:EmergencyInjection]]
+
+---script_EmergencyInjection_Start---
+if is_undefined(scriptVars["lastFrameDidHeal"]) {
+	scriptVars["lastFrameDidHeal"] = globalTick
+}
+
+---script_EmergencyInjection_TookDamage---
+
+rand := import("rand")
+
+if is_undefined(scriptVars["lastFrameDidHeal"]) {
+	scriptVars["lastFrameDidHeal"] = globalTick
+}
+
+myHp := float(getPoints(myEntityId, "hp", "current") - damage) / float(getPoints(myEntityId, "hp", "max"))
+
+if myHp < 0.25 {
+	log(globalTick - scriptVars["lastFrameDidHeal"])
+	if globalTick - scriptVars["lastFrameDidHeal"] > 1200 { //limit to once every 1 minute
+		dealPotencyToEntity(myEntityId, myEntityId, -262, auraAbilityId)
+		scriptVars["lastFrameDidHeal"] = globalTick
+		
+		messages := [
+			"Your emergency injection device has activated. SafeCo thanks you for choosing us to save your life today.",
+			"Emergency medical protocols engaged. SafeCo - Because your life is worth saving!",
+			"Critical health stabilization complete. Another satisfied SafeCo customer!",
+			"Automated healing administered. SafeCo - Your trusted partner in survival."
+		]
+		
+		randomIndex := rand.intn(len(messages))
+		say(myEntityId, messages[randomIndex], "Emergency Injection", true)
+	}
+}
+

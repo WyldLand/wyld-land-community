@@ -1,0 +1,45 @@
+---mob_Gravestone---
+Prefab :: gravestone
+Range Behavior :: Stationary
+Bounding Box :: 0.0 0.6 0.6 1.2
+Speed :: 500
+Type :: Friendly
+
+---prefab_gravestone---
+
+Components :: [[GravestoneSprite]] [[GravestoneCollider]] [[Monster]] [[Nameplate]] [[Gravestone]]
+
+---prefabcomponent_GravestoneCollider---
+
+Component :: Collider
+
+{
+    "layer": "Friendly",
+    "position": [0.0, 0.6],
+    "size": [0.6, 1.2]
+}
+
+---prefabcomponent_GravestoneSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "pickups/gravestone",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefabcomponent_Gravestone---
+
+Component :: Gravestone

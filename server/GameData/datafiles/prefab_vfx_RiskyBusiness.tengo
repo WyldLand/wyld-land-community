@@ -1,0 +1,15 @@
+---prefab_RiskyBusiness---
+
+Components :: [[RiskyBusinessSprite]]
+
+---prefabcomponent_RiskyBusinessSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "vfx/RiskyBusiness",
+    "play": "default"
+     
+}

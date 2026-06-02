@@ -1,0 +1,15 @@
+---prefab_MediumHit---
+
+Components :: [[MediumHitSprite]]
+
+---prefabcomponent_MediumHitSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "vfx/MediumHit",
+    "play": "default"
+     
+}

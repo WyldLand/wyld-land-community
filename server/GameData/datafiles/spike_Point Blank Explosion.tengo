@@ -1,0 +1,67 @@
+---aura_Point Blank Explosion---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:PointBlankExplosion]]
+
+---spike_Point Blank Explosion---
+Slot :: Gun
+Auras :: [[Point Blank Explosion]]
+Rarity :: Legendary
+Archetypes :: [[Handgun]] [[Shotgun]]
+
+When firing extremely close to an enemy, triggers a devastating AoE explosion around you.
+
+---script_PointBlankExplosion_DamageDealt---
+// Initialize cooldown tracking
+if is_undefined(scriptVars["explosionCooldown"]) {
+    scriptVars["explosionCooldown"] = 0
+}
+
+// Check if this damage is from our gun
+if abilityId == auraAbilityId {
+    
+    // Get distance to the enemy we just hit
+    targetDistance := distToEntity(myEntityId, damageSenderId)
+    
+    // Check if we're at point blank range (very close)
+    if targetDistance < 6.5 {
+        
+        // Only trigger if cooldown has expired (prevent spam)
+        if globalTick > scriptVars["explosionCooldown"] {
+            
+            // Trigger the explosion at player's position
+            useAbilityAtPosition(myEntityId, "Point Blank Devastation", entityPosition(myEntityId))
+            
+            // Visual and audio feedback
+            showVfxAtPosition(myEntityId, "PowerSpike", entityPosition(myEntityId))
+            showVfxAtPosition(myEntityId, "ShockwaveBlast", entityPosition(myEntityId))
+            
+            // Set cooldown (1.5 seconds between explosions)
+            scriptVars["explosionCooldown"] = globalTick + 30
+            
+            // Log for debugging
+            log("Point blank explosion triggered! Distance was: ", targetDistance)
+        }
+    }
+}
+
+---ability_Point Blank Devastation---
+Bullet Definition :: [[pointblankdevastation]]
+Max Range :: 100.0
+
+---bulletdef_pointblankdevastation---
+sprite CirclePool 8
+color 5
+potency 150
+fire 0 relative 0
+	aoeexplosion
+	radius 8
+	timedFill 15
+	damageEvery 15
+	wait 15
+	vfx BombExplosion 4
+	wait 1
+	vanish

@@ -1,0 +1,59 @@
+---item_300 Allied Detonator---
+Type :: Equippable
+Slot :: Active
+Icon :: items_713
+Gun Definition :: [[Allied Detonator]]
+Rarity :: Exotic
+
+On use, deploy a friendly bombbot that explodes after a short period of time.
+
+Sometimes you need a friend who's willing to go out with a bang.
+
+---gundef_Allied Detonator---
+Fire Speed :: 45.0
+Bullets In Chamber :: -1
+Reload Speed :: 0.0
+Sprite :: items_713
+Fire Event :: tripmine
+Reload Event :: 
+Archetype :: EquippableItem
+Bullet Definition :: [[allieddetonator]]
+
+---prefab_Detonator---
+
+Components :: [[DetonatorSprite]]
+
+---prefabcomponent_DetonatorSprite---
+
+Component :: Sprite
+
+{
+	"pivotX": 0.65,
+	"pivotY": 0.6,
+	"sprite": "vfx/detonator",
+	"color": "red",
+	"play": "default"
+}
+
+---bulletdef_allieddetonator---
+sprite OrangePool 4
+potency 600
+fire 0 relative 0
+	aoeexplosion
+	radius 4.5
+	timedFill 20
+	damageEvery 20
+	wait 1
+	vfx Detonator
+	wait 19
+	vfx BombExplosion 6
+	fire alliedshockwave
+	wait 1
+	vanish
+
+---bulletdef_alliedshockwave---
+sprite Custom12
+potency 250
+radial bullets:24 speed:8 angle:0 directionType:absolute
+	wait 60
+	vanish

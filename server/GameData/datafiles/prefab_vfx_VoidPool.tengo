@@ -1,0 +1,15 @@
+---prefab_VoidPool---
+
+Components :: [[VoidPoolSprite]]
+
+---prefabcomponent_VoidPoolSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "vfx/VoidPool",
+    "play": "default"
+     
+}

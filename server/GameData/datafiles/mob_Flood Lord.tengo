@@ -1,0 +1,147 @@
+---mobdefinition_Flood Lord---
+ID :: floodlord
+Prefab :: colossus
+Range Behavior :: [[Medium Ranged]]
+Abilities :: [[Tidal Wave]] [[Whirlpool]] [[Water Jet]] [[Rising Tide]] [[Tsunami]]
+Bounding Box :: 0 2.73 2.5 3.0
+Speed :: 200
+Type :: Boss
+Loot :: [[FloodLord]]
+
+---ability_Tidal Wave---
+Bullet Definition :: [[tidalwave]]
+
+---bulletdef_tidalwave---
+sprite Basic
+color 1
+potency 75
+nway speed:6 bullets:8 spread:30 angle:0 directionType:relative
+wait 5
+nway speed:6 bullets:8 spread:30 angle:0 directionType:relative
+wait 5
+nway speed:6 bullets:8 spread:30 angle:0 directionType:relative
+
+---ability_Whirlpool---
+Bullet Definition :: [[whirlpool]]
+Max Range :: 100.0
+
+---bulletdef_whirlpool---
+sprite CirclePool 2.5
+potency 50
+fire 0 relative 0
+	aoedot
+	radius 2.5
+	damageEvery 15
+	wait 300
+	vanish
+wait 10
+sprite Basic
+color 3
+potency 25
+repeat bullets:36 speed:3 angle:0 maxAngle:360 delay:5
+	wait 290
+	vanish
+
+---ability_Water Jet---
+Bullet Definition :: [[waterjet]]
+
+---bulletdef_waterjet---
+sprite Basic
+color 2
+potency 100
+repeat bullets:5 speed:12 angle:-10 maxAngle:10 delay:3 directionType:relative
+	piercing 3
+
+---ability_Rising Tide---
+Bullet Definition :: [[risingtide]]
+Max Range :: 100.0
+
+---bulletdef_risingtide---
+sprite CirclePool 3
+potency 25
+fire 0 relative 0
+	aoedot
+	radius 3
+	damageEvery 30
+	wait 1800
+	vanish
+
+---ability_Tsunami---
+Bullet Definition :: [[tsunami]]
+
+---bulletdef_tsunami---
+sprite Basic
+color 5
+potency 150
+line speed:9 bullets:30 delay:1 angle:0 directionType:relative speedChange:0.1
+wait 5
+line speed:9 bullets:30 delay:1 angle:15 directionType:relative speedChange:0.1
+wait 5
+line speed:9 bullets:30 delay:1 angle:-15 directionType:relative speedChange:0.1
+
+---loottable_FloodLord---
+[[185 Heart of the Flood]] @ 67.0
+
+---script_colossust_Monster---
+resetVars := func() {
+	scriptVars["phase"] = 1
+	scriptVars["risingTideTimer"] = 0.0
+	scriptVars["tsunamiTimer"] = 0.0
+	scriptVars["mainAttackTimer"] = 0.0
+	scriptVars["whirlpoolTimer"] = 0.0
+	scriptVars["phaseTimer"] = 0.0
+}
+
+if !isDead {
+	if is_undefined(scriptVars["phase"]) {
+		resetVars()
+	}
+
+	scriptVars["risingTideTimer"] += delta
+	scriptVars["tsunamiTimer"] += delta
+	scriptVars["mainAttackTimer"] += delta
+	scriptVars["whirlpoolTimer"] += delta
+	scriptVars["phaseTimer"] += delta
+
+	if scriptVars["phaseTimer"] >= 60.0 {
+		scriptVars["phase"] += 1
+		if scriptVars["phase"] > 3 {
+			scriptVars["phase"] = 3
+		}
+		scriptVars["phaseTimer"] = 0.0
+	}
+
+	if targetEntityId != 0 {
+		if scriptVars["mainAttackTimer"] >= 1.0 {
+			if scriptVars["phase"] == 1 {
+				useAbilityAtTarget(myEntityId, "Tidal Wave", targetEntityId, 1.0)
+			} else {
+				useAbilityAtTarget(myEntityId, "Water Jet", targetEntityId, 0.5)
+			}
+			scriptVars["mainAttackTimer"] = 0.0
+		}
+
+		if scriptVars["risingTideTimer"] >= 12.0 {
+			useAbilityAtPosition(myEntityId, "Rising Tide", randomPositionInCurrentRoom(myEntityId, 3.0))
+			scriptVars["risingTideTimer"] = 0.0
+		}
+
+		if scriptVars["phase"] >= 2 {
+			if scriptVars["tsunamiTimer"] >= 18.0 {
+				useAbilityAtTarget(myEntityId, "Tsunami", targetEntityId, 1.5)
+				scriptVars["tsunamiTimer"] = 0.0
+			}
+
+			if scriptVars["whirlpoolTimer"] >= 5.0 {
+				useAbilityAtPosition(myEntityId, "Whirlpool", randomPositionInCurrentRoom(myEntityId, 2.5))
+				scriptVars["whirlpoolTimer"] = 0.0
+			}
+		}
+
+		if scriptVars["phase"] == 3 {
+			if scriptVars["mainAttackTimer"] >= 0.5 {
+				useAbilityAtTarget(myEntityId, "Water Jet", targetEntityId, 0.5)
+			}
+		}
+	}
+}

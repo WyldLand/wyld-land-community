@@ -1,0 +1,85 @@
+---mob_Archer---
+Prefab :: archer
+Range Behavior :: Long Ranged
+Abilities :: [[Archer Shock]]
+Speed :: 500
+Type :: Normal
+
+---prefab_archer---
+
+Components :: [[ArcherSprite]] [[ArcherCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_ArcherCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+    "position": [0.0, 0.7],
+    "size": [0.75, 1.4]
+}
+
+---prefabcomponent_ArcherSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.355,
+    "pivotY": 1.0,
+    "sprite": "darkforest1/archer",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_sfxarcherCharge---
+
+Components :: [[SFXArcherCharge]]
+
+---prefabcomponent_SFXArcherCharge---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest1/archerCharge1.wav", "darkforest1/archerCharge2.wav"],
+    "select": "all",
+    "delay": [0.0, 0.38],
+	"spatial": true
+}
+
+---prefab_sfxarcherShoot---
+
+Components :: [[SFXArcherShoot]]
+
+---prefabcomponent_SFXArcherShoot---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest1/archerShoot.wav"],
+	"spatial": true
+}
+
+---ability_Archer Shock---
+Bullet Definition :: [[archershock]]
+Cooldown :: 2.0
+Auras :: [[Shock]]
+VFX Charging :: trigger:Charge*
+VFX Cast :: trigger:Shoot*
+Lock Time :: 0.50
+Cast Time :: 1.5
+Max Range :: 0.0
+
+---bulletdef_archershock---
+sprite Shock
+potency 150
+line speed:13 bullets:4 delay:2 angle:0 directionType:relative speedChange:0.25
+

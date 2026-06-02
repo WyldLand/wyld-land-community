@@ -1,0 +1,511 @@
+---mobdefinition_Widow---
+ID :: widow
+Prefab :: widow
+Range Behavior :: [[Medium Ranged]]
+Abilities :: [[Widow Venom Pool]]
+Speed :: 200
+Type :: Boss
+Loot :: [[Widow]]
+
+---prefab_widow---
+
+Components :: [[WidowSprite]] [[WidowCollider]] [[Monster]] [[Nameplate]] [[BGMWidow]]
+
+---prefabcomponent_WidowCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+    "position": [0.0, 1.7],
+    "size": [2.5, 3.0]
+}
+
+---prefabcomponent_WidowSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.45,
+    "pivotY": 1.0,
+    "sprite": "widow/widow",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_sfxwidowAttack---
+
+Components :: [[SFXWidowAttack]]
+
+---prefabcomponent_SFXWidowAttack---
+
+Component :: Sound
+
+{
+    "sources": ["widow/widowAttack.wav"],
+	"spatial": true
+}
+
+---prefab_sfxwidowBuff---
+
+Components :: [[SFXWidowBuff]]
+
+---prefabcomponent_SFXWidowBuff---
+
+Component :: Sound
+
+{
+    "sources": ["widow/widowBuff.wav"],
+	"spatial": true
+}
+
+---prefab_sfxwidowSpit---
+
+Components :: [[SFXWidowSpit]]
+
+---prefabcomponent_SFXWidowSpit---
+
+Component :: Sound
+
+{
+    "sources": ["widow/widowSpit.wav"],
+	"spatial": true
+}
+
+---prefabcomponent_BGMWidow---
+
+Component :: Sound
+{
+	"sources": ["widow/bgm1.wav", "widow/bgm2.wav", "widow/bgm3.wav", "widow/bgm4.wav"],
+	"channel": "bgm",
+	"loop": true,
+	"select": "random",
+	"priority": 2,
+	"combatOnly": true
+}
+
+---loottable_Widow---
+[[195 Widow's Venom Sac]] @ 67.0
+[[23 Desperation]] @ 2.0
+[[104 Pain Converter]] @ 2.0
+[[111 Chicken]] @ 5.0
+[[651 Tanky Pulse]] @ 15.0
+
+---ability_Widow Venom Pool---
+Bullet Definition :: [[widowvenompool]]
+Max Range :: 100.0
+Auras :: [[Slow]]
+trigger:Buff*
+
+---bulletdef_widowvenompool---
+sprite OrangePool 3
+potency 50
+fire 0 relative 0
+	aoedot
+	radius 3
+	damageEvery 10
+	vfx VenomPool
+	wait 600
+	vanish
+
+---ability_Widow Web Shot---
+Bullet Definition :: [[widowwebshot]]
+VFX Cast :: trigger:Spit*
+
+---bulletdef_widowwebshot---
+sprite Custom11
+color 4
+potency 100
+nway speed:8 bullets:5 spread:30 angle:0 directionType:relative
+wait 3
+nway speed:6 bullets:3 spread:15 angle:0 directionType:relative bulletShift:2
+
+---ability_Widow Spider Call---
+VFX Charging :: trigger:Buff*
+Cast Time :: 1.0
+Script :: SpiderCall
+
+---script_SpiderCall_Cast---
+if frameNum == 10 {
+    // Spawn 3 spiderlings
+    for i := 0; i < 3; i++ {
+        newEntId := summonEntity("spider", randomPositionInCurrentRoom(myEntityId, 2.0), monsterLevel(myEntityId))
+        aggroMyTargets(myEntityId, newEntId)
+        killEntityIfEntityDies(newEntId, myEntityId)
+    }
+}
+
+---ability_Widow Rapid Fire---
+Bullet Definition :: [[widowrapidfire]]
+VFX Cast :: trigger:Spit*
+
+---bulletdef_widowrapidfire---
+sprite Invisible
+potency 0
+fire 2 relative 0
+	lifetime 50
+	fire widowrapidfiresub
+	wait 5
+	repeat
+
+---bulletdef_widowrapidfiresub---
+sprite Custom10
+color 2
+potency 75
+repeat bullets:8 speed:10 angle:-20 angleChange:5 delay:1 directionType:relative
+	wait 10
+	speed 3
+	wait 60
+	vanish
+
+---ability_Widow Spider Rush---
+Bullet Definition :: [[widowspiderrush]]
+VFX Cast :: trigger:Buff*
+Lock Time :: 1.0
+
+---bulletdef_widowspiderrush---
+sprite CirclePool 4
+potency 200
+fire 0 relative 0
+	aoeexplosion
+	radius 4
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vfx BombExplosion 4
+	wait 1
+	vanish
+
+---ability_Widow Web Wall---
+Bullet Definition :: [[widowwebwall]]
+Max Range :: 100.0
+
+---bulletdef_widowwebwall---
+sprite Custom7
+potency 100
+color 4
+line speed:8 bullets:1 delay:0 angle:0 directionType:relative
+	wait 45
+	vanish
+line speed:8 bullets:1 delay:0 angle:90 directionType:relative
+	wait 45
+	vanish
+line speed:8 bullets:1 delay:0 angle:180 directionType:relative
+	wait 45
+	vanish
+line speed:8 bullets:1 delay:0 angle:270 directionType:relative
+	wait 45
+	vanish
+
+---ability_Widow Multi Shot---
+Bullet Definition :: [[widowmultishot]]
+VFX Cast :: trigger:Attack*
+
+---bulletdef_widowmultishot---
+sprite Basic
+color 2
+potency 100
+radial bullets:16 speed:3 angle:0 directionType:absolute
+	wait 120
+	vanish
+
+---ability_Widow Spinning Web---
+Bullet Definition :: [[widowspinningweb]]
+VFX Cast :: trigger:Spit*
+
+---bulletdef_widowspinningweb---
+sprite Custom10 
+color 4
+potency 100
+repeat bullets:3 speed:3 angle:0 angleChange:120 directionType:absolute
+	wait 1000
+wait 5
+repeat bullets:3 speed:3 angle:15 angleChange:120 directionType:absolute
+	wait 1000
+wait 5
+repeat bullets:3 speed:3 angle:30 angleChange:120 directionType:absolute
+	wait 1000
+
+---ability_Widow Phase Two Venom---
+Bullet Definition :: [[widowphasetwovenom]]
+Max Range :: 100.0
+Auras :: [[Slow]]
+VFX Cast :: trigger:Buff*
+
+---bulletdef_widowphasetwovenom---
+sprite OrangePool 2
+potency 75
+repeat speed:2 bullets:4 angleChange:90 angle:0 directionType:relative
+	lifetime 120
+	aoedot
+	radius 2
+	damageEvery 10
+	wait 30
+	fire widowphasetwovenomradial
+	repeat
+
+---bulletdef_widowphasetwovenomradial---
+sprite Custom11 0.5
+color 3
+potency 100
+radial bullets:8 speed:3 angle:0 directionType:absolute
+	radius 0.25
+	wait 60
+	vanish
+
+---ability_Widow Phase Two Rush---
+Bullet Definition :: [[widowphasetworush]]
+VFX Cast :: trigger:Buff*
+Lock Time :: 1.5
+Max Range :: 100.0
+
+---bulletdef_widowphasetworush---
+sprite CirclePool 5
+potency 250
+fire 0 relative 0
+	aoeexplosion
+	radius 5
+	timedFill 30
+	damageEvery 30
+	wait 30
+	vfx BombExplosion 5
+	wait 1
+	fire widowrushspread
+	vanish
+
+---bulletdef_widowrushspread---
+sprite Custom11
+color 4
+potency 100
+radial bullets:24 speed:8 angle:0 directionType:absolute
+	wait 60
+	vanish
+
+---ability_Widow Phase Two Web---
+Bullet Definition :: [[widowphasetwoweb]]
+VFX Cast :: trigger:Attack*
+
+---bulletdef_widowphasetwoweb---
+sprite Custom10
+color 4
+potency 100
+repeat bullets:180 speed:4 angle:0 angleChange:8 delay:1 directionType:relative
+	wait 5
+	speed 0
+	wait 10
+	speed 12
+	wait 30
+	vanish
+
+---ability_Widow Phase Three Storm---
+Bullet Definition :: [[widowphasethreestorm]]
+VFX Cast :: trigger:Attack*
+
+---bulletdef_widowphasethreestorm---
+sprite Custom11
+color 2
+potency 100
+radial bullets:48 speed:3 angle:0 directionType:absolute
+	wait 120
+
+---ability_Widow Phase Three Burst---
+Bullet Definition :: [[widowphaseethreeburst]]
+VFX Cast :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_widowphaseethreeburst---
+sprite Invisible
+potency 0
+repeat bullets:8 speed:6 angle:0 maxAngle:360 delay:2 directionType:relative
+	wait 15
+	fire widowburstpool
+	vanish
+
+---bulletdef_widowburstpool---
+sprite OrangePool 2
+potency 100
+fire 0 relative 0
+	aoedot
+	radius 2
+	damageEvery 10
+	vfx VenomPool
+	wait 90
+	vanish
+
+---ability_Widow Phase Three Pool---
+Bullet Definition :: [[widowphasethreepool]]
+Max Range :: 100.0
+Auras :: [[Slow]]
+VFX Cast :: trigger:Buff*
+
+---bulletdef_widowphasethreepool---
+sprite OrangePool 4
+potency 150
+fire 0 relative 0
+	aoedot
+	radius 4
+	damageEvery 15
+	vfx VenomPool
+	wait 600
+	vanish
+wait 5
+sprite Custom11
+color 2
+potency 125
+radial bullets:32 speed:6 angle:0 directionType:absolute
+	wait 60
+	vanish
+
+---ability_Widow Phase Three Finale---
+Bullet Definition :: [[widowphaseethreefinale]]
+VFX Cast :: trigger:Spit*
+
+---bulletdef_widowphaseethreefinale---
+sprite CirclePool 6
+potency 300
+fire 0 relative 0
+	aoeexplosion
+	radius 6
+	timedFill 45
+	damageEvery 45
+	wait 45
+	vfx BombExplosion 6
+	wait 1
+	fire widowfinalespread
+	wait 1
+	vanish
+
+---bulletdef_widowfinalespread---
+sprite Custom11
+color 4
+potency 100
+radial bullets:64 speed:8 angle:0 directionType:absolute
+wait 3
+radial bullets:64 speed:7 angle:2.8125 directionType:absolute
+
+---script_widow_Monster---
+resetVars := func() {
+    scriptVars["phase"] = 1
+    scriptVars["timeSinceVenomPool"] = 3.0
+    scriptVars["timeSinceWebShot"] = 0.0
+    scriptVars["timeSinceSpiderCall"] = 10.0
+    scriptVars["timeSinceRapidFire"] = 0.0
+    scriptVars["timeSinceRush"] = 0.0
+    scriptVars["timeSinceWebWall"] = 0.0
+    scriptVars["timeSinceMultiShot"] = 0.0
+    scriptVars["timeSinceSpinningWeb"] = 0.0
+}
+
+if !isDead {
+    if is_undefined(scriptVars["phase"]) {
+        resetVars()
+    }
+
+    if targetEntityId > 0 {
+        currentHealth := float(getPoints(myEntityId, "hp", "current"))
+        maxHealth := float(getPoints(myEntityId, "hp", "max"))
+
+        // Phase transitions
+        if currentHealth < maxHealth * 0.66 && scriptVars["phase"] == 1 {
+            scriptVars["phase"] = 2
+            clearBulletsForEntity(myEntityId)
+        } else if currentHealth < maxHealth * 0.33 && scriptVars["phase"] == 2 {
+            scriptVars["phase"] = 3
+            clearBulletsForEntity(myEntityId)
+        }
+
+        // Update all timers
+        scriptVars["timeSinceVenomPool"] += delta
+        scriptVars["timeSinceWebShot"] += delta
+        scriptVars["timeSinceSpiderCall"] += delta
+        scriptVars["timeSinceRapidFire"] += delta
+        scriptVars["timeSinceRush"] += delta
+        scriptVars["timeSinceWebWall"] += delta
+        scriptVars["timeSinceMultiShot"] += delta
+        scriptVars["timeSinceSpinningWeb"] += delta
+
+        if castingAction == 0 {
+            if scriptVars["phase"] == 1 {
+                // Phase 1: Basic attacks and web patterns
+                if scriptVars["timeSinceVenomPool"] > 4.0 {
+                    useAbilityAtPosition(myEntityId, "Widow Venom Pool", randomPositionInCurrentRoom(myEntityId, 3.0))
+                    scriptVars["timeSinceVenomPool"] = 0.0
+                }
+                if scriptVars["timeSinceWebShot"] > 2.0 {
+                    useAbilityAtTarget(myEntityId, "Widow Web Shot", targetEntityId, 1.0)
+                    scriptVars["timeSinceWebShot"] = 0.0
+                }
+                if scriptVars["timeSinceSpiderCall"] > 15.0 {
+                    useAbilityAtPosition(myEntityId, "Widow Spider Call", entityPosition(myEntityId))
+                    scriptVars["timeSinceSpiderCall"] = 0.0
+                }
+                if scriptVars["timeSinceRapidFire"] > 3.0 {
+                    useAbilityAtTarget(myEntityId, "Widow Rapid Fire", targetEntityId, 2.0)
+					useAbilityAtPosition(myEntityId, "Widow Rapid Fire", entityPosition(myEntityId), randomPositionInCurrentRoom(myEntityId, 3.0))
+					useAbilityAtPosition(myEntityId, "Widow Rapid Fire", entityPosition(myEntityId), randomPositionInCurrentRoom(myEntityId, 3.0))
+					useAbilityAtPosition(myEntityId, "Widow Rapid Fire", entityPosition(myEntityId), randomPositionInCurrentRoom(myEntityId, 3.0))
+                    scriptVars["timeSinceRapidFire"] = 0.0
+                }
+            } else if scriptVars["phase"] == 2 {
+                // Phase 2: More aggressive attacks and patterns
+                if scriptVars["timeSinceRush"] > 6.0 {
+                    useAbilityAtTarget(myEntityId, "Widow Phase Two Rush", targetEntityId, 1.0)
+                    scriptVars["timeSinceRush"] = 0.0
+                }
+                // if scriptVars["timeSinceWebWall"] > 4.0 {
+                //     useAbilityAtPosition(myEntityId, "Phase Two Web", entityPosition(myEntityId))
+                //     scriptVars["timeSinceWebWall"] = 0.0
+                // }
+                if scriptVars["timeSinceVenomPool"] > 3.0 {
+                    useAbilityAtPosition(myEntityId, "Widow Phase Two Venom", randomPositionInCurrentRoom(myEntityId, 2.0))
+                    scriptVars["timeSinceVenomPool"] = 0.0
+                }
+                if scriptVars["timeSinceMultiShot"] > 2.5 {
+                    useAbilityAtTarget(myEntityId, "Widow Multi Shot", targetEntityId, 1.0)
+                    scriptVars["timeSinceMultiShot"] = 0.0
+                }
+				if scriptVars["timeSinceRapidFire"] > 3.0 {
+                    useAbilityAtTarget(myEntityId, "Widow Rapid Fire", targetEntityId, 2.0)
+					useAbilityAtPosition(myEntityId, "Widow Rapid Fire", entityPosition(myEntityId), randomPositionInCurrentRoom(myEntityId, 3.0))
+					useAbilityAtPosition(myEntityId, "Widow Rapid Fire", entityPosition(myEntityId), randomPositionInCurrentRoom(myEntityId, 3.0))
+					useAbilityAtPosition(myEntityId, "Widow Rapid Fire", entityPosition(myEntityId), randomPositionInCurrentRoom(myEntityId, 3.0))
+                    scriptVars["timeSinceRapidFire"] = 0.0
+                }
+            } else {
+                // Phase 3: Most dangerous attacks and combinations
+                if scriptVars["timeSinceSpinningWeb"] > 5.0 {
+                    useAbilityAtPosition(myEntityId, "Widow Phase Three Storm", entityPosition(myEntityId))
+                    scriptVars["timeSinceSpinningWeb"] = 0.0
+                }
+                if scriptVars["timeSinceVenomPool"] > 3.0 {
+                    useAbilityAtPosition(myEntityId, "Widow Phase Three Pool", randomPositionInCurrentRoom(myEntityId, 4.0))
+                    scriptVars["timeSinceVenomPool"] = 0.0
+                }
+                if scriptVars["timeSinceRush"] > 4.0 {
+                    useAbilityAtPosition(myEntityId, "Widow Phase Three Burst", randomPositionInCurrentRoom(myEntityId, 6.0))
+                    scriptVars["timeSinceRush"] = 0.0
+                }
+                if scriptVars["timeSinceWebWall"] > 8.0 {
+                    useAbilityAtPosition(myEntityId, "Widow Phase Three Finale", entityPosition(myEntityId))
+                    scriptVars["timeSinceWebWall"] = 0.0
+                }
+				if scriptVars["timeSinceRapidFire"] > 3.0 {
+                    useAbilityAtTarget(myEntityId, "Widow Rapid Fire", targetEntityId, 2.0)
+					useAbilityAtPosition(myEntityId, "Widow Rapid Fire", entityPosition(myEntityId), randomPositionInCurrentRoom(myEntityId, 3.0))
+					useAbilityAtPosition(myEntityId, "Widow Rapid Fire", entityPosition(myEntityId), randomPositionInCurrentRoom(myEntityId, 3.0))
+					useAbilityAtPosition(myEntityId, "Widow Rapid Fire", entityPosition(myEntityId), randomPositionInCurrentRoom(myEntityId, 3.0))
+                    scriptVars["timeSinceRapidFire"] = 0.0
+                }
+            }
+        }
+    }
+}

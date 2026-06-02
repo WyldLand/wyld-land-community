@@ -1,0 +1,541 @@
+---prefabcomponent_Pet---
+
+Component :: Pet
+
+---mob_Baby Chick---
+Prefab :: babychick
+Range Behavior :: Follow Player
+Bounding Box :: 0.0 0.0 0.5 0.5
+Speed :: 3000
+Type :: Pet
+
+---prefab_babychick---
+
+Components :: [[BabyChickSprite]] [[BabyChickCollider]] [[Monster]] [[Pet]]
+
+---prefabcomponent_BabyChickCollider---
+
+Component :: Collider
+
+{
+    "layer": "Friendly",
+    "position": [0.0, 0.0],
+    "size": [0.5, 0.5]
+}
+
+---prefabcomponent_BabyChickSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "pets/babychick",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---mob_Fire Chick---
+Prefab :: firechick
+Range Behavior :: Follow Player
+Speed :: 3000
+Type :: Pet
+
+---prefab_firechick---
+
+Components :: [[FireChickSprite]] [[FireChickCollider]] [[Monster]] [[Pet]]
+
+---prefabcomponent_FireChickCollider---
+
+Component :: Collider
+
+{
+    "layer": "Friendly",
+    "position": [0.0, 0.0],
+    "size": [0.5, 0.5]
+}
+
+---prefabcomponent_FireChickSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "pets/firechick",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---mob_Rabbit---
+Prefab :: rabbit
+Range Behavior :: Follow Player
+Speed :: 3000
+Type :: Pet
+
+---prefab_rabbit---
+
+Components :: [[RabbitSprite]] [[RabbitCollider]] [[Monster]] [[Pet]]
+
+---prefabcomponent_RabbitCollider---
+
+Component :: Collider
+
+{
+    "layer": "Friendly",
+    "position": [0.0, 0.0],
+    "size": [0.5, 0.5]
+}
+
+---prefabcomponent_RabbitSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "pets/rabbit",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---mob_Sheep---
+Prefab :: sheep
+Range Behavior :: Follow Player
+Speed :: 3000
+Type :: Pet
+
+---prefab_sheep---
+
+Components :: [[SheepSprite]] [[SheepCollider]] [[Monster]] [[Pet]]
+
+---prefabcomponent_SheepCollider---
+
+Component :: Collider
+
+{
+    "layer": "Friendly",
+    "position": [0.0, 0.0],
+    "size": [0.5, 0.5]
+}
+
+---prefabcomponent_SheepSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "pets/sheep",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---mob_Chicken---
+Prefab :: chicken
+Range Behavior :: Follow Player
+Speed :: 3000
+Type :: Pet
+
+---prefab_chicken---
+
+Components :: [[ChickenSprite]] [[ChickenCollider]] [[Monster]] [[Pet]]
+
+---prefabcomponent_ChickenCollider---
+
+Component :: Collider
+
+{
+    "layer": "Friendly",
+    "position": [0.0, 0.0],
+    "size": [0.5, 0.5]
+}
+
+---prefabcomponent_ChickenSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "pets/chicken",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---mob_Dark Rabbit---
+Prefab :: darkrabbit
+Range Behavior :: Follow Player
+Speed :: 3000
+Type :: Pet
+
+---prefab_darkrabbit---
+
+Components :: [[DarkRabbitSprite]] [[DarkRabbitCollider]] [[Monster]] [[Pet]]
+
+---prefabcomponent_DarkRabbitCollider---
+
+Component :: Collider
+
+{
+    "layer": "Friendly",
+    "position": [0.0, 0.0],
+    "size": [0.5, 0.5]
+}
+
+---prefabcomponent_DarkRabbitSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "pets/darkrabbit",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---mob_Choofer---
+Prefab :: monkey
+Range Behavior :: Follow Player
+Speed :: 3000
+Type :: Pet
+
+---prefab_monkey---
+
+Components :: [[MonkeySprite]] [[MonkeyCollider]] [[Monster]] [[Pet]]
+
+---prefabcomponent_MonkeyCollider---
+
+Component :: Collider
+
+{
+    "layer": "Friendly",
+    "position": [0.0, 0.0],
+    "size": [0.5, 0.5]
+}
+
+---prefabcomponent_MonkeySprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "pets/monkey",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---mob_Mini Flayer---
+Prefab :: miniflayer
+Range Behavior :: Follow Player
+Speed :: 3000
+Type :: Pet
+
+---prefab_miniflayer---
+
+Components :: [[MiniFlayerSprite]] [[MiniFlayerCollider]] [[Monster]] [[Pet]]
+
+---prefabcomponent_MiniFlayerCollider---
+
+Component :: Collider
+
+{
+    "layer": "Friendly",
+    "position": [0.0, 0.0],
+    "size": [0.5, 0.5]
+}
+
+---prefabcomponent_MiniFlayerSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "pets/miniflayer",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---mob_Mini Hunter---
+Prefab :: minihunter
+Range Behavior :: Follow Player
+Speed :: 3000
+Type :: Pet
+
+---prefab_minihunter---
+
+Components :: [[MiniHunterSprite]] [[MiniHunterCollider]] [[Monster]] [[Pet]]
+
+---prefabcomponent_MiniHunterCollider---
+
+Component :: Collider
+
+{
+    "layer": "Friendly",
+    "position": [0.0, 0.0],
+    "size": [0.5, 0.5]
+}
+
+---prefabcomponent_MiniHunterSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "pets/minihunter",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---mob_Mini Echoblight---
+Prefab :: miniechoblight
+Range Behavior :: Follow Player
+Bounding Box :: 0.0 0.0 0.5 0.5
+Speed :: 3000
+Type :: Pet
+
+---prefab_miniechoblight---
+
+Components :: [[MiniEchoblightSprite]] [[MiniEchoblightCollider]] [[Monster]] [[Pet]]
+
+---prefabcomponent_MiniEchoblightCollider---
+
+Component :: Collider
+
+{
+    "layer": "Friendly",
+    "position": [0.0, 0.0],
+    "size": [0.5, 0.5]
+}
+
+---prefabcomponent_MiniEchoblightSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "pets/miniechoblight",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---mob_Mini Echodeath---
+Prefab :: miniechodeath
+Range Behavior :: Follow Player
+Bounding Box :: 0.0 0.0 0.5 0.5
+Speed :: 3000
+Type :: Pet
+
+---prefab_miniechodeath---
+
+Components :: [[MiniEchodeathSprite]] [[MiniEchodeathCollider]] [[Monster]] [[Pet]]
+
+---prefabcomponent_MiniEchodeathCollider---
+
+Component :: Collider
+
+{
+    "layer": "Friendly",
+    "position": [0.0, 0.0],
+    "size": [0.5, 0.5]
+}
+
+---prefabcomponent_MiniEchodeathSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "pets/miniechodeath",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---mob_Mini Idrae---
+Prefab :: miniidrae
+Range Behavior :: Follow Player
+Bounding Box :: 0.0 0.0 0.5 0.5
+Speed :: 3000
+Type :: Pet
+
+---prefab_miniidrae---
+
+Components :: [[MiniIdraeSprite]] [[MiniIdraeCollider]] [[Monster]] [[Pet]]
+
+---prefabcomponent_MiniIdraeCollider---
+
+Component :: Collider
+
+{
+    "layer": "Friendly",
+    "position": [0.0, 0.0],
+    "size": [0.5, 0.5]
+}
+
+---prefabcomponent_MiniIdraeSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "pets/miniidrae",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---mob_Mini Harbinger---
+Prefab :: miniharbinger
+Range Behavior :: Follow Player
+Bounding Box :: 0.0 0.0 0.5 0.5
+Speed :: 3000
+Type :: Pet
+
+---prefab_miniharbinger---
+
+Components :: [[MiniHarbingerSprite]] [[MiniHarbingerCollider]] [[Monster]] [[Pet]]
+
+---prefabcomponent_MiniHarbingerCollider---
+
+Component :: Collider
+
+{
+    "layer": "Friendly",
+    "position": [0.0, 0.0],
+    "size": [0.5, 0.5]
+}
+
+---prefabcomponent_MiniHarbingerSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "pets/miniharbinger",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}

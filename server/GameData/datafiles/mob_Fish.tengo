@@ -1,0 +1,124 @@
+---mob_FishGrouper---
+Prefab :: fishgrouper
+Range Behavior :: Medium Ranged
+Speed :: 600
+Type :: Normal
+Options :: manualpathing noaggronearby nodeathsmoke
+MobScript :: fishtarget
+
+---prefab_fishgrouper---
+
+Components :: [[FishGrouperSprite]] [[FishCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_FishGrouperSprite---
+
+Component :: Sprite
+
+{
+	"pivotX": 0.5,
+	"pivotY": 0.5,
+	"sprite": "player/items",
+	"frame": 684
+}
+
+---prefabcomponent_FishCollider---
+
+Component :: Collider
+
+{
+	"layer": "Enemy",
+	"position": [0.0, 0.0],
+	"size": [1.0, 1.0]
+}
+
+---mob_FishCatfish---
+Prefab :: fishcatfish
+Range Behavior :: Medium Ranged
+Speed :: 600
+Type :: Normal
+Options :: manualpathing noaggronearby nodeathsmoke
+MobScript :: fishtarget
+
+---prefab_fishcatfish---
+
+Components :: [[FishCatfishSprite]] [[FishCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_FishCatfishSprite---
+
+Component :: Sprite
+
+{
+	"pivotX": 0.5,
+	"pivotY": 0.5,
+	"sprite": "player/items",
+	"frame": 685
+}
+
+---mob_FishSunfish---
+Prefab :: fishsunfish
+Range Behavior :: Medium Ranged
+Speed :: 600
+Type :: Normal
+Options :: manualpathing noaggronearby nodeathsmoke
+MobScript :: fishtarget
+
+---prefab_fishsunfish---
+
+Components :: [[FishSunfishSprite]] [[FishCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_FishSunfishSprite---
+
+Component :: Sprite
+
+{
+	"pivotX": 0.5,
+	"pivotY": 0.5,
+	"sprite": "player/items",
+	"frame": 689
+}
+
+---mob_FishCarp---
+Prefab :: fishcarp
+Range Behavior :: Medium Ranged
+Speed :: 600
+Type :: Normal
+Options :: manualpathing noaggronearby nodeathsmoke
+MobScript :: fishtarget
+
+---prefab_fishcarp---
+
+Components :: [[FishCarpSprite]] [[FishCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_FishCarpSprite---
+
+Component :: Sprite
+
+{
+	"pivotX": 0.5,
+	"pivotY": 0.5,
+	"sprite": "player/items",
+	"frame": 690
+}
+
+---mob_FishVolcanoTrout---
+Prefab :: fishvolcanotrout
+Range Behavior :: Medium Ranged
+Speed :: 600
+Type :: Normal
+Options :: manualpathing noaggronearby nodeathsmoke
+MobScript :: fishtarget
+
+---prefab_fishvolcanotrout---
+
+Components :: [[FishVolcanoSprite]] [[FishCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_FishVolcanoSprite---
+
+Component :: Sprite
+
+{
+	"pivotX": 0.5,
+	"pivotY": 0.5,
+	"sprite": "player/items",
+	"frame": 691
+}

@@ -1,0 +1,82 @@
+---item_31 Rampage---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Rampage]]
+Rarity :: Legendary
+Durability :: 5
+
+Every tenth hit creates an explosion on impact.
+
+When fury builds, devastation follows.
+
+---gundef_Rampage---
+Fire Speed :: 0.08
+Bullets In Chamber :: 45
+Reload Speed :: 0.9
+Sprite :: weapons_108
+Fire Event :: assaultriflea
+Reload Event :: assaultriflereload
+Bullet Definition :: [[rampage]]
+Archetype :: Automatic
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: FullAuto
+Bullet Lifetime :: 1.0
+Innate Spikes :: [[Rampage Explosive]]
+
+---bulletdef_rampage---
+sprite Custom12
+color 1
+potency 40
+fire 16 relative -3 3
+
+---spike_Rampage Explosive---
+Auras :: [[Rampage Explosive]]
+
+---aura_Rampage Explosive---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:RampageExplosive]]
+
+---ability_Rampage Explosion---
+Bullet Definition :: [[rampageexplosion]]
+Max Range :: 100.0
+Cooldown :: 0.0
+
+---bulletdef_rampageexplosion---
+sprite CirclePool 3
+potency 150
+fire 0 relative 0
+	aoeexplosion
+	radius 3.0
+	timedFill 3
+	damageEvery 3
+	wait 3
+	vfx BombExplosion 
+	wait 1
+	vanish
+
+---script_RampageExplosive_DamageDealt---
+if abilityId == auraAbilityId {
+	if is_undefined(scriptVars["hitCounter"]) {
+		scriptVars["hitCounter"] = 0
+	}
+	
+	scriptVars["hitCounter"] += 1
+	
+	if scriptVars["hitCounter"] >= 10 {
+		// Create explosion at the target's position
+		targetPos := entityPosition(damageSenderId)
+		useAbilityAtPosition(myEntityId, "Rampage Explosion", targetPos)
+		scriptVars["hitCounter"] = 0
+		showVfxAtPosition(myEntityId, "PowerSpike", targetPos)
+	}
+}
+
+---script_RampageExplosive_ReloadWeapon---
+// Reset counter on reload to prevent carrying over partial progress
+if abilityId == auraAbilityId {
+	scriptVars["hitCounter"] = 0
+}

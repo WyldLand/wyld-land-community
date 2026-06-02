@@ -1,0 +1,52 @@
+---item_86 Helm of the Eternal---
+Type :: Equippable
+Slot :: Head
+Icon :: items_234
+Equip Index :: 4
+Meta :: player/head6
+Rarity :: Exotic
+Gun Definition :: [[Helm of the Eternal]]
+
+A legendary helm that will negate all of the damage from a single attack once every 30 seconds.
+
+Forged in the deepest depth of the fiery furnace, it knows no fear.
+
+---gundef_Helm of the Eternal---
+Fire Speed :: 15.0
+Bullets In Chamber :: -1
+Reload Speed :: 0.0
+Sprite :: items_234
+Fire Event :: 
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Eternal Guard]]
+
+---spike_Eternal Guard---
+Auras :: [[Eternal Guard]]
+
+---aura_Eternal Guard---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:EternalGuard]]
+
+---script_EternalGuard_Tick---
+
+if is_undefined(scriptVars["lastInvulnerabilityTime"]) {
+	scriptVars["lastInvulnerabilityTime"] = globalTick
+}
+
+---script_EternalGuard_IncomingDamage---
+
+if is_undefined(scriptVars["lastInvulnerabilityTime"]) {
+	scriptVars["lastInvulnerabilityTime"] = globalTick
+}
+
+currentTime := globalTick
+if currentTime - scriptVars["lastInvulnerabilityTime"] >= 600 && damage > 0 {
+	additionalDamage = -1 * damage + 1
+	scriptVars["lastInvulnerabilityTime"] = currentTime
+	showVfxAtPosition(myEntityId, "Shield", entityPosition(myEntityId))
+}

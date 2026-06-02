@@ -1,0 +1,92 @@
+---mob_Dual Slicer---
+Prefab :: dualslicer
+Range Behavior :: Medium Ranged
+Abilities :: [[Dual Slicer Gun]] [[Dual Slicer Slash]]
+Speed :: 400
+Type :: Normal
+
+---prefab_dualslicer---
+
+Components :: [[DualSlicerSprite]] [[DualSlicerCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_DualSlicerCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+    "position": [0.0, 0.7],
+    "size": [1.0, 1.4]
+}
+
+---prefabcomponent_DualSlicerSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.38,
+    "pivotY": 1.0,
+    "sprite": "darkforest3/dualslicer",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_sfxdualslicerShoot---
+
+Components :: [[SFXDualSlicerShoot]]
+
+---prefabcomponent_SFXDualSlicerShoot---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest3/dualslicerShoot.wav"],
+	"spatial": true
+}
+
+---prefab_sfxdualslicerSlash---
+
+Components :: [[SFXDualSlicerSlash]]
+
+---prefabcomponent_SFXDualSlicerSlash---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest3/dualslicerSlash.wav"],
+	"spatial": true
+}
+
+---ability_Dual Slicer Gun---
+Bullet Definition :: [[dualslicergun]]
+Cooldown :: 1.4
+VFX Charging :: trigger:Shoot*
+Cast Time :: 0.30
+Lock Time :: 0.30
+
+---bulletdef_dualslicergun---
+potency 100
+nway speed:7 bullets:3 spread:20 directionType:relative angle:-5 maxAngle:5
+wait 1
+nway speed:7 bullets:2 spread:15 directionType:relative angle:-5 maxAngle:5
+
+---ability_Dual Slicer Slash---
+Bullet Definition :: [[dualslicerslash]]
+Cooldown :: 4.0
+VFX Charging :: trigger:Slash*
+Cast Time :: 0.75
+Lock Time :: 0.50
+
+---bulletdef_dualslicerslash---
+potency 100
+line speed:10 bullets:6 delay:1 angle:0 directionType:relative
+

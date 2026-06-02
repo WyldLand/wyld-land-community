@@ -1,0 +1,89 @@
+---mob_Red Ball---
+Prefab :: redball
+Range Behavior :: Stationary
+Abilities :: [[Red Ball Shoot]] [[Red Ball Heal]]
+Type :: Normal
+Options :: alwaysattack
+
+---prefab_redball---
+
+Components :: [[RedBallSprite]] [[RedBallCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_RedBallCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+    "position": [0.0, 0.25],
+    "size": [0.75, 0.75]
+}
+
+---prefabcomponent_RedBallSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.53,
+    "pivotY": 0.68,
+    "sprite": "redking/redball",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_sfxredballShield---
+
+Components :: [[SFXRedBallShield]]
+
+---prefabcomponent_SFXRedBallShield---
+
+Component :: Sound
+
+{
+    "sources": ["redking/redballShield.wav"],
+	"spatial": true
+}
+
+---prefab_sfxredballShoot---
+
+Components :: [[SFXRedBallShoot]]
+
+---prefabcomponent_SFXRedBallShoot---
+
+Component :: Sound
+
+{
+    "sources": ["redking/redballShoot.wav"],
+	"spatial": true
+}
+
+---ability_Red Ball Shoot---
+Bullet Definition :: [[redballshoot]]
+Cooldown :: 3.0
+VFX Cast :: trigger:Shoot*
+
+---bulletdef_redballshoot---
+potency 200
+sprite Custom12
+color 2
+radial bullets:36 speed:6
+
+---ability_Red Ball Heal---
+Bullet Definition :: [[redballheal]]
+VFX Cast :: trigger:Shield*
+
+---bulletdef_redballheal---
+sprite Invisible
+fire 0 relative 0
+	wait 1
+	vanish
+

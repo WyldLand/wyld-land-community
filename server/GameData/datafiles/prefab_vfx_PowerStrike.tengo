@@ -1,0 +1,15 @@
+---prefab_PowerStrike---
+
+Components :: [[PowerStrikeSprite]]
+
+---prefabcomponent_PowerStrikeSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "vfx/PowerStrike",
+    "play": "default"
+     
+}

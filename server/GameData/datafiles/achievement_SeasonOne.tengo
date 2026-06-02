@@ -1,0 +1,103 @@
+---achievement_Shock Therapy---
+Kill :: [[Mobs/Shock Sweeper|Shock Sweeper]]@25 [[Mobs/Caged Shocker|Caged Shocker]]@10
+Title :: Shockproof
+XP :: 100
+ResetOnDeath :: True
+
+Face off against the shock troops and live to tell the tale.
+
+Kill 25 Shock Sweepers and 10 Caged Shockers.
+
+---achievement_Storm Chaser---
+Kill :: [[Mobs/Shadow of Storms|Shadow of Storms]]@25 [[Mobs/Stormhead|Stormhead]]@50
+Title :: Storm Caller
+XP :: 100
+ResetOnDeath :: True
+
+Weather the storms and prove yourself against both Shadow and Storm alike.
+
+Kill 25 Shadow of Storms and 50 Stormheads.
+
+---achievement_Walking Tank---
+Kill :: [[Mobs/Heavy Slicer|Heavy Slicer]]@15 [[Mobs/Lumbering Hulk|Lumbering Hulk]]@10
+Title :: Tank Buster
+XP :: 100
+ResetOnDeath :: True
+
+Take down the heaviest hitters in the realm.
+
+Kill 15 Heavy Slicers and 10 Lumbering Hulks.
+
+---achievement_Master of Blades---
+Kill :: [[Mobs/Dual Slicer|Dual Slicer]]@50 [[Mobs/Glitch Samurai|Glitch Samurai]]@25
+Title :: Blade Master
+XP :: 100
+ResetOnDeath :: True
+
+Prove your worth against the realm's most skilled blade wielders.
+
+Kill 50 Dual Slicers and 25 Glitch Samurai.
+
+---achievement_Explosive Expert---
+Kill :: [[Mobs/Bomb Bot|Bomb Bot]]@100 [[Mobs/Anklebiter|Anklebiter]]@50
+Title :: Demolitions Expert
+XP :: 100
+ResetOnDeath :: True
+
+Carefully dispose of the realm's most volatile threats.
+
+Kill 100 Bomb Bots and 50 Anklebiters.
+
+---achievement_Elite Exterminator---
+Kill :: [[Mobs/Glitch Samurai|Glitch Samurai]]@200 [[Mobs/Wraith|Wraith]]@200 [[Mobs/Blaster|Blaster]]@200 [[Mobs/Caged Shocker|Caged Shocker]]@200 [[Mobs/Heavy Slicer|Heavy Slicer]]@200
+Title :: Elite Hunter
+XP :: 200
+ResetOnDeath :: False
+
+Become a legendary hunter of the realm's most dangerous elite enemies.
+
+Kill 200 each of Glitch Samurai, Wraith, Blaster, Caged Shocker, and Heavy Slicer enemies.
+
+---achievement_Army of One---
+Kill :: [[Mobs/Assassin|Assassin]]@1000 [[Mobs/Dual Slicer|Dual Slicer]]@500 [[Mobs/Shadow of Storms|Shadow of Storms]]@500 [[Mobs/Shock Sweeper|Shock Sweeper]]@250
+Title :: One Man Army
+Tags :: TeamSize1
+XP :: 200
+ResetOnDeath :: False
+Rewards :: [[30 Refined Wyld Luck]]@1
+
+Single-handedly defeat an army's worth of the realm's dangerous denizens.
+
+Kill 1000 Assassins, 500 Dual Slicers, 500 Shadow of Storms, and 250 Shock Sweepers.
+
+---achievement_Mushroom Kingdom---
+Kill :: [[Mobs/Mushroom Dagger|Mushroom Dagger]]@500
+Title :: Mushroom Slayer
+XP :: 100
+ResetOnDeath :: False
+
+Clear the realm of its fungal infestation.
+
+Kill 500 Mushroom Daggers.
+
+---achievement_Storm Breaker---
+Kill :: [[Mobs/Stormhead|Stormhead]]@1000
+Title :: Storm Breaker
+XP :: 500
+ResetOnDeath :: False
+Rewards :: [[30 Refined Wyld Luck]]@1
+
+Break a thousand storms and live to tell the tale.
+
+Kill 1000 Stormheads.
+
+---achievement_Bot Destroyer---
+Kill :: [[Mobs/Bomb Bot|Bomb Bot]]@750 [[Mobs/Anklebiter|Anklebiter]]@750
+Title :: Bot Scrapper
+XP :: 500
+ResetOnDeath :: False
+Rewards :: [[30 Refined Wyld Luck]]@1
+
+Send hundreds of mechanical menaces to the scrap heap.
+
+Kill 750 Bomb Bots and 750 Anklebiters.

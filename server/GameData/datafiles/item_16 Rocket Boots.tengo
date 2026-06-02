@@ -1,0 +1,56 @@
+---item_16 Rocket Boots---
+Type :: Equippable
+Slot :: Passive
+Icon :: items_724
+Gun Definition :: [[Rocket Boots]]
+
+Increased movement speed after taking damage
+
+Bravely, bravely ran away, bravely ran away...
+
+---gundef_Rocket Boots---
+Fire Speed :: 0
+Bullets In Chamber :: 1
+Reload Speed :: 15.0
+Sprite :: items_724
+Fire Event :: 
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Rocket Boots]]
+
+---spike_Rocket Boots---
+Auras :: [[Rocket Boots Passive]]
+
+---aura_Rocket Boots Passive---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:RocketBoots]]
+
+---script_RocketBoots_Tick---
+
+if is_undefined(scriptVars["lastFrameDidTrigger"]) {
+	scriptVars["lastFrameDidTrigger"] = globalTick
+}
+
+---script_RocketBoots_IncomingDamage---
+
+if is_undefined(scriptVars["lastFrameDidTrigger"]) {
+	scriptVars["lastFrameDidTrigger"] = globalTick
+}
+
+
+if globalTick - scriptVars["lastFrameDidTrigger"] > 600 {
+	addAuraToEntity(myEntityId, "Rocket Boots Active", auraAbilityId, myEntityId)
+	scriptVars["lastFrameDidTrigger"] = globalTick
+}
+
+---aura_Rocket Boots Active---
+Type :: Buff
+Duration :: 6
+Icon :: statusicons_8
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[AuraAffectStat/Rocket Boots]]

@@ -1,0 +1,41 @@
+---item_70 Cluster Bomb---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Cluster Bomb]]
+Rarity :: Rare
+
+When you can't really be bothered to get that close to your target.
+
+---gundef_Cluster Bomb---
+Fire Speed :: 1.2
+Bullets In Chamber :: 2
+Reload Speed :: 10
+Passive Reload :: true
+Sprite :: weapons_69
+Fire Event :: rocketa
+Reload Event :: rocketreload
+Bullet Definition :: [[clusterbomb]]
+Archetype :: ExplosiveLauncher
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: SemiAuto
+Bullet Lifetime :: 2
+
+---bulletdef_clusterbomb---
+potency 0
+sprite Custom7
+color 1
+fire 8 relative 0
+	hitfire clusterbombcluster
+
+---bulletdef_clusterbombcluster---
+sprite Invisible
+potency 109
+repeat bullets:5 speed:10 angle:0 maxAngle:360 delay:1
+	aoeexplosion
+	radius 1
+	damageEvery 3
+	wait 2
+	speed 0
+	vfx MiniExplosion 5
+	wait 1
+	vanish

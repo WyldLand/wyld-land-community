@@ -1,0 +1,1205 @@
+---mobdefinition_Test Boss---
+ID :: testboss
+Prefab :: testboss
+Range Behavior :: [[Close Ranged]]
+Type :: Boss
+Speed :: 1500
+
+---prefab_testboss---
+
+Components :: [[TestBossSprite]] [[TestBossCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_TestBossCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+	"position": [0.0, 2.5],
+    "size": [4.3, 5.15]
+}
+
+---prefabcomponent_TestBossSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.244,
+    "pivotY": 1.0,
+    "sprite": "idrae/idrae4",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---ability_Basic Weave---
+Bullet Definition :: [[basicweave]]
+Max Range :: 100.0
+
+
+---bulletdef_basicweave---
+sprite Custom11
+color 1
+potency 100
+radial bullets:5 angle:0 directionType:absolute speed:1 
+	wait 30
+	fire basicweavenode
+	wait 300
+	vanish
+
+---bulletdef_basicweavenode---
+sprite Basic
+color 1
+potency 80
+nway speed:2 bullets:4 spread:180 angle:0 directionType:relative
+	wait 45
+	fire weavespark
+	wait 300
+	vanish
+
+---bulletdef_weavespark---
+sprite Basic
+color 1
+potency 60
+radial bullets:4 speed:1 angle:0 directionType:absolute
+	wait 265
+	vanish
+
+---ability_Cross Weave---
+Bullet Definition :: [[crossweave]]
+Max Range :: 100.0
+VFX Cast :: trigger:Attack*
+
+---bulletdef_crossweave---
+sprite Custom11
+color 2
+potency 100
+nway speed:2 bullets:12 spread:180 angle:0 directionType:absolute
+	lifetime 1000
+wait 10
+nway speed:2 bullets:12 spread:180 angle:90 directionType:absolute
+	lifetime 1000
+wait 15
+nway speed:2 bullets:12 spread:180 angle:180 directionType:absolute
+	lifetime 1000
+wait 15
+nway speed:2 bullets:12 spread:180 angle:270 directionType:absolute
+	lifetime 1000
+wait 15
+repeat bullets:16 angleChange:22.5 angle:11.25 directionType:absolute speed:2 delay:2
+	wait 40
+	fire crossweavenode
+	wait 500
+	vanish
+
+---bulletdef_crossweavenode---
+sprite Basic
+color 2
+potency 90
+nway speed:2 bullets:3 spread:90 angle:0 directionType:relative
+	wait 500
+	vanish
+
+---ability_Target All Players Tracking Bullet---
+Script :: targetAllPlayersTimer
+VFX Cast :: trigger:Attack*
+Lock Time :: 1.0
+
+---script_targetAllPlayersTimer_Cast---
+// Get all nearby entities
+nearby := getNearbyEntities(myEntityId)
+
+// Loop through all entities and target players
+for i := 0; i < len(nearby); i++ {
+	entityId := nearby[i].id
+	
+	// Check if this entity is an enemy of the caster (i.e., a player)
+	if isEnemyOfEntity(myEntityId, entityId) {
+		// Fire a tracking bullet at this player
+		useAbilityAtTarget(myEntityId, "Player Tracking Bullet", entityId, 1.5)
+	}
+}
+
+---ability_Player Tracking Bullet---
+Bullet Definition :: [[playertrackingbullet]]
+VFX Cast :: trigger:Attack*
+
+---bulletdef_playertrackingbullet---
+sprite Custom7
+color 4
+potency 100
+nway speed:20 bullets:5 spread:20 angle:0 directionType:relative
+	wait 180
+	vanish
+
+---ability_Target All Players Ground Blast---
+Script :: TargetAllPlayersGroundBlast
+VFX Cast :: trigger:Attack*
+Lock Time :: 1.0
+
+---script_TargetAllPlayersGroundBlast_Cast---
+// Get all nearby entities
+nearby := getNearbyEntities(myEntityId)
+
+// Loop through all entities and target players
+for i := 0; i < len(nearby); i++ {
+	entityId := nearby[i].id
+	
+	// Check if this entity is an enemy of the caster (i.e., a player)
+	if isEnemyOfEntity(myEntityId, entityId) {
+		// Get the player's current position
+		playerPos := entityPosition(entityId)
+		
+		// Spawn a delayed explosion at the player's current location
+		useAbilityAtPosition(myEntityId, "Delayed Ground Explosion", playerPos)
+	}
+}
+
+---ability_Delayed Ground Explosion---
+Bullet Definition :: [[delayedgroundexplosion]]
+Max Range :: 100.0
+
+---bulletdef_delayedgroundexplosion---
+sprite PurplePool 1
+color 1
+potency 100
+fire 0 relative 0
+	aoeexplosion
+	radius 1
+	timedFill 20
+	damageEvery 20
+	wait 21
+	vanish
+
+---ability_Target All Players Hoarder Beam---
+Script :: TargetAllPlayersHoarderBeam
+VFX Cast :: trigger:Attack*
+Lock Time :: 3.0
+
+---script_TargetAllPlayersHoarderBeam_Cast---
+// Get all nearby entities
+nearby := getNearbyEntities(myEntityId)
+
+// Loop through all entities and target players
+for i := 0; i < len(nearby); i++ {
+	entityId := nearby[i].id
+	
+	// Check if this entity is an enemy of the caster (i.e., a player)
+	if isEnemyOfEntity(myEntityId, entityId) {
+		// Get the player's current position
+		playerPos := entityPosition(entityId)
+		
+		// Spawn a delayed explosion at the player's current location
+		useAbilityAtPosition(myEntityId, "Raid Hoarder Beam", entityPosition(myEntityId))
+	}
+}
+
+---ability_Raid Hoarder Beam---
+Bullet Definition :: [[raidhoarderbeamattack]]
+VFX Cast :: trigger:Attack
+Lock Time :: 6.5
+
+---bulletdef_raidhoarderbeamattack---
+sprite RectPool 0.5 0.5
+potency 0
+repeat bullets:10 speedChange:20 speed:29 angle:0 directionType:relative
+	aoedot
+	wait 1
+	speed 0
+	wait 10
+	vanish
+wait 10
+sprite Laser14
+color 4
+potency 0
+fire 230 relative 0
+	piercing 100
+	wait 40
+	vanish
+sprite Invisible
+potency 125
+wait 3
+fire 230 relative 0
+	radius 0.6
+	piercing 100
+wait 3
+fire 230 relative 0
+	radius 0.6
+	piercing 100
+
+---ability_Expand And Retract---
+Bullet Definition :: [[expandretract]]
+Max Range :: 100.0
+
+---bulletdef_expandretract---
+radial bullets:20 speed:1.5 directionType:relative
+	lifetime 400
+	wait 235
+	speed 0
+	wait 1
+	speed -1.5
+	wait 235
+	vanish
+
+---ability_Expand And Retract Attack---
+Bullet Definition :: [[expandretractattack]]
+Max Range :: 100.0
+
+---bulletdef_expandretractattack---
+color 4
+radial bullets:20 speed:3.0 directionType:relative
+	lifetime 1000
+	wait 100
+	speed 0
+	wait 1
+	speed -3.5
+	wait 85
+	vanish
+
+---ability_Expand Attack---
+Bullet Definition :: [[expandattack]]
+Max Range :: 100.0
+
+---bulletdef_expandattack---
+color 4
+radial bullets:20 speed:3.0 directionType:relative
+	lifetime 200
+	wait 200
+	vanish
+
+---ability_Rect Throw Left---
+Bullet Definition :: [[rectthrowleft]]
+Max Range :: 100.0
+
+---bulletdef_rectthrowleft---
+sprite RectPool 1 3
+potency 75
+fire 3 absolute 270
+	aoedot
+	radius 1 3
+	damageEvery 2
+	timedFill 1
+	wait 250
+	vanish
+
+---ability_Rect Throw Down---
+Bullet Definition :: [[rectthrowdown]]
+Max Range :: 100.0
+
+---bulletdef_rectthrowdown---
+sprite RectPool 0.5 6
+potency 75
+fire 3 absolute 180
+	aoedot
+	radius 6 0.5
+	damageEvery 2
+	timedFill 1
+	wait 250
+	vanish
+
+---ability_Rect Throw Up---
+Bullet Definition :: [[rectthrowup]]
+Max Range :: 100.0
+
+---bulletdef_rectthrowup---
+sprite RectPool 0.5 4
+potency 75
+fire 2 absolute 0
+	aoedot
+	radius 4 0.5
+	damageEvery 2
+	timedFill 1
+	wait 250
+	vanish
+
+---ability_Rect Explode---
+Bullet Definition :: [[rectexplode]]
+Max Range :: 100.0
+
+---bulletdef_rectexplode---
+sprite RectPool 1 19
+potency 100
+fire 0 absolute 00
+	aoeexplosion
+	radius 1 19
+	damageEvery 15
+	timedFill 15
+	wait 20
+	vanish
+
+---ability_Bottom Line---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---bulletdef_bottomline---
+sprite Lance10
+color 0
+line speed:1 bullets:1 angle:360 directionType:absolute
+	wait 1000
+	vanish
+
+---ability_Top Line---
+Bullet Definition :: [[topline]]
+Max Range :: 100.0
+
+---bulletdef_topline---
+sprite Lance10
+color 0
+line speed:1 bullets:1 angle:180 directionType:absolute
+	wait 1000
+	vanish
+
+---ability_Left Line---
+Bullet Definition :: [[leftline]]
+Max Range :: 100.0
+
+---bulletdef_leftline---
+sprite Lance10
+color 0
+line speed:3 bullets:1 angle:270 directionType:absolute
+	wait 1000
+	vanish
+
+---ability_Right Line---
+Bullet Definition :: [[rightline]]
+Max Range :: 100.0
+
+---bulletdef_rightline---
+sprite Lance10
+color 0
+line speed:3 bullets:1 angle:90 directionType:absolute
+	wait 1000
+	vanish
+
+---ability_Spawn Power Circle Enemy---
+Script :: SpawnPowerCircleEnemy
+
+---script_SpawnPowerCircleEnemy_Cast---
+if frameNum == 0 {
+    rand := import("rand")
+    
+    // Define possible spawn positions
+    spawnPositions := [
+        positionInCurrentRoom(myEntityId, [7.0, 7.0, 0.0]),
+        positionInCurrentRoom(myEntityId, [21.0, 7.0, 0.0]),
+        positionInCurrentRoom(myEntityId, [34.0, 7.0, 0.0]),
+        positionInCurrentRoom(myEntityId, [7.0, 14.0, 0.0]),
+        positionInCurrentRoom(myEntityId, [34.0, 14.0, 0.0]),
+        positionInCurrentRoom(myEntityId, [7.0, 21.0, 0.0]),
+        positionInCurrentRoom(myEntityId, [34.0, 21.0, 0.0]),
+        positionInCurrentRoom(myEntityId, [7.0, 28.0, 0.0]),
+        positionInCurrentRoom(myEntityId, [34.0, 28.0, 0.0]),
+        positionInCurrentRoom(myEntityId, [7.0, 34.0, 0.0]),
+        positionInCurrentRoom(myEntityId, [21.0, 34.0, 0.0]),
+        positionInCurrentRoom(myEntityId, [34.0, 34.0, 0.0])
+    ]
+    
+    // Create array to track used positions
+    usedPositions := []
+    
+    // Spawn 6 enemies at different positions
+    for i := 0; i < 6; i++ {
+        // Keep trying until we find an unused position
+        selectedIndex := -1
+        for selectedIndex == -1 {
+            randomIndex := rand.intn(len(spawnPositions))
+            
+            // Check if this position has already been used
+            alreadyUsed := false
+            for j := 0; j < len(usedPositions); j++ {
+                if usedPositions[j] == randomIndex {
+                    alreadyUsed = true
+                    break
+                }
+            }
+            
+            // If position hasn't been used, select it
+            if !alreadyUsed {
+                selectedIndex = randomIndex
+            }
+        }
+        
+        // Add the selected index to used positions
+        usedPositions = append(usedPositions, selectedIndex)
+        
+        // Spawn the enemy at the selected position
+        selectedPosition := spawnPositions[selectedIndex]
+        log("Spawn Power Circle Enemy " + string(i + 1) + " at position " + string(selectedIndex))
+        newEntityId := summonEntity("powercircleenemy", selectedPosition, monsterLevel(myEntityId))
+        killEntityIfEntityDies(newEntityId, myEntityId)
+    }
+}
+
+---ability_Spawn Healing Tower Two---
+Script :: SpawnHealingTowerTwo
+
+---script_SpawnHealingTowerTwo_Cast---
+if frameNum == 0 {
+    rand := import("rand")
+    
+    // Define possible spawn positions
+    spawnPositions := [
+        positionInCurrentRoom(myEntityId, [25.0, 11.0, 0.0]),
+        positionInCurrentRoom(myEntityId, [20.0, 31.0, 0.0])
+    ]
+    
+    // Create array to track used positions
+    usedPositions := []
+    
+    // Spawn 6 enemies at different positions
+    for i := 0; i < 2; i++ {
+        // Keep trying until we find an unused position
+        selectedIndex := -1
+        for selectedIndex == -1 {
+            randomIndex := rand.intn(len(spawnPositions))
+            
+            // Check if this position has already been used
+            alreadyUsed := false
+            for j := 0; j < len(usedPositions); j++ {
+                if usedPositions[j] == randomIndex {
+                    alreadyUsed = true
+                    break
+                }
+            }
+            
+            // If position hasn't been used, select it
+            if !alreadyUsed {
+                selectedIndex = randomIndex
+            }
+        }
+        
+        // Add the selected index to used positions
+        usedPositions = append(usedPositions, selectedIndex)
+        
+        // Spawn the enemy at the selected position
+        selectedPosition := spawnPositions[selectedIndex]
+        log("Spawn Power Circle Enemy " + string(i + 1) + " at position " + string(selectedIndex))
+        newEntityId := summonEntity("raid3healingtower", selectedPosition, monsterLevel(myEntityId))
+        killEntityIfEntityDies(newEntityId, myEntityId)
+    }
+}
+
+
+
+---aura_Raid3 Immunity---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:Raid3Immunity]]
+
+---script_Raid3Immunity_IncomingDamage---
+// Check if the damage sender has the Raid3 Attacker
+hasRaid3Buff := false
+senderAuras := getAurasOnEntity(damageSenderId)
+
+for i := 0; i < len(senderAuras); i++ {
+    if senderAuras[i]["name"] == "Raid3 Attacker" {
+        hasRaid3Buff = true
+        break
+    }
+}
+
+// If the player doesn't have the raid3 buff, make the entity invulnerable
+if !hasRaid3Buff {
+    additionalDamage = -1 * damage
+}
+
+---ability_Rect Throw Right---
+Bullet Definition :: [[rectthrowright]]
+Max Range :: 100.0
+
+---bulletdef_rectthrowright---
+sprite RectPool 0.5 2.5
+potency 75
+fire 1.5 absolute 90
+	aoedot
+	radius 0.5 2.5
+	damageEvery 1
+	timedFill 1
+	wait 500
+	vanish
+
+---script_testboss_Monster---
+resetVarsStart := func() {
+		scriptVars["phase"] = 2
+		addAuraToEntity(myEntityId, "Raid3 Immunity", 0, myEntityId)
+	}
+
+	if is_undefined(scriptVars["phase"]) {
+		resetVarsStart()
+	}
+
+if !isDead {
+	currentHealth := float(getPoints(myEntityId, "hp", "current"))
+	maxHealth := float(getPoints(myEntityId, "hp", "max"))
+
+	// Phase transitions
+	if currentHealth < maxHealth * 0.66 && scriptVars["phase"] == 1 {
+		clearBulletsForEntity(myEntityId)
+		scriptVars["phase"] = 2
+		say(myEntityId, "I'm in phase 2.")
+	} else if currentHealth < maxHealth * 0.33 && scriptVars["phase"] == 2 {
+		say(myEntityId, "Im in Phase 3.")
+		clearBulletsForEntity(myEntityId)
+		scriptVars["phase"] = 3
+	}
+
+	if scriptVars["phase"] == 1 { 
+
+		resetVarsOne := func() {
+			scriptVars["rectAndLineTime"] = 0.0
+			scriptVars["crossWeaveTime"] = 4.0
+			scriptVars["powerCircleEnemySpawnTimer"] = 19.0
+			scriptVars["targetAllPlayersTimer"] = 4.0
+
+			scriptVars["timeSinceTeleport"] = 0.0
+			scriptVars["teleportIndex"] = 0
+			scriptVars["hasTeleported"] = false
+
+
+			scriptVars["teleportLocations"] = [
+				[12.0, 31.0, 0.0],
+				[24.0, 31.0, 0.0],
+				[10.0, 8.0, 0.0],
+				[31.0, 8.0, 0.0]
+			]
+		}
+
+		if is_undefined(scriptVars["rectAndLineTime"]) {
+    		resetVarsOne()
+		}
+
+		scriptVars["rectAndLineTime"] += delta
+		scriptVars["timeSinceTeleport"] += delta
+		scriptVars["targetAllPlayersTimer"] += delta
+		scriptVars["powerCircleEnemySpawnTimer"] += delta
+		scriptVars["crossWeaveTime"] += delta
+
+		// Check if it's time to teleport 
+		if scriptVars["timeSinceTeleport"] >= 12.0 && !scriptVars["hasTeleported"] {
+			// Move to the next location in the predefined list
+			scriptVars["teleportIndex"] = (scriptVars["teleportIndex"] + 1) % len(scriptVars["teleportLocations"])
+			
+			// Get the new position
+			newPosition := positionInCurrentRoom(myEntityId, scriptVars["teleportLocations"][scriptVars["teleportIndex"]])
+
+			scriptVars["hasTeleported"] = true
+
+			scriptVars["timeSinceTeleport"] = 0.0
+			
+			// Teleport the entity to the new position
+			setPosition(myEntityId, newPosition)
+			
+		}
+
+
+		if scriptVars["targetAllPlayersTimer"] >= 5.75 && scriptVars["sendTargetAllPlayersBullet"] {
+			useAbilityAtPosition(myEntityId, "Target All Players Tracking Bullet", entityPosition(myEntityId))
+			scriptVars["sendTargetAllPlayersBullet"] = false
+			log("Tracking Bullet")
+		}
+
+		if scriptVars["targetAllPlayersTimer"] >= 10.75 {
+			useAbilityAtPosition(myEntityId, "Target All Players Ground Blast", entityPosition(myEntityId))
+			log("Ground Blast")
+			scriptVars["sendTargetAllPlayersBullet"] = true
+			scriptVars["targetAllPlayersTimer"] = 0.0
+		}
+
+		
+		if targetEntityId > 0 {
+		scriptVars["powerCircleEnemySpawnTimer"] += delta
+		
+
+		if scriptVars["powerCircleEnemySpawnTimer"] >= 20.0 {
+					useAbilityAtPosition(myEntityId, "Spawn Power Circle Enemy", entityPosition(myEntityId))
+					scriptVars["powerCircleEnemySpawnTimer"] = 0.0
+					log("Spawned Power Circle")
+			}
+		}
+
+		if scriptVars["crossWeaveTime"] >= 8.0 {
+			useAbilityAtPosition(myEntityId, "Cross Weave", positionInCurrentRoom(myEntityId, [21.0, 20.0, 0.0]))
+			scriptVars["crossWeaveTime"] = 0
+		}
+		
+
+
+		if scriptVars["rectAndLineTime"] >= 3.0 {
+			
+			useAbilityAtPosition(myEntityId, "Rect Throw Down", positionInCurrentRoom(myEntityId, [22.0, 3.0, 0.0]))
+			useAbilityAtPosition(myEntityId, "Rect Throw Up", positionInCurrentRoom(myEntityId, [37.0, 38.0, 0.0]))
+			useAbilityAtPosition(myEntityId, "Rect Throw Up", positionInCurrentRoom(myEntityId, [5.0, 38.0, 0.0]))
+			useAbilityAtPosition(myEntityId, "Top Line", positionInCurrentRoom(myEntityId, [12.0, 3.0, 0.0]))
+			useAbilityAtPosition(myEntityId, "Bottom Line", positionInCurrentRoom(myEntityId, [11.0, 39.0, 0.0]))
+
+			useAbilityAtPosition(myEntityId, "Top Line", positionInCurrentRoom(myEntityId, [32.0, 3.0, 0.0]))
+			useAbilityAtPosition(myEntityId, "Bottom Line", positionInCurrentRoom(myEntityId, [31.0, 39.0, 0.0]))
+			scriptVars["rectAndLineTime"] = 0.0
+		}
+
+	}
+	
+
+	if scriptVars["phase"] == 2 { 
+
+		resetVarsTwo := func() {
+			scriptVars["rectExplodeTime"] = 0.0
+			scriptVars["lineBulletTime"] = 1.0
+			scriptVars["basicWeaveTime"] = 10.0
+			scriptVars["firstRectExplode"] = false
+			scriptVars["secondRectExplode"] = false
+			scriptVars["thirdRectExplode"] = false
+			scriptVars["fourthRectExplode"] = false
+			scriptVars["fifthRectExplode"] = false
+			scriptVars["sixthRectExplode"] = false
+			scriptVars["seventhRectExplode"] = false
+			scriptVars["eigthRectExplode"] = false
+			scriptVars["ninthRectExplode"] = false
+			scriptVars["tenthRectExplode"] = false
+			scriptVars["eleventhRectExplode"] = false
+			scriptVars["twelthRectExplode"] = false
+			scriptVars["thirteenthRectExplode"] = false
+			scriptVars["fourteenthRectExplode"] = false
+			scriptVars["fifteenthRectExplode"] = false
+			scriptVars["sixteenthRectExplode"] = false
+			scriptVars["seventeenthRectExplode"] = false
+			scriptVars["eighteenthRectExplode"] = false
+			scriptVars["targetAllPlayersTimer"] = 0.0
+			scriptVars["powerCircleEnemySpawnTimer"] = 19.0
+
+			scriptVars["healingTowerSpawnTimer"] = 59.0
+			
+			scriptVars["timeSinceTeleport"] = 0.0
+			scriptVars["teleportIndex"] = 0
+			scriptVars["hasTeleported"] = false
+			scriptVars["teleportLocations"] = [
+				[12.0, 31.0, 0.0],
+				[24.0, 31.0, 0.0],
+				[10.0, 8.0, 0.0],
+				[31.0, 8.0, 0.0]
+			]
+		}
+
+		if is_undefined(scriptVars["rectExplodeTime"]) {
+    		resetVarsTwo()
+		}
+
+		scriptVars["rectExplodeTime"] += delta
+		scriptVars["lineBulletTime"] += delta 
+		scriptVars["basicWeaveTime"] += delta
+		scriptVars["targetAllPlayersTimer"] += delta
+		scriptVars["timeSinceTeleport"] += delta
+		scriptVars["healingTowerSpawnTimer"] += delta
+
+		if scriptVars["healingTowerSpawnTimer"] >= 60.0 {
+			useAbilityAtPosition(myEntityId, "Spawn Healing Tower Two", entityPosition(myEntityId))
+			scriptVars["healingTowerSpawnTimer"] = 0
+		}
+
+
+		// Check if it's time to teleport 
+		//if scriptVars["timeSinceTeleport"] >= 12.0 && !scriptVars["hasTeleported"] {
+			// Move to the next location in the predefined list
+		//	scriptVars["teleportIndex"] = (scriptVars["teleportIndex"] + 1) % len(scriptVars["teleportLocations"])
+			
+			// Get the new position
+		//	newPosition := positionInCurrentRoom(myEntityId, scriptVars["teleportLocations"][scriptVars["teleportIndex"]])
+
+		//	scriptVars["hasTeleported"] = true
+			
+			// Teleport the entity to the new position
+		//	setPosition(myEntityId, newPosition)
+			
+		// }
+
+		if scriptVars["timeSinceTeleport"] >= 12.3 {
+			// Reset the timer
+			scriptVars["timeSinceTeleport"] = 0.0
+			
+			useAbilityAtPosition(myEntityId, "Expand Attack", entityPosition(myEntityId))
+			scriptVars["hasTeleported"] = false
+		}
+
+		if scriptVars["targetAllPlayersTimer"] >= 2.0 && scriptVars["sendTargetAllPlayersBullet"] {
+			useAbilityAtPosition(myEntityId, "Target All Players Tracking Bullet", entityPosition(myEntityId))
+			scriptVars["sendTargetAllPlayersBullet"] = false
+			log("Tracking Bullet")
+		}
+
+		if scriptVars["targetAllPlayersTimer"] >= 5.0 {
+			useAbilityAtPosition(myEntityId, "Target All Players Hoarder Beam", entityPosition(myEntityId))
+			log("Hoarder Beam")
+			scriptVars["sendTargetAllPlayersBullet"] = true
+			scriptVars["targetAllPlayersTimer"] = 0.0
+		}
+
+		
+		if targetEntityId > 0 {
+		scriptVars["powerCircleEnemySpawnTimer"] += delta
+		
+
+		if scriptVars["powerCircleEnemySpawnTimer"] >= 20.0 {
+				useAbilityAtPosition(myEntityId, "Spawn Power Circle Enemy", entityPosition(myEntityId))
+				scriptVars["powerCircleEnemySpawnTimer"] = 0.0
+				log("Spawned Power Circle")
+			}
+		}
+
+		if scriptVars["basicWeaveTime"] >= 12.0 {
+			useAbilityAtPosition(myEntityId, "Basic Weave", positionInCurrentRoom(myEntityId, [21.0, 20.0, 0.0]))
+			scriptVars["basicWeaveTime"] = 0.0
+		}
+
+		if scriptVars["lineBulletTime"] >= 2.0 {
+			useAbilityAtPosition(myEntityId, "Left Line", positionInCurrentRoom(myEntityId, [40.0, 38.0, 0.0]))
+			useAbilityAtPosition(myEntityId, "Right Line", positionInCurrentRoom(myEntityId, [2.0, 36.0, 0.0]))
+			useAbilityAtPosition(myEntityId, "Left Line", positionInCurrentRoom(myEntityId, [40.0, 34.0, 0.0]))
+			useAbilityAtPosition(myEntityId, "Right Line", positionInCurrentRoom(myEntityId, [2.0, 32.0, 0.0]))
+			useAbilityAtPosition(myEntityId, "Left Line", positionInCurrentRoom(myEntityId, [40.0, 30.0, 0.0]))
+			useAbilityAtPosition(myEntityId, "Right Line", positionInCurrentRoom(myEntityId, [2.0, 28.0, 0.0]))
+			useAbilityAtPosition(myEntityId, "Left Line", positionInCurrentRoom(myEntityId, [40.0, 26.0, 0.0]))
+			useAbilityAtPosition(myEntityId, "Right Line", positionInCurrentRoom(myEntityId, [2.0, 24.0, 0.0]))
+			useAbilityAtPosition(myEntityId, "Left Line", positionInCurrentRoom(myEntityId, [40.0, 22.0, 0.0]))
+			useAbilityAtPosition(myEntityId, "Right Line", positionInCurrentRoom(myEntityId, [2.0, 20.0, 0.0]))
+			useAbilityAtPosition(myEntityId, "Left Line", positionInCurrentRoom(myEntityId, [40.0, 18.0, 0.0]))
+			useAbilityAtPosition(myEntityId, "Right Line", positionInCurrentRoom(myEntityId, [2.0, 16.0, 0.0]))
+			useAbilityAtPosition(myEntityId, "Left Line", positionInCurrentRoom(myEntityId, [40.0, 14.0, 0.0]))
+			useAbilityAtPosition(myEntityId, "Right Line", positionInCurrentRoom(myEntityId, [2.0, 12.0, 0.0]))
+			useAbilityAtPosition(myEntityId, "Left Line", positionInCurrentRoom(myEntityId, [40.0, 10.0, 0.0]))
+			useAbilityAtPosition(myEntityId, "Right Line", positionInCurrentRoom(myEntityId, [2.0, 8.0, 0.0]))
+			useAbilityAtPosition(myEntityId, "Left Line", positionInCurrentRoom(myEntityId, [40.0, 6.0, 0.0]))
+			useAbilityAtPosition(myEntityId, "Right Line", positionInCurrentRoom(myEntityId, [2.0, 4.0, 0.0]))
+			scriptVars["lineBulletTime"] = 0.0 
+			log("Bullet Spawned")
+		}
+
+		if scriptVars["rectExplodeTime"] >= 0.5 && !scriptVars["firstRectExplode"] {
+			useAbilityAtPosition(myEntityId, "Rect Explode", positionInCurrentRoom(myEntityId, [3.0, 21.0, 0.0]))
+			scriptVars["firstRectExplode"] = true
+			log("Rect Explode 1")
+		}
+		
+		
+
+		if scriptVars["rectExplodeTime"] >= 1.0 && !scriptVars["secondRectExplode"]{
+			useAbilityAtPosition(myEntityId, "Rect Explode", positionInCurrentRoom(myEntityId, [5.0, 21.0, 0.0]))
+			scriptVars["secondRectExplode"] = true
+			log("Rect Explode 2")
+		}
+
+		if scriptVars["rectExplodeTime"] >= 1.5 && !scriptVars["thirdRectExplode"]{
+			useAbilityAtPosition(myEntityId, "Rect Explode", positionInCurrentRoom(myEntityId, [7.0, 21.0, 0.0]))
+			scriptVars["thirdRectExplode"] = true
+			log("Rect Explode 3")
+		}
+
+		if scriptVars["rectExplodeTime"] >= 2.0 && !scriptVars["fourthRectExplode"]{
+			useAbilityAtPosition(myEntityId, "Rect Explode", positionInCurrentRoom(myEntityId, [9.0, 21.0, 0.0]))
+			scriptVars["fourthRectExplode"] = true
+			log("Rect Explode 4")
+		}
+
+		if scriptVars["rectExplodeTime"] >= 2.5 && !scriptVars["fifthRectExplode"]{
+			useAbilityAtPosition(myEntityId, "Rect Explode", positionInCurrentRoom(myEntityId, [11.0, 21.0, 0.0]))
+			scriptVars["fifthRectExplode"] = true
+			log("Rect Explode 5")
+		}
+
+		if scriptVars["rectExplodeTime"] >= 3.0 && !scriptVars["sixthRectExplode"] {
+			useAbilityAtPosition(myEntityId, "Rect Explode", positionInCurrentRoom(myEntityId, [13.0, 21.0, 0.0]))
+			scriptVars["sixthRectExplode"] = true
+			log("Rect Explode 6")
+		}
+
+		if scriptVars["rectExplodeTime"] >= 3.5 && !scriptVars["seventhRectExplode"]{
+			useAbilityAtPosition(myEntityId, "Rect Explode", positionInCurrentRoom(myEntityId, [15.0, 21.0, 0.0]))
+			scriptVars["seventhRectExplode"] = true
+			log("Rect Explode 7")
+		}
+
+		if scriptVars["rectExplodeTime"] >= 4.0 && !scriptVars["eigthRectExplode"]{
+			useAbilityAtPosition(myEntityId, "Rect Explode", positionInCurrentRoom(myEntityId, [17.0, 21.0, 0.0]))
+			scriptVars["eigthRectExplode"] = true
+			log("Rect Explode 8")
+		}
+
+		if scriptVars["rectExplodeTime"] >= 4.5 && !scriptVars["ninthRectExplode"]{
+			useAbilityAtPosition(myEntityId, "Rect Explode", positionInCurrentRoom(myEntityId, [19.0, 21.0, 0.0]))
+			scriptVars["ninthRectExplode"] = true
+			log("Rect Explode 9")
+		}
+
+		if scriptVars["rectExplodeTime"] >= 5.0 && !scriptVars["tenthRectExplode"]{
+			useAbilityAtPosition(myEntityId, "Rect Explode", positionInCurrentRoom(myEntityId, [21.0, 21.0, 0.0]))
+			scriptVars["tenthRectExplode"] = true
+			log("Rect Explode 10")
+		}
+
+		if scriptVars["rectExplodeTime"] >= 5.5 && !scriptVars["eleventhRectExplode"]{
+			useAbilityAtPosition(myEntityId, "Rect Explode", positionInCurrentRoom(myEntityId, [23.0, 21.0, 0.0]))
+			scriptVars["eleventhRectExplode"] = true
+			log("Rect Explode 11")
+		}
+
+		if scriptVars["rectExplodeTime"] >= 6.0 && !scriptVars["twelthRectExplode"]{
+			useAbilityAtPosition(myEntityId, "Rect Explode", positionInCurrentRoom(myEntityId, [25.0, 21.0, 0.0]))
+			scriptVars["twelthRectExplode"] = true
+			log("Rect Explode 12")
+		}
+
+		if scriptVars["rectExplodeTime"] >= 6.5 && !scriptVars["thirteenthRectExplode"]{
+			useAbilityAtPosition(myEntityId, "Rect Explode", positionInCurrentRoom(myEntityId, [27.0, 21.0, 0.0]))
+			scriptVars["thirteenthRectExplode"] = true
+			log("Rect Explode 13")
+		}
+
+		if scriptVars["rectExplodeTime"] >= 7.0 && !scriptVars["fourteenthRectExplode"]{
+			useAbilityAtPosition(myEntityId, "Rect Explode", positionInCurrentRoom(myEntityId, [29.0, 21.0, 0.0]))
+			scriptVars["fourteenthRectExplode"] = true
+			log("Rect Explode 14")
+		}
+
+		if scriptVars["rectExplodeTime"] >= 7.5 && !scriptVars["fifteenthRectExplode"]{
+			useAbilityAtPosition(myEntityId, "Rect Explode", positionInCurrentRoom(myEntityId, [31.0, 21.0, 0.0]))
+			scriptVars["fifteenthRectExplode"] = true
+			log("Rect Explode 15")
+		}
+
+		if scriptVars["rectExplodeTime"] >= 8.0 && !scriptVars["sixteenthRectExplode"] {
+			useAbilityAtPosition(myEntityId, "Rect Explode", positionInCurrentRoom(myEntityId, [33.0, 21.0, 0.0]))
+			scriptVars["sixteenthRectExplode"] = true
+			log("Rect Explode 16")
+		}
+
+		if scriptVars["rectExplodeTime"] >= 8.5 && !scriptVars["seventeenthRectExplode"] {
+			useAbilityAtPosition(myEntityId, "Rect Explode", positionInCurrentRoom(myEntityId, [35.0, 21.0, 0.0]))
+			scriptVars["seventeenthRectExplode"] = true
+			log("Rect Explode 17")
+		}
+
+		if scriptVars["rectExplodeTime"] >= 9.0 && !scriptVars["eighteenthRectExplode"] {
+			useAbilityAtPosition(myEntityId, "Rect Explode", positionInCurrentRoom(myEntityId, [37.0, 21.0, 0.0]))
+			scriptVars["eighteenthRectExplode"] = true
+			log("Rect Explode 18")
+		}
+
+		if scriptVars["rectExplodeTime"] >= 9.5 {
+			useAbilityAtPosition(myEntityId, "Rect Explode", positionInCurrentRoom(myEntityId, [39.0, 21.0, 0.0]))
+			scriptVars["rectExplodeTime"] = 0.0
+			scriptVars["firstRectExplode"] = false
+			scriptVars["secondRectExplode"] = false
+			scriptVars["thirdRectExplode"] = false
+			scriptVars["fourthRectExplode"] = false
+			scriptVars["fifthRectExplode"] = false
+			scriptVars["sixthRectExplode"] = false
+			scriptVars["seventhRectExplode"] = false
+			scriptVars["eigthRectExplode"] = false
+			scriptVars["ninthRectExplode"] = false
+			scriptVars["tenthRectExplode"] = false
+			scriptVars["eleventhRectExplode"] = false
+			scriptVars["twelthRectExplode"] = false
+			scriptVars["thirteenthRectExplode"] = false
+			scriptVars["fourteenthRectExplode"] = false
+			scriptVars["fifteenthRectExplode"] = false
+			scriptVars["sixteenthRectExplode"] = false
+			scriptVars["seventeenthRectExplode"] = false
+			scriptVars["eighteenthRectExplode"] = false
+			log("Rect Explode 19")
+		}
+
+	}
+
+	if scriptVars["phase"] == 3 {
+
+		resetVarsThree := func() {
+			scriptVars["powerCircleEnemySpawnTimer"] = 19.0
+			scriptVars["expandRetractTime"] = 2.7
+			scriptVars["rectThrowTime"] = 2.7
+			scriptVars["targetAllPlayersTimer"] = 1.0
+			scriptVars["sendTargetAllPlayersBullet"] = true
+
+			scriptVars["hasTeleported"] = false
+			scriptVars["timeSinceTeleport"] = 0.0
+			scriptVars["teleportIndex"] = 0
+			scriptVars["teleportLocations"] = [
+				[12.0, 31.0, 0.0],
+				[24.0, 31.0, 0.0],
+				[10.0, 8.0, 0.0],
+				[31.0, 8.0, 0.0]
+			]
+		}
+
+		if is_undefined(scriptVars["powerCircleEnemySpawnTimer"]) {
+			resetVarsThree()
+		}
+			// Only start spawning enemies if there's a target (player detected)
+		if targetEntityId > 0 {
+			scriptVars["powerCircleEnemySpawnTimer"] += delta
+			
+
+			if scriptVars["powerCircleEnemySpawnTimer"] >= 20.0 {
+						useAbilityAtPosition(myEntityId, "Spawn Power Circle Enemy", entityPosition(myEntityId))
+						scriptVars["powerCircleEnemySpawnTimer"] = 0.0
+						log("Spawned Power Circle")
+			}
+		}
+
+		scriptVars["expandRetractTime"] += delta
+		scriptVars["targetAllPlayersTimer"] += delta
+		scriptVars["rectThrowTime"] += delta
+		scriptVars["timeSinceTeleport"] += delta
+
+		// Check if it's time to teleport 
+		if scriptVars["timeSinceTeleport"] >= 12.0 && !scriptVars["hasTeleported"] {
+			// Move to the next location in the predefined list
+			scriptVars["teleportIndex"] = (scriptVars["teleportIndex"] + 1) % len(scriptVars["teleportLocations"])
+			
+			// Get the new position
+			newPosition := positionInCurrentRoom(myEntityId, scriptVars["teleportLocations"][scriptVars["teleportIndex"]])
+
+			scriptVars["hasTeleported"] = true
+			
+			// Teleport the entity to the new position
+			setPosition(myEntityId, newPosition)
+			
+		}
+
+		if scriptVars["timeSinceTeleport"] >= 12.3 {
+			// Reset the timer
+			scriptVars["timeSinceTeleport"] = 0.0
+			
+			useAbilityAtPosition(myEntityId, "Expand And Retract Attack", entityPosition(myEntityId))
+			scriptVars["hasTeleported"] = false
+		}
+
+		if scriptVars["rectThrowTime"] >= 3.75 {
+				useAbilityAtPosition(myEntityId, "Rect Throw Right", positionInCurrentRoom(myEntityId, [2.0, 6.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Rect Throw Right", positionInCurrentRoom(myEntityId, [2.0, 12.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Rect Throw Right", positionInCurrentRoom(myEntityId, [2.0, 18.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Rect Throw Right", positionInCurrentRoom(myEntityId, [2.0, 24.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Rect Throw Right", positionInCurrentRoom(myEntityId, [2.0, 30.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Rect Throw Right", positionInCurrentRoom(myEntityId, [2.0, 36.0, 0.0]))
+
+				useAbilityAtPosition(myEntityId, "Bottom Line", positionInCurrentRoom(myEntityId, [37.0, 39.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line", positionInCurrentRoom(myEntityId, [34.0, 39.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line", positionInCurrentRoom(myEntityId, [31.0, 39.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line", positionInCurrentRoom(myEntityId, [28.0, 39.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line", positionInCurrentRoom(myEntityId, [25.0, 39.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line", positionInCurrentRoom(myEntityId, [22.0, 39.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line", positionInCurrentRoom(myEntityId, [19.0, 39.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line", positionInCurrentRoom(myEntityId, [16.0, 39.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line", positionInCurrentRoom(myEntityId, [13.0, 39.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line", positionInCurrentRoom(myEntityId, [10.0, 39.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line", positionInCurrentRoom(myEntityId, [7.0, 39.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line", positionInCurrentRoom(myEntityId, [4.0, 39.0, 0.0]))
+
+				scriptVars["rectThrowTime"] = 0.0
+		}
+
+
+
+
+
+		if scriptVars["targetAllPlayersTimer"] >= 5.75 && scriptVars["sendTargetAllPlayersBullet"] {
+			useAbilityAtPosition(myEntityId, "Target All Players Hoarder Beam", entityPosition(myEntityId))
+			scriptVars["sendTargetAllPlayersBullet"] = false
+			log("Tracking Bullet")
+		}
+
+		if scriptVars["targetAllPlayersTimer"] >= 10.75 {
+			useAbilityAtPosition(myEntityId, "Target All Players Ground Blast", entityPosition(myEntityId))
+			log("Tracking Bullet")
+			scriptVars["sendTargetAllPlayersBullet"] = true
+			scriptVars["targetAllPlayersTimer"] = 0.0
+		}
+
+		if scriptVars["expandRetractTime"] >= 2.75 {
+				useAbilityAtPosition(myEntityId, "Expand And Retract", positionInCurrentRoom(myEntityId, [21.0, 20.0, 0.0]))
+				scriptVars["expandRetractTime"] = 0.0
+			}
+
+	}
+	
+}
+
+---mob_Power Circle Enemy---
+ID :: powercircleenemy
+Prefab :: obstacle
+Type :: Normal
+Range Behavior :: Stationary
+
+---ability_Raid3 Immunity Pool---
+Bullet Definition :: [[raid3immunitypool]]
+Max Range :: 100.0
+
+---bulletdef_raid3immunitypool---
+sprite GreenPool 0.65
+potency 0
+fire 0 relative 0
+	aoedot
+	nododge
+	radius 0.65
+	damageEvery 10
+	wait 400
+	vanish
+
+---aura_Raid3 Attacker---
+Type :: Buff
+Duration :: 1.0
+Icon :: statusicons_7
+Max Stacks :: 1
+Time Per Tick :: 1.0
+
+---script_powercircleenemy_Monster---
+resetVars := func() {
+	scriptVars["poolsCreated"] = false
+	scriptVars["timeUntilPools"] = 0.0
+	scriptVars["timeSinceCheck"] = 0.0
+}
+
+if !isDead {
+	if is_undefined(scriptVars["poolsCreated"]) {
+		resetVars()
+	}
+
+	scriptVars["timeUntilPools"] += delta
+
+	if !scriptVars["poolsCreated"] && scriptVars["timeUntilPools"] >= 0.5 {
+				useAbilityAtPosition(myEntityId, "Raid3 Immunity Pool", 
+					entityPosition(myEntityId))
+					scriptVars["poolsCreated"] = true
+	}
+
+	scriptVars["timeSinceCheck"] += delta
+
+	if scriptVars["timeSinceCheck"] > 0.5 {
+
+		scriptVars["timeSinceCheck"] = 0.0
+
+		// Set the minimum distance between players for the buff to apply
+		minimumDistance := 2.0
+
+		// Get all nearby entities
+		nearby := getNearbyEntities(myEntityId)
+
+		// Count how many players are within the minimum distance
+		playersWithinDistance := []
+
+		for i := 0; i < len(nearby); i++ {
+			// Since the Power Circle Enemy is now "Friendly", we use isEnemyOfEntity 
+			// to identify players (from a friendly entity's perspective, players are "enemies" in faction terms)
+			if isEnemyOfEntity(myEntityId, nearby[i]["id"]) && nearby[i]["id"] != myEntityId {
+				// Calculate distance to this player
+				dist := distToEntity(myEntityId, nearby[i]["id"])
+				
+				// If this player is within the minimum distance, count them
+				if dist < minimumDistance {
+					playersWithinDistance = append(playersWithinDistance, nearby[i]["id"])
+				}
+			}
+		}
+
+		// If there are 2 or more players within the minimum distance, remove the buff
+		if len(playersWithinDistance) == 1 {
+			addAuraToEntity(myEntityId, "Raid3 Attacker", 0, playersWithinDistance[0])
+		}
+
+	}
+}
+
+---mobdefinition_Raid 3 Healing Tower---
+ID :: raid3healingtower
+Prefab :: healingtower
+Range Behavior :: Stationary
+Type :: Normal
+Speed :: 0
+
+---prefab_healingtower---
+Components :: [[HealingTowerSprite]] [[HealingTowerCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_HealingTowerCollider---
+Component :: Collider
+{
+    "layer": "Enemy",
+    "position": [0.0, 1.0],
+    "size": [1.5, 2.0]
+}
+
+---prefabcomponent_HealingTowerSprite---
+Component :: Sprite
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "echodeathvictor/echodeathtowertwo",
+    "animations": [
+        {
+            "name": "idle"
+        }
+    ]
+}
+
+---ability_Boss Heal Pulse---
+Script :: BossHealPulse
+Max Range :: 100
+VFX Cast :: trigger:Heal*
+
+---script_BossHealPulse_Cast---
+if frameNum >= 0 {
+	// Find all nearby entities
+	nearby := getNearbyEntities(myEntityId)
+	
+	for i := 0; i < len(nearby); i++ {
+		// Check if this entity has the Raid3 Immunity aura (which the boss has)
+		auras := getAurasOnEntity(nearby[i]["id"])
+		
+		for j := 0; j < len(auras); j++ {
+			if auras[j]["name"] == "Raid3 Immunity" && nearby[i]["id"] != myEntityId {
+				// This is the boss! Heal it
+				dealPotencyToEntity(myEntityId, nearby[i]["id"], -500, 0)
+				log("Healing Tower healed boss (entity " + string(nearby[i]["id"]) + ") for 500 HP")
+				
+				// Optional: Add a visual effect at the boss location
+				showVfxAtPosition(myEntityId, "HealEffect", entityPosition(nearby[i]["id"]))
+			}
+		}
+	}
+	
+	// Alternative method: If the boss entity ID is stored somewhere
+	// or if we know the boss is always the entity that summoned the towers
+	// we could use that information instead
+}
+
+---script_raid3healingtower_Monster---
+resetVars := func() {
+	scriptVars["healPulseTimer"] = 19.0
+	scriptVars["visualCreated"] = false
+	scriptVars["timeSinceSpawn"] = 0.0
+}
+
+if !isDead {
+	if is_undefined(scriptVars["healPulseTimer"]) {
+		resetVars()
+	}
+
+	scriptVars["healPulseTimer"] += delta
+	scriptVars["timeSinceSpawn"] += delta
+
+	// Start healing after 2 seconds to give players time to react
+	if scriptVars["timeSinceSpawn"] > 2.0 && scriptVars["healPulseTimer"] >= 20.0 {
+		// Use the healing ability
+		useAbilityAtPosition(myEntityId, "Boss Heal Pulse", entityPosition(myEntityId))
+		scriptVars["healPulseTimer"] = 0.0
+	}
+}
+
+

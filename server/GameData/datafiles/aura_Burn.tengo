@@ -1,0 +1,45 @@
+---aura_Burn---
+Type :: Debuff
+Icon :: statusicons_9
+Duration :: 3.0
+Max Stacks :: 3
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Burn]]
+
+---aura_Disruptor I Burn---
+Type :: Debuff
+Icon :: statusicons_27
+Duration :: 2.0
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Burn]]
+
+---aura_Disruptor II Burn---
+Type :: Debuff
+Icon :: statusicons_27
+Duration :: 4.0
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Burn]]
+
+---aura_Disruptor III Burn---
+Type :: Debuff
+Icon :: statusicons_27
+Duration :: 6.0
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Burn]]
+
+---aura_Disruptor IV Burn---
+Type :: Debuff
+Icon :: statusicons_27
+Duration :: 8.0
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Burn]]
+

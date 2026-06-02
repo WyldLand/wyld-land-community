@@ -1,0 +1,43 @@
+---item_71 Void Swarm---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Void Swarm]]
+Rarity :: Rare
+
+They said it was easiest to just use overwhelming force.
+
+---gundef_Void Swarm---
+Fire Speed :: 1.3
+Bullets In Chamber :: 3
+Reload Speed :: 10
+Passive Reload :: true
+Sprite :: weapons_100
+Fire Event :: rocketa
+Reload Event :: rocketreload
+Bullet Definition :: [[voidswarmgun]]
+Archetype :: ExplosiveLauncher
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: SemiAuto
+Bullet Lifetime :: 2
+
+---bulletdef_voidswarmgun---
+potency 0
+sprite Custom7
+color 4
+repeat bullets:4 angle:-10 maxAngle:10 directionType:relative speed:12 speedChange:0.25 delay:1
+	hitfire voidexplosiongun
+repeat bullets:4 angle:-10 maxAngle:10 directionType:relative speed:12 speedChange:0.25 delay:1
+	hitfire voidexplosiongun
+
+---bulletdef_voidexplosiongun---
+sprite Invisible
+potency 65
+fire 0 relative 0
+	aoeexplosion
+	radius 1
+	damageEvery 3
+	wait 2
+	speed 0
+	vfx MiniExplosion 5
+	wait 1
+	vanish

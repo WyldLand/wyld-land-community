@@ -1,0 +1,35 @@
+---item_84 Energized Visor---
+Type :: Equippable
+Slot :: Head
+Icon :: items_217
+Equip Index :: 1
+Meta :: player/head4
+Rarity :: Legendary
+Gun Definition :: [[Energized Visor]]
+
+A high-tech visor that enhances your vision and reflexes, allowing you to deal greater damage.
+
+---gundef_Energized Visor---
+Fire Speed :: 0
+Bullets In Chamber :: 1
+Reload Speed :: 15.0
+Sprite :: items_217
+Fire Event :: 
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Enhanced Reflexes]]
+
+---spike_Enhanced Reflexes---
+Auras :: [[Enhanced Reflexes]]
+
+---aura_Enhanced Reflexes---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:EnhancedReflexes]]
+
+---script_EnhancedReflexes_OutgoingDamage---
+// Increase damage by 5% for all outgoing attacks
+additionalDamage = int(0.05 * float(damage))

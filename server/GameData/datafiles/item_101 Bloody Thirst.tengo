@@ -1,0 +1,76 @@
+---item_101 Bloody Thirst---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Bloodthirst]]
+Rarity :: Legendary
+Durability :: 5
+
+Each kill increases your power. Maximum of 5 stacks. Stacks decay if you don't kill anything for 30 seconds.
+
+The hunger grows with each life you take.
+
+---gundef_Bloodthirst---
+Fire Speed :: 0.12
+Bullets In Chamber :: 40
+Reload Speed :: 1.1
+Sprite :: weapons_91
+Fire Event :: assaultriflea
+Reload Event :: assaultriflereload
+Bullet Definition :: [[bloodthirst]]
+Archetype :: Automatic
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: FullAuto
+Bullet Lifetime :: 1.2
+Innate Spikes :: [[Bloodthirst]]
+
+---bulletdef_bloodthirst---
+sprite Custom12
+color 1
+potency 30
+fire 16 relative -4 4
+
+---spike_Bloodthirst---
+Auras :: [[Bloodthirst]]
+
+---aura_Bloodthirst---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:Bloodthirst]]
+
+---script_Bloodthirst_DamageDealt---
+if abilityId == auraAbilityId {
+	if is_undefined(scriptVars["killStacks"]) {
+		scriptVars["killStacks"] = 0
+		scriptVars["timeSinceKill"] = 0.0
+	}
+	
+	// Check for kills
+	if getPoints(damageSenderId, "hp", "current") <= 0 {
+		scriptVars["timeSinceKill"] = 0.0
+		if scriptVars["killStacks"] < 5 {
+			scriptVars["killStacks"] += 1
+			showVfxAtPosition(myEntityId, "PowerSpike", entityPosition(myEntityId))
+		}
+	}
+}
+
+---script_Bloodthirst_OutgoingDamage---
+if abilityId == auraAbilityId {
+	if !is_undefined(scriptVars["killStacks"]) && scriptVars["killStacks"] > 0 {
+		additionalDamage = int(float(damage) * (float(scriptVars["killStacks"]) * 0.2))
+	}
+}
+
+---script_Bloodthirst_Tick---
+if is_undefined(scriptVars["timeSinceKill"]) {
+	scriptVars["timeSinceKill"] = 0.0
+}
+
+scriptVars["timeSinceKill"] += 1.0
+
+if scriptVars["timeSinceKill"] >= 10.0 {
+	scriptVars["killStacks"] = 0
+	scriptVars["timeSinceKill"] = 0.0
+}

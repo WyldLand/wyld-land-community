@@ -1,0 +1,26 @@
+---item_40 Basic Assault Rifle---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Basic Assault Rifle]]
+Rarity :: Uncommon
+
+The AK-47 never really went out of style, even in the future.
+
+---gundef_Basic Assault Rifle---
+Fire Speed :: 0.12
+Bullets In Chamber :: 40
+Reload Speed :: 1.1
+Sprite :: weapons_38
+Fire Event :: assaultriflea
+Reload Event :: assaultriflereload
+Bullet Definition :: [[basicar]]
+Archetype :: Automatic
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: FullAuto
+Bullet Lifetime :: 1.2
+
+---bulletdef_basicar---
+sprite Custom12
+potency 25
+fire 14 relative -4 4
+

@@ -1,0 +1,15 @@
+---prefab_Muzzle---
+
+Components :: [[MuzzleSprite]]
+
+---prefabcomponent_MuzzleSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "player/muzzle",
+    "play": "default",
+    "allowBatch": true
+}

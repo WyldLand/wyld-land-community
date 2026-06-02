@@ -1,0 +1,21 @@
+---aura_Lucky Reload---
+Type :: Buff
+Duration :: -1
+Icon ::
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:LuckyReload]]
+
+---spike_Lucky Reload---
+Slot :: Gun
+Auras :: [[Lucky Reload]]
+Rarity :: Uncommon
+
+Random chance to have reload take half the usual time.
+
+---script_LuckyReload_ReloadWeapon---
+rand := import("rand")
+
+if rand.float() < 0.50 && auraAbilityId == abilityId {
+    reloadTime = reloadTime * 0.5
+}

@@ -1,0 +1,288 @@
+---mob_Heart Hoarder---
+Prefab :: hearthoarder
+Range Behavior :: Medium Ranged
+Bounding Box :: 0.0 1.5 2.0 3.0
+Type :: Boss
+Abilities :: [[Hoarder Slash]] [[Hoarder Focus]] [[Hoarder Room Beam]] [[Hoarder Explosion]] [[Hoarder Beam]]
+Loot :: [[HeartHoarder]]
+
+---prefab_hearthoarder---
+
+Components :: [[HeartHoarderSprite]] [[HeartHoarderCollider]] [[Monster]] [[Nameplate]] [[BGMHeartHoarder]]
+
+---prefabcomponent_HeartHoarderCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+	"position": [0.0, 1.5],
+    "size": [2.0, 3.0]
+}
+
+---prefabcomponent_HeartHoarderSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.502,
+    "pivotY": 1.0,
+    "sprite": "hearthoarder/hearthoarder",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ],
+	"transitions": [
+		{
+			"from": "Vanish",
+			"to": "*",
+			"animation": "_hide"
+		},
+		{
+			"from": "*",
+			"to": "Appear",
+			"animation": "_show"
+		}
+	]
+}
+
+---prefab_sfxhearthoarderAttack---
+
+Components :: [[SFXHeartHoarderAttack]]
+
+---prefabcomponent_SFXHeartHoarderAttack---
+
+Component :: Sound
+
+{
+    "sources": ["hearthoarder/hearthoarderAttack.wav"],
+	"spatial": true
+}
+
+---prefabcomponent_BGMHeartHoarder---
+
+Component :: Sound
+{
+	"sources": ["hearthoarder/bgm1.wav"],
+	"channel": "bgm",
+	"loop": true,
+	"select": "random",
+	"priority": 2,
+	"combatOnly": true
+}
+
+---ability_Hoarder Slash---
+Bullet Definition :: [[hoarderslash]]
+VFX Cast :: trigger:Attack*
+Lock Time :: 1.5
+
+---bulletdef_hoarderslash---
+potency 150
+nway speed:8 bullets:12 spread:70 angle:90 directionType:absolute
+nway speed:8 bullets:12 spread:70 angle:270 directionType:absolute
+wait 4
+nway speed:8 bullets:15 spread:80 angle:0 directionType:absolute
+nway speed:8 bullets:15 spread:80 angle:180 directionType:absolute
+wait 10
+radial speed:10 bullets:20
+
+---ability_Hoarder Focus---
+Bullet Definition :: [[hoarderfocus]]
+
+---bulletdef_hoarderfocus---
+potency 100
+nway speed:8 bullets:8 spread:40 angle:0 directionType:relative
+wait 1
+line speed:10 bullets:8 delay:1 angle:0 directionType:relative speedChange:0.25
+
+---ability_Hoarder Room Beam---
+Bullet Definition :: [[hoarderroombeam]]
+VFX Cast :: trigger:Beam
+Lock Time :: 2.5
+
+---bulletdef_hoarderroombeam---
+repeat bullets:4 angleChange:90 angle:0 directionType:relative
+	fire hoarderbeamattack
+
+---ability_Hoarder Explosion---
+Bullet Definition :: [[hoarderexplosion]]
+Max Range :: 100.0
+
+---bulletdef_hoarderexplosion---
+sprite CirclePool 2.5
+potency 250
+fire 0 relative 0
+	aoeexplosion
+	radius 2.5
+	timedFill 25
+	damageEvery 25
+	wait 25
+	vfx BloodySlamExplosion 5
+	wait 1
+	vanish
+
+---ability_Hoarder Beam---
+Bullet Definition :: [[hoarderbeamattack]]
+VFX Cast :: trigger:Attack
+Lock Time :: 6.5
+
+---bulletdef_hoarderbeamattack---
+sprite RectPool 0.5 0.5
+potency 0
+repeat bullets:10 speedChange:20 speed:29 angle:0 directionType:relative
+	aoedot
+	wait 1
+	speed 0
+	wait 22
+	vanish
+wait 22
+sprite Laser14
+color 4
+potency 0
+fire 230 relative 0
+	piercing 100
+	wait 40
+	vanish
+sprite Invisible
+potency 125
+wait 3
+fire 230 relative 0
+	radius 0.6
+	piercing 100
+wait 3
+fire 230 relative 0
+	radius 0.6
+	piercing 100
+
+---loottable_HeartHoarder---
+[[187 Hoarder's Bloodstone]] @ 25.0
+[[14 Land Mine]] @ 25.0
+[[26 Frenemies]] @ 2.0
+[[702 Speed Pulse]] @ 15.0
+[[121 Heart Core]] @ 500.0 @ qf_epicQuestPhaseTwoItems
+[[117 Flame Transport]] @ 5.0
+
+---script_hearthoarder_Monster---
+
+resetVars := func() {
+	scriptVars["timeFocusing"] = 0.0
+	scriptVars["timeSinceFocus"] = 0.0
+	scriptVars["timeSinceAttack"] = 0.0
+	scriptVars["timeSinceFocusFire"] = 0.0
+	scriptVars["focusEntityId"] = 0
+	scriptVars["timeVanishing"] = 0.0
+	scriptVars["timeSinceVanish"] = 10.0
+	scriptVars["timeSinceSummon"] = 0.0
+	scriptVars["timeSinceBeam"] = 0.0
+	scriptVars["timeSinceRandom"] = 0.0
+}
+
+doSlam := func() {
+	currentNearby := getNearbyEntities(myEntityId)
+	for i := 0; i < len(currentNearby); i++ {
+		if isEnemyOfEntity(myEntityId, currentNearby[i].id) {
+			useAbilityAtTarget(myEntityId, "Hoarder Explosion", currentNearby[i].id, 1.0)
+		}
+	}
+}
+
+summonAdds := func() {
+	currentNearby := getNearbyEntities(myEntityId)
+	numSummons := 3
+	for i := 0; i < numSummons; i++ {
+		newEntId := summonEntity("lilsword", randomPositionInCurrentRoom(myEntityId, 2.0), monsterLevel(myEntityId))
+		aggroMyTargets(myEntityId, newEntId)
+		killEntityIfEntityDies(newEntId, myEntityId)
+	}
+}
+
+if !isDead {
+
+	if is_undefined(scriptVars["timeSinceAttack"]) {
+		resetVars()
+	}
+
+	if targetEntityId > 0 && castingAction == 0 {
+		scriptVars["timeSinceFocus"] += delta
+		scriptVars["timeSinceAttack"] += delta
+		scriptVars["timeSinceVanish"] += delta
+		scriptVars["timeSinceBeam"] += delta
+	}
+
+	scriptVars["timeSinceRandom"] += delta
+
+	if scriptVars["timeVanishing"] > 0.0 {
+		scriptVars["timeVanishing"] -= delta
+
+		if scriptVars["timeSinceRandom"] > 0.50 {
+			useAbilityAtTarget(myEntityId, "Hoarder Explosion", randomTargetEntityId(myEntityId, 100.0), 1.0)
+			scriptVars["timeSinceRandom"] = 0.0
+		}
+
+		if scriptVars["timeVanishing"] <= 0.0 {
+			log("DONE VANISH")
+			triggerAnimation(myEntityId, "Appear")
+			setCollisionLayer(myEntityId, CollisionLayerMonster)
+			scriptVars["timeSinceAttack"] = 1.5
+			scriptVars["timeSinceFocus"] = 0.0
+			scriptVars["timeSinceVanish"] = 0.0
+		}
+
+	} else if scriptVars["timeFocusing"] > 0.0 {
+
+		scriptVars["timeFocusing"] -= delta
+		scriptVars["timeSinceFocusFire"] += delta
+
+		 if scriptVars["timeSinceRandom"] > 1.0 {
+			doSlam()
+			scriptVars["timeSinceRandom"] = 0.0
+		}
+
+		if scriptVars["timeFocusing"] <= 0.0 {
+			log("STOP FOCUS")
+			changeAttackBehaviour(myEntityId, "Medium Ranged")
+			scriptVars["timeSinceAttack"] = 1.5
+			scriptVars["timeSinceFocus"] = 0.0
+		} else if scriptVars["timeFocusing"] <= 3.0 {
+			if scriptVars["timeSinceFocusFire"] > 0.75 {
+				scriptVars["timeSinceFocusFire"] = 0.0
+				useAbilityAtTarget(myEntityId, "Hoarder Focus", scriptVars["focusEntityId"], 3.0)
+			}
+		}
+
+	} else if scriptVars["timeSinceVanish"] > 20.0 && castingAction == 0 {
+		log("START VANISH")
+		scriptVars["timeVanishing"] = 15.0
+		scriptVars["timeSinceVanish"] = 0.0
+		triggerAnimation(myEntityId, "Vanish")
+		setCollisionLayer(myEntityId, CollisionLayerDynamic)
+		summonAdds()
+		
+	} else if scriptVars["timeSinceFocus"] > 9.0 && targetEntityId > 0 && castingAction == 0 {
+		log("START FOCUS")
+		scriptVars["focusEntityId"] = targetEntityId
+		scriptVars["timeFocusing"] = 4.0
+		scriptVars["timeSinceFocusFire"] = 0.0
+		changeAttackBehaviour(myEntityId, "Melee Ranged")
+		triggerAnimation(myEntityId, "MoveAttack")
+		scriptVars["timeSinceFocus"] = 0.0
+	} else if scriptVars["timeSinceBeam"] > 6.0 && targetEntityId > 0 && castingAction == 0 {
+		log("USE BEAM")
+		doSlam()
+		useAbilityAtTarget(myEntityId, "Hoarder Room Beam", targetEntityId, 0.0)
+		scriptVars["timeSinceBeam"] = 0.0
+	} else if scriptVars["timeSinceAttack"] > 1.5 && targetEntityId > 0 && castingAction == 0 {
+		useAbilityAtTarget(myEntityId, "Hoarder Slash", targetEntityId, 2.0)
+		scriptVars["timeSinceAttack"] = 0.0
+	}
+
+}
+
+

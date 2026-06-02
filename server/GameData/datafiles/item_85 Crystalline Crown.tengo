@@ -1,0 +1,42 @@
+---item_85 Crystalline Crown---
+Type :: Equippable
+Slot :: Head
+Icon :: items_224
+Equip Index :: 2
+Meta :: player/head2
+Rarity :: Legendary
+Gun Definition :: [[Crystalline Crown]]
+
+A crown made of crystal that amplifies energy-based weapons, including Laser Canons, Blasters, and Fusion Rifles.
+
+---gundef_Crystalline Crown---
+Fire Speed :: 0
+Bullets In Chamber :: 1
+Reload Speed :: 15.0
+Sprite :: items_224
+Fire Event :: 
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Mana Amplification]]
+
+---spike_Mana Amplification---
+Auras :: [[Mana Amplification]]
+
+---aura_Mana Amplification---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:ManaAmplification]]
+
+---script_ManaAmplification_OutgoingDamage---
+// Increase damage by 15% for energy-based weapons (e.g., laser, blaster)
+if abilityId >= 0 && abilityId < 3 {
+    itemDef := itemDefintionForSlot(myEntityId, abilityId+1)
+    if !is_undefined(itemDef) {
+        if itemDef["archetype"] == "LaserCannon" || itemDef["archetype"] == "Blaster" || itemDef["archetype"] == "FusionRifle" {
+            additionalDamage = int(0.15 * float(damage))
+        }
+    }
+}

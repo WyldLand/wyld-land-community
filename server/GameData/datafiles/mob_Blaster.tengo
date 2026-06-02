@@ -1,0 +1,97 @@
+---mob_Blaster---
+Prefab :: blaster
+Range Behavior :: Long Ranged
+Abilities :: [[Blaster Slash]] [[Blaster Heal]]
+Speed :: 500
+Type :: Elite
+Options :: alwaysattack
+
+---prefab_blaster---
+
+Components :: [[BlasterSprite]] [[BlasterCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_BlasterCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+    "position": [0.0, 0.75],
+    "size": [0.75, 1.5]
+}
+
+---prefabcomponent_BlasterSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.186,
+    "pivotY": 1.0,
+    "sprite": "darkforest3/blaster",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_sfxblasterAttack---
+
+Components :: [[SFXBlasterAttack]]
+
+---prefabcomponent_SFXBlasterAttack---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest3/blasterAttack.wav"],
+	"spatial": true
+}
+
+---prefab_sfxblasterHeal---
+
+Components :: [[SFXBlasterHeal]]
+
+---prefabcomponent_SFXBlasterHeal---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest3/blasterHeal.wav"],
+	"spatial": true
+}
+
+---ability_Blaster Slash---
+Bullet Definition :: [[blasterslash]]
+Cooldown :: 2.0
+VFX Charging :: trigger:Attack*
+Lock Time :: 0.25
+Cast Time :: 0.75
+
+---bulletdef_blasterslash---
+potency 100
+repeat bullets:10 speed:7 angle:-45 maxAngle:45 directionType:relative
+
+---ability_Blaster Heal---
+Cooldown :: 7.0
+VFX Charging :: trigger:Heal*
+Lock Time :: 0.25
+Cast Time :: 0.75
+Script :: BlasterHeal
+
+---script_BlasterHeal_Cast---
+
+
+if frameNum == 14 {
+	myAllies := getAlliesSortedByHealth(myEntityId)
+	for i := 0; i < 3 && i < len(myAllies); i++ {
+		dealPotencyToEntity(myEntityId, myAllies[i]["id"], -150, 0)
+	}
+}
+

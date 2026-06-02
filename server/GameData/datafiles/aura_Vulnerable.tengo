@@ -1,0 +1,13 @@
+---aura_Vulnerable---
+Type :: Debuff
+Duration :: 5.0
+Icon :: statusicons_13
+Max Stacks :: 3
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:Vulnerable]]
+
+---script_Vulnerable_IncomingDamage---
+if damage > 0 {
+	additionalDamage = int(damage*0.20)
+}

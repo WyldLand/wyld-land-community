@@ -1,0 +1,22 @@
+---mob_Bullet Obstacle---
+ID :: bulletobstacle
+Prefab :: obstacle
+Range Behavior :: Stationary
+Bounding Box :: 0 0 1.0 1.0
+Type :: Normal
+Abilities :: [[Bullet Obstacle]]
+
+---ability_Bullet Obstacle---
+Bullet Definition :: [[bulletobstacle]]
+Cooldown :: 0.5
+
+---bulletdef_bulletobstacle---
+fire 8 absolute 270
+sprite Invisible
+fire 0 relative 0
+	aoedot
+	radius 0.25
+	damageEvery 1
+	wait 1
+	vanish
+

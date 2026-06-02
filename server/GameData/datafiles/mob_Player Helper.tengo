@@ -1,0 +1,71 @@
+---mob_Player Helper---
+Prefab :: playerhelper
+Range Behavior :: Melee Ranged
+Abilities :: [[Basic Bullet]]
+
+---prefab_playerhelper---
+
+Components :: [[PlayerHelperSprite]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_PlayerHelperSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "playerhelper",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---ability_Basic Bullet---
+Bullet Definition :: [[basic]]
+Cooldown :: 0.2
+VFX Cast :: fmod:Mobs/basicfire
+
+---script_playerhelper_Monster---
+
+
+if is_undefined(scriptVars["timeSinceTargetCheck"]) {
+	scriptVars["timeSinceTargetCheck"] = 0.0
+}
+
+scriptVars["timeSinceTargetCheck"] += delta
+
+if scriptVars["timeSinceTargetCheck"] > 1.0 {
+
+	scriptVars["timeSinceTargetCheck"] = 0.0
+
+	myRoom := entityRoom(myEntityId)
+	playerRoom := entityRoom(scriptVars["myPlayerId"])
+
+	setPlayerFriendly(myEntityId)
+
+	if myRoom != playerRoom && playerRoom != "OFFMAP" {
+		stopPathfinding(myEntityId)
+		setPosition(myEntityId, entityPosition(scriptVars["myPlayerId"]))
+	} else {
+		aggroMyTargets(scriptVars["myPlayerId"], myEntityId) //make sure we're just attacking whatever is attacking the player.
+
+		if distToEntity(myEntityId, scriptVars["myPlayerId"]) > 3.0 && !isPathfinding {
+			log("BOT MOVING TO PLAYER POSITION")
+			stopPathfinding(myEntityId)
+			pathTo(myEntityId, entityPosition(scriptVars["myPlayerId"]))
+		}
+	}
+}
+
+
+
+
+

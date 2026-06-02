@@ -1,0 +1,19 @@
+---mob_Tutorial Loot---
+ID :: loottutorial
+Prefab :: assassin
+Range Behavior :: Short Ranged
+Abilities :: [[Tutorial]]
+Bounding Box :: 0.0 0.6 1.0 1.2
+Type :: Normal
+Loot :: [[Tutorial]]
+Options :: fastrespawn noaggronearby manualpathing
+
+---loottable_Tutorial---
+[[177 Useless Junk]] @ 400.0
+
+---ability_Tutorial---
+Bullet Definition :: [[basic]]
+Cooldown :: 0.25
+VFX Charging :: trigger:Attack*
+Cast Time :: 0.50
+Lock Time :: 0.30

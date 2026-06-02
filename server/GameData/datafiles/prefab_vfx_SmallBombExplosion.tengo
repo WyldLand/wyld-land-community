@@ -1,0 +1,25 @@
+---prefab_SmallBombExplosion---
+
+Components :: [[SmallBombExplosionSprite]] [[SmallBombExplosionSound]]
+
+---prefabcomponent_SmallBombExplosionSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "vfx/SmallBombExplosion",
+    "play": "default"
+     
+}
+
+---prefabcomponent_SmallBombExplosionSound---
+
+Component :: Sound
+
+{
+    
+    "sources": ["sfxexplosion/smallexplosion.wav"],
+	"spatial": true
+}

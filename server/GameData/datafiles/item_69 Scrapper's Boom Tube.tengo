@@ -1,0 +1,41 @@
+---item_69 Scrapper's Boom Tube---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Scrapper's Boom Tube]]
+Rarity :: Uncommon
+
+Have you ever just stuck a rocket inside of a metal tube and set it off to see what happened? Well, you have now.
+
+---gundef_Scrapper's Boom Tube---
+Fire Speed :: 1.2
+Bullets In Chamber :: 2
+Reload Speed :: 10
+Passive Reload :: true
+Sprite :: weapons_68
+Fire Event :: rocketa
+Reload Event :: rocketreload
+Bullet Definition :: [[boomtube]]
+Archetype :: ExplosiveLauncher
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: SemiAuto
+Bullet Lifetime :: 2
+
+---bulletdef_boomtube---
+sprite Custom7
+color 2
+potency 0
+fire 12 relative -0 0
+	hitfire boomexplosion
+
+---bulletdef_boomexplosion---
+sprite Invisible
+potency 360
+fire 0 relative 0
+	aoeexplosion
+	radius 2
+	damageEvery 2
+	vfx SmallBombExplosion 5
+	wait 1
+	vfx ShakeSmall 5
+	wait 1
+	vanish

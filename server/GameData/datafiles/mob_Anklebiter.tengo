@@ -1,0 +1,92 @@
+---mob_Anklebiter---
+Prefab :: anklebiter
+Range Behavior :: Close Ranged
+Abilities :: [[Pulse Burst]] [[Drift Mine]]
+Speed :: 750
+Type :: Normal
+
+---prefab_anklebiter---
+
+Components :: [[AnklebiterSprite]] [[AnklebiterCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_AnklebiterCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+    "position": [0, 0.55],
+    "size": [1.8, 1.1]
+}
+
+---prefabcomponent_AnklebiterSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.4,
+    "pivotY": 1.0,
+    "sprite": "darkforest1/anklebiter",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ],
+    "allowBatch": true
+}
+
+---prefab_sfxanklebiterAttack---
+
+Components :: [[SFXAnkleBiterAttack]]
+
+---prefabcomponent_SFXAnkleBiterAttack---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest1/anklebiterAttack.wav"],
+	"spatial": true
+}
+
+---ability_Pulse Burst---
+Bullet Definition :: [[pulseburst]]
+Cooldown :: 0.75
+
+---bulletdef_pulseburst---
+sprite Basic
+potency 100
+radial bullets:12 speed:7
+	wait 7
+	vanish
+
+---ability_Drift Mine---
+Bullet Definition :: [[driftmine]]
+Cooldown :: 2.5
+VFX Cast :: trigger:Attack*
+
+---bulletdef_driftmine---
+sprite Custom9 0.50
+color 4
+potency 0
+fire 4 relative 0
+	wait 20
+	fire driftshrapnel
+	vanish
+repeat bullets:2 speed:4 angle:0 maxAngle:360 delay:2 directionType:relative
+	wait 20
+	fire driftshrapnel
+	vanish
+
+---bulletdef_driftshrapnel---
+sprite Custom9
+color 4
+potency 100
+radial bullets:8 bulletShift:2 speed:2
+	wait 40
+	vanish

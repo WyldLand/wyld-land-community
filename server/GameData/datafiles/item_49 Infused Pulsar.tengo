@@ -1,0 +1,108 @@
+---item_49 Infused Pulsar---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Infused Pulsar]]
+Rarity :: Exotic
+
+Bullets from this weapon can pierce multiple targets. 
+When bullets make contact with an enemy, spawn a damage over time "Infused Pulsar Pool" at the enemy's position for 3 seconds.
+
+Surprise, bet you didn't expect that!
+
+---gundef_Infused Pulsar---
+Fire Speed :: 0.35
+Bullets In Chamber :: 15
+Reload Speed :: 1.3
+Sprite :: weapons_109
+Fire Event :: blastera
+Reload Event :: blasterreload
+Bullet Definition :: [[pulsar]]
+Archetype :: Handgun
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: SemiAuto
+Bullet Lifetime :: 2.0
+Innate Spikes :: [[Infused Pulsar Pool]]
+
+---bulletdef_pulsar---
+sprite Custom10
+color 3
+potency 25
+fire 16 relative -2 2
+	piercing 2
+fire 16 relative -2 2
+	piercing 2
+wait 1
+fire 16 relative -2 2
+	piercing 2
+fire 16 relative -2 2
+	piercing 2
+
+---spike_Infused Pulsar Pool---
+Auras :: [[Infused Pulsar Pool]]
+
+---aura_Infused Pulsar Pool---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:InfusedPulsarPool]]
+
+
+---script_InfusedPulsarPool_DamageDealt---
+if abilityId == auraAbilityId {
+	log("Damage Dealt")
+	
+	// Initialize pool tracking variables if they don't exist
+	if is_undefined(scriptVars["activePools"]) {
+		scriptVars["activePools"] = 0
+	}
+	if is_undefined(scriptVars["poolDecrementTimes"]) {
+		scriptVars["poolDecrementTimes"] = []
+	}
+	
+	// Check if we can spawn a new pool (max 3 pools)
+	if scriptVars["activePools"] < 3 {
+		targetPos := entityPosition(damageSenderId)
+		useAbilityAtPosition(myEntityId, "Infused Pulsar Pool", targetPos)
+		
+		// Increment active pool count
+		scriptVars["activePools"] = scriptVars["activePools"] + 1
+		
+		// Schedule this pool for decrement after 1 second (20 frames at 20fps)
+		// Store the global tick when this pool should be decremented
+		decrementTime := globalTick + 20
+		scriptVars["poolDecrementTimes"] = append(scriptVars["poolDecrementTimes"], decrementTime)
+	}
+	
+	// Process pool decrements - check if any pools have expired
+	newDecrementTimes := []
+	for i := 0; i < len(scriptVars["poolDecrementTimes"]); i++ {
+		if globalTick >= scriptVars["poolDecrementTimes"][i] {
+			// This pool has expired, decrement the count
+			scriptVars["activePools"] = scriptVars["activePools"] - 1
+			if scriptVars["activePools"] < 0 {
+				scriptVars["activePools"] = 0
+			}
+		} else {
+			// Pool hasn't expired yet, keep it in the list
+			newDecrementTimes = append(newDecrementTimes, scriptVars["poolDecrementTimes"][i])
+		}
+	}
+	scriptVars["poolDecrementTimes"] = newDecrementTimes
+}
+
+---ability_Infused Pulsar Pool---
+Bullet Definition :: [[infusedpool]]
+Max Range :: 100.0
+
+---bulletdef_infusedpool---
+sprite PurplePool 2
+potency 75
+fire 0 relative 0
+	aoedot
+	radius 2
+	damageEvery 20
+	vfx BloodPool
+	wait 20
+	vanish

@@ -1,0 +1,7 @@
+---aura_Rage---
+Type :: Buff
+Duration :: 6.0
+Icon :: statusicons_7
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[AuraAffectStat/Rage Speed]] [[AuraAffectStat/Rage Damage]]

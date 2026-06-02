@@ -1,0 +1,135 @@
+---item_103 Gravity Collapse---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Gravity Collapse]]
+Rarity :: Exotic
+Durability :: 5
+
+Creates a gravitational singularity that pulls in and damages enemies. Firing grants a burst of speed.
+The weight of a thousand collapsing stars in the palm of your hand.
+
+---gundef_Gravity Collapse---
+Fire Speed :: 1.0
+Bullets In Chamber :: 1
+Reload Speed :: 20
+Passive Reload :: true
+Sprite :: weapons_101
+Fire Event :: rocketa
+Reload Event :: rocketreload
+Bullet Definition :: [[gravitycollapse]]
+Archetype :: ExplosiveLauncher
+Muzzle VFX :: Muzzle 1.0
+Fire Type :: SemiAuto
+Bullet Lifetime :: 2.0
+Innate Spikes :: [[Gravity Well]] [[Gravitational Propulsion]]
+
+---bulletdef_gravitycollapse---
+potency 0
+sprite Custom7
+color 5
+fire 8 relative 0
+	hitfire gravitywell
+
+---bulletdef_gravitywell---
+sprite BluePool 4
+potency 50
+fire 0 relative 0
+	aoedot
+	radius 4
+	damageEvery 10
+	vfx VoidPool
+	wait 100
+	vanish
+
+---spike_Gravity Well---
+Auras :: [[Gravity Well]]
+
+---aura_Gravity Well---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 0.5
+Definitions :: [[Custom:GravityWell]]
+
+---script_GravityWell_BulletHit---
+if abilityId == auraAbilityId {
+	// Store the position of our new gravity well
+	scriptVars["wellPosition"] = hitPosition
+	scriptVars["wellDuration"] = 0.0
+}
+
+---script_GravityWell_Tick---
+if !is_undefined(scriptVars["wellPosition"]) {
+	if is_undefined(scriptVars["wellDuration"]) {
+		scriptVars["wellDuration"] = 0.0
+	}
+	
+	scriptVars["wellDuration"] += 0.5
+	
+	if scriptVars["wellDuration"] <= 5.0 {  // Well lasts 5 seconds
+		// Get all nearby entities
+		nearby := getNearbyEntities(myEntityId)
+		for i := 0; i < len(nearby); i++ {
+			if nearby[i]["isBoss"] == true {
+				continue
+			}
+			if nearby[i]["isEnemy"] == true {
+				// Calculate direction to well
+				enemyPos := entityPosition(nearby[i]["id"])
+				dist := distToPoint(nearby[i]["id"], scriptVars["wellPosition"])
+				
+				if dist < 4.0 {  // Pull range
+					// Move enemy toward well center
+					// Closer enemies are pulled less to prevent orbiting
+					pullStrength := (4.0 - dist) * 0.12
+					newPos := [
+						enemyPos[0] + (scriptVars["wellPosition"][0] - enemyPos[0]) * pullStrength,
+						enemyPos[1] + (scriptVars["wellPosition"][1] - enemyPos[1]) * pullStrength,
+						0.0
+					]
+					setPosition(nearby[i]["id"], newPos)
+				}
+			}
+		}
+	} else {
+		// Well has expired, clean up
+		scriptVars["wellPosition"] = undefined
+		scriptVars["wellDuration"] = 0.0
+	}
+}
+
+---spike_Gravitational Propulsion---
+Auras :: [[Gravitational Propulsion]]
+Icon :: 
+
+Firing the Gravity Collapse propels you forward with a 50% speed boost for 3 seconds.
+
+---aura_Gravitational Propulsion---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:GravitationalPropulsion]]
+
+---script_GravitationalPropulsion_FireWeapon---
+if abilityId == auraAbilityId {
+	// Apply Gravitational Speed buff when firing
+	addAuraToEntity(myEntityId, "Gravitational Speed", auraAbilityId, myEntityId)
+	
+	// Visual feedback for speed boost activation
+	showVfxAtPosition(myEntityId, "GainBuff", entityPosition(myEntityId))
+}
+
+---aura_Gravitational Speed---
+Type :: Buff
+Duration :: 3
+Icon :: statusicons_8
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[AuraAffectStat/Gravitational Speed]]
+
+---auraaffectstat_Gravitational Speed---
+Stat :: Speed
+Boost :: 100.0

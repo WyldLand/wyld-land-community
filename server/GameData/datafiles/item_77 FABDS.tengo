@@ -1,0 +1,29 @@
+---item_77 FABDS---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[FABDS]]
+Rarity :: Legendary
+
+Fully Automatic Bullet Delivery System
+
+---gundef_FABDS---
+Fire Speed :: 0.2
+Bullets In Chamber :: 12
+Reload Speed :: 2.2
+Sprite :: weapons_75
+Fire Event :: shotgunb
+Reload Event :: shotgunreload
+Bullet Definition :: [[fabds]]
+Archetype :: Shotgun
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: FullAuto
+Bullet Lifetime :: 0.65
+
+---bulletdef_fabds---
+sprite Custom10
+color 4
+potency 17
+nway speed:16 bullets:2 spread:15 directionType:relative angle:0 bulletShift:1
+wait 1
+nway speed:16 bullets:3 spread:15 directionType:relative angle:0 bulletShift:1
+

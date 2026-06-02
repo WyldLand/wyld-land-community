@@ -1,0 +1,68 @@
+---mob_Heavy Slicer---
+Prefab :: heavyslicer
+Range Behavior :: Medium Ranged
+Abilities :: [[Heavy Slicer]]
+Bounding Box :: 0 1.0 1.25 2.0
+Type :: Elite
+
+---prefab_heavyslicer---
+
+Components :: [[HeavySlicerSprite]] [[HeavySlicerCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_HeavySlicerCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+    "position": [0.0, 1.0],
+    "size": [1.25, 2.0]
+}
+
+---prefabcomponent_HeavySlicerSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.33,
+    "pivotY": 1.0,
+    "sprite": "darkforest3/heavyslicer",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_sfxheavyslicerAttack---
+
+Components :: [[SFXHeavySlicerAttack]]
+
+---prefabcomponent_SFXHeavySlicerAttack---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest3/heavyslicerAttack.wav"],
+	"spatial": true
+}
+
+---ability_Heavy Slicer---
+Bullet Definition :: [[heavyslicer]]
+Cooldown :: 2.0
+VFX Charging :: trigger:Attack*
+Lock Time :: 0.5
+Cast Time :: 0.3
+
+---bulletdef_heavyslicer---
+potency 150
+nway speed:6 bullets:10 spread:90 angle:0 directionType:relative
+wait 7
+nway speed:10 bullets:5 spread:20 angle:0 directionType:relative bulletShift:0.5
+

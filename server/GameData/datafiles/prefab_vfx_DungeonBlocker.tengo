@@ -1,0 +1,123 @@
+---prefab_DungeonBlockerNorth---
+
+Components :: [[DungeonBlockerNorthSprite]] [[DungeonBlockerNorthCollider]]
+
+---prefabcomponent_DungeonBlockerNorthSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.0,
+    "sprite": "vfx/DungeonBlockerNorth",
+    "layer": "fx",
+    "animations": [
+        {
+            "name": "default"
+        }
+    ]
+     
+}
+
+---prefabcomponent_DungeonBlockerNorthCollider---
+
+Component :: Collider
+
+{
+    "layer": "Static",
+    "position": [0.39, 1.0],
+    "size": [3.0, 3.0]
+}
+
+---prefab_DungeonBlockerSouth---
+
+Components :: [[DungeonBlockerSouthSprite]] [[DungeonBlockerSouthCollider]]
+
+---prefabcomponent_DungeonBlockerSouthSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "vfx/DungeonBlockerSouth",
+    "layer": "fx",
+    "animations": [
+        {
+            "name": "default"
+        }
+    ]
+     
+}
+
+---prefabcomponent_DungeonBlockerSouthCollider---
+
+Component :: Collider
+
+{
+    "layer": "Static",
+    "position": [0.39, -1.0],
+    "size": [3.0, 3.0]
+}
+
+---prefab_DungeonBlockerEast---
+
+Components :: [[DungeonBlockerEastSprite]] [[DungeonBlockerEastCollider]]
+
+---prefabcomponent_DungeonBlockerEastSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.0,
+    "pivotY": 0.5,
+    "sprite": "vfx/DungeonBlockerEast",
+    "layer": "fx",
+    "animations": [
+        {
+            "name": "default"
+        }
+    ]
+     
+}
+
+---prefabcomponent_DungeonBlockerEastCollider---
+
+Component :: Collider
+
+{
+    "layer": "Static",
+    "position": [-1.0, 0.5],
+    "size": [3.0, 3.0]
+}
+
+---prefab_DungeonBlockerWest---
+
+Components :: [[DungeonBlockerWestSprite]] [[DungeonBlockerWestCollider]]
+
+---prefabcomponent_DungeonBlockerWestSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 1.0,
+    "pivotY": 0.5,
+    "sprite": "vfx/DungeonBlockerWest",
+    "layer": "fx",
+    "animations": [
+        {
+            "name": "default"
+        }
+    ]
+     
+}
+
+---prefabcomponent_DungeonBlockerWestCollider---
+
+Component :: Collider
+
+{
+    "layer": "Static",
+    "position": [1.0, 0.5],
+    "size": [3.0, 3.0]
+}

@@ -1,0 +1,199 @@
+---mobdefinition_Elite Shadow Hunter---
+ID :: eliteshadowhunter
+Prefab :: genie
+Range Behavior :: [[Medium Ranged]]
+Abilities :: [[Shadow Burst]] [[Shadow Impact]] [[Shadow Storm]]
+Bounding Box :: 0 2.73 2.5 3.0
+Speed :: 300
+Type :: Boss
+Loot :: [[ShadowHunter]]
+
+---ability_Elite Shadow Hunter Turrets---
+Bullet Definition :: [[shadowhunterturrets]]
+Max Range :: 100.0
+
+---bulletdef_shadowhunterturrets---
+sprite CirclePool 1
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 1
+	timedFill 40
+	damageEvery 40
+	wait 41
+	vanish
+wait 40
+sprite Basic
+potency 100
+radial bullets:6 speed:3 angle:10 directionType:absolute
+	wait 300
+	vanish
+wait 6
+radial bullets:6 speed:3 angle:40 directionType:absolute
+	wait 300
+	vanish
+
+---script_eliteshadowhunter_Monster---
+resetVars := func() {
+   scriptVars["phase"] = 1
+   scriptVars["timeSinceCharge"] = 0.0
+   scriptVars["isCharging"] = false
+   scriptVars["timeSinceBurst"] = 0.0
+   scriptVars["timeSinceSpikes"] = 0.0
+   scriptVars["timeSinceStorm"] = 0.0
+   scriptVars["timeSinceLastVanish"] = 0.0
+   scriptVars["cloneIds"] = []
+   scriptVars["wasDead"] = false
+   scriptVars["isHidden"] = false
+   scriptVars["timeSinceTurret"] = 0.0
+}
+
+spawnClones := func() {
+    // Use dangerous enemy types
+    cloneTypes := ["wraith", "glitchsamurai", "blaster"]
+    
+    positions := [
+        positionInCurrentRoom(myEntityId, [10.0, 10.0, 0.0]),
+        positionInCurrentRoom(myEntityId, [22.0, 10.0, 0.0]),
+        positionInCurrentRoom(myEntityId, [16.0, 22.0, 0.0])
+    ]
+    
+    for i := 0; i < 3; i++ {
+        cloneId := summonEntity(cloneTypes[i], positions[i], monsterLevel(myEntityId))
+        scriptVars["cloneIds"] = append(scriptVars["cloneIds"], cloneId)
+    }
+}
+
+if isDead {
+   if !scriptVars["wasDead"] {
+       scriptVars["wasDead"] = true
+       // Clean up clones
+       if !is_undefined(scriptVars["cloneIds"]) {
+           for i := 0; i < len(scriptVars["cloneIds"]); i++ {
+               if !isEntityDead(scriptVars["cloneIds"][i]) {
+                   killEntity(scriptVars["cloneIds"][i])
+               }
+           }
+       }
+       clearBulletsForEntity(myEntityId)
+   }
+} else {
+   if is_undefined(scriptVars["phase"]) {
+       resetVars()
+   }
+
+   if targetEntityId > 0 {
+       // Update timers
+       scriptVars["timeSinceCharge"] += delta
+       scriptVars["timeSinceBurst"] += delta
+       scriptVars["timeSinceSpikes"] += delta
+       scriptVars["timeSinceStorm"] += delta
+       scriptVars["timeSinceTurret"] += delta
+       
+       if !scriptVars["isHidden"] && scriptVars["phase"] == 2 {
+           scriptVars["timeSinceLastVanish"] += delta
+       }
+
+       // Phase transition check
+       hp := float(getPoints(myEntityId, "hp", "current"))
+       maxhp := float(getPoints(myEntityId, "hp", "max"))
+       
+       if hp/maxhp < 0.7 && scriptVars["phase"] == 1 {
+           scriptVars["phase"] = 2
+           // Phase 2 init
+           setCollisionLayer(myEntityId, CollisionLayerDynamic)
+           triggerAnimation(myEntityId, "Vanish")
+           scriptVars["isHidden"] = true
+           clearBulletsForEntity(myEntityId)
+           spawnClones()
+       }
+       
+       // Phase 2 clone check and periodic vanish
+       if scriptVars["phase"] == 2 {
+           // Check for clone deaths
+           anyCloneDead := false
+           for i := 0; i < len(scriptVars["cloneIds"]); i++ {
+               if isEntityDead(scriptVars["cloneIds"][i]) {
+                   anyCloneDead = true
+                   break
+               }
+           }
+           
+           // Handle clone death or periodic vanish timer
+           if (anyCloneDead && scriptVars["isHidden"]) || (scriptVars["timeSinceLastVanish"] >= 20.0 && !scriptVars["isHidden"]) {
+               if scriptVars["isHidden"] {
+                   // Reappear
+                   setCollisionLayer(myEntityId, CollisionLayerMonster)
+                   triggerAnimation(myEntityId, "Idle")
+                   scriptVars["isHidden"] = false
+                   
+                   // Clean up any remaining clones
+                   for i := 0; i < len(scriptVars["cloneIds"]); i++ {
+                       if !isEntityDead(scriptVars["cloneIds"][i]) {
+                           killEntity(scriptVars["cloneIds"][i])
+                       }
+                   }
+                   scriptVars["cloneIds"] = []
+                   scriptVars["timeSinceLastVanish"] = 0.0
+               } else {
+                   // Time to vanish again
+                   setCollisionLayer(myEntityId, CollisionLayerDynamic)
+                   triggerAnimation(myEntityId, "Vanish")
+                   scriptVars["isHidden"] = true
+                   clearBulletsForEntity(myEntityId)
+                   spawnClones()
+                   scriptVars["timeSinceLastVanish"] = 0.0
+               }
+           }
+
+           if scriptVars["timeSinceTurret"] > 2.0 && scriptVars["isHidden"] == false{
+				// Place 6 turrets around the room
+				useAbilityAtPosition(myEntityId, "Elite Shadow Hunter Turrets", 
+					positionInCurrentRoom(myEntityId, [6.0,6.0,0.0]))
+				useAbilityAtPosition(myEntityId, "Elite Shadow Hunter Turrets",
+					positionInCurrentRoom(myEntityId, [6.0,16.0,0.0]))
+				useAbilityAtPosition(myEntityId, "Elite Shadow Hunter Turrets",
+					positionInCurrentRoom(myEntityId, [6.0,26.0,0.0]))
+				scriptVars["timeSinceTurret"] = 0.0
+			}
+       }
+       
+       // Combat logic
+       if castingAction == 0 && (scriptVars["phase"] == 1 || (scriptVars["phase"] == 2 && !scriptVars["isHidden"])) {
+           // Handle charging
+           if scriptVars["timeSinceCharge"] >= 2.5 && !scriptVars["isCharging"] {
+               scriptVars["isCharging"] = true
+               scriptVars["timeSinceCharge"] = 0.0
+               setSpeed(myEntityId, 20.0)
+               changeAttackBehaviour(myEntityId, "Melee Ranged")
+               pathTo(myEntityId, entityPosition(targetEntityId))
+               
+               if distToEntity(myEntityId, targetEntityId) < 2.0 {
+                   attackEntity(myEntityId, targetEntityId, 250, 0)
+               }
+           }
+           
+           if scriptVars["isCharging"] && scriptVars["timeSinceCharge"] >= 0.4 {
+               scriptVars["isCharging"] = false
+               setSpeed(myEntityId, 1.0)
+               changeAttackBehaviour(myEntityId, "Medium Ranged")
+               stopPathfinding(myEntityId)
+               useAbilityAtPosition(myEntityId, "Shadow Impact", entityPosition(myEntityId))
+           }
+           
+           // Regular attacks
+           if !scriptVars["isCharging"] {
+               if scriptVars["timeSinceBurst"] >= 1.5 {
+                   useAbilityAtPosition(myEntityId, "Shadow Burst", [0.0,0.0,0.0], entityPosition(targetEntityId))
+                   scriptVars["timeSinceBurst"] = 0.0
+               }
+               
+
+               if scriptVars["timeSinceStorm"] >= 5.0 {
+                   useAbilityAtPosition(myEntityId, "Shadow Storm", entityPosition(myEntityId))
+                   scriptVars["timeSinceStorm"] = 0.0
+               }
+           }
+       }
+   }
+}

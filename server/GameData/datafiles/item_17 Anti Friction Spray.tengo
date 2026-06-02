@@ -1,0 +1,31 @@
+---item_17 Anti Friction Spray---
+Type :: Equippable
+Slot :: Passive
+Icon :: items_714
+Gun Definition :: [[Anti Friction Spray]]
+
+Increased base movement speed
+
+Making a quick getaway is an important part of any adventure.
+
+---gundef_Anti Friction Spray---
+Fire Speed :: 0
+Bullets In Chamber :: 1
+Reload Speed :: 15.0
+Sprite :: items_714
+Fire Event :: 
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Feet of the Slick]]
+
+---spike_Feet of the Slick---
+Auras :: [[Feet of the Slick]]
+
+---aura_Feet of the Slick---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Feet of the Slick]]
+

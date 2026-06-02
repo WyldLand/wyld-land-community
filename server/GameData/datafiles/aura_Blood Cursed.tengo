@@ -1,0 +1,35 @@
+---aura_Blood Cursed---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:BloodCursed]]
+
+---ability_Blood Cursed Pool---
+Bullet Definition :: [[bloodpool]]
+Max Range :: 100.0
+
+---bulletdef_bloodpool---
+sprite CirclePool 3
+potency 100
+fire 0 relative 0
+	aoedot
+	radius 3
+	damageEvery 20
+	vfx BloodPool
+	wait 1200
+	vanish
+
+---script_BloodCursed_IncomingDamage---
+rand := import("rand")
+
+if is_undefined(scriptVars["didPool"]) {
+	scriptVars["didPool"] = false
+}
+
+if getPoints(myEntityId, "hp", "current") - damage <= 0 && !scriptVars["didPool"] {
+	if rand.float() < 0.50 {
+		scriptVars["didPool"] = true
+		useAbilityAtPosition(myEntityId, "Blood Cursed Pool", entityPosition(myEntityId))
+	}
+}

@@ -1,0 +1,31 @@
+---item_45 Standard Issue Blaster---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Standard Issue Blaster]]
+Rarity :: Common
+
+Blasting pattern Alpha Gamma Delta.
+
+---gundef_Standard Issue Blaster---
+Fire Speed :: 0.3
+Bullets In Chamber :: 12
+Reload Speed :: 1.1
+Sprite :: weapons_45
+Fire Event :: blastera
+Reload Event :: blasterreload
+Bullet Definition :: [[basicblaster]]
+Archetype :: Handgun
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: SemiAuto
+Bullet Lifetime :: 1.0
+
+---bulletdef_basicblaster---
+sprite Custom10
+color 3
+potency 23
+fire 16 relative -2 2
+wait 1
+fire 16 relative -2 2
+wait 1
+fire 16 relative -2 2
+

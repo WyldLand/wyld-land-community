@@ -1,0 +1,37 @@
+---item_15 Insulation---
+Type :: Equippable
+Slot :: Passive
+Icon :: items_718
+Gun Definition :: [[Insulation]]
+
+Decreased damage from Shock effects
+
+50% of the time it works every time.
+
+---gundef_Insulation---
+Fire Speed :: 0
+Bullets In Chamber :: 1
+Reload Speed :: 15.0
+Sprite :: items_718
+Fire Event :: 
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Insulation]]
+
+---spike_Insulation---
+Auras :: [[Insulation]]
+
+---aura_Insulation---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:Insulation]]
+
+---script_Insulation_IncomingDamage---
+
+if damageType == "Shock" {
+	additionalDamage = int(0.3 * float(damage)) * -1
+}
+

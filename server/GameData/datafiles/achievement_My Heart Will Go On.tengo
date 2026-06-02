@@ -1,0 +1,9 @@
+---achievement_My Heart Will Go On---
+Kill :: [[Mobs/Heart Hoarder|Heart Hoarder]]@1
+Tags :: NoDamage
+Title :: Titanous
+XP :: 50
+ResetOnDeath :: False
+
+Take out Heart Hoarder without taking any damage.
+

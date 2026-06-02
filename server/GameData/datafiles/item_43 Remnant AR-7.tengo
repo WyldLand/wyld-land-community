@@ -1,0 +1,26 @@
+---item_43 Remnant AR-7---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Remnant AR-7]]
+Rarity :: Rare
+
+Take your time, and aim for the center of mass.
+
+---gundef_Remnant AR-7---
+Fire Speed :: 0.2
+Bullets In Chamber :: 35
+Reload Speed :: 1.4
+Sprite :: weapons_44
+Fire Event :: assaultriflec
+Reload Event :: assaultriflereload
+Bullet Definition :: [[remnantar]]
+Archetype :: AssaultRifle
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: FullAuto
+Bullet Lifetime :: 1.2
+
+---bulletdef_remnantar---
+sprite Custom12
+potency 46
+fire 15 relative -3 3
+

@@ -1,0 +1,81 @@
+---item_100 Temporal Disruptor---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Temporal Disruptor]]
+Rarity :: Exotic
+Durability :: 5
+
+First shot slows enemies. Second shot deals massive bonus damage to slowed targets.
+
+Time flows like honey through this weapon's barrel.
+
+---gundef_Temporal Disruptor---
+Fire Speed :: 0.6
+Charge Time :: 0.5
+Charge Slow :: 1.0
+Lock Time :: 0.5
+Bullets In Chamber :: 2
+Reload Speed :: 2.0
+Sprite :: weapons_102
+Fire Event :: lasercannona
+Reload Event :: lasercannonreload
+Charge Event :: chargelong
+Bullet Definition :: [[temporaldisruptor]]
+Archetype :: Laser
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: SemiAuto
+Bullet Lifetime :: 1.0
+Innate Spikes :: [[Temporal Strike]]
+
+---bulletdef_temporaldisruptor---
+sprite Laser14
+color 4
+potency 0
+fire 230 relative 0
+	piercing 100
+sprite Invisible
+potency 172
+wait 1
+fire 230 relative 0
+	radius 0.6
+	piercing 100
+wait 4
+fire 230 relative 0
+	radius 0.6
+	piercing 100
+
+---spike_Temporal Strike---
+Auras :: [[Temporal Strike]]
+
+---aura_Temporal Strike---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:TemporalStrike]]
+
+---script_TemporalStrike_FireWeapon---
+if abilityId == auraAbilityId {
+    if is_undefined(scriptVars["lastBulletFired"]) {
+        scriptVars["lastBulletFired"] = -1
+    }
+    scriptVars["lastBulletFired"] = gunState["BulletsFired"]
+}
+
+---script_TemporalStrike_DamageDealt---
+if abilityId == auraAbilityId {
+    if !is_undefined(scriptVars["lastBulletFired"]) {
+        if scriptVars["lastBulletFired"] == 0 {
+            addAuraToEntity(myEntityId, "Slow", auraAbilityId, damageSenderId)
+        } else if scriptVars["lastBulletFired"] == 1 {
+            currentAuras := getAurasOnEntity(damageSenderId)
+            for i := 0; i < len(currentAuras); i++ {
+                if currentAuras[i]["name"] == "Slow" {
+                    attackEntity(myEntityId, damageSenderId, damage, -99)
+                    break
+                }
+            }
+        }
+    }
+}

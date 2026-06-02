@@ -1,0 +1,8 @@
+---mob_Curse Shrine---
+Prefab :: curseshrine
+Range Behavior :: Stationary
+
+Bounding Box :: 0 1.0 1.5 2.0
+Speed :: 500
+Type :: Friendly
+

@@ -1,0 +1,139 @@
+---mob_Elite Bomb Bot---
+Prefab :: elitebombbot
+Range Behavior :: Melee Ranged
+Abilities :: [[Explosive Trail]] [[Override Explosion]]
+Speed :: 1000
+Type :: Normal
+Options :: nodeathsmoke
+
+---prefab_elitebombbot---
+
+Components :: [[EliteBombBotSprite]] [[EliteBombBotCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_EliteBombBotCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+	"position": [0, 0.4],
+    "size": [1.2, 1.2]
+}
+
+---prefabcomponent_EliteBombBotSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.65,
+    "pivotY": 0.6,
+    "sprite": "darkforest3/elitebombbot",
+    "color": "red",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_sfxelitebombbotDig---
+
+Components :: [[SFXBombBotDig]]
+
+---ability_Explosive Trail---
+Bullet Definition :: [[explosivetrail]]
+Cooldown :: 1.5
+Max Range :: 100.0
+
+---bulletdef_explosivetrail---
+sprite CirclePool 1
+potency 100
+fire 0 relative 0
+	aoeexplosion
+	radius 1
+	timedFill 5
+	damageEvery 5
+	wait 5
+	vfx MiniExplosion 1
+	wait 1
+	vanish
+
+---ability_Override Explosion---
+Bullet Definition :: [[overrideexplosion]]
+Lock Time :: 2.0
+VFX Cast :: trigger:Dig*
+
+---bulletdef_overrideexplosion---
+sprite CirclePool 5
+potency 300
+fire 0 relative 0
+	aoeexplosion
+	radius 6
+	timedFill 5
+	damageEvery 5
+	wait 5
+	vfx BombExplosion 6
+	fire overrideshockwave
+	wait 1
+	vanish
+
+---bulletdef_overrideshockwave---
+sprite Basic
+potency 100
+radial bullets:24 speed:8 angle:0 directionType:absolute
+	wait 60
+	vanish
+
+---script_elitebombbot_Monster---
+
+if is_undefined(scriptVars["didDie"]) {
+	scriptVars["didDie"] = false
+	scriptVars["timeSinceTrail"] = 0.0
+	scriptVars["healthThreshold"] = 0.25
+	scriptVars["usedOverride"] = false
+}
+
+if !isDead {
+	currentHealth := float(getPoints(myEntityId, "hp", "current"))
+	maxHealth := float(getPoints(myEntityId, "hp", "max"))
+	
+	// Leave explosive trail at target's position while moving
+	if targetEntityId > 0 {
+		scriptVars["timeSinceTrail"] += delta
+		if scriptVars["timeSinceTrail"] > 1.0 {
+			useAbilityAtPosition(myEntityId, "Explosive Trail", entityPosition(targetEntityId))
+			scriptVars["timeSinceTrail"] = 0.0
+		}
+	}
+	
+	// Use override explosion when health gets low
+	if currentHealth < maxHealth * scriptVars["healthThreshold"] && !scriptVars["usedOverride"] && castingAction == 0 {
+		scriptVars["usedOverride"] = true
+		useAbilityAtPosition(myEntityId, "Override Explosion", entityPosition(myEntityId))
+		killEntity(myEntityId)
+		scriptVars["didDie"] = true
+	}
+	
+	// Normal combat behavior
+	if targetEntityId > 0 && castingAction == 0 {
+		distanceToTarget := distToEntity(myEntityId, targetEntityId)
+			
+		// Close range suicide attack
+		if distanceToTarget < 2.0 {
+			useAbilityAtPosition(myEntityId, "Override Explosion", entityPosition(myEntityId))
+			scriptVars["didDie"] = true
+			killEntity(myEntityId)
+		}
+	}
+}
+
+if !scriptVars["didDie"] && isDead {
+	useAbilityAtPosition(myEntityId, "Override Explosion", entityPosition(myEntityId))
+	scriptVars["didDie"] = true
+}

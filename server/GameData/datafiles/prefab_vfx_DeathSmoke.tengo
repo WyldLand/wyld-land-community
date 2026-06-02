@@ -1,0 +1,26 @@
+---prefab_DeathSmoke---
+
+Components :: [[DeathSmokeSprite]] [[DeathSmokeSound]]
+
+---prefabcomponent_DeathSmokeSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "player/deathsmoke",
+    "play": "default",
+    "allowBatch": true
+     
+}
+
+---prefabcomponent_DeathSmokeSound---
+
+Component :: Sound
+
+{
+    
+    "sources": ["player/enemykilled.wav"],
+	"spatial": true
+}

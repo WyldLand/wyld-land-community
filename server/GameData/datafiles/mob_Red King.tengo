@@ -1,0 +1,504 @@
+---mob_Red King---
+Prefab :: redking
+Range Behavior :: Short Ranged
+Bounding Box :: -0.1 0.6 1 1.2
+Type :: Boss
+Loot :: [[RedKing]]
+Abilities :: [[Bloody Charge]] [[Bloody Slam]] [[Bloody Slash]] [[Bloody Stab]] [[Bloody Slash Phase Two]] [[Bloody Slam Phase Two]] [[Phase Transition]] [[Bloody Pulse]]
+
+---prefab_redking---
+
+Components :: [[RedKingSprite]] [[Monster]] [[Nameplate]] [[RedKingCollider]] [[BGMRedKing]]
+
+---prefabcomponent_RedKingCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+	"position": [-0.1, 0.6],
+    "size": [1.0, 1.2]
+}
+
+---prefabcomponent_RedKingSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.323,
+    "pivotY": 1.0,
+    "sprite": "redking/redking",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ],
+	"transitions": [
+		{
+			"from": "Teleport",
+			"to": "*",
+			"animation": "_hide"
+		},
+		{
+			"from": "*",
+			"to": "Reappear",
+			"animation": "_show"
+		}
+	]
+}
+
+---prefab_sfxredkingExplosion---
+
+Components :: [[SFXRedKingExplosion]]
+
+---prefabcomponent_SFXRedKingExplosion---
+
+Component :: Sound
+
+{
+    "sources": ["redking/redkingExplosion.wav"],
+	"spatial": true
+}
+
+---prefab_sfxredkingSlam---
+
+Components :: [[SFXRedKingSlam]]
+
+---prefabcomponent_SFXRedKingSlam---
+
+Component :: Sound
+
+{
+    "sources": ["redking/redkingSlam.wav"],
+	"spatial": true
+}
+
+---prefab_sfxredkingSlash---
+
+Components :: [[SFXRedKingSlash]]
+
+---prefabcomponent_SFXRedKingSlash---
+
+Component :: Sound
+
+{
+    "sources": ["redking/redkingSlash1.wav", "redking/redkingSlash2.wav"],
+	"select": "all",
+	"delay": [0.0, 0.60],
+	"spatial": true
+}
+
+---prefab_sfxredkingStab---
+
+Components :: [[SFXRedKingStab]]
+
+---prefabcomponent_SFXRedKingStab---
+
+Component :: Sound
+
+{
+    "sources": ["redking/redkingStab.wav"],
+	"spatial": true
+}
+
+---prefab_sfxredkingTeleport---
+
+Components :: [[SFXRedKingTeleport]]
+
+---prefabcomponent_SFXRedKingTeleport---
+
+Component :: Sound
+
+{
+    "sources": ["redking/redkingTeleport.wav"],
+	"spatial": true
+}
+
+---prefabcomponent_BGMRedKing---
+
+Component :: Sound
+{
+	"sources": ["redking/bgm1.wav", "redking/bgm2.wav", "redking/bgm3.wav", "redking/bgm4.wav"],
+	"channel": "bgm",
+	"loop": true,
+	"select": "random",
+	"priority": 2,
+	"combatOnly": true
+}
+
+---loottable_RedKing---
+[[190 Crimson Ooze]] @ 67.0
+[[19 Rage Machine]] @ 25.0
+[[20 Medical Spa]] @ 15.0
+[[101 Bloody Thirst]] @ 2.0
+[[604 Suppression Pulse]] @ 15.0
+[[122 Red Ooze]] @ 500.0 @ qf_epicQuestPhaseTwoItems
+
+---ability_Bloody Charge---
+VFX Charging :: trigger:Teleport*
+Cast Time :: 15.0
+Script :: BloodyCharge
+
+---script_BloodyCharge_Cast---
+setSpeed(myEntityId, 0.0) //so we don't move while we're casing this
+
+if frameNum == 1 {
+	//Spawn our helpers
+	aggroMyTargets(myEntityId, summonEntity("redball", positionInCurrentRoom(myEntityId, [16.0,6.0,0.0]), monsterLevel(myEntityId)))
+	aggroMyTargets(myEntityId, summonEntity("redball", positionInCurrentRoom(myEntityId, [16.0,25.0,0.0]), monsterLevel(myEntityId)))
+	aggroMyTargets(myEntityId, summonEntity("redball", positionInCurrentRoom(myEntityId, [25.0,15.0,0.0]), monsterLevel(myEntityId)))
+	//aggroMyTargets(myEntityId, summonEntity("redball", positionInCurrentRoom(myEntityId, [5.0,15.0,0.0]), monsterLevel(myEntityId)))
+}
+
+if frameNum == 15 {
+	setCollisionLayer(myEntityId, CollisionLayerDynamic)
+}
+
+if frameNum == 284 {
+	triggerAnimation(myEntityId, "Reappear")
+	setCollisionLayer(myEntityId, CollisionLayerMonster)
+}
+
+if frameNum == 299 {
+	//Come back
+
+	currentNearby := getNearbyEntities(myEntityId)
+	ballsAlive := 0
+	for i := 0; i < len(currentNearby); i++ {
+		if currentNearby[i].prefab == "redball" && !isEntityDead(currentNearby[i].id) {
+			//triggerAnimation(currentNearby[i].id, "Heal")
+			useAbilityAtPosition(currentNearby[i].id, "Red Ball Heal", [0.0,0.0,0.0])
+			killEntity(currentNearby[i].id)
+			ballsAlive++
+		}
+	}
+
+
+	dealPotencyToEntity(myEntityId, myEntityId, -1000 * ballsAlive, 0)
+}
+
+---ability_Bloody Slam---
+Bullet Definition :: [[bloodyslam]]
+VFX Cast :: trigger:Slam*
+Lock Time :: 2.2
+
+---bulletdef_bloodyslam---
+sprite CirclePool 3.5
+potency 250
+fire 0 relative 0
+	aoeexplosion
+	radius 3.5
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vfx BloodySlamExplosion 5
+	wait 1
+	vanish
+
+---ability_Bloody Pulse---
+Bullet Definition :: [[bloodypulse]]
+VFX Cast :: trigger:Buff*
+Lock Time :: 2.5
+Max Range :: 100.0
+
+---bulletdef_bloodypulse---
+sprite OrangePool 3.5
+potency 150
+fire 0 relative 0
+	aoeexplosion
+	radius 3.5
+	timedFill 25
+	damageEvery 25
+	wait 25
+	vfx BloodySlamExplosion 3
+	wait 1
+	fire bloodypulsewave
+	vanish
+
+---bulletdef_bloodypulsewave---
+sprite Custom10
+color 2
+potency 125
+radial bullets:24 speed:8
+	wait 25
+	speed -16
+	wait 25
+	vanish
+
+
+---ability_Bloody Slash---
+Bullet Definition :: [[bloodyslash]]
+VFX Cast :: trigger:Slash*
+Lock Time :: 0.25
+
+---bulletdef_bloodyslash---
+potency 100
+wait 5
+nway speed:5 bullets:5 spread:15 angle:0 directionType:relative
+wait 10
+nway speed:8 bullets:12 spread:60 angle:0 directionType:relative
+
+---ability_Bloody Stab---
+Bullet Definition :: [[bloodystab]] [[bloodystabradial]]
+VFX Charging :: trigger:Stab*
+Lock Time :: 0.75
+Cast Time :: 0.5
+Auras :: [[Boss Slow]]
+
+---bulletdef_bloodystab---
+sprite PurplePool 2.0
+potency 100
+wait 5
+fire 0 relative 0
+	aoedot
+	radius 2.0
+	damageEvery 10
+	vfx BloodPool
+	wait 1800
+	vanish
+
+---bulletdef_bloodystabradial---
+sprite Slow
+color 4
+potency 100
+radial bullets:36 speed:6
+
+---aura_Boss Slow---
+Type :: Debuff
+Icon :: statusicons_4
+Duration :: 3.0
+Max Stacks :: 3
+Time Per Tick :: 1.0
+Definitions :: [[Slow]]
+
+---ability_Bloody Slash Phase Two---
+Bullet Definition :: [[bloodyslashphasetwo]]
+VFX Cast :: trigger:Slash*
+Lock Time :: 0.25
+
+---bulletdef_bloodyslashphasetwo---
+potency 125
+wait 5
+nway speed:6 bullets:7 spread:20 angle:0 directionType:relative
+wait 8
+nway speed:9 bullets:15 spread:75 angle:0 directionType:relative
+wait 8
+nway speed:7 bullets:5 spread:15 angle:-30 directionType:relative
+nway speed:7 bullets:5 spread:15 angle:30 directionType:relative
+
+---ability_Bloody Slam Phase Two---
+Bullet Definition :: [[bloodyslamphasetwo]]
+VFX Cast :: trigger:Slam*
+Lock Time :: 2.2
+
+---bulletdef_bloodyslamphasetwo---
+sprite CirclePool 4.0
+potency 300
+fire 0 relative 0
+	aoeexplosion
+	radius 4.0
+	timedFill 15
+	damageEvery 15
+	wait 15
+	vfx BloodySlamExplosion 5
+	wait 1
+	fire bloodyslamwave
+	vanish
+
+---bulletdef_bloodyslamwave---
+sprite Custom10
+color 2
+potency 125
+radial bullets:16 speed:8 directionType:absolute angle:0
+	wait 60
+	vanish
+
+---ability_Phase Transition---
+Bullet Definition :: [[redkingphasetransition]]
+Max Range :: 100.0
+VFX Cast :: trigger:Buff
+Lock Time :: 3.0
+
+---bulletdef_redkingphasetransition---
+sprite Custom10
+color 2
+potency 100
+radial bullets:48 speed:8
+wait 3
+radial bullets:48 speed:7 angle:3.75 directionType:absolute
+
+---aura_Phase Transition Immunity---
+Type :: Buff
+Duration :: 5.0
+Icon :: statusicons_36
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:PhaseTransitionImmunity]]
+
+---script_PhaseTransitionImmunity_IncomingDamage---
+// Negate all damage during phase transition
+additionalDamage = -1 * damage
+
+---script_redking_Monster---
+resetVars := func() {
+	scriptVars["timeSinceShoot"] = 0.0
+	scriptVars["timeSinceStab"] = 0.0
+	scriptVars["timeSinceTeleport"] = 0.0
+	scriptVars["timeSinceAction"] = 0.0
+	scriptVars["timeSinceCharge"] = 0.0
+	scriptVars["timeSincePulse"] = 0.0  // New timer for Bloody Pulse
+	scriptVars["phase"] = 1
+	scriptVars["didPhaseTransition"] = false
+	scriptVars["inTransition"] = false
+	scriptVars["transitionTimer"] = 0.0
+	scriptVars["saidDeathPhrase"] = false
+	scriptVars["saidIntroPhrase"] = false
+}
+
+if !isDead {
+	if is_undefined(scriptVars["timeSinceShoot"]) {
+		resetVars()
+	}
+	
+	// Add intro phrase when first seeing a player
+	if targetEntityId > 0 && !scriptVars["saidIntroPhrase"] {
+		say(myEntityId, "Finally, a real battle!")
+		scriptVars["saidIntroPhrase"] = true
+	}
+
+	// Check for phase transition
+	currentHealth := float(getPoints(myEntityId, "hp", "current"))
+	maxHealth := float(getPoints(myEntityId, "hp", "max"))
+	
+	// Phase transition at 50% health
+	if currentHealth < maxHealth * 0.5 && scriptVars["phase"] == 1 {
+		if !scriptVars["inTransition"] && !scriptVars["didPhaseTransition"] {
+			// Start phase transition and add invulnerability
+			say(myEntityId, "Looks like I'll have to step it up!")
+			addAuraToEntity(myEntityId, "Phase Transition Immunity", 0, myEntityId)
+			scriptVars["inTransition"] = true
+			scriptVars["transitionTimer"] = 0.0
+			useAbilityAtPosition(myEntityId, "Phase Transition", entityPosition(myEntityId))
+			
+			// Visual effect to indicate invulnerability
+			showVfxAtPosition(myEntityId, "Shield", entityPosition(myEntityId))
+		}
+	}
+	
+	// Handle phase transition
+	if scriptVars["inTransition"] {
+		scriptVars["transitionTimer"] += delta
+		
+		// After 2 seconds, complete the transition
+		if scriptVars["transitionTimer"] >= 2.0 {
+			scriptVars["inTransition"] = false
+			scriptVars["didPhaseTransition"] = true
+			scriptVars["phase"] = 2
+			
+			// Visual effect for phase transition completion
+			triggerAnimation(myEntityId, "Buff")
+			
+			// Reset all timers after phase transition
+			scriptVars["timeSinceShoot"] = 0.0
+			scriptVars["timeSinceStab"] = 0.0
+			scriptVars["timeSinceTeleport"] = 0.0
+			scriptVars["timeSinceAction"] = 0.0
+			scriptVars["timeSinceCharge"] = 0.0
+			scriptVars["timeSincePulse"] = 0.0
+		}
+		
+		// Skip the rest of the function execution when in transition
+	} else {
+	
+		if targetEntityId > 0 {
+			scriptVars["timeSinceShoot"] += delta
+			scriptVars["timeSinceStab"] += delta
+			scriptVars["timeSincePulse"] += delta  // Update Pulse timer
+
+			if castingAction == 0 {
+				scriptVars["timeSinceTeleport"] += delta
+				scriptVars["timeSinceCharge"] += delta
+				scriptVars["timeSinceAction"] += delta
+				
+				// Force a Bloody Slash every 20 seconds if it hasn't happened
+				if scriptVars["timeSinceShoot"] > 1.50 {
+					scriptVars["timeSinceShoot"] = 0.0
+					scriptVars["timeSinceAction"] = 0.0
+					
+					if scriptVars["phase"] >= 2 {
+						// Use enhanced version in phase 2
+						useAbilityAtTarget(myEntityId, "Bloody Slash Phase Two", targetEntityId, 0.0)
+					} else {
+						// Use normal version in phase 1
+						useAbilityAtTarget(myEntityId, "Bloody Slash", targetEntityId, 0.0)
+					}
+				}
+				
+				if scriptVars["timeSinceAction"] > 1.0 {
+					// Prioritize actions with less overlap
+					if scriptVars["timeSinceCharge"] > 28.0 {
+						scriptVars["timeSinceCharge"] = 0.0
+						scriptVars["timeSinceAction"] = 0.0
+						useAbilityAtPosition(myEntityId, "Bloody Charge", entityPosition(myEntityId))
+					} else if scriptVars["timeSinceTeleport"] > 11.0 {
+						scriptVars["timeSinceTeleport"] = 0.0
+						scriptVars["timeSinceAction"] = 0.0
+						
+						// Handle teleport based on phase
+						if scriptVars["phase"] >= 2 {
+							// Phase 2: Direct teleport to target and slam
+							targetEntId := randomTargetEntityId(myEntityId, 100.0)
+							setPosition(myEntityId, entityPosition(targetEntId))
+							useAbilityAtPosition(myEntityId, "Bloody Slam Phase Two", entityPosition(myEntityId))
+						} else {
+							// Phase 1: Use original teleport
+							targetEntId := randomTargetEntityId(myEntityId, 100.0)
+							setPosition(myEntityId, entityPosition(targetEntId))
+							useAbilityAtPosition(myEntityId, "Bloody Slam", entityPosition(myEntityId))
+						}
+					} else if scriptVars["timeSincePulse"] > 5.0 {  // Use Bloody Pulse every 5 seconds
+						scriptVars["timeSincePulse"] = 0.0
+						scriptVars["timeSinceAction"] = 0.0
+						
+						if scriptVars["phase"] >= 2 {
+							// In phase 2, place multiple pulses for increased difficulty
+							useAbilityAtPosition(myEntityId, "Bloody Pulse", randomPositionInCurrentRoom(myEntityId, 3.0))
+							useAbilityAtPosition(myEntityId, "Bloody Pulse", randomPositionInCurrentRoom(myEntityId, 3.0))
+						} else {
+							// In phase 1, just one pulse
+							useAbilityAtPosition(myEntityId, "Bloody Pulse", randomPositionInCurrentRoom(myEntityId, 3.0))
+						}
+					} else if scriptVars["timeSinceStab"] > 5.0 {
+						scriptVars["timeSinceStab"] = 0.0
+						scriptVars["timeSinceAction"] = 0.0
+						useAbilityAtPosition(myEntityId, "Bloody Stab", entityPosition(myEntityId))
+					} else if scriptVars["timeSinceShoot"] > 1.5 {
+						scriptVars["timeSinceShoot"] = 0.0
+						scriptVars["timeSinceAction"] = 0.0
+						
+						if scriptVars["phase"] >= 2 {
+							// Use enhanced version in phase 2
+							// Use actual target instead of random
+							useAbilityAtTarget(myEntityId, "Bloody Slash Phase Two", targetEntityId, 0.0)
+						} else {
+							// Use normal version in phase 1
+							// Use actual target instead of random
+							useAbilityAtTarget(myEntityId, "Bloody Slash", targetEntityId, 0.0)
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+if isDead && !scriptVars["saidDeathPhrase"] {
+	say(myEntityId, "A battle...well fought...")
+	scriptVars["saidDeathPhrase"] = true
+}

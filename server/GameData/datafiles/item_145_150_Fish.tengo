@@ -1,0 +1,44 @@
+---item_145 Grouper---
+Type :: Ingredient
+Slot :: Item
+Icon :: items_684
+Rarity :: Uncommon
+Max Stacks :: 99
+
+A basic and common fish, found in many waters throughout the Wyld.
+
+---item_146 Catfish---
+Type :: Ingredient
+Slot :: Item
+Icon :: items_685
+Rarity :: Uncommon
+Max Stacks :: 99
+
+Has whiskers, even though it's a fish. Kind of weird, if you ask me.
+
+---item_147 Sunfish---
+Type :: Ingredient
+Slot :: Item
+Icon :: items_689
+Rarity :: Rare
+Max Stacks :: 99
+
+Perhaps the most sought-after fish in the Wyld, it sparkles when it swims like it's caught the sun in its belly.
+
+---item_148 Carp---
+Type :: Ingredient
+Slot :: Item
+Icon :: items_690
+Rarity :: Uncommon
+Max Stacks :: 99
+
+Has a really nasty fin on its backside, handle with care.
+
+---item_149 Volcano Trout---
+Type :: Ingredient
+Slot :: Item
+Icon :: items_691
+Rarity :: Rare
+Max Stacks :: 99
+
+Looks like it's swallowed fire and uses it to propel itself forward. Tastes terrible, but has other unique properites useful in crafting.

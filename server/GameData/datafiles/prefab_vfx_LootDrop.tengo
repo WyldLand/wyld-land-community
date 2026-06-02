@@ -1,0 +1,75 @@
+---prefab_LootDropEffect---
+
+Components :: [[LootDropSprite]] [[LootDropSound]] [[SmallCameraShake]]
+
+---prefabcomponent_LootDropSprite---
+
+Component :: Sprite
+
+{
+	"pivotX": 0.5,
+	"pivotY": 0.5,
+	"sprite": "vfx/LootDrop",
+	"play": "default"
+	 
+}
+
+---prefabcomponent_LootDropSound---
+
+Component :: Sound
+
+{
+	"sources": ["sfxexplosion/smallexplosion.wav"]
+}
+
+---prefab_sfxLootDrop1---
+
+Components :: [[SFXLootDrop1]]
+
+---prefabcomponent_SFXLootDrop1---
+
+Component :: Sound
+
+{
+	"sources": ["player/LootDrop1.wav"],
+	"spatial": true
+}
+
+---prefab_sfxLootDrop2---
+
+Components :: [[SFXLootDrop2]]
+
+---prefabcomponent_SFXLootDrop2---
+
+Component :: Sound
+
+{
+	"sources": ["player/LootDrop2.wav"],
+	"spatial": true
+}
+
+---prefab_sfxLootDrop3---
+
+Components :: [[SFXLootDrop3]]
+
+---prefabcomponent_SFXLootDrop3---
+
+Component :: Sound
+
+{
+	"sources": ["player/LootDrop3.wav"],
+	"spatial": true
+}
+
+---prefab_sfxLootDrop4---
+
+Components :: [[SFXLootDrop4]]
+
+---prefabcomponent_SFXLootDrop4---
+
+Component :: Sound
+
+{
+	"sources": ["player/LootDrop4.wav"],
+	"spatial": true
+}

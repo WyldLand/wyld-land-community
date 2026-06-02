@@ -1,0 +1,29 @@
+---item_136 Arc Shotgun---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Arc Blast]]
+Rarity :: Legendary
+Durability :: 4
+
+Fires bullets in a 5-way arc pattern with substantial kickback.
+
+The wide spread ensures nothing in front of you survives.
+
+---gundef_Arc Blast---
+Fire Speed :: 0.5
+Bullets In Chamber :: 4
+Reload Speed :: 2.0
+Sprite :: weapons_88
+Fire Event :: shotgunb
+Reload Event :: shotgunreload
+Bullet Definition :: [[arcblast]]
+Archetype :: Shotgun
+Muzzle VFX :: Muzzle 1.0
+Fire Type :: SemiAuto
+Bullet Lifetime :: 0.8
+
+---bulletdef_arcblast---
+sprite Custom10
+color 2
+potency 50
+nway speed:14 bullets:5 spread:45 angle:0 directionType:relative

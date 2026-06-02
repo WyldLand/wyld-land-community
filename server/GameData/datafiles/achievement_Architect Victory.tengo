@@ -1,0 +1,14 @@
+---achievement_Architect Victory---
+Kill :: [[Mobs/Architect|Architect]]@1
+XP :: 50
+
+Defeat the Architect and its complex array of defensive constructs.
+
+---achievement_Master Builder---
+Kill :: [[Mobs/Architect|Architect]]@1
+Tags :: NoDamage
+Title :: Blueprint Master
+XP :: 50
+ResetOnDeath :: False
+
+Take out the Architect without taking any damage.

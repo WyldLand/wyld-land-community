@@ -1,0 +1,19 @@
+---spike_Reload Addict---
+Auras :: [[Give Plus Damage on Reload]]
+Slot :: Gun
+Rarity :: Legendary
+
+Gain additional damage for a short time after you reload.
+
+---aura_Give Plus Damage on Reload---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:PlusDmgReload]]
+
+---script_PlusDmgReload_ReloadWeapon---
+if auraAbilityId == abilityId {
+	addAuraToEntity(myEntityId, "Plus Damage", 0, myEntityId)
+}

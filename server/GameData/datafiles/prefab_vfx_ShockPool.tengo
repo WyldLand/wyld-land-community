@@ -1,0 +1,32 @@
+---prefab_ShockPool---
+
+Components :: [[ShockPoolSprite]] [[ShockPoolSound]]
+
+---prefabcomponent_ShockPoolSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "vfx/ElectricArea",
+    "animations": [
+        {
+            "name": "default"
+        }
+    ],
+    "allowBatch": true
+    
+}
+
+---prefabcomponent_ShockPoolSound---
+
+Component :: Sound
+
+{
+    
+    "sources": ["sfxexplosion/shockpool.wav"],
+    "loop": true,
+    "volume": 0.75,
+	"spatial": true
+}

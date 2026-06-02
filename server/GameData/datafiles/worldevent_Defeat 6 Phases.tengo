@@ -1,0 +1,218 @@
+---worldevent_Defeat 6 Elite Enemy Phases---
+Mob :: elitephasescontroller
+XP :: 150
+
+Defeat the 6 enemy phases before the progress bar fills (5 Minutes)!
+
+---mobdefinition_Elite Phases Controller---
+ID :: elitephasescontroller
+Prefab :: defendcache
+Range Behavior :: [[Stationary]]
+Bounding Box :: 0 2.73 2.5 3.0
+Type :: Miniboss
+Speed :: 0
+Interaction Timer :: 0.1
+Interaction Label :: Activate
+Options :: noaggronearby
+Loot :: [[Elite Phases Controller]]
+
+---loottable_Elite Phases Controller---
+[[125 Wyld Dash]] @ 10.0
+[[703 Stamina Spa]] @ 15.0
+[[702 Speed Pulse]] @ 15.0
+[[601 Frost Pulse]] @ 15.0
+[[603 Flame Pulse]] @ 15.0
+
+---aura_Controller Immunity---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:ControllerImmunity]]
+
+---script_ControllerImmunity_IncomingDamage---
+// Negate all damage to the controller
+additionalDamage = -1 * damage
+
+---script_elitephasescontroller_Monster---
+
+spawnNextPhase := func() {
+	scriptVars["currentPhase"] += 1
+	
+	if scriptVars["currentPhase"] > scriptVars["totalPhases"] {
+		// All phases complete - victory!
+		worldEventPassed(myEntityId)
+		scriptVars["eventComplete"] = true
+		return
+	}
+	
+	// Each phase has exactly 2 elites
+	numElites := 2
+	
+	// Calculate how many normal mobs to spawn (starts with 4 and increases by 2 each phase)
+	numNormals := 2 + (scriptVars["currentPhase"] - 1) * 2
+	
+	// Clear the tracked entities array for the new phase
+	scriptVars["spawnedEntities"] = []
+	
+	// Spawn the elites
+	for i := 0; i < numElites; i++ {
+		// Get a random spawn position around the controller
+		spawnPos := randomPositionNearby(myEntityId, 10.0, 3.0)
+		
+		// Choose which elite to spawn
+		eliteTypes := ["heavyslicer", "cagedshocker", "blaster", "lumberinghulk", "summoner"]
+		eliteIndex := i % len(eliteTypes)
+		eliteType := eliteTypes[eliteIndex]
+		
+		// Spawn the elite
+		newEliteId := summonEntity(eliteType, spawnPos, monsterLevel(myEntityId))
+		
+		// REMOVED: killEntityIfEntityDies(newEliteId, myEntityId)
+		// We'll handle cleanup manually when the event ends
+		
+		// Add the event credit aura so we know this entity is part of the event
+		addAuraToEntity(myEntityId, "Event Credit", 0, newEliteId)
+		
+		// Store the entity ID for tracking
+		scriptVars["spawnedEntities"] = append(scriptVars["spawnedEntities"], newEliteId)
+		
+		// Make sure the new entity attacks players
+		nearby := getNearbyEntities(myEntityId)
+		for j := 0; j < len(nearby); j++ {
+			if isEnemyOfEntity(myEntityId, nearby[j].id) {
+				aggroMyTargets(nearby[j].id, newEliteId)
+			}
+		}
+	}
+	
+	// Spawn the normal mobs
+	for i := 0; i < numNormals; i++ {
+		// Get a random spawn position around the controller
+		spawnPos := randomPositionNearby(myEntityId, 10.0, 3.0)
+		
+		// Choose which normal mob to spawn
+		normalTypes := ["assassin", "archer", "dualslicer", "bombbot", "shadowofstorms", "stormhead", "mushroomdagger"]
+		normalIndex := i % len(normalTypes)
+		normalType := normalTypes[normalIndex]
+		
+		// Spawn the normal mob
+		newMobId := summonEntity(normalType, spawnPos, monsterLevel(myEntityId))
+		
+		// REMOVED: killEntityIfEntityDies(newMobId, myEntityId)
+		// We'll handle cleanup manually when the event ends
+		
+		// Add the event credit aura so we know this entity is part of the event
+		addAuraToEntity(myEntityId, "Event Credit", 0, newMobId)
+		
+		// Store the entity ID for tracking
+		scriptVars["spawnedEntities"] = append(scriptVars["spawnedEntities"], newMobId)
+		
+		// Make sure the new entity attacks players
+		nearby := getNearbyEntities(myEntityId)
+		for j := 0; j < len(nearby); j++ {
+			if isEnemyOfEntity(myEntityId, nearby[j].id) {
+				aggroMyTargets(nearby[j].id, newMobId)
+			}
+		}
+	}
+}
+
+checkPhaseCompletion := func() {
+	allDefeated := true
+	
+	for i := 0; i < len(scriptVars["spawnedEntities"]); i++ {
+		entityId := scriptVars["spawnedEntities"][i]
+		if !isEntityDead(entityId) {
+			allDefeated = false
+			break
+		}
+	}
+	
+	if allDefeated && len(scriptVars["spawnedEntities"]) > 0 {
+		spawnNextPhase()
+	}
+}
+
+updateProgress := func() {
+	// Calculate progress based on time (0.0 to 1.0)
+	timeProgress := scriptVars["eventTimer"] / scriptVars["maxTime"]
+	
+	// Clamp the progress to [0, 1]
+	if timeProgress < 0.0 {
+		timeProgress = 0.0
+	} else if timeProgress > 1.0 {
+		timeProgress = 1.0
+	}
+	
+	worldEventProgress(myEntityId, timeProgress)
+}
+
+cleanupAllEntities := func() {
+	for i := 0; i < len(scriptVars["spawnedEntities"]); i++ {
+		entityId := scriptVars["spawnedEntities"][i]
+		if !isEntityDead(entityId) {
+			// Note: killEntity not used to avoid potential issues, entities will be cleaned up naturally
+		}
+	}
+	
+	// Clear the array
+	scriptVars["spawnedEntities"] = []
+}
+
+if is_undefined(scriptVars["eventActive"]) {
+	scriptVars["eventActive"] = false
+	scriptVars["eventComplete"] = false
+	scriptVars["currentPhase"] = 0
+	scriptVars["totalPhases"] = 6
+	scriptVars["eventTimer"] = 0.0
+	scriptVars["maxTime"] = 300.0  // 5 minutes max time
+	scriptVars["spawnedEntities"] = []
+	scriptVars["timeSinceProgressUpdate"] = 0.0
+	addAuraToEntity(myEntityId, "Controller Immunity", 0, myEntityId)
+}
+
+if !scriptVars["eventActive"] && !scriptVars["eventComplete"] && len(usedByEntities) > 0 {
+	scriptVars["eventActive"] = true
+	triggerAnimation(myEntityId, "Activate")
+	worldEventActivated(myEntityId)
+	
+	// Start the first phase
+	spawnNextPhase()
+}
+
+if !isDead && scriptVars["eventActive"] && !scriptVars["eventComplete"] {
+	// Controller should not move
+	setSpeed(myEntityId, 0.0)
+	
+	// Update the timer
+	scriptVars["eventTimer"] += delta
+	scriptVars["timeSinceProgressUpdate"] += delta
+	
+	// Check if time's up 
+	if scriptVars["eventTimer"] >= scriptVars["maxTime"] {
+		// Kill all remaining enemies manually
+		cleanupAllEntities()
+		
+		// Destroy the chest/controller
+		triggerAnimation(myEntityId, "Destroy")
+		setCollisionLayer(myEntityId, CollisionLayerIgnore)
+		
+		worldEventFailed(myEntityId)
+		scriptVars["eventComplete"] = true
+	}
+	
+	// Check if this phase is complete every frame
+	checkPhaseCompletion()
+	
+	// Update progress periodically
+	if scriptVars["timeSinceProgressUpdate"] > 0.5 {
+		updateProgress()
+		scriptVars["timeSinceProgressUpdate"] = 0.0
+	}
+}
+
+// Handle event completion cleanup
+if scriptVars["eventComplete"] && len(scriptVars["spawnedEntities"]) > 0 {
+	cleanupAllEntities()
+}

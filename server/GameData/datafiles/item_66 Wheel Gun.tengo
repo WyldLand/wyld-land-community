@@ -1,0 +1,26 @@
+---item_66 Wheel Gun---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Wheel Gun]]
+Rarity :: Rare
+
+Western movies were made long before this gun.
+
+---gundef_Wheel Gun---
+Fire Speed :: 0.15
+Bullets In Chamber :: 7
+Reload Speed :: 1.9
+Sprite :: weapons_65
+Fire Event :: revolverb
+Reload Event :: revolverreload
+Bullet Definition :: [[wheelgun]]
+Archetype :: Handgun
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: SemiAuto
+Bullet Lifetime :: 1.0
+
+---bulletdef_wheelgun---
+sprite PlayerBullet
+potency 78
+fire 17 relative -1.5 1.5 
+

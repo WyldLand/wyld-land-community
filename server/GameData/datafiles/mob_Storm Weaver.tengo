@@ -1,0 +1,157 @@
+---mobdefinition_Storm Weaver---
+ID :: stormweaver
+Prefab :: colossus
+Range Behavior :: [[Medium Ranged]]
+Abilities :: [[Tempest Spiral]] [[Lightning Barrage]] [[Thunder Vortex]]
+Bounding Box :: 0 2.73 2.5 3.0
+Speed :: 150
+Type :: Boss
+
+---ability_Tempest Spiral---
+Bullet Definition :: [[tempestspiral]]
+VFX Cast :: trigger:Attack*
+Lock Time :: 1.0
+
+---bulletdef_tempestspiral---
+sprite Custom10
+color 3
+potency 75
+repeat bullets:60 speed:6 angle:0 angleChange:25 delay:1 directionType:relative
+	wait 60
+	vanish
+wait 15
+repeat bullets:60 speed:7 angle:180 angleChange:-25 delay:1 directionType:relative
+	wait 60
+	vanish
+wait 15
+repeat bullets:30 speed:7 angle:90 angleChange:15 delay:1 directionType:relative
+	wait 60
+	vanish
+repeat bullets:30 speed:7 angle:270 angleChange:-15 delay:1 directionType:relative
+	wait 60
+	vanish
+
+---ability_Lightning Barrage---
+Bullet Definition :: [[lightningbarrage]]
+VFX Cast :: trigger:RangeAttack*
+Lock Time :: 1.5
+
+---bulletdef_lightningbarrage---
+sprite Custom7
+color 4
+potency 50
+repeat bullets:5 angleChange:72 angle:0 directionType:relative
+	fire lightningspread1
+wait 10
+repeat bullets:5 angleChange:72 angle:36 directionType:relative
+	fire lightningspread2
+wait 10
+repeat bullets:10 angleChange:36 angle:0 directionType:relative
+	fire lightningbolt
+
+---bulletdef_lightningspread1---
+sprite Shock
+color 4
+potency 50
+nway speed:12 bullets:7 spread:30 angle:0 directionType:relative
+	wait 60
+	vanish
+
+---bulletdef_lightningspread2---
+sprite Shock
+color 4
+potency 50
+nway speed:10 bullets:5 spread:20 angle:0 directionType:relative
+	wait 60
+	vanish
+
+---bulletdef_lightningbolt---
+sprite Lance14
+color 4
+potency 100
+fire 15 relative 0
+	wait 30
+	fire lightningfork
+
+---bulletdef_lightningfork---
+sprite CirclePool 1
+color 4
+potency 75
+fire 0 relative 0
+	aoeexplosion
+	radius 1
+	damageEvery 3
+	wait 3
+	vfx MiniExplosion 1
+	wait 1
+	vanish
+
+---ability_Thunder Vortex---
+Bullet Definition :: [[thundervortex]]
+VFX Cast :: trigger:Beam
+Lock Time :: 1.5
+
+---bulletdef_thundervortex---
+sprite Custom12
+color 1
+potency 25
+radial bullets:36 speed:8
+wait 5
+radial bullets:36 speed:7 angle:5 directionType:absolute
+wait 5
+radial bullets:36 speed:6 angle:10 directionType:absolute
+repeat bullets:90 speed:4 angle:0 angleChange:14 delay:1 directionType:relative
+	wait 10
+	speed 0
+	wait 20
+	speed 12
+	wait 30
+	vanish
+
+---script_colossust_Monster---
+resetVars := func() {
+	scriptVars["phase"] = 1
+	scriptVars["timeSinceTempest"] = 0.0
+	scriptVars["timeSinceLightning"] = 0.0
+	scriptVars["timeSinceThunder"] = 0.0
+}
+
+if !isDead {
+	if is_undefined(scriptVars["phase"]) {
+		resetVars()
+	}
+
+	if targetEntityId > 0 && castingAction == 0 {
+		scriptVars["timeSinceTempest"] += delta
+		scriptVars["timeSinceLightning"] += delta
+		scriptVars["timeSinceThunder"] += delta
+
+		currentHealth := getPoints(myEntityId, "hp", "current")
+		maxHealth := getPoints(myEntityId, "hp", "max")
+
+		if currentHealth < maxHealth * 0.5 && scriptVars["phase"] == 1 {
+			scriptVars["phase"] = 2
+		}
+
+		if scriptVars["phase"] == 1 {
+			if scriptVars["timeSinceTempest"] > 5.0 {
+				useAbilityAtTarget(myEntityId, "Tempest Spiral", targetEntityId, 2.0)
+				scriptVars["timeSinceTempest"] = 0.0
+			} else if scriptVars["timeSinceLightning"] > 4.0 {
+				useAbilityAtTarget(myEntityId, "Lightning Barrage", targetEntityId, 1.0)
+				scriptVars["timeSinceLightning"] = 0.0
+			}
+		} else {
+			if scriptVars["timeSinceTempest"] > 4.0 {
+				useAbilityAtTarget(myEntityId, "Tempest Spiral", targetEntityId, 2.0)
+				scriptVars["timeSinceTempest"] = 0.0
+			} else if scriptVars["timeSinceLightning"] > 3.5 {
+				useAbilityAtTarget(myEntityId, "Lightning Barrage", targetEntityId, 1.0)
+				scriptVars["timeSinceLightning"] = 0.0
+			} else if scriptVars["timeSinceThunder"] > 6.0 {
+				useAbilityAtPosition(myEntityId, "Thunder Vortex", entityPosition(myEntityId))
+				scriptVars["timeSinceThunder"] = 0.0
+			}
+		}
+	}
+}

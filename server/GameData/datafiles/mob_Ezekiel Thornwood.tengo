@@ -1,0 +1,39 @@
+---mob_Ezekiel Thornwood---
+Prefab :: travelermerchant
+Range Behavior :: Stationary
+Type :: Friendly
+
+---prefab_travelermerchant---
+
+Components :: [[TravelerMerchantSprite]] [[TravelerMerchantCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_TravelerMerchantCollider---
+
+Component :: Collider
+
+{
+    "layer": "Friendly",
+    "position": [0.0, 0.96875],
+    "size": [1.5, 1.9375]
+}
+
+---prefabcomponent_TravelerMerchantSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "haven/travelermerchant",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}

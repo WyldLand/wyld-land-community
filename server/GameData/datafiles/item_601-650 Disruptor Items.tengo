@@ -1,0 +1,552 @@
+---item_602 Shock Pulse---
+Type :: Equippable
+Slot :: Active 
+Icon :: items_725
+Gun Definition :: [[Shock Pulse]]
+Rarity :: Legendary
+Durability :: 4
+
+On use, creates a shocking pool around the player that shocks all enemies within its radius for 2 seconds. If the player has Status Ailment Synergy echo nodes unlocked enemies the reach and duration of the shock effect will increase.
+
+The crackling energy dances with chaotic fury, paralyzing even the most nimble adversaries.
+
+---gundef_Shock Pulse---
+Fire Speed :: 30.0
+Bullets In Chamber :: -1
+Reload Speed :: 0.0
+Sprite :: items_725
+Fire Event :: crystalcast
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Shock Pulse]]
+
+---spike_Shock Pulse---
+Auras :: [[Shock Pulse]]
+
+---aura_Shock Pulse---
+Type :: Debuff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:ShockPulse]]
+
+---ability_Shock Pool I---
+Bullet Definition :: [[shockpoolI]]
+Max Range :: 100.0
+Auras :: [[Disruptor I Shock]]
+
+---bulletdef_shockpoolI---
+sprite OrangePool 2
+potency 0
+fire 0 relative 0
+	aoedot
+	radius 2
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+
+---ability_Shock Pool Disruptor I---
+Bullet Definition :: [[shockpooldisruptorI]]
+Max Range :: 100.0
+Auras :: [[Disruptor II Shock]]
+
+---bulletdef_shockpooldisruptorI---
+sprite OrangePool 4
+potency 0
+fire 0 relative 0
+	aoedot
+	radius 4
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+
+---ability_Shock Pool Disruptor II---
+Bullet Definition :: [[shockpooldisruptorII]]
+Max Range :: 100.0
+Auras :: [[Disruptor III Shock]]
+
+---bulletdef_shockpooldisruptorII---
+sprite OrangePool 6
+potency 0
+fire 0 relative 0
+	aoedot
+	radius 6
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+
+---ability_Shock Pool Disruptor III---
+Bullet Definition :: [[shockpooldisruptorIII]]
+Max Range :: 100.0
+Auras :: [[Disruptor IV Shock]]
+
+---bulletdef_shockpooldisruptorIII---
+sprite OrangePool 8
+potency 0
+fire 0 relative 0
+	aoedot
+	radius 8
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+
+---script_ShockPulse_FireWeapon---
+if abilityId == auraAbilityId {
+    // Get all nearby entities and filter for enemies
+    allNearby := getNearbyEntities(myEntityId)
+    enemiesShocked := 0
+
+    // Check for synergy enhancement
+    if is_undefined(scriptVars["hasDisruptorSynergyI"]) {
+        scriptVars["hasDisruptorSynergyI"] = false
+        scriptVars["hasDisruptorSynergyII"] = false
+        scriptVars["hasDisruptorSynergyIII"] = false
+    }
+
+    auras := getAurasOnEntity(myEntityId)
+    for j := 0; j < len(auras); j++ {
+       if (auras[j]["name"] == "Status Ailment Synergy I") {
+        log("Has Status Ailment Synergy I unlocked!")
+        scriptVars["hasDisruptorSynergyI"] = true
+       } 
+
+       if (auras[j]["name"] == "Status Ailment Synergy II") {
+        log("Has Status Ailment Synergy II unlocked!")
+        scriptVars["hasDisruptorSynergyII"] = true
+       } 
+
+        if (auras[j]["name"] == "Status Ailment Synergy III") {
+        log("Has Status Ailment Synergy III unlocked!")
+        scriptVars["hasDisruptorSynergyIII"] = true
+       } 
+    }
+
+    if (scriptVars["hasDisruptorSynergyIII"]) {
+        useAbilityAtPosition(myEntityId, "Shock Pool Disruptor III", entityPosition(myEntityId))
+    } else if (scriptVars["hasDisruptorSynergyII"]) {
+        useAbilityAtPosition(myEntityId, "Shock Pool Disruptor II", entityPosition(myEntityId))
+    } else if (scriptVars["hasDisruptorSynergyI"]) {
+        useAbilityAtPosition(myEntityId, "Shock Pool Disruptor I", entityPosition(myEntityId))
+    } else {
+        useAbilityAtPosition(myEntityId, "Shock Pool I", entityPosition(myEntityId))
+    }
+}
+
+---item_603 Flame Pulse---
+Type :: Equippable
+Slot :: Active 
+Icon :: items_720
+Gun Definition :: [[Flame Pulse]]
+Rarity :: Legendary
+Durability :: 4
+
+On use, creates a small sized burning pool around the player that burns all enemies within its radius for 2 seconds. If the player has Status Ailment Synergy echo nodes unlocked the reach and duration of the burn effect will increase.
+
+The inferno's embrace consumes all who dare approach, leaving only ash in its wake.
+
+---gundef_Flame Pulse---
+Fire Speed :: 30.0
+Bullets In Chamber :: -1
+Reload Speed :: 0.0
+Sprite :: items_720
+Fire Event :: crystalcast
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Flame Pulse]]
+
+---spike_Flame Pulse---
+Auras :: [[Flame Pulse]]
+
+---aura_Flame Pulse---
+Type :: Debuff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:FlamePulse]]
+
+---ability_Flame Pool I---
+Bullet Definition :: [[flamepoolI]]
+Max Range :: 100.0
+Auras :: [[Disruptor I Burn]]
+
+---bulletdef_flamepoolI---
+sprite CirclePool 2
+potency 0
+fire 0 relative 0
+	aoedot
+	radius 2
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+
+---ability_Flame Pool Disruptor I---
+Bullet Definition :: [[flamepooldisruptorI]]
+Max Range :: 100.0
+Auras :: [[Disruptor II Burn]]
+
+---bulletdef_flamepooldisruptorI---
+sprite CirclePool 4
+potency 0
+fire 0 relative 0
+	aoedot
+	radius 4
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+
+---ability_Flame Pool Disruptor II---
+Bullet Definition :: [[flamepooldisruptorII]]
+Max Range :: 100.0
+Auras :: [[Disruptor III Burn]]
+
+---bulletdef_flamepooldisruptorII---
+sprite CirclePool 6
+potency 0
+fire 0 relative 0
+	aoedot
+	radius 6
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+
+---ability_Flame Pool Disruptor III---
+Bullet Definition :: [[flamepooldisruptorIII]]
+Max Range :: 100.0
+Auras :: [[Disruptor IV Burn]]
+
+---bulletdef_flamepooldisruptorIII---
+sprite CirclePool 8
+potency 0
+fire 0 relative 0
+	aoedot
+	radius 8
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+
+---script_FlamePulse_FireWeapon---
+if abilityId == auraAbilityId {
+    // Get all nearby entities and filter for enemies
+    allNearby := getNearbyEntities(myEntityId)
+    enemiesBurned := 0
+
+    // Check for synergy enhancement
+    if is_undefined(scriptVars["hasDisruptorSynergyI"]) {
+        scriptVars["hasDisruptorSynergyI"] = false
+        scriptVars["hasDisruptorSynergyII"] = false
+        scriptVars["hasDisruptorSynergyIII"] = false
+    }
+
+    auras := getAurasOnEntity(myEntityId)
+    for j := 0; j < len(auras); j++ {
+       if (auras[j]["name"] == "Status Ailment Synergy I") {
+        log("Has Status Ailment Synergy I unlocked!")
+        scriptVars["hasDisruptorSynergyI"] = true
+       } 
+
+       if (auras[j]["name"] == "Status Ailment Synergy II") {
+        log("Has Status Ailment Synergy II unlocked!")
+        scriptVars["hasDisruptorSynergyII"] = true
+       } 
+
+        if (auras[j]["name"] == "Status Ailment Synergy III") {
+        log("Has Status Ailment Synergy III unlocked!")
+        scriptVars["hasDisruptorSynergyIII"] = true
+       } 
+    }
+
+    if (scriptVars["hasDisruptorSynergyIII"]) {
+        useAbilityAtPosition(myEntityId, "Flame Pool Disruptor III", entityPosition(myEntityId))
+    } else if (scriptVars["hasDisruptorSynergyII"]) {
+        useAbilityAtPosition(myEntityId, "Flame Pool Disruptor II", entityPosition(myEntityId))
+    } else if (scriptVars["hasDisruptorSynergyI"]) {
+        useAbilityAtPosition(myEntityId, "Flame Pool Disruptor I", entityPosition(myEntityId))
+    } else {
+        // Create the flame pool at player position
+        useAbilityAtPosition(myEntityId, "Flame Pool I", entityPosition(myEntityId))
+    }    
+}
+
+---item_604 Suppression Pulse---
+Type :: Equippable
+Slot :: Active 
+Icon :: items_726
+Gun Definition :: [[Suppression Pulse]]
+Rarity :: Legendary
+Durability :: 4
+
+On use, creates a small sized suppression pool around the player that reduces damage for all enemies within its radius for 2 seconds. If the player has Debuff Synergy echo nodes unlocked the reach and duration of the suppression effect will increase.
+
+Even the fiercest foes can't escape this suppression!
+
+---gundef_Suppression Pulse---
+Fire Speed :: 30.0
+Bullets In Chamber :: -1
+Reload Speed :: 0.0
+Sprite :: items_726
+Fire Event :: crystalcast
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Suppression Pulse]]
+
+---spike_Suppression Pulse---
+Auras :: [[Suppression Pulse]]
+
+---aura_Suppression Pulse---
+Type :: Debuff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:SuppressionPulse]]
+
+---ability_Suppression Pool I---
+Bullet Definition :: [[suppressionpoolI]]
+Max Range :: 100.0
+Auras :: [[Disruptor I Suppression]]
+
+---bulletdef_suppressionpoolI---
+sprite BluePool 2
+potency 0
+fire 0 relative 0
+	aoedot
+	radius 2
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+
+---ability_Suppression Pool Disruptor I---
+Bullet Definition :: [[suppressionpooldisruptorI]]
+Max Range :: 100.0
+Auras :: [[Disruptor II Suppression]]
+
+---bulletdef_suppressionpooldisruptorI---
+sprite BluePool 4
+potency 0
+fire 0 relative 0
+	aoedot
+	radius 4
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+
+---ability_Suppression Pool Disruptor II---
+Bullet Definition :: [[suppressionpooldisruptorII]]
+Max Range :: 100.0
+Auras :: [[Disruptor III Suppression]]
+
+---bulletdef_suppressionpooldisruptorII---
+sprite BluePool 6
+potency 0
+fire 0 relative 0
+	aoedot
+	radius 6
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+
+---ability_Suppression Pool Disruptor III---
+Bullet Definition :: [[suppressionpooldisruptorIII]]
+Max Range :: 100.0
+Auras :: [[Disruptor IV Suppression]]
+
+---bulletdef_suppressionpooldisruptorIII---
+sprite BluePool 8
+potency 0
+fire 0 relative 0
+	aoedot
+	radius 8
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+
+---script_SuppressionPulse_FireWeapon---
+if abilityId == auraAbilityId {
+    // Get all nearby entities and filter for enemies
+    allNearby := getNearbyEntities(myEntityId)
+
+    // Check for synergy enhancement
+    if is_undefined(scriptVars["hasDebuffSynergyI"]) {
+        scriptVars["hasDebuffSynergyI"] = false
+        scriptVars["hasDebuffSynergyII"] = false
+        scriptVars["hasDebuffSynergyIII"] = false
+    }
+
+    auras := getAurasOnEntity(myEntityId)
+    for j := 0; j < len(auras); j++ {
+       if (auras[j]["name"] == "Debuff Synergy I") {
+        scriptVars["hasDebuffSynergyI"] = true
+       } 
+
+       if (auras[j]["name"] == "Debuff Synergy II") {
+        scriptVars["hasDebuffSynergyII"] = true
+       } 
+
+        if (auras[j]["name"] == "Debuff Synergy III") {
+        scriptVars["hasDebuffSynergyIII"] = true
+       } 
+    }
+
+    if (scriptVars["hasDebuffSynergyIII"]) {
+        useAbilityAtPosition(myEntityId, "Suppression Pool Disruptor III", entityPosition(myEntityId))
+    } else if (scriptVars["hasDebuffSynergyII"]) {
+        useAbilityAtPosition(myEntityId, "Suppression Pool Disruptor II", entityPosition(myEntityId))
+    } else if (scriptVars["hasDebuffSynergyI"]) {
+        useAbilityAtPosition(myEntityId, "Suppression Pool Disruptor I", entityPosition(myEntityId))
+    } else {
+        useAbilityAtPosition(myEntityId, "Suppression Pool I", entityPosition(myEntityId))
+    }
+    
+}
+
+---item_601 Frost Pulse---
+Type :: Equippable
+Slot :: Active 
+Icon :: items_717
+Gun Definition :: [[Frost Pulse]]
+Rarity :: Legendary
+Durability :: 4
+
+On use, creates a small sized chilling pool around the player that slows all enemies within its radius for 2 seconds. If the player has Debuff Synergy echo nodes unlocked the reach and duration of the slow effect will increase.
+
+The arctic winds carry whispers of stillness, freezing even the swiftest foes in their tracks.
+
+---gundef_Frost Pulse---
+Fire Speed :: 30.0
+Bullets In Chamber :: -1
+Reload Speed :: 0.0
+Sprite :: items_717
+Fire Event :: crystalcast
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Frost Pulse]]
+
+---spike_Frost Pulse---
+Auras :: [[Frost Pulse]]
+
+---aura_Frost Pulse---
+Type :: Debuff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:FrostPulse]]
+
+---ability_Frost Pool---
+Bullet Definition :: [[frostpool]]
+Max Range :: 100.0
+Auras :: [[Disruptor I Slow]]
+
+---bulletdef_frostpool---
+sprite BluePool 2
+potency 0
+fire 0 relative 0
+	aoedot
+	radius 2
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+
+---ability_Frost Pool Disruptor I---
+Bullet Definition :: [[frostpooldisruptorI]]
+Max Range :: 100.0
+Auras :: [[Disruptor II Slow]]
+
+---bulletdef_frostpooldisruptorI---
+sprite BluePool 4
+potency 0
+fire 0 relative 0
+	aoedot
+	radius 4
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+
+---ability_Frost Pool Disruptor II---
+Bullet Definition :: [[frostpooldisruptorII]]
+Max Range :: 100.0
+Auras :: [[Disruptor III Slow]]
+
+---bulletdef_frostpooldisruptorII---
+sprite BluePool 6
+potency 0
+fire 0 relative 0
+	aoedot
+	radius 6
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+
+---ability_Frost Pool Disruptor III---
+Bullet Definition :: [[frostpooldisruptorIII]]
+Max Range :: 100.0
+Auras :: [[Disruptor IV Slow]]
+
+---bulletdef_frostpooldisruptorIII---
+sprite BluePool 10
+potency 0
+fire 0 relative 0
+	aoedot
+	radius 10
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+
+---script_FrostPulse_FireWeapon---
+if abilityId == auraAbilityId {
+    // Get all nearby entities and filter for enemies
+    allNearby := getNearbyEntities(myEntityId)
+    enemiesSlowed := 0
+
+    // Check for synergy enhancement
+    if is_undefined(scriptVars["hasDebuffSynergyI"]) {
+        scriptVars["hasDebuffSynergyI"] = false
+        scriptVars["hasDebuffSynergyII"] = false
+        scriptVars["hasDebuffSynergyIII"] = false
+    }
+
+    auras := getAurasOnEntity(myEntityId)
+    for j := 0; j < len(auras); j++ {
+       if (auras[j]["name"] == "Debuff Synergy I") {
+        scriptVars["hasDebuffSynergyI"] = true
+       } 
+
+       if (auras[j]["name"] == "Debuff Synergy II") {
+        scriptVars["hasDebuffSynergyII"] = true
+       } 
+
+        if (auras[j]["name"] == "Debuff Synergy III") {
+        scriptVars["hasDebuffSynergyIII"] = true
+       } 
+    }
+
+    if (scriptVars["hasDebuffSynergyIII"]) {
+        useAbilityAtPosition(myEntityId, "Frost Pool Disruptor III", entityPosition(myEntityId))
+    } else if (scriptVars["hasDebuffSynergyII"]) {
+        useAbilityAtPosition(myEntityId, "Frost Pool Disruptor II", entityPosition(myEntityId))
+    } else if (scriptVars["hasDebuffSynergyI"]) {
+        useAbilityAtPosition(myEntityId, "Frost Pool Disruptor I", entityPosition(myEntityId))
+    } else {
+        // Create the frost pool at player position
+        useAbilityAtPosition(myEntityId, "Frost Pool I", entityPosition(myEntityId))
+    }
+}
+

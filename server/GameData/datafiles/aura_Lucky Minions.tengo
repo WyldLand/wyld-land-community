@@ -1,0 +1,10 @@
+---aura_Lucky Minions---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[AuraAffectStat/Lucky Minions]]
+
+---auraaffectstat_Lucky Minions---
+Stat :: CritChance
+Add :: 125

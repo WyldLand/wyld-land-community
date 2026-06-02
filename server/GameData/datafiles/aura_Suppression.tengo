@@ -1,0 +1,48 @@
+---aura_Suppression---
+Type :: Debuff
+Duration :: 5.0
+Icon :: statusicons_10
+Max Stacks :: 3
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Suppression]]
+
+---auraaffectstat_Suppression---
+Stat :: Damage
+Boost :: -20.0
+
+---aura_Disruptor I Suppression---
+Type :: Debuff
+Icon :: statusicons_17
+Duration :: 2.0
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Suppression]]
+
+---aura_Disruptor II Suppression---
+Type :: Debuff
+Icon :: statusicons_17
+Duration :: 4.0
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Suppression]]
+
+---aura_Disruptor III Suppression---
+Type :: Debuff
+Icon :: statusicons_17
+Duration :: 6.0
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Suppression]]
+
+---aura_Disruptor IV Suppression---
+Type :: Debuff
+Icon :: statusicons_17
+Duration :: 8.0
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Suppression]]

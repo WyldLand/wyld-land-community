@@ -1,0 +1,645 @@
+---mobdefinition_Flameclaw---
+ID :: flameclaw
+Prefab :: flameclaw
+Range Behavior :: [[Stationary]]
+Abilities :: [[Flameclaw Phase One First]] [[Flameclaw Phase One Second]] [[Flameclaw Phase One Seconde]] [[Flameclaw Phase Two First]] [[Flameclaw Phase Two Second]] [[Flameclaw Phase Three First]] [[Flameclaw Phase Three Second]]
+Type :: Boss
+Loot :: [[Flameclaw]]
+
+---prefab_flameclaw---
+
+Components :: [[FlameClawSprite]] [[FlameClawCollider]] [[Monster]] [[Nameplate]] [[BGMFlameclaw]]
+
+---prefabcomponent_FlameClawCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+"position": [0.0, 2.73],
+    "size": [2.5, 3.0]
+}
+
+---prefabcomponent_FlameClawSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.247,
+    "pivotY": 1.0,
+    "sprite": "flameclaw/flameclaw",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_sfxflameclawAttack---
+
+Components :: [[SFXFlameclawAttack]]
+
+---prefabcomponent_SFXFlameclawAttack---
+
+Component :: Sound
+
+{
+    "sources": ["flameclaw/flameclawAttack.wav"],
+	"spatial": true
+}
+
+---prefab_sfxflameclawAttack2---
+
+Components :: [[SFXFlameclawAttack2]]
+
+---prefabcomponent_SFXFlameclawAttack2---
+
+Component :: Sound
+
+{
+    "sources": ["flameclaw/flameclawAttack2.wav"],
+	"spatial": true
+}
+
+---prefabcomponent_BGMFlameclaw---
+
+Component :: Sound
+{
+	"sources": ["flameclaw/bgm1.wav"],
+	"channel": "bgm",
+	"loop": true,
+	"select": "random",
+	"priority": 2,
+	"combatOnly": true
+}
+
+---loottable_Flameclaw---
+[[184 Flameclaw's Talon]] @ 67.0
+[[9 Mini Mines]] @ 2.0
+[[28 Neverending Story]] @ 2.0
+[[112 Fire Chick]] @ 2.0
+[[603 Flame Pulse]] @ 15.0
+
+//phase 1
+
+---ability_Flameclaw Phase One First---
+Bullet Definition :: [[flameclawponef]]
+VFX Cast :: trigger:Attack2*
+
+---bulletdef_flameclawponef---
+color 3
+repeat bullets:60 speed:5 angle:-60 maxAngle:60 delay:1 directionType:relative
+	lifetime 1000
+
+
+---ability_Flameclaw Phase One Second---
+Bullet Definition :: [[flameclawpones]]
+VFX Cast :: trigger:Attack*
+
+---bulletdef_flameclawpones---
+color 3
+radial bullets:18 speed:6 directionType:relative delay:1
+	lifetime 1000
+radial bullets:26 speed:6 directionType:relative delay:1
+	lifetime 1000
+radial bullets:34 speed:6 directionType:relative delay:1
+	lifetime 1000
+radial bullets:60 speed:6
+	lifetime 1000
+
+---ability_Flameclaw Phase One Seconde---
+Bullet Definition :: [[flameclawponese]]
+VFX Cast :: trigger:Attack3*
+
+---bulletdef_flameclawponese---
+color 3
+radial bullets:10 speed:4 angle:0
+	lifetime 1000
+wait 3
+radial bullets:10 speed:4 angle:0
+	lifetime 1000
+wait 7
+radial bullets:10 speed:4 angle:17
+	lifetime 1000
+wait 3
+radial bullets:10 speed:4 angle:17
+	lifetime 1000
+wait 7
+radial bullets:10 speed:4 angle:0
+	lifetime 1000
+wait 3
+radial bullets:10 speed:4 angle:0
+	lifetime 1000
+wait 7
+radial bullets:10 speed:4 angle:17
+	lifetime 1000
+wait 3
+radial bullets:10 speed:4 angle:17
+	lifetime 1000
+
+
+//phase 2
+
+
+---ability_Flameclaw Phase Two First---
+Bullet Definition :: [[flameclawptwof]]
+Lock Time :: 1
+VFX Cast :: trigger:Attack4*
+
+---bulletdef_flameclawptwof---
+color 3
+nway bullets:9 spread:12 speed:8 angle:60 directionType:relative
+	lifetime 1000
+	wait 8
+	direction relative -90
+nway bullets:9 spread:12 speed:8 angle:-60 directionType:relative
+	lifetime 1000
+	wait 8
+	direction relative 90
+wait 16
+radial bullets:24 speed:6
+	lifetime 1000
+wait 3
+radial bullets:24 speed:6 angle:7
+	lifetime 1000
+
+---ability_Flameclaw Phase Two Second---
+Bullet Definition :: [[flameclawptwos]]
+Lock Time :: 2
+VFX Cast :: trigger:Attack5*
+
+---bulletdef_flameclawptwos---
+color 3
+radial bullets:32 speed:6
+	lifetime 1000
+wait 4
+radial bullets:4 speed:6 angle:7
+	lifetime 1000
+radial bullets:4 speed:6 angle:-7
+	lifetime 1000
+radial bullets:4 speed:6 angle:42
+	lifetime 1000
+radial bullets:4 speed:6 angle:-42
+	lifetime 1000
+wait 4
+radial bullets:4 speed:6 angle:14
+	lifetime 1000
+radial bullets:4 speed:6 angle:-14
+	lifetime 1000
+radial bullets:4 speed:6 angle:35
+	lifetime 1000
+radial bullets:4 speed:6 angle:-35
+	lifetime 1000
+wait 4
+radial bullets:4 speed:6 angle:21
+	lifetime 1000
+radial bullets:4 speed:6 angle:-21
+	lifetime 1000
+radial bullets:4 speed:6 angle:14
+	lifetime 1000
+radial bullets:4 speed:6 angle:-14
+	lifetime 1000
+radial bullets:4 speed:6 angle:28
+	lifetime 1000
+radial bullets:4 speed:6 angle:-28
+	lifetime 1000
+wait 4
+radial bullets:4 speed:6 angle:7
+	lifetime 1000
+radial bullets:4 speed:6 angle:-7
+	lifetime 1000
+radial bullets:4 speed:6 angle:28
+	lifetime 1000
+radial bullets:4 speed:6 angle:-28
+	lifetime 1000
+wait 4
+radial bullets:4 speed:6 angle:35
+	lifetime 1000
+radial bullets:4 speed:6 angle:-35
+	lifetime 1000
+wait 4
+radial bullets:4 speed:6 angle:42
+	lifetime 1000
+radial bullets:4 speed:6 angle:-42
+	lifetime 1000
+wait 4
+radial bullets:32 speed:6
+	lifetime 1000
+
+//phase 3
+
+
+---ability_Flameclaw Phase Three First---
+Bullet Definition :: [[flameclawpthreef]]
+VFX Cast :: trigger:Attack5*
+
+---bulletdef_flameclawpthreef---
+sprite CirclePool 0.8
+radial bullets:4 speed:6 directionType:relative
+	radius 0
+	timedFill 20
+	damageEvery 20
+	wait 20
+	fire flameclawpthreeftwo
+	vanish
+
+---bulletdef_flameclawpthreeftwo---
+sprite CirclePool 0.8
+radial bullets:1
+	lifetime 60
+	radius 0.7
+sprite Basic
+color 3
+repeat bullets:60 speed:4 angle:0 maxAngle:360 delay:1
+	lifetime 1000
+
+---ability_Flameclaw Phase Three Second---
+Bullet Definition :: [[flameclawpthrees]]
+VFX Cast :: trigger:Attack6*
+
+---bulletdef_flameclawpthrees---
+color 3
+radial bullets:20 speed:5
+	lifetime 1000
+	wait 15
+	direction relative 50
+	wait 15
+	direction relative -100
+	wait 15
+	direction relative 100
+wait 3
+radial bullets:20 speed:5
+	lifetime 1000
+	wait 12
+	direction relative 50
+	wait 15
+	direction relative -100
+	wait 15
+	direction relative 100
+wait 3
+radial bullets:20 speed:5
+	lifetime 1000
+	wait 9
+	direction relative 50
+	wait 15
+	direction relative -100
+	wait 15
+	direction relative 100
+wait 15
+radial bullets:20 speed:5
+	lifetime 1000
+	wait 12
+	direction relative 50
+	wait 12
+	direction relative -100
+	wait 12
+	direction relative 100
+wait 3
+radial bullets:20 speed:5
+	lifetime 1000
+	wait 9
+	direction relative 50
+	wait 9
+	direction relative -100
+	wait 9
+	direction relative 100
+
+
+
+---aura_Flameclaw Max Hp---
+Type :: Buff
+Duration :: -1
+Max stacks :: 1 
+Time Per Tick :: 1.0
+Definitions :: [[AuraAffectStat/Flameclaw Max Hp]]
+
+---auraaffectstat_Flameclaw Max Hp---
+Stat :: Vitality
+Boost :: 150.0
+
+---script_flameclaw_Monster---
+if !isDead && targetEntityId != 0 {
+
+	if is_undefined(scriptVars["phase"]) {
+		scriptVars["phase"] = 1
+		scriptVars["wait"] = 0.0
+	}
+
+	//hp
+	hp := getPoints(myEntityId, "hp", "current")
+	//log(hp)
+	//log(getStat(myEntityId, "Speed"))
+	pthp := getPoints(myEntityId, "hp", "max")
+	//wait
+	if scriptVars["phase"] == 2 || scriptVars["phase"] == 4 {
+		scriptVars["wait"] += delta
+		setCollisionLayer(myEntityId, CollisionLayerDynamic)
+		if scriptVars["wait"] > 8.0 {
+			setCollisionLayer(myEntityId, CollisionLayerMonster)
+			scriptVars["phase"] += 1
+		}
+	}
+
+
+	//phase 1
+
+	if hp < 0.75 * pthp && scriptVars["phase"] == 1 {
+		log("phase 2")
+		scriptVars["wait"] = 0.0
+		scriptVars["phase"] += 1
+	}
+	if scriptVars["phase"] == 1 {
+		if !isDead {
+			scriptVars["wait"] = 0.0
+
+			if is_undefined(scriptVars["flameclawfirsturretspawn"]) {
+				scriptVars["flameclawfirsturretspawn"] = 24.0
+				scriptVars["flameclawponefirst"] = 0.0
+				scriptVars["flameclawponesecond"] = 4.5
+			}
+			scriptVars["flameclawfirsturretspawn"] += delta
+			if scriptVars["flameclawfirsturretspawn"] > 25.0 {
+				summonEntity("flameclawminiontwo", randomPositionInCurrentRoom(myEntityId, 2.0), monsterLevel(myEntityId))
+				summonEntity("flameclawminiontwo", randomPositionInCurrentRoom(myEntityId, 2.0), monsterLevel(myEntityId))
+				summonEntity("flameclawminiontwo", randomPositionInCurrentRoom(myEntityId, 2.0), monsterLevel(myEntityId))
+				scriptVars["flameclawfirsturretspawn"] = 0
+			}
+			scriptVars["flameclawponefirst"] += delta
+			if scriptVars["flameclawponefirst"] > 9.0 {
+				useAbilityAtPosition(myEntityId, "Flameclaw Phase One First", positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Flameclaw Phase One First", positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+				scriptVars["flameclawponefirst"] = 0
+			}
+			scriptVars["flameclawponesecond"] += delta
+			if scriptVars["flameclawponesecond"] > 9.0 {
+				useAbilityAtPosition(myEntityId, "Flameclaw Phase One Second", positionInCurrentRoom(myEntityId, [23.0, 3.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Flameclaw Phase One Seconde", positionInCurrentRoom(myEntityId, [23.0, 3.0, 0.0]))
+				scriptVars["flameclawponesecond"] = 0.0
+			}
+		}
+	}
+
+	//phase 2
+
+	if hp < 0.40 * pthp && scriptVars["phase"] == 3 {
+		log("phase 3")
+		scriptVars["wait"] = 0.0
+		scriptVars["phase"] += 1
+	}
+	if scriptVars["phase"] == 3 {
+		if !isDead {
+			scriptVars["wait"] = 0.0
+			if is_undefined(scriptVars["flameclawsecondturretspawn"]) {
+				scriptVars["flameclawsecondturretspawn"] = 24.0
+				scriptVars["flameclawptwofirst"] = 3.0
+				scriptVars["flameclawptwosecond"] = 0.0
+			}
+			scriptVars["flameclawsecondturretspawn"] += delta
+			if scriptVars["flameclawsecondturretspawn"] > 25.0 {
+				summonEntity("flameclawminiontwo", randomPositionInCurrentRoom(myEntityId, 2.0), monsterLevel(myEntityId))
+				summonEntity("flameclawminionone", randomPositionInCurrentRoom(myEntityId, 2.0), monsterLevel(myEntityId))
+				summonEntity("flameclawminionone", randomPositionInCurrentRoom(myEntityId, 2.0), monsterLevel(myEntityId))
+				scriptVars["flameclawsecondturretspawn"] = 0
+
+			}
+			scriptVars["flameclawptwofirst"] += delta
+			if scriptVars["flameclawptwofirst"] > 6.0 {
+				useAbilityAtPosition(myEntityId, "Flameclaw Phase Two First", positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+				scriptVars["flameclawptwofirst"] = 0
+
+			}
+			scriptVars["flameclawptwosecond"] += delta
+			if scriptVars["flameclawptwosecond"] > 6.0 {
+				useAbilityAtPosition(myEntityId, "Flameclaw Phase Two Second", positionInCurrentRoom(myEntityId, [23.0, 3.0, 0.0]))
+				scriptVars["flameclawptwosecond"] = 0.0
+			}
+		}
+	}
+
+	//phase 3
+
+	if scriptVars["phase"] == 5 {
+
+		if !isDead && targetEntityId != 0 {
+			scriptVars["wait"] - 0.0
+			if is_undefined(scriptVars["flameclawthirdturretspawn"]) {
+				scriptVars["flameclawthirdturretspawn"] = 24.0
+				scriptVars["flameclawpthreefirst"] = 4.0
+				scriptVars["flameclawpthreesecond"] = 0.0
+			}
+			scriptVars["flameclawthirdturretspawn"] += delta
+			if scriptVars["flameclawthirdturretspawn"] > 25.0 {
+				summonEntity("flameclawminiontwo", randomPositionInCurrentRoom(myEntityId, 2.0), monsterLevel(myEntityId))
+				summonEntity("flameclawminionthree", randomPositionInCurrentRoom(myEntityId, 2.0), monsterLevel(myEntityId))
+				summonEntity("flameclawminionone", randomPositionInCurrentRoom(myEntityId, 2.0), monsterLevel(myEntityId))
+				scriptVars["flameclawthirdturretspawn"] = 0
+			}
+			scriptVars["flameclawpthreefirst"] += delta
+			if scriptVars["flameclawpthreefirst"] > 8.0 {
+				useAbilityAtPosition(myEntityId, "Flameclaw Phase Three First", positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+				scriptVars["flameclawpthreefirst"] = 0
+			}
+			scriptVars["flameclawpthreesecond"] += delta
+			if scriptVars["flameclawpthreesecond"] > 8.0 {
+				useAbilityAtPosition(myEntityId, "Flameclaw Phase Three Second", positionInCurrentRoom(myEntityId, [23.0, 3.0, 0.0]))
+				scriptVars["flameclawpthreesecond"] = 0.0
+			}
+		}
+	}
+}
+
+
+---mob_Flameclaw Minion One---
+ID :: flameclawminionone
+Prefab :: rocketgoon
+Range Behavior :: Stationary
+Abilities :: [[Flameclaw Minion Turret]]
+Bounding Box :: 0.0 0.85 1.0 1.7
+
+---prefab_rocketgoon---
+
+Components :: [[RocketGoonSprite]] [[RocketGoonCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_RocketGoonCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+	"position": [0.0, 0.85],
+    "size": [1.0, 1.7]
+}
+
+---prefabcomponent_RocketGoonSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.19,
+    "pivotY": 1.0,
+    "sprite": "darkforest2/rocketgoon",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_sfxrocketgoonAttack---
+
+Components :: [[SFXRocketGoonAttack]]
+
+---prefabcomponent_SFXRocketGoonAttack---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest2/rocketgoonAttack.wav"],
+	"spatial": true
+}
+
+
+---ability_Flameclaw Minion Turret---
+Bullet Definition :: [[flameclawminionturret]]
+Cooldown :: 3.5
+VFX Cast :: trigger:Attack3*
+
+---bulletdef_flameclawminionturret---
+sprite OrangePool 0.5
+nway bullets:2 spread:10 speed:14 directionType:relative
+	lifetime 1000
+	radius 0
+wait 10
+sprite Custom7
+nway bullets:2 spread:10 speed:14 directionType:relative
+	lifetime 1000
+wait 3
+nway bullets:2 spread:10 speed:14 directionType:relative
+	lifetime 1000
+wait 3
+nway bullets:2 spread:10 speed:14 directionType:relative
+	lifetime 1000
+nway bullets:3 spread:15 speed:5 directionType:relative
+	lifetime 1000
+
+---mob_Flameclaw Minion Two---
+ID :: flameclawminiontwo
+Prefab :: assassin
+Range Behavior :: Stationary
+Abilities :: [[Flameclaw Minion Turret Two]]
+Bounding Box :: 0.0 0.6 1.0 1.2
+
+
+---ability_Flameclaw Minion Turret Two---
+Bullet Definition :: [[flameclawminionturrettwo]]
+Cooldown :: 3.5
+VFX Cast :: trigger:Attack6*
+
+---bulletdef_flameclawminionturrettwo---
+nway bullets:9 spread:65 speed:4 directionType:relative
+	lifetime 1000
+
+
+---mob_Flameclaw Minion Three---
+ID :: flameclawminionthree
+Prefab :: quadblaster
+Range Behavior :: Stationary
+Abilities :: [[Flameclaw Minion Turret Three]]
+Bounding Box :: 0.0 0.75 1.0 1.5
+
+---prefab_quadblaster---
+
+Components :: [[QuadBlasterSprite]] [[QuadBlasterCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_QuadBlasterCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+"position": [0.0, 0.75],
+    "size": [1.0, 1.5]
+}
+
+---prefabcomponent_QuadBlasterSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.168,
+    "pivotY": 1.0,
+    "sprite": "darkforest2/quadblaster",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_sfxquadblasterAttack---
+
+Components :: [[SFXQuadblasterAttack]]
+
+---prefabcomponent_SFXQuadblasterAttack---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest2/quadblasterAttack.wav"],
+	"spatial": true
+}
+
+
+---ability_Flameclaw Minion Turret Three---
+Bullet Definition :: [[flameclawminionturretthree]]
+Cooldown :: 2.5
+VFX Cast :: trigger:Attack*
+
+---bulletdef_flameclawminionturretthree---
+radial bullets:6 speed:6 directionType:relative
+	lifetime 1000
+radial bullets:6 speed:6 directionType:relative angle:3
+	lifetime 1000
+radial bullets:6 speed:6 directionType:relative angle:-3
+	lifetime 1000
+radial bullets:6 speed:6 directionType:relative angle:6
+	lifetime 1000
+radial bullets:6 speed:6 directionType:relative angle:-6
+	lifetime 1000
+radial bullets:6 speed:6 directionType:relative angle:9
+	lifetime 1000
+radial bullets:6 speed:6 directionType:relative angle:-9
+	lifetime 1000
+wait 10
+radial bullets:6 speed:6 directionType:relative angle:30
+	lifetime 1000
+radial bullets:6 speed:6 directionType:relative angle:33
+	lifetime 1000
+radial bullets:6 speed:6 directionType:relative angle:-33
+	lifetime 1000
+radial bullets:6 speed:6 directionType:relative angle:36
+	lifetime 1000
+radial bullets:6 speed:6 directionType:relative angle:-36
+	lifetime 1000
+radial bullets:6 speed:6 directionType:relative angle:39
+	lifetime 1000
+radial bullets:6 speed:6 directionType:relative angle:-39
+	lifetime 1000

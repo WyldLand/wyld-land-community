@@ -1,0 +1,39 @@
+---aura_Immunity---
+Type :: Buff
+Duration :: 6.0
+Icon :: statusicons_8
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:Immunity]]
+
+---script_Immunity_IncomingDamage---
+if damage > 0 {
+	additionalDamage = -1 * damage
+}
+
+---script_Immunity_OutgoingDamage---
+if damage > 0 {
+	additionalDamage = -9999999999
+}
+
+---aura_Permanent Immunity---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:Immunity]]
+
+---aura_OnlyTakeDamageFromSource---
+Type :: Buff
+Duration :: -1
+Icon ::
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:OnlyTakeDamageFromSource]]
+
+---script_OnlyTakeDamageFromSource_IncomingDamage---
+
+//Only take damage from the source entity that applied the aura to us.
+if sourceEntityId != damageSenderId {
+	additionalDamage = -1 * damage
+}

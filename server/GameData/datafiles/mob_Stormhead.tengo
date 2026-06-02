@@ -1,0 +1,67 @@
+---mob_Stormhead---
+Prefab :: stormhead
+Range Behavior :: Stationary
+Abilities :: [[Stormhead]]
+Speed :: 0
+Type :: Normal
+Options :: alwaysattack
+
+---prefab_stormhead---
+
+Components :: [[StormheadSprite]] [[StormheadCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_StormheadCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+    "position": [0.0, 0.75],
+    "size": [0.75, 1.5]
+}
+
+---prefabcomponent_StormheadSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.45,
+    "pivotY": 0.976,
+    "sprite": "darkforest1/stormhead",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_sfxstormheadAttack---
+
+Components :: [[SFXStormheadAttack]]
+
+---prefabcomponent_SFXStormheadAttack---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest1/stormheadAttack.wav"],
+	"spatial": true
+}
+
+---ability_Stormhead---
+Bullet Definition :: [[stormhead]]
+Cooldown :: 2.0
+VFX Cast :: trigger:Attack*
+Lock Time :: 1.0
+
+---bulletdef_stormhead---
+repeat bullets:26 speed:7 angle:0 maxAngle:360 delay:1 directionType:relative
+	wait 10
+	speed 4
+

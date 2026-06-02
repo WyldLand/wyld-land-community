@@ -1,0 +1,72 @@
+---prefab_sfxsmga---
+
+Components :: [[SFXSMGA]]
+
+---prefabcomponent_SFXSMGA---
+
+Component :: Sound
+
+{
+    "sources": ["sfxsmg/smga1.wav", "sfxsmg/smga2.wav", "sfxsmg/smga3.wav"],
+    "select": "random",
+    "randomPitch": 0.15,
+    "channel": "gfx"
+}
+
+---prefab_sfxsmgb---
+
+Components :: [[SFXSMGB]]
+
+---prefabcomponent_SFXSMGB---
+
+Component :: Sound
+
+{
+    "sources": ["sfxsmg/smgb1.wav", "sfxsmg/smgb2.wav", "sfxsmg/smgb3.wav"],
+    "select": "random",
+    "randomPitch": 0.15,
+    "channel": "gfx"
+}
+
+---prefab_sfxsmgc---
+
+Components :: [[SFXSMGC]]
+
+---prefabcomponent_SFXSMGC---
+
+Component :: Sound
+
+{
+    "sources": ["sfxsmg/smgc1.wav", "sfxsmg/smgc2.wav", "sfxsmg/smgc3.wav"],
+    "select": "random",
+    "randomPitch": 0.15,
+    "channel": "gfx"
+}
+
+---prefab_sfxsmgd---
+
+Components :: [[SFXSMGD]]
+
+---prefabcomponent_SFXSMGD---
+
+Component :: Sound
+
+{
+    "sources": ["sfxsmg/smgd1.wav", "sfxsmg/smgd2.wav", "sfxsmg/smgd3.wav"],
+    "select": "random",
+    "randomPitch": 0.15,
+    "channel": "gfx"
+}
+
+---prefab_sfxsmgreload---
+
+Components :: [[SFXSMGReload]]
+
+---prefabcomponent_SFXSMGReload---
+
+Component :: Sound
+
+{
+    "sources": ["sfxsmg/smgreload.wav"],
+    "channel": "gfx"
+}

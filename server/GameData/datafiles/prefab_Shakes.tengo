@@ -1,0 +1,25 @@
+---prefabcomponent_SmallCameraShake---
+
+Component :: CameraShake
+
+{
+    "time": 0.65,
+    "power": 0.65
+}
+
+---prefabcomponent_LargeCameraShake---
+
+Component :: CameraShake
+
+{
+    "time": 1.0,
+    "power": 1.5
+}
+
+---prefab_ShakeSmall---
+
+Components :: [[SmallCameraShake]]
+
+---prefab_ShakeLarge---
+
+Components :: [[LargeCameraShake]]

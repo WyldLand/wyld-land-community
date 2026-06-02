@@ -1,0 +1,564 @@
+---worldevent_Miniboss Two---
+Mob :: minibossforgetwo
+XP :: 100
+
+A threatening Ethos remnant is nearby. Defeat it and claim your reward!
+
+---mobdefinition_Miniboss Forge Two---
+ID :: minibossforgetwo
+Prefab :: minibossforge
+Range Behavior :: [[Stationary]]
+Bounding Box :: 0 2.73 2.5 3.0
+Type :: Miniboss
+Speed :: 0
+Interaction Timer :: 0.1
+Interaction Label :: Activate
+Options :: noaggronearby
+Loot :: [[Miniboss Forge Two]]
+
+---loottable_Miniboss Forge Two---
+[[701 Damage Pulse]] @ 15.0
+[[651 Tanky Pulse]] @ 15.0
+[[604 Suppression Pulse]] @ 15.0
+[[602 Shock Pulse]] @ 15.0
+
+---script_minibossforgetwo_Monster---
+
+if is_undefined(scriptVars["eventActive"]) {
+    scriptVars["eventActive"] = false
+    scriptVars["timeSinceActivated"] = 0.0
+    addAuraToEntity(myEntityId, "Permanent Immunity", 0, myEntityId)
+}
+
+if !scriptVars["eventActive"] && len(usedByEntities) > 0 {
+	scriptVars["eventActive"] = true
+	triggerAnimation(myEntityId, "Activate")
+	summonEntity("minibosstwo", entityPosition(myEntityId), monsterLevel(myEntityId))
+}
+
+if scriptVars["eventActive"] {
+    scriptVars["timeSinceActivated"] += delta
+    if scriptVars["timeSinceActivated"] > 1.5 {
+        setCollisionLayer(myEntityId, CollisionLayerDynamic)
+    }
+}
+
+---mob_MinibossTwo---
+ID :: minibosstwo
+Prefab :: miniboss
+Range Behavior :: [[Melee Ranged]]
+Bounding Box :: 0.0 0.3 1.0 1.0
+Type :: Miniboss
+Speed :: 1300
+Options :: manualpathing
+
+//Accelerating Shot Phase Attacks
+
+---ability_Miniboss Two Accelerating Shot Phase---
+Bullet Definition :: [[minibosstwoacceleratingshotphase]]
+Max Range :: 100.0
+
+---bulletdef_minibosstwoacceleratingshotphase---
+potency 120
+color 3
+nway bullets:13 speed:1 delay:2 spread:140 directionType:relative
+	lifetime 1000
+	wait 10
+	speed +11
+
+---ability_Miniboss Two Accelerating Shot Phase Explosions---
+Bullet Definition :: [[minibosstwoacceleratingshotphaseexplosions]]
+Max Range :: 100.0
+
+---bulletdef_minibosstwoacceleratingshotphaseexplosions---
+potency 175
+sprite CirclePool 0.8
+radial bullets:1
+	lifetime 1000
+	radius 0.7
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+wait 20
+sprite Basic
+potency 110
+color 2
+radial bullets:12 speed:7.5 directionType:relative
+	lifetime 1000
+
+//Plus Phase Attacks
+
+
+---ability_Miniboss Two Plus Phase---
+Bullet Definition :: [[minibosstwoplusphase]]
+VFX Charging :: trigger:Attack*
+
+---bulletdef_minibosstwoplusphase---
+sprite CirclePool 0.5
+radial bullets:1
+	lifetime 1000
+	radius 0
+	wait 40
+	vanish
+sprite Basic
+repeat bullets:6 speed:5 angle:0 angleChange:60 directionType:relative
+	lifetime 1000
+repeat bullets:40 speed:5 angle:0 speedChange:0.4 angleChange:60 delay:1 directionType:relative
+	lifetime 1000
+
+---ability_Miniboss Two Plus Phase Shotgun One---
+Bullet Definition :: [[minibosstwoplusphaseshotgunone]]
+VFX Charging :: trigger:Attack*
+
+---bulletdef_minibosstwoplusphaseshotgunone---
+color 3
+radial bullets:24 speed:7.5 directionType:relative
+	lifetime 1000
+wait 2
+nway bullets:16 speed:7.5 spread:180 angle:90 directionType:relative
+	lifetime 1000
+
+
+---ability_Miniboss Two Plus Phase Shotgun Two---
+Bullet Definition :: [[minibosstwoplusphaseshotguntwo]]
+VFX Charging :: trigger:Attack*
+
+---bulletdef_minibosstwoplusphaseshotguntwo---
+color 3
+radial bullets:24 speed:7.5 directionType:relative
+	lifetime 1000
+wait 2
+nway bullets:24 speed:7.5 spread:180 angle:-90 directionType:relative
+	lifetime 1000
+
+
+
+//Backwards Shotgun Phase Attacks
+
+---ability_Miniboss Two Backwards Shotgun Phase---
+Bullet Definition :: [[minibosstwobackwardshotgunphase]]
+VFX Charging :: trigger:Attack*
+
+---bulletdef_minibosstwobackwardshotgunphase---
+color 3
+potency 120
+nway bullets:11 speed:12 spread:70 angle:180 directionType:relative
+	wait 4
+	speed -24
+	wait 1000
+wait 4
+nway bullets:8 speed:12 spread:55 angle:180 directionType:relative
+	wait 4
+	speed -24
+	wait 1000
+
+---ability_Miniboss Two Backwards Shotgun Phase Leftright Shotgun---
+Bullet Definition :: [[minibosstwobackwardshotgunphaseleftrightshotgun]]
+VFX Charging :: trigger:Attack*
+
+---bulletdef_minibosstwobackwardshotgunphaseleftrightshotgun---
+color 2
+potency 120
+radial bullets:20 speed:7 directionType:relative
+	wait 1000
+wait 6
+radial bullets:20 speed:7 angle:9 directionType:relative
+	wait 1000
+wait 6
+radial bullets:20 speed:7 directionType:relative
+	wait 1000
+wait 6
+radial bullets:20 speed:7 angle:9 directionType:relative
+	wait 1000
+
+
+---ability_Miniboss Two Backwards Shotgun Phase Explosion---
+Bullet Definition :: [[minibosstwobackwardshotgunphasexplosion]]
+Max Range :: 100.0
+
+
+---bulletdef_minibosstwobackwardshotgunphasexplosion---
+sprite CirclePool 3
+radial bullets:1
+	lifetime 1000
+	radius 3
+	timedFill 40
+	damageEvery 40
+	wait 41
+	vanish
+wait 40
+color 3
+sprite Custom7
+radial bullets:10 speed:8 directionType:relative
+	lifetime 1000
+//angle 36
+wait 3
+radial bullets:10 speed:8 directionType:relative
+	lifetime 1000
+wait 3
+radial bullets:10 speed:8 directionType:relative
+	lifetime 1000
+
+radial bullets:10 speed:8 angle:3 directionType:relative
+	lifetime 1000
+radial bullets:10 speed:8 angle:-3 directionType:relative
+	lifetime 1000
+wait 3
+
+radial bullets:10 speed:8 directionType:relative
+	lifetime 1000
+wait 3
+radial bullets:10 speed:8 directionType:relative
+	lifetime 1000
+radial bullets:10 speed:8 angle:18 directionType:relative
+	lifetime 1000
+
+radial bullets:10 speed:8 angle:9 directionType:relative
+	lifetime 1000
+radial bullets:10 speed:8 angle:-9 directionType:relative
+	lifetime 1000
+wait 3
+
+radial bullets:10 speed:8 directionType:relative
+	lifetime 1000
+radial bullets:10 speed:8 angle:18 directionType:relative
+	lifetime 1000
+wait 3
+radial bullets:10 speed:8 directionType:relative
+	lifetime 1000
+radial bullets:10 speed:8 angle:18 directionType:relative
+	lifetime 1000
+
+radial bullets:10 speed:8 angle:15 directionType:relative
+	lifetime 1000
+radial bullets:10 speed:8 angle:-15 directionType:relative
+	lifetime 1000
+wait 3
+
+radial bullets:10 speed:8 angle:18 directionType:relative
+	lifetime 1000
+wait 3
+radial bullets:10 speed:8 angle:18 directionType:relative
+	lifetime 1000
+wait 3
+radial bullets:10 speed:8 angle:18 directionType:relative
+	lifetime 1000
+
+//Bomb Phase Attacks
+
+---ability_Miniboss Two Explosion Phase---
+Bullet Definition :: [[minibosstwoexplosionphase]]
+Max Range :: 100.0
+
+---bulletdef_minibosstwoexplosionphase---
+potency 175
+sprite CirclePool 1
+radial bullets:1 
+	lifetime 1000
+	aoeexplosion
+	radius 0.8
+	damageEvery 30
+	timedFill 30
+	wait 31
+	vanish
+
+---ability_Miniboss Two Explosion Phase Shotgun---
+Bullet Definition :: [[minibosstwoexplosionphaseshotgun]]
+
+---bulletdef_minibosstwoexplosionphaseshotgun---
+potency 125
+sprite Custom11
+color 3
+repeat bullets:18 speed:7 angle:-80 maxAngle:80 directionType:relative
+	lifetime 1000
+
+
+
+
+//Auras
+
+---aura_Miniboss Two Speed---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1 
+Time Per Tick :: 1.0
+Icon :: statusicons_22
+Definitions :: [[Miniboss Two Speed]]
+
+---auraaffectstat_Miniboss Two Speed---
+Stat :: Speed
+Boost :: 200.0
+
+
+
+---script_minibosstwo_Monster---
+if is_undefined(scriptVars["isMiniTwoPhaseActive"]) {
+    //Phase Status
+    scriptVars["isMiniTwoPhaseActive"] = 0
+    scriptVars["phaseCooldown"] = 4.0
+    scriptVars["hasMiniTwoAcceleratingShotPhaseBeenUsed"] = 0
+    scriptVars["hasMiniTwoPlusPhaseBeenUsed"] = 0
+    scriptVars["hasMiniTwoBackwardsShotgunPhaseBeenUsed"] = 0
+    scriptVars["hasMiniTwoBombPhaseBeenUsed"] = 0
+    //Phase Progression
+    scriptVars["miniTwoAcceleratingShotPhaseProgressionTimer"] = 0.0
+    scriptVars["miniTwoAcceleratingShotPhaseProgressionCounter"] = 0
+    scriptVars["miniTwoPlusPhaseProgressionTimer"] = 0.0
+    scriptVars["miniTwoPlusPhaseProgressionCounter"] = 0
+    scriptVars["miniTwoBackwardsShotgunPhaseProgressionTimer"] = 0.0
+    scriptVars["miniTwoBackwardsShotgunPhaseProgressionCounter"] = 0
+    scriptVars["miniTwoBombPhaseProgressionTimer"] = 0.0
+    scriptVars["miniTwoBombPhaseProgressionCounter"] = 0
+    //Accelerating Shot Phase
+    scriptVars["miniTwoAcceleratingShotPhaseBombTimer"] = 0.0
+    scriptVars["miniTwoAcceleratingShotPhaseShotgunTimer"] = 0.0
+    //Plus Phase
+    scriptVars["miniTwoPlusPhaseShotgunTimer"] = 0.0
+    scriptVars["miniTwoPlusPhaseShotgunCounter"] = 0
+    scriptVars["miniTwoPlusPhaseTimer"] = 0.0
+    //Backwards Shotgun Phase
+    scriptVars["miniTwoBackwardsShotgunPhaseBombTimer"] = 0.0
+    scriptVars["miniTwoBackwardsShotgunPhaseShotgunTimer"] = 0.0
+    //Bomb Phase
+    scriptVars["miniTwoBombPhaseShotgunTimer"] = 0.0
+    scriptVars["miniTwoBombPhaseBombTimer"] = 0.0
+    //World Event variables
+    scriptVars["eventActivated"] = false
+    scriptVars["eventCompleted"] = false
+    scriptVars["eventTimer"] = 0.0
+    addAuraToEntity(myEntityId, "Event Credit", 0, myEntityId)
+}
+
+if isDead && !scriptVars["eventCompleted"] {
+	scriptVars["eventCompleted"] = true
+	worldEventPassed(myEntityId)
+}
+
+if scriptVars["eventActivated"] {
+	scriptVars["eventTimer"] += delta
+	if scriptVars["eventTimer"] > 120.0 {
+		scriptVars["eventCompleted"] = true
+		worldEventFailed(myEntityId)
+	}
+}
+
+if !isDead && targetEntityId != 0 {
+
+    if !scriptVars["eventActivated"] {
+		worldEventActivated(myEntityId)
+		scriptVars["eventActivated"] = true
+	}
+
+    //hp
+	hp := getPoints(myEntityId, "hp", "current")
+	pthp := getPoints(myEntityId, "hp", "max")
+
+	pctCompleted := float(hp) / float(pthp)
+	worldEventProgress(myEntityId, pctCompleted)
+
+    scriptVars["proximity"] = distToEntity(myEntityId, targetEntityId)
+    //log(distToEntity(myEntityId, targetEntityId))
+    //log(scriptVars["proximity"])
+
+    //Phase Selection
+
+    scriptVars["phaseCooldown"] += delta
+    if scriptVars["isMiniTwoPhaseActive"] == 0 && scriptVars["phaseCooldown"] > 6.0 {
+        addAuraToEntity(myEntityId, "Miniboss Two Speed", 0, myEntityId)
+        if scriptVars["proximity"] < 4.0 {
+            scriptVars["rnd"] = import("rand")
+            z := scriptVars["rnd"]
+            prevside := z.intn(4)
+            scriptVars["phaseSelection"] = prevside
+            //log(scriptVars["phaseSelection"])
+        }
+
+
+    }
+
+    //Phase Reroll
+
+    if scriptVars["phaseSelection"] == 0 && scriptVars["hasMiniTwoAcceleratingShotPhaseBeenUsed"] == 1 && scriptVars["isMiniTwoPhaseActive"] == 0 || scriptVars["phaseSelection"] == 1 && scriptVars["hasMiniTwoPlusPhaseBeenUsed"] == 1 && scriptVars["isMiniTwoPhaseActive"] == 0 || scriptVars["phaseSelection"] == 2 && scriptVars["hasMiniTwoBackwardsShotgunPhaseBeenUsed"] == 1 && scriptVars["isMiniTwoPhaseActive"] == 0 || scriptVars["phaseSelection"] == 3 && scriptVars["hasMiniTwoBombPhaseBeenUsed"] == 1 && scriptVars["isMiniTwoPhaseActive"] == 0 {
+        scriptVars["rnd"] = import("rand")
+        z := scriptVars["rnd"]
+        prevside := z.intn(4)
+        scriptVars["phaseSelection"] = prevside
+    }
+
+    //Accelerating Shot Phase
+
+    if scriptVars["phaseSelection"] == 0 && scriptVars["hasMiniTwoAcceleratingShotPhaseBeenUsed"] == 0 {
+        //log("accelerating shot phase")
+        scriptVars["miniTwoAcceleratingShotPhaseProgressionTimer"] += delta
+        if scriptVars["miniTwoAcceleratingShotPhaseProgressionTimer"] > 0.0 && scriptVars["miniTwoAcceleratingShotPhaseProgressionCounter"] == 0 {
+            dispelAuraOnEntity(myEntityId, "Miniboss Two Speed")
+            scriptVars["isMiniTwoPhaseActive"] = 1
+            scriptVars["miniTwoAcceleratingShotPhaseProgressionCounter"] += 1
+        }
+        if scriptVars["miniTwoAcceleratingShotPhaseProgressionTimer"] > 20.0 && scriptVars["miniTwoAcceleratingShotPhaseProgressionCounter"] == 1 {
+            scriptVars["phaseCooldown"] = 0.0
+            scriptVars["miniTwoAcceleratingShotPhaseProgressionTimer"] = 0.0
+            scriptVars["miniTwoAcceleratingShotPhaseProgressionCounter"] = 0
+            scriptVars["isMiniTwoPhaseActive"] = 0
+            scriptVars["hasMiniTwoAcceleratingShotPhaseBeenUsed"] = 1
+        }
+        scriptVars["miniTwoAcceleratingShotPhaseShotgunTimer"] += delta
+        if scriptVars["miniTwoAcceleratingShotPhaseShotgunTimer"] > 1.2 {
+            useAbilityAtPosition(myEntityId, "Miniboss Two Accelerating Shot Phase", entityPosition(myEntityId), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+            scriptVars["miniTwoAcceleratingShotPhaseShotgunTimer"] = 0.0
+        }
+
+        scriptVars["miniTwoAcceleratingShotPhaseBombTimer"] += delta
+        if scriptVars["miniTwoAcceleratingShotPhaseBombTimer"] > 1.7 {
+            scriptVars["playerPos"] = entityPosition(targetEntityId)
+            scriptVars["playerPoszero"] = scriptVars["playerPos"][0]
+            scriptVars["playerPosone"] = scriptVars["playerPos"][1]
+            useAbilityAtPosition(myEntityId, "Miniboss Two Accelerating Shot Phase Explosions", [scriptVars["playerPoszero"] + 4, scriptVars["playerPosone"] + 4, 0.0])
+            useAbilityAtPosition(myEntityId, "Miniboss Two Accelerating Shot Phase Explosions", [scriptVars["playerPoszero"] + 4, scriptVars["playerPosone"] - 4, 0.0])
+            useAbilityAtPosition(myEntityId, "Miniboss Two Accelerating Shot Phase Explosions", [scriptVars["playerPoszero"] - 4, scriptVars["playerPosone"] + 4, 0.0])
+            useAbilityAtPosition(myEntityId, "Miniboss Two Accelerating Shot Phase Explosions", [scriptVars["playerPoszero"] - 4, scriptVars["playerPosone"] - 4, 0.0])
+            scriptVars["miniTwoAcceleratingShotPhaseBombTimer"] = 0.0
+        }
+    }
+
+
+    //Plus Phase
+    if scriptVars["phaseSelection"] == 1 && scriptVars["hasMiniTwoPlusPhaseBeenUsed"] == 0 {
+        //log("plus phase")
+        scriptVars["miniTwoPlusPhaseProgressionTimer"] += delta
+        if scriptVars["miniTwoPlusPhaseProgressionTimer"] > 0.0 && scriptVars["miniTwoPlusPhaseProgressionCounter"] == 0 {
+            dispelAuraOnEntity(myEntityId, "Miniboss Two Speed")
+            scriptVars["isMiniTwoPhaseActive"] = 1
+            scriptVars["miniTwoPlusPhaseProgressionCounter"] += 1
+        }
+        if scriptVars["miniTwoPlusPhaseProgressionTimer"] > 20.0 && scriptVars["miniTwoPlusPhaseProgressionCounter"] == 1 {
+            scriptVars["phaseCooldown"] = 0.0
+            scriptVars["miniTwoPlusPhaseProgressionTimer"] = 0.0
+            scriptVars["miniTwoPlusPhaseProgressionCounter"] = 0
+            scriptVars["isMiniTwoPhaseActive"] = 0
+            scriptVars["hasMiniTwoPlusPhaseBeenUsed"] = 1
+        }
+        scriptVars["miniTwoPlusPhaseTimer"] += delta
+        if scriptVars["miniTwoPlusPhaseTimer"] > 2.0 {
+            useAbilityAtPosition(myEntityId, "Miniboss Two Plus Phase", entityPosition(myEntityId), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+            scriptVars["miniTwoPlusPhaseTimer"] = 0.0
+        }
+
+        scriptVars["miniTwoPlusPhaseShotgunTimer"] += delta
+        if scriptVars["miniTwoPlusPhaseShotgunTimer"] > 1.2 && scriptVars["miniTwoPlusPhaseShotgunCounter"] == 0 {
+            useAbilityAtPosition(myEntityId, "Miniboss Two Plus Phase Shotgun One", entityPosition(myEntityId), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+            scriptVars["miniTwoPlusPhaseShotgunCounter"] += 1
+        }
+        if scriptVars["miniTwoPlusPhaseShotgunTimer"] > 2.4 && scriptVars["miniTwoPlusPhaseShotgunCounter"] == 1 {
+            useAbilityAtPosition(myEntityId, "Miniboss Two Plus Phase Shotgun Two", entityPosition(myEntityId), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+            scriptVars["miniTwoPlusPhaseShotgunTimer"] = 0.0
+            scriptVars["miniTwoPlusPhaseShotgunCounter"] = 0
+        }
+    }
+
+
+    //Backwards Shotgun Phase
+    if scriptVars["phaseSelection"] == 2 && scriptVars["hasMiniTwoBackwardsShotgunPhaseBeenUsed"] == 0 {
+        //log("backwards shotgun phase")
+        scriptVars["miniTwoBackwardsShotgunPhaseProgressionTimer"] += delta
+        if scriptVars["miniTwoBackwardsShotgunPhaseProgressionTimer"] > 0.0 && scriptVars["miniTwoBackwardsShotgunPhaseProgressionCounter"] == 0 {
+            dispelAuraOnEntity(myEntityId, "Miniboss Two Speed")
+            scriptVars["isMiniTwoPhaseActive"] = 1
+            scriptVars["miniTwoBackwardsShotgunPhaseProgressionCounter"] += 1
+        }
+        if scriptVars["miniTwoBackwardsShotgunPhaseProgressionTimer"] > 20.0 && scriptVars["miniTwoBackwardsShotgunPhaseProgressionCounter"] == 1 {
+            scriptVars["phaseCooldown"] = 0.0
+            scriptVars["miniTwoBackwardsShotgunPhaseProgressionTimer"] = 0.0
+            scriptVars["miniTwoBackwardsShotgunPhaseProgressionCounter"] = 0
+            scriptVars["isMiniTwoPhaseActive"] = 0
+            scriptVars["hasMiniTwoBackwardsShotgunPhaseBeenUsed"] = 1
+        }
+        scriptVars["miniTwoBackwardsShotgunPhaseShotgunTimer"] += delta
+        if scriptVars["miniTwoBackwardsShotgunPhaseShotgunTimer"] > 2.0 {
+            useAbilityAtPosition(myEntityId, "Miniboss Two Backwards Shotgun Phase", entityPosition(myEntityId), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+            useAbilityAtPosition(myEntityId, "Miniboss Two Backwards Shotgun Phase Leftright Shotgun", entityPosition(myEntityId), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+            scriptVars["miniTwoBackwardsShotgunPhaseShotgunTimer"] = 0.0
+        }
+
+        scriptVars["miniTwoBackwardsShotgunPhaseBombTimer"] += delta
+        if scriptVars["miniTwoBackwardsShotgunPhaseBombTimer"] > 4.5 {
+            useAbilityAtTarget(myEntityId, "Miniboss Two Backwards Shotgun Phase Explosion", randomTargetEntityId(myEntityId, 100.0), 1.0)
+            scriptVars["miniTwoBackwardsShotgunPhaseBombTimer"] = 0.0
+        }
+    }
+
+
+    //Bomb Phase
+    if scriptVars["phaseSelection"] == 3 && scriptVars["hasMiniTwoBombPhaseBeenUsed"] == 0 {
+        //log("bomb phase")
+        scriptVars["miniTwoBombPhaseProgressionTimer"] += delta
+        if scriptVars["miniTwoBombPhaseProgressionTimer"] > 0.0 && scriptVars["miniTwoBombPhaseProgressionCounter"] == 0 {
+            dispelAuraOnEntity(myEntityId, "Miniboss Two Speed")
+            scriptVars["isMiniTwoPhaseActive"] = 1
+            scriptVars["miniTwoBombPhaseProgressionCounter"] += 1
+        }
+        if scriptVars["miniTwoBombPhaseProgressionTimer"] > 20.0 && scriptVars["miniTwoBombPhaseProgressionCounter"] == 1 {
+            scriptVars["phaseCooldown"] = 0.0
+            scriptVars["miniTwoBombPhaseProgressionTimer"] = 0.0
+            scriptVars["miniTwoBombPhaseProgressionCounter"] = 0
+            scriptVars["isMiniTwoPhaseActive"] = 0
+            scriptVars["hasMiniTwoBombPhaseBeenUsed"] = 1
+        }
+        scriptVars["miniTwoBombPhaseBombTimer"] += delta
+        if scriptVars["miniTwoBombPhaseBombTimer"] > 1.5 {
+            for i := 0;
+            i < 16;
+            i++{
+                useAbilityAtPosition(myEntityId, "Miniboss Two Explosion Phase", randomPositionNearby(myEntityId, 14.0))
+                useAbilityAtPosition(myEntityId, "Miniboss Two Explosion Phase", randomPositionNearby(myEntityId, 16.0))
+                useAbilityAtPosition(myEntityId, "Miniboss Two Explosion Phase", randomPositionNearby(myEntityId, 18.0))
+                useAbilityAtPosition(myEntityId, "Miniboss Two Explosion Phase", randomPositionNearby(myEntityId, 7.0))
+                scriptVars["miniTwoBombPhaseBombTimer"] = 0.0
+            }
+        }
+
+        scriptVars["miniTwoBombPhaseShotgunTimer"] += delta
+        if scriptVars["miniTwoBombPhaseShotgunTimer"] > 1.0 {
+            useAbilityAtPosition(myEntityId, "Miniboss Two Explosion Phase Shotgun", entityPosition(myEntityId), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+            scriptVars["miniTwoBombPhaseShotgunTimer"] = 0.0
+        }
+    }
+
+
+    //End of phase cycle
+
+    if scriptVars["hasMiniTwoAcceleratingShotPhaseBeenUsed"] == 1 && scriptVars["hasMiniTwoPlusPhaseBeenUsed"] == 1 && scriptVars["hasMiniTwoBackwardsShotgunPhaseBeenUsed"] == 1 && scriptVars["hasMiniTwoBombPhaseBeenUsed"] == 1 {
+        scriptVars["hasMiniTwoAcceleratingShotPhaseBeenUsed"] = 0
+        scriptVars["hasMiniTwoPlusPhaseBeenUsed"] = 0
+        scriptVars["hasMiniTwoBackwardsShotgunPhaseBeenUsed"] = 0
+        scriptVars["hasMiniTwoBombPhaseBeenUsed"] = 0
+    }
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

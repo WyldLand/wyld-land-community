@@ -1,0 +1,126 @@
+---mob_Dungeon Entrance---
+Prefab :: dungeonentrance
+Range Behavior :: Stationary
+Bounding Box :: 0.0 0.0 0.5 0.5
+Speed :: 500
+Type :: Friendly
+Options :: noaggronearby
+
+---prefab_dungeonentrance---
+
+Components :: [[DungeonEntranceSprite]] [[DungeonEntranceCollider]] [[DungeonEntrance]] [[UsableObject]] [[Nameplate]]
+
+---prefabcomponent_DungeonEntrance---
+
+Component :: DungeonEntrance
+
+---prefabcomponent_DungeonEntranceSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.95,
+    "sprite": "haven/dungeonportal1",
+    "play": "start",
+    "animations": [
+        {
+            "name": "loop"
+        }
+    ]
+}
+
+---prefabcomponent_DungeonEntranceCollider---
+
+Component :: Collider
+
+{
+    "layer": "Dynamic",
+    "position": [0.0, 1.2],
+    "size": [1.0, 2.4]
+}
+
+---mob_Dungeon Entrance Two---
+Prefab :: dungeonentrancetwo
+Range Behavior :: Stationary
+Bounding Box :: 0.0 0.0 0.5 0.5
+Speed :: 500
+Type :: Friendly
+Options :: noaggronearby
+
+---prefab_dungeonentrancetwo---
+
+Components :: [[DungeonEntranceTwoSprite]] [[DungeonEntranceCollider]] [[DungeonEntrance]] [[UsableObject]] [[Nameplate]]
+
+---prefabcomponent_DungeonEntranceTwoSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.95,
+    "sprite": "haven/dungeonportal2",
+    "play": "start",
+    "animations": [
+        {
+            "name": "loop"
+        }
+    ]
+}
+
+---mob_Dungeon Entrance Three---
+Prefab :: dungeonentrancethree
+Range Behavior :: Stationary
+Bounding Box :: 0.0 0.0 0.5 0.5
+Speed :: 500
+Type :: Friendly
+Options :: noaggronearby
+
+---prefab_dungeonentrancethree---
+
+Components :: [[DungeonEntranceThreeSprite]] [[DungeonEntranceCollider]] [[DungeonEntrance]] [[UsableObject]] [[Nameplate]]
+
+---prefabcomponent_DungeonEntranceThreeSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.95,
+    "sprite": "haven/dungeonportal3",
+    "play": "start",
+    "animations": [
+        {
+            "name": "loop"
+        }
+    ]
+}
+
+---mob_Dungeon Entrance Four---
+Prefab :: dungeonentrancefour
+Range Behavior :: Stationary
+Bounding Box :: 0.0 0.0 0.5 0.5
+Speed :: 500
+Type :: Friendly
+Options :: noaggronearby
+
+---prefab_dungeonentrancefour---
+
+Components :: [[DungeonEntranceFourSprite]] [[DungeonEntranceCollider]] [[DungeonEntrance]] [[UsableObject]] [[Nameplate]]
+
+---prefabcomponent_DungeonEntranceFourSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.95,
+    "sprite": "haven/dungeonportal4",
+    "play": "start",
+    "animations": [
+        {
+            "name": "loop"
+        }
+    ],
+    "scale": [0.75, 0.75]
+}

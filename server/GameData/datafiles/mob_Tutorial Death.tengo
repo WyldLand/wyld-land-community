@@ -1,0 +1,43 @@
+---mob_Tutorial Death---
+ID :: tutorialdeath
+Prefab :: obstacle
+Range Behavior :: Stationary
+Abilities :: [[Tutorial Death Explosion]]
+Bounding Box :: 0 0.3 1.0 1.0
+Speed :: 0
+Type :: Normal
+Options :: nodeathsmoke
+
+---ability_Tutorial Death Explosion---
+Bullet Definition :: [[tutorialdeathexplosion]]
+Lock Time :: 1.0
+Cooldown :: 2.0
+
+---bulletdef_tutorialdeathexplosion---
+sprite CirclePool 3
+potency 250
+fire 0 relative 0
+	aoeexplosion 
+	radius 3
+	timedFill 30
+	damageEvery 30
+	wait 30
+	vfx ShockPool 3
+
+---script_TutorialImmunity_IncomingDamage---
+// Negate all incoming damage
+additionalDamage = -1 * damage
+
+---script_tutorialdeath_Monster---
+if is_undefined(scriptVars["didDie"]) {
+	scriptVars["didDie"] = false
+}
+
+if len(getAurasOnEntity(myEntityId)) == 0 {
+	addAuraToEntity(myEntityId, "Tutorial Immunity", 0, myEntityId)
+}
+
+// Fire attack regardless of aggro
+    if castingAction == 0 {
+        useAbilityAtPosition(myEntityId, "Tutorial Death Explosion", entityPosition(myEntityId))
+    }

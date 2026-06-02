@@ -1,0 +1,39 @@
+---mob_Mags---
+Prefab :: bunnymerchant
+Range Behavior :: Stationary
+Type :: Friendly
+
+---prefab_bunnymerchant---
+
+Components :: [[BunnyMerchantSprite]] [[BunnyMerchantCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_BunnyMerchantCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+    "position": [0, 1.0],
+    "size": [2.0, 2.0]
+}
+
+---prefabcomponent_BunnyMerchantSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "haven/bunnymerchant",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}

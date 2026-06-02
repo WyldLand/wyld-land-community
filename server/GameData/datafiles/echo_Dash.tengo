@@ -1,0 +1,74 @@
+---aura_Enhanced Stamina---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 99
+Time Per Tick :: 10.0
+Definitions :: [[AuraAffectStat/Enhanced Stamina]]
+
+---auraaffectstat_Enhanced Stamina---
+Stat :: StaminaRecharge
+Boost :: 1.0
+
+---aura_Enhanced Speed---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 99
+Time Per Tick :: 10.0
+Definitions :: [[AuraAffectStat/Enhanced Speed]]
+
+---auraaffectstat_Enhanced Speed---
+Stat :: Speed
+Boost :: 1.0
+
+---echonode_Enhanced Stamina I---
+Auras :: [[Enhanced Stamina]]
+Cost :: 100
+ID :: enhancedstam1
+Icon :: ability0_99
+
+Your stamina regenerates 1% more quickly.
+
+---echonode_Enhanced Stamina II---
+Auras :: [[Enhanced Stamina]]
+Cost :: 200
+ID :: enhancedstam2
+Icon :: ability0_99
+Prev Node :: enhancedstam1
+
+Your stamina regenerates 1% more quickly.
+
+---echonode_Enhanced Stamina III---
+Auras :: [[Enhanced Stamina]]
+Cost :: 400
+ID :: enhancedstam3
+Icon :: ability0_99
+Prev Node :: enhancedstam2
+
+Your stamina regenerates 1% more quickly.
+
+---echonode_Enhanced Stamina IV---
+Auras :: [[Enhanced Stamina]]
+Cost :: 800
+ID :: enhancedstam4
+Icon :: ability0_99
+Prev Node :: enhancedstam3
+
+Your stamina regenerates 1% more quickly.
+
+---echonode_Enhanced Stamina V---
+Auras :: [[Enhanced Stamina]]
+Cost :: 1000
+ID :: enhancedstam5
+Icon :: ability0_99
+Prev Node :: enhancedstam4
+
+Your stamina regenerates 1% more quickly.
+
+---echonode_Dash Prodigy---
+Cost :: 2000
+ID :: dashprodigy
+Icon :: ability0_73
+Prev Node :: enhancedstam5
+Requires Activation :: true
+
+You gain an enough Stamina to perform an additional Dash.

@@ -1,0 +1,605 @@
+---mobdefinition_Architect---
+ID :: architect
+Prefab :: deneme
+Range Behavior :: [[Medium Ranged]]
+Abilities :: [[Bullet Wave]] [[Cross Attack]] [[Architect Energy Burst]] [[Architect Ground Rupture]] [[Energy Storm]] [[Bullet Field]] [[Death Storm]] [[Perimeter Rupture]]
+Type :: Boss
+Loot :: [[Architect]]
+
+---loottable_Architect---
+[[181 Architect's Blueprint]] @ 67.0
+[[93 Elemental Gauntlets]] @ 2.0
+[[90 Quantum Striders]] @ 2.0
+[[107 Rabbit]] @ 5.0
+[[701 Damage Pulse]] @ 15.0
+
+---prefab_deneme---
+
+Components :: [[DenemeSprite]] [[DenemeCollider]] [[Monster]] [[Nameplate]] [[BGMArchitect]]
+
+---prefabcomponent_DenemeCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+    "position": [0.18, 1.76],
+    "size": [1.46, 3.44]
+}
+
+---prefabcomponent_DenemeSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.21,
+    "pivotY": 1.0,
+    "sprite": "deneme/deneme",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_sfxdenemeAttack---
+
+Components :: [[SFXDenemeAttack]]
+
+---prefabcomponent_SFXDenemeAttack---
+
+Component :: Sound
+
+{
+    "sources": ["deneme/denemeAttack.wav"],
+    "delay": [0.5],
+	"spatial": true
+}
+
+---prefabcomponent_BGMArchitect---
+
+Component :: Sound
+{
+	"sources": ["architect/bgm1.wav"],
+	"channel": "bgm",
+	"loop": true,
+	"select": "random",
+	"priority": 2,
+	"combatOnly": true
+}
+
+---ability_Bullet Wave---
+Bullet Definition :: [[bulletwave]]
+VFX Cast :: trigger:Attack3
+
+---bulletdef_bulletwave---
+sprite Basic
+color 3
+potency 100
+radial bullets:24 speed:6 directionType:absolute
+wait 5
+radial bullets:24 speed:5 angle:7.5 directionType:absolute
+
+---ability_Cross Attack---
+Bullet Definition :: [[crossattack]]
+VFX Cast :: trigger:Attack*
+
+---bulletdef_crossattack---
+sprite Custom10
+color 4
+potency 100
+nway speed:8 bullets:3 spread:20 angle:0 directionType:relative
+nway speed:8 bullets:3 spread:20 angle:90 directionType:relative
+nway speed:8 bullets:3 spread:20 angle:180 directionType:relative
+nway speed:8 bullets:3 spread:20 angle:270 directionType:relative
+
+---ability_Architect Energy Burst---
+Bullet Definition :: [[architectenergyburst]]
+VFX Cast :: trigger:Attack2*
+
+---bulletdef_architectenergyburst---
+sprite Custom7
+color 2
+potency 150
+nway speed:8 bullets:5 spread:40 angle:0 directionType:relative
+wait 3
+nway speed:8 bullets:5 spread:40 angle:20 directionType:relative
+wait 3
+nway speed:8 bullets:5 spread:40 angle:-20 directionType:relative
+
+---ability_Architect Ground Rupture---
+Bullet Definition :: [[architectgroundrupture]]
+VFX Cast :: trigger:Attack4*
+Max Range :: 100.0
+
+---bulletdef_architectgroundrupture---
+sprite CirclePool 3
+potency 50
+repeat bullets:8 angleChange:45 angle:0 directionType:relative speed:8
+	aoedot
+	damageEvery 10
+	vfx ShockPool
+	wait 10
+	speed 0
+	fire architectrupturepool
+	wait 1
+	vanish
+
+---ability_Perimeter Rupture---
+Bullet Definition :: [[perimeterrupture]]
+VFX Cast :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_perimeterrupture---
+sprite CirclePool 1.5
+potency 75
+fire 0 relative 0
+	aoedot
+	radius 1.5
+	damageEvery 10
+	wait 999999
+	vanish
+
+---bulletdef_architectrupturepool---
+sprite CirclePool 3
+potency 50
+fire 0 relative 0
+	aoedot
+	radius 3
+	damageEvery 10
+	vfx ShockPool
+	wait 30
+	fire architectruptureburst
+	wait 30
+	vanish
+
+---bulletdef_architectruptureburst---
+sprite Custom10
+potency 100
+nway speed:4 bullets:8 spread:360 angle:0 directionType:absolute
+
+---ability_Energy Storm---
+Bullet Definition :: [[energystorm]]
+VFX Cast :: trigger:Attack4*
+
+---bulletdef_energystorm---
+sprite Custom10
+color 4
+potency 100
+repeat bullets:3 speed:3 angle:0 angleChange:120 directionType:absolute
+	wait 1000
+wait 5
+repeat bullets:3 speed:3 angle:15 angleChange:120 directionType:absolute
+	wait 1000
+wait 5
+repeat bullets:3 speed:3 angle:30 angleChange:120 directionType:absolute
+	wait 1000
+
+---ability_Bullet Field---
+Bullet Definition :: [[bulletfield]]
+VFX Cast :: trigger:Attack3*
+
+---bulletdef_bulletfield---
+sprite Custom11
+color 2
+potency 100
+radial bullets:48 speed:3 angle:0 directionType:absolute
+	wait 120
+	vanish
+
+---ability_Death Storm---
+Bullet Definition :: [[deathstorm]]
+VFX Cast :: trigger:Attack4*
+
+---bulletdef_deathstorm---
+sprite Custom12
+color 1
+potency 150
+repeat bullets:180 speed:4 angle:0 angleChange:8 delay:1 directionType:relative
+	wait 5
+	speed 0
+	wait 10
+	speed 12
+	wait 30
+	vanish
+
+---ability_Pillar Pulse---
+Bullet Definition :: [[pillarpulse]]
+Cooldown :: 3.0
+VFX Cast :: trigger:Attack
+
+---bulletdef_pillarpulse---
+sprite CirclePool 2
+potency 100
+fire 0 relative 0
+	aoeexplosion
+	radius 2
+	timedFill 5
+	damageEvery 5
+	vfx SmallBombExplosion 5
+	wait 1
+	vanish
+
+---script_architect_Monster---
+resetVars := func() {
+    scriptVars["phase"] = 1
+    scriptVars["engaged"] = false
+    scriptVars["timeSincePillars"] = 0.0
+    scriptVars["timeSinceWave"] = 0.0
+    scriptVars["timeSinceCross"] = 0.0
+    scriptVars["timeSinceBurst"] = 0.0
+    scriptVars["timeSinceRupture"] = 0.0
+    scriptVars["timeSinceStorm"] = 0.0
+    scriptVars["timeSinceField"] = 0.0
+    scriptVars["slowPillarId"] = 0
+    scriptVars["jamPillarId"] = 0
+    scriptVars["vulnPillarId"] = 0
+    scriptVars["wasDead"] = false
+}
+
+spawnPillars := func() {
+    // Calculate positions for the three pillars in a triangle formation
+    pillarPositions := [
+        positionInCurrentRoom(myEntityId, [10.0, 10.0, 0.0]),
+        positionInCurrentRoom(myEntityId, [22.0, 10.0, 0.0]),
+        positionInCurrentRoom(myEntityId, [16.0, 22.0, 0.0])
+    ]
+    
+    // Check and spawn slow pillar if needed
+    if is_undefined(scriptVars["slowPillarId"]) || isEntityDead(scriptVars["slowPillarId"]) {
+        scriptVars["slowPillarId"] = summonEntity("architectpillarslow", pillarPositions[0], monsterLevel(myEntityId))
+    }
+    
+    // Check and spawn jam pillar if needed
+    if is_undefined(scriptVars["jamPillarId"]) || isEntityDead(scriptVars["jamPillarId"]) {
+        scriptVars["jamPillarId"] = summonEntity("architectpillarjam", pillarPositions[1], monsterLevel(myEntityId))
+    }
+    
+    // Check and spawn vulnerable pillar if needed
+    if is_undefined(scriptVars["vulnPillarId"]) || isEntityDead(scriptVars["vulnPillarId"]) {
+        scriptVars["vulnPillarId"] = summonEntity("architectpillarvuln", pillarPositions[2], monsterLevel(myEntityId))
+    }
+}
+
+if isDead {
+    if !scriptVars["wasDead"] {
+        // First time detecting death - do cleanup
+        scriptVars["wasDead"] = true
+        
+        // Kill all pillars
+        if !is_undefined(scriptVars["slowPillarId"]) && !isEntityDead(scriptVars["slowPillarId"]) {
+            killEntity(scriptVars["slowPillarId"])
+        }
+        if !is_undefined(scriptVars["jamPillarId"]) && !isEntityDead(scriptVars["jamPillarId"]) {
+            killEntity(scriptVars["jamPillarId"])
+        }
+        if !is_undefined(scriptVars["vulnPillarId"]) && !isEntityDead(scriptVars["vulnPillarId"]) {
+            killEntity(scriptVars["vulnPillarId"])
+        }
+        
+        // Clear all bullets
+        clearBulletsForEntity(myEntityId)
+    }
+} else {
+    if is_undefined(scriptVars["phase"]) {
+        resetVars()
+    }
+
+    if targetEntityId > 0 {
+        // Engage boss and spawn initial pillars
+        if !scriptVars["engaged"] {
+            scriptVars["engaged"] = true
+            spawnPillars()
+        }
+
+        scriptVars["timeSincePillars"] += delta
+        scriptVars["timeSinceWave"] += delta
+        scriptVars["timeSinceCross"] += delta
+        scriptVars["timeSinceBurst"] += delta
+        scriptVars["timeSinceRupture"] += delta
+        scriptVars["timeSinceStorm"] += delta
+        scriptVars["timeSinceField"] += delta
+
+        // Check for phase transitions
+        currentHealth := float(getPoints(myEntityId, "hp", "current"))
+        maxHealth := float(getPoints(myEntityId, "hp", "max"))
+        
+        if currentHealth < maxHealth * 0.5 && scriptVars["phase"] == 1 {
+            scriptVars["phase"] = 2
+            // Clear any existing bullets for clean phase transition
+            clearBulletsForEntity(myEntityId)
+            // Force pillar respawn at phase transition
+            spawnPillars()
+            scriptVars["timeSincePillars"] = 0.0
+            
+            // Create perimeter of permanent ground effects
+            perimeterPositions := [
+                // Top edge
+                [3.0, 3.0, 0.0], [5.0, 3.0, 0.0], [7.0, 3.0, 0.0], [9.0, 3.0, 0.0], [11.0, 3.0, 0.0], [13.0, 3.0, 0.0], 
+                [15.0, 3.0, 0.0], [17.0, 3.0, 0.0], [19.0, 3.0, 0.0], [21.0, 3.0, 0.0], [23.0, 3.0, 0.0], [25.0, 3.0, 0.0], [27.0, 3.0, 0.0],
+                // Bottom edge
+                [3.0, 29.0, 0.0], [5.0, 29.0, 0.0], [7.0, 29.0, 0.0], [9.0, 29.0, 0.0], [11.0, 29.0, 0.0], [13.0, 29.0, 0.0],
+                [15.0, 29.0, 0.0], [17.0, 29.0, 0.0], [19.0, 29.0, 0.0], [21.0, 29.0, 0.0], [23.0, 29.0, 0.0], [25.0, 29.0, 0.0], [27.0, 29.0, 0.0],
+                // Left edge
+                [3.0, 5.0, 0.0], [3.0, 7.0, 0.0], [3.0, 9.0, 0.0], [3.0, 11.0, 0.0], [3.0, 13.0, 0.0], [3.0, 15.0, 0.0],
+                [3.0, 17.0, 0.0], [3.0, 19.0, 0.0], [3.0, 21.0, 0.0], [3.0, 23.0, 0.0], [3.0, 25.0, 0.0], [3.0, 27.0, 0.0],
+                // Right edge
+                [29.0, 5.0, 0.0], [29.0, 7.0, 0.0], [29.0, 9.0, 0.0], [29.0, 11.0, 0.0], [29.0, 13.0, 0.0], [29.0, 15.0, 0.0],
+                [29.0, 17.0, 0.0], [29.0, 19.0, 0.0], [29.0, 21.0, 0.0], [29.0, 23.0, 0.0], [29.0, 25.0, 0.0], [29.0, 27.0, 0.0]
+            ]
+            
+            for i := 0; i < len(perimeterPositions); i++ {
+                useAbilityAtPosition(myEntityId, "Perimeter Rupture", positionInCurrentRoom(myEntityId, perimeterPositions[i]))
+            }
+        }
+
+        // Rebuild pillars every 30 seconds
+        if scriptVars["timeSincePillars"] >= 30.0 {
+            spawnPillars()
+            scriptVars["timeSincePillars"] = 0.0
+        }
+
+        // Regular attack patterns
+        if castingAction == 0 {
+            if scriptVars["phase"] == 1 {
+                // Phase 1 Attacks
+                if scriptVars["timeSinceWave"] > 2.0 {
+                    useAbilityAtPosition(myEntityId, "Bullet Wave", entityPosition(myEntityId))
+                    scriptVars["timeSinceWave"] = 0.0
+                } 
+                
+                if scriptVars["timeSinceCross"] > 4.0 {
+                    useAbilityAtTarget(myEntityId, "Cross Attack", targetEntityId, 1.0)
+                    scriptVars["timeSinceCross"] = 0.0
+                } 
+                
+                if scriptVars["timeSinceBurst"] > 6.0 {
+                    useAbilityAtTarget(myEntityId, "Architect Energy Burst", targetEntityId, 1.0)
+                    scriptVars["timeSinceBurst"] = 0.0
+                }
+
+                // Environmental attacks are less frequent in phase 1
+                if scriptVars["timeSinceRupture"] > 8.0 {
+                    useAbilityAtPosition(myEntityId, "Architect Ground Rupture", randomPositionInCurrentRoom(myEntityId, 3.0))
+                    scriptVars["timeSinceRupture"] = 0.0
+                }
+            } else {
+                // Phase 2 Attacks - More manageable patterns
+                if scriptVars["timeSinceWave"] > 2.0 {  // Increased from 2.5
+                    useAbilityAtPosition(myEntityId, "Bullet Wave", entityPosition(myEntityId))
+                    scriptVars["timeSinceWave"] = 0.0
+                }
+                
+                if scriptVars["timeSinceCross"] > 4.0 {  // Increased from 3.0
+                    useAbilityAtTarget(myEntityId, "Cross Attack", targetEntityId, 1.0)
+                    scriptVars["timeSinceCross"] = 0.0
+                }
+                
+                if scriptVars["timeSinceBurst"] > 6.0 {  // Increased from 2.0
+                    useAbilityAtTarget(myEntityId, "Architect Energy Burst", targetEntityId, 1.0)
+                    scriptVars["timeSinceBurst"] = 0.0
+                }
+
+                // Removed random Architect Ground Rupture bursts
+
+                if scriptVars["timeSinceField"] > 8.0 {  // Increased from 7.0
+                    useAbilityAtPosition(myEntityId, "Bullet Field", entityPosition(myEntityId))
+                    scriptVars["timeSinceField"] = 0.0
+                }
+
+                if scriptVars["timeSinceStorm"] > 10.0 {  // Increased from 10.0
+                    useAbilityAtPosition(myEntityId, "Death Storm", entityPosition(myEntityId))
+                    scriptVars["timeSinceStorm"] = 0.0
+                }
+
+            }
+        }
+    }
+}
+
+---mobdefinition_Architect Pillar Slow---
+ID :: architectpillarslow
+Prefab :: alchemy
+Range Behavior :: [[Stationary]]
+Bounding Box :: 0 0.7 1.18 1.51
+Type :: Normal
+Abilities :: [[Apply Slow]] [[Pillar Pulse]]
+
+---prefab_alchemy---
+
+Components :: [[AlchemySprite]] [[AlchemyCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_AlchemyCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+    "position": [0.02, 0.992],
+    "size": [1.038, 1.984]
+}
+
+---prefabcomponent_AlchemySprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "deneme/alchemy",
+    "animations": [
+        {
+            "name": "idle"
+        }
+    ]
+}
+
+---ability_Apply Slow---
+Script :: ApplyStatusSlow
+Cooldown :: 1.0
+
+---script_ApplyStatusSlow_Cast---
+if frameNum == 0 {
+    nearby := getNearbyEntities(myEntityId)
+    for i := 0; i < len(nearby); i++ {
+        if isEnemyOfEntity(myEntityId, nearby[i].id) {
+            addAuraToEntity(myEntityId, "Slow", -99, nearby[i].id)
+        }
+    }
+}
+
+---script_architectpillarslow_Monster---
+if !isDead {
+    if is_undefined(scriptVars["initialized"]) {
+        scriptVars["initialized"] = true
+        scriptVars["timeSincePulse"] = 0.0
+        addAuraToEntity(myEntityId, "Recovering Minions", -99, myEntityId)
+    }
+
+    scriptVars["timeSincePulse"] += delta
+    
+    if scriptVars["timeSincePulse"] >= 3.0 {
+        useAbilityAtPosition(myEntityId, "Pillar Pulse", entityPosition(myEntityId))
+        scriptVars["timeSincePulse"] = 0.0
+    }
+}
+
+---mobdefinition_Architect Pillar Gun Jam---
+ID :: architectpillarjam
+Prefab :: advanced
+Range Behavior :: [[Stationary]]
+Bounding Box :: 0 0.7 1.18 1.51
+Type :: Normal
+Abilities :: [[Apply Gun Jam]] [[Pillar Pulse]]
+
+---prefab_advanced---
+
+Components :: [[AdvancedSprite]] [[AdvancedCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_AdvancedCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+    "position": [0.02, 0.992],
+    "size": [1.038, 1.984]
+}
+
+---prefabcomponent_AdvancedSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "deneme/advanced",
+    "animations": [
+        {
+            "name": "idle"
+        }
+    ]
+}
+
+---ability_Apply Gun Jam---
+Script :: ApplyStatusGunJam
+Cooldown :: 5.0
+
+---script_ApplyStatusGunJam_Cast---
+if frameNum == 0 {
+    nearby := getNearbyEntities(myEntityId)
+    for i := 0; i < len(nearby); i++ {
+        if isEnemyOfEntity(myEntityId, nearby[i].id) {
+            addAuraToEntity(myEntityId, "Gun Jam", -99, nearby[i].id)
+        }
+    }
+}
+
+---script_architectpillarjam_Monster---
+if !isDead {
+    if is_undefined(scriptVars["initialized"]) {
+        scriptVars["initialized"] = true
+        scriptVars["timeSincePulse"] = 0.0
+        addAuraToEntity(myEntityId, "Recovering Minions", -99, myEntityId)
+    }
+
+    scriptVars["timeSincePulse"] += delta
+    
+    if scriptVars["timeSincePulse"] >= 3.0 {
+        useAbilityAtPosition(myEntityId, "Pillar Pulse", entityPosition(myEntityId))
+        scriptVars["timeSincePulse"] = 0.0
+    }
+}
+
+---mobdefinition_Architect Pillar Vulnerable---
+ID :: architectpillarvuln
+Prefab :: automation
+Range Behavior :: [[Stationary]]
+Bounding Box :: 0 0 1.0 1.0
+Type :: Normal
+Abilities :: [[Apply Vulnerable]] [[Pillar Pulse]]
+
+---prefab_automation---
+
+Components :: [[AutomationSprite]] [[AutomationCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_AutomationCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+    "position": [0.02, 0.992],
+    "size": [1.038, 1.984]
+}
+
+---prefabcomponent_AutomationSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "deneme/automation",
+    "animations": [
+        {
+            "name": "idle"
+        }
+    ]
+}
+
+---ability_Apply Vulnerable---
+Script :: ApplyStatusVuln
+Cooldown :: 1.0
+
+---script_ApplyStatusVuln_Cast---
+if frameNum == 0 {
+    nearby := getNearbyEntities(myEntityId)
+    for i := 0; i < len(nearby); i++ {
+        if isEnemyOfEntity(myEntityId, nearby[i].id) {
+            addAuraToEntity(myEntityId, "Vulnerable", -99, nearby[i].id)
+        }
+    }
+}
+
+---script_architectpillarvuln_Monster---
+if !isDead {
+    if is_undefined(scriptVars["initialized"]) {
+        scriptVars["initialized"] = true
+        scriptVars["timeSincePulse"] = 0.0
+        addAuraToEntity(myEntityId, "Recovering Minions", -99, myEntityId)
+    }
+
+    scriptVars["timeSincePulse"] += delta
+    
+    if scriptVars["timeSincePulse"] >= 3.0 {
+        useAbilityAtPosition(myEntityId, "Pillar Pulse", entityPosition(myEntityId))
+        scriptVars["timeSincePulse"] = 0.0
+    }
+}

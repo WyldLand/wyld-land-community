@@ -1,0 +1,25 @@
+---item_67 Chaos Wheel---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Chaos Wheel]]
+Rarity :: Rare
+
+It's full-auto chaos.
+
+---gundef_Chaos Wheel---
+Fire Speed :: 0.18
+Bullets In Chamber :: 8
+Reload Speed :: 2.5
+Sprite :: weapons_66
+Fire Event :: revolvera
+Reload Event :: revolverreload
+Bullet Definition :: [[chaoswheel]]
+Archetype :: Handgun
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: FullAuto
+Bullet Lifetime :: 1.0
+
+---bulletdef_chaoswheel---
+sprite PlayerBullet
+potency 83
+fire 17 relative -1.5 1.5

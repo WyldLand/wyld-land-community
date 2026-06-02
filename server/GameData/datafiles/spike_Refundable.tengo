@@ -1,0 +1,22 @@
+---aura_Refundable---
+Type :: Buff
+Duration :: -1
+Icon ::
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:Refundable]]
+
+---spike_Refundable---
+Slot :: Gun
+Auras :: [[Refundable]]
+Rarity :: Legendary
+Archetypes :: [[Pistol]] [[Revolver]] [[AssaultRifle]] [[LongRangeRifle]] [[Blaster]] [[SubmachineGun]]
+
+Chance to return bullet to clip on hit.
+
+---script_Refundable_DamageDealt---
+rand := import("rand")
+
+if abilityId == auraAbilityId && rand.float() < 0.15 {
+    addAmmoToClip(myEntityId, abilityId, 1)
+}

@@ -1,0 +1,34 @@
+---item_51 Ethos Melter---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Ethos Melter]]
+Rarity :: Legendary
+
+Let's CHARGE into battle together!
+
+---gundef_Ethos Melter---
+Fire Speed :: 0.60
+Charge Time :: 0.50
+Bullets In Chamber :: 12
+Reload Speed :: 1.5
+Sprite :: weapons_31
+Color :: Retro
+Fire Event :: fusionriflea
+Charge Event :: chargeshort
+Reload Event :: fusionriflereload
+Bullet Definition :: [[melter]]
+Archetype :: Shotgun
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: FullAuto
+Bullet Lifetime :: 0.4
+
+---bulletdef_melter---
+sprite Lance14
+color 2
+potency 51
+fire 40 relative -1 1
+wait 1
+fire 40 relative -1 1
+wait 1
+fire 40 relative -1 1
+

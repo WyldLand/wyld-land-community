@@ -1,0 +1,88 @@
+---aura_Survivalist Damage---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:SurvivalistDamage]]
+
+---script_SurvivalistDamage_OutgoingDamage---
+hpPct := float(getPoints(myEntityId, "hp", "current")) / float(getPoints(myEntityId, "hp", "max"))
+if hpPct <= 0.25 {
+    additionalDamage = damage * 0.1
+}
+
+---aura_Enhanced Healing---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 99
+Time Per Tick :: 10.0
+Definitions :: [[AuraAffectStat/Enhanced Healing]]
+
+---auraaffectstat_Enhanced Healing---
+Stat :: HealingEffectiveness
+Add :: 10
+
+---aura_Enhanced Vitality---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 99
+Time Per Tick :: 10.0
+Definitions :: [[AuraAffectStat/Enhanced Vitality]]
+
+---auraaffectstat_Enhanced Vitality---
+Stat :: Vitality
+Add :: 2
+
+---echonode_Enhanced Healing I---
+Auras :: [[Enhanced Healing]]
+Cost :: 100
+ID :: enhancedhealing1
+Icon :: ability0_40
+
+Healing effects are 1% more effective
+
+---echonode_Enhanced Healing II---
+Auras :: [[Enhanced Healing]]
+Cost :: 400
+ID :: enhancedhealing2
+Icon :: ability0_40
+Prev Node :: enhancedhealing1
+
+Healing effects are 1% more effective
+
+---echonode_Enhanced Healing III---
+Auras :: [[Enhanced Healing]]
+Cost :: 1000
+ID :: enhancedhealing3
+Icon :: ability0_40
+Prev Node :: enhancedhealing2
+
+Healing effects are 1% more effective
+
+---echonode_Enhanced Healing IV---
+Auras :: [[Enhanced Healing]]
+Cost :: 1500
+ID :: enhancedhealing4
+Icon :: ability0_40
+Prev Node :: enhancedhealing3
+
+Healing effects are 1% more effective
+
+---echonode_Survivalist's Resolve---
+Auras :: [[Survivalist Damage]]
+Cost :: 2000
+ID :: survivalistresolver
+Icon :: ability0_58
+Prev Node :: enhancedhealing4
+Requires Activation :: true
+
+When your health is below 25%, outgoing damage is increased by 10%
+
+---echonode_Enhanced Healing V---
+Auras :: [[Enhanced Healing]]
+Cost :: 1500
+ID :: enhancedhealing5
+Icon :: ability0_40
+Prev Node :: enhancedhealing4
+
+Healing effects are 1% more effective

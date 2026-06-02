@@ -1,0 +1,21 @@
+---mob_GunChicken---
+ID :: gunchicken
+Prefab :: chicken
+Range Behavior :: Melee Ranged
+Abilities :: [[Melee Attack]]
+Speed :: 1250
+Type :: Friendly
+
+---script_gunchicken_Monster---
+
+if is_undefined(scriptVars["timeAlive"]) {
+	scriptVars["timeAlive"] = 0
+}
+
+scriptVars["timeAlive"] += delta
+
+if scriptVars["timeAlive"] > 1.0 && isDead == false && targetEntityId == 0 {
+	log("CHICKEN HAS NO TARGETS DESPAWN")
+	killEntity(myEntityId)
+}
+

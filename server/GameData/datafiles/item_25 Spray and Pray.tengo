@@ -1,0 +1,50 @@
+---item_25 Spray and Pray---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Spray and Pray]]
+Rarity :: Exotic
+
+Chance on miss to return bullet to clip
+
+Just close your eyes and hope you hit the target. Or die trying.
+
+---gundef_Spray and Pray---
+Fire Speed :: 0.12
+Bullets In Chamber :: 42
+Reload Speed :: 1.2
+Sprite :: weapons_34
+Fire Event :: assaultrifle
+Reload Event :: assaultriflereload
+Bullet Definition :: [[sprayandpray]]
+Archetype :: Automatic
+Fire Type :: FullAuto
+Innate Spikes :: [[Spray and Pray]]
+Muzzle VFX :: Muzzle 1.0
+
+---bulletdef_sprayandpray---
+sprite Custom12
+color 3
+potency 30
+fire 12 relative -4 4
+
+---spike_Spray and Pray---
+Auras :: [[Spray and Pray]]
+
+---aura_Spray and Pray---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:SprayAndPray]]
+
+---script_SprayAndPray_BulletHit---
+
+rand := import("rand")
+
+if auraAbilityId == abilityId {
+	if hitLayer == CollisionLayerStatic && rand.float() < 0.20 {
+		addAmmoToClip(myEntityId, abilityId, 1)
+	}
+}
+

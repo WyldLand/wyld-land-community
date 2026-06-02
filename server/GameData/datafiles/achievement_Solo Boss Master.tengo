@@ -1,0 +1,10 @@
+---achievement_Solo Boss Master---
+Kill :: [[Mobs/Heart Hoarder|Heart Hoarder]]@1 [[Mobs/Red King|Red King]]@1 [[Mobs/Destructor|Destructor]]@1 [[Mobs/Great Wyrm|Great Wyrm]]@1 [[Mobs/Inferno Juggernaut|Inferno Juggernaut]]@1
+Tags :: TeamSize1
+Title :: Solo Slayer
+XP :: 150
+ResetOnDeath :: False
+Rewards :: [[29 Corrupted Wyld Luck]]@1
+
+Slay the Heart Hoarder, Red King, Destructor, Great Wyrm, and Inferno Juggernaut solo.
+

@@ -1,0 +1,374 @@
+---mobdefinition_Voltage Vanguard---
+ID :: voltagevanguard
+Prefab :: firesword
+Range Behavior :: [[Medium Ranged]]
+Abilities :: [[Thunder Strike]] [[Chain Lightning]] [[Storm Surge]] [[Voltage Blast]] [[Lightning Field]] [[Thunder Orbs]] [[Lightning Nova]] [[Storm Finisher]]
+Speed :: 200
+Type :: Boss
+Loot :: [[VoltageVanguard]]
+
+---loottable_VoltageVanguard---
+[[194 Vanguard's Capacitor]] @ 67.0
+[[602 Shock Pulse]] @ 15.0
+
+---prefab_firesword---
+
+Components :: [[FireSwordSprite]] [[FireSwordCollider]] [[Monster]] [[Nameplate]] [[BGMFiresword]]
+
+---prefabcomponent_FireSwordCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+	"position": [0.11, 2.5],
+    "size": [4.15, 4.43]
+}
+
+---prefabcomponent_FireSwordSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.23,
+    "pivotY": 1.0,
+    "sprite": "firesword/firesword",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_sfxfireswordAttack---
+
+Components :: [[SFXFireswordAttack]]
+
+---prefabcomponent_SFXFireswordAttack---
+
+Component :: Sound
+
+{
+    "sources": ["firesword/fireswordAttack.wav"],
+	"spatial": true
+}
+
+---prefabcomponent_BGMFiresword---
+
+Component :: Sound
+{
+	"sources": ["firesword/bgm1.wav", "firesword/bgm2.wav"],
+	"channel": "bgm",
+	"loop": true,
+	"select": "random",
+	"priority": 2,
+	"combatOnly": true
+}
+
+---ability_Thunder Strike---
+Bullet Definition :: [[thunderstrike]]
+VFX Cast :: trigger:Attack*
+
+---bulletdef_thunderstrike---
+sprite Custom10
+color 4
+potency 100
+nway speed:8 bullets:10 spread:45 angle:0 directionType:relative
+wait 2
+nway speed:7 bullets:10 spread:45 angle:22.5 directionType:relative
+wait 2
+nway speed:6 bullets:10 spread:45 angle:45 directionType:relative
+wait 8
+radial bullets:32 speed:4 angle:0 directionType:absolute
+	wait 35
+	speed 10
+	wait 35
+	vanish
+
+---ability_Chain Lightning---
+Bullet Definition :: [[chainlightning]]
+VFX Cast :: trigger:Attack*
+
+---bulletdef_chainlightning---
+sprite Lance14
+color 4
+potency 100
+repeat bullets:16 angleChange:22.5 angle:0 directionType:absolute speed:12
+	piercing 3
+	wait 15
+	direction relative 45
+	wait 15
+	fire chainlightningexplosion
+	vanish
+
+---bulletdef_chainlightningexplosion---
+sprite CirclePool 2
+potency 150
+fire 0 relative 0
+	aoeexplosion
+	radius 2
+	timedFill 5
+	damageEvery 5
+	wait 5
+	vfx SmallBombExplosion 2
+	wait 1
+	vanish
+
+---ability_Storm Surge---
+Bullet Definition :: [[stormsurge]]
+Max Range :: 100.0
+VFX Cast :: trigger:Attack*
+
+---bulletdef_stormsurge---
+sprite CirclePool 5
+potency 250
+fire 0 relative 0
+	aoeexplosion
+	radius 5
+	timedFill 30
+	damageEvery 30
+	wait 30
+	vfx BombExplosion 5
+	wait 1
+	fire stormsurgewave
+	vanish
+
+---bulletdef_stormsurgewave---
+sprite Custom11
+color 4
+potency 100
+repeat bullets:72 speed:4 angle:0 angleChange:5 delay:1 directionType:relative
+	wait 6
+	speed 0
+	wait 8
+	speed 14
+	wait 30
+	vanish
+
+---ability_Voltage Blast---
+Bullet Definition :: [[voltageblast]]
+VFX Cast :: trigger:Attack*
+
+---bulletdef_voltageblast---
+sprite Custom7
+color 4
+potency 100
+nway speed:12 bullets:5 spread:20 angle:0 directionType:relative
+wait 2
+nway speed:11 bullets:5 spread:20 angle:10 directionType:relative
+wait 2
+nway speed:10 bullets:5 spread:20 angle:-10 directionType:relative
+
+---ability_Thunder Orbs---
+Bullet Definition :: [[thunderorbs]]
+Max Range :: 100.0
+VFX Cast :: trigger:Attack*
+
+---bulletdef_thunderorbs---
+sprite CirclePool 1.5
+color 4
+potency 60
+repeat bullets:6 speed:3 angle:0 maxAngle:360 delay:4 directionType:absolute
+	aoedot
+	radius 1.5
+	damageEvery 8
+	wait 100
+	fire thunderorbsexplode
+	vanish
+
+---bulletdef_thunderorbsexplode---
+sprite Custom10
+color 4
+potency 100
+radial bullets:16 speed:8
+wait 3
+radial bullets:16 speed:7 angle:11.25 directionType:absolute
+
+---ability_Lightning Nova---
+Bullet Definition :: [[lightningnova]]
+VFX Cast :: trigger:Attack*
+
+---bulletdef_lightningnova---
+sprite Custom10
+color 4
+potency 100
+repeat bullets:360 speed:3 angle:0 angleChange:8 delay:1 directionType:relative
+	wait 15
+	speed 10
+	wait 35
+	vanish
+
+---ability_Storm Finisher---
+Bullet Definition :: [[stormfinisher]]
+Max Range :: 100.0
+VFX Cast :: trigger:Attack*
+
+---bulletdef_stormfinisher---
+sprite CirclePool 6
+potency 300
+fire 0 relative 0
+	aoeexplosion
+	radius 6
+	timedFill 45
+	damageEvery 45
+	wait 45
+	vfx BombExplosion 6
+	wait 1
+	fire stormfinisherspread
+	vanish
+
+---bulletdef_stormfinisherspread---
+sprite Lance14
+color 4
+potency 100
+radial bullets:48 speed:10 angle:0 directionType:absolute
+	piercing 2
+wait 3
+radial bullets:48 speed:9 angle:3.75 directionType:absolute
+	piercing 2
+
+---ability_Lightning Field---
+Bullet Definition :: [[lightningfield]]
+Max Range :: 100.0
+
+---bulletdef_lightningfield---
+sprite RectPool 6 15
+potency 0
+fire 0 relative 0
+	resetrotation
+	aoeexplosion
+	radius 6 15
+	timedFill 40
+	damageEvery 40
+	wait 40
+	fire lightningfielddot
+	vanish
+
+---bulletdef_lightningfielddot---
+sprite RectPool 6 15
+potency 150
+fire 0 relative 0
+	resetrotation
+	aoedot
+	radius 6 15
+	damageEvery 10
+	wait 200
+	vanish
+wait 1
+sprite Invisible
+potency 0
+repeat bullets:3 speedChange:20 speed:1
+	wait 5
+	speed 0
+	vfx ShockPool
+	wait 200
+	vanish
+wait 1
+sprite Invisible
+potency 0
+repeat bullets:2 speedChange:20 speed:21 directionType:absolute angle:180
+	wait 5
+	speed 0
+	vfx ShockPool
+	wait 200
+	vanish
+
+---script_voltagevanguard_Monster---
+resetVars := func() {
+	scriptVars["phase"] = 1
+	scriptVars["timeSinceThunderStrike"] = 0.0
+	scriptVars["timeSinceChainLightning"] = 0.0
+	scriptVars["timeSinceStormSurge"] = 0.0
+	scriptVars["timeSinceVoltageBlast"] = 0.0
+	scriptVars["timeSinceLightningField"] = 12.0
+	scriptVars["timeSinceThunderOrbs"] = 0.0
+	scriptVars["timeSinceLightningNova"] = 0.0
+	scriptVars["timeSinceStormFinisher"] = 0.0
+	scriptVars["currentSection"] = 0
+	scriptVars["wasDead"] = false
+}
+
+if isDead {
+	if !scriptVars["wasDead"] {
+		scriptVars["wasDead"] = true
+		clearBulletsForEntity(myEntityId)
+	}
+} else {
+	if is_undefined(scriptVars["phase"]) {
+		resetVars()
+	}
+
+	if targetEntityId > 0 && castingAction == 0 {
+		currentHealth := float(getPoints(myEntityId, "hp", "current"))
+		maxHealth := float(getPoints(myEntityId, "hp", "max"))
+
+		// Update all timers
+		scriptVars["timeSinceThunderStrike"] += delta
+		scriptVars["timeSinceChainLightning"] += delta
+		scriptVars["timeSinceStormSurge"] += delta
+		scriptVars["timeSinceVoltageBlast"] += delta
+		scriptVars["timeSinceLightningField"] += delta
+		scriptVars["timeSinceThunderOrbs"] += delta
+		scriptVars["timeSinceLightningNova"] += delta
+		scriptVars["timeSinceStormFinisher"] += delta
+
+		if currentHealth < maxHealth * 0.5 && scriptVars["phase"] == 1 {
+			scriptVars["phase"] = 2
+			clearBulletsForEntity(myEntityId)
+		}
+
+		// Lightning Field pattern (throughout both phases)
+		if scriptVars["timeSinceLightningField"] > 12.0 {
+			sections := [
+				[8.0, 16.0, 0.0],  // Left third
+				[16.0, 16.0, 0.0],  // Middle third
+				[24.0, 16.0, 0.0]   // Right third
+			]
+			
+			pos := sections[scriptVars["currentSection"]]
+			useAbilityAtPosition(myEntityId, "Lightning Field", positionInCurrentRoom(myEntityId, pos))
+			scriptVars["currentSection"] = (scriptVars["currentSection"] + 1) % 3
+			scriptVars["timeSinceLightningField"] = 0.0
+		}
+
+		if scriptVars["phase"] == 1 {
+			// Phase 1: Thunder Strike, Chain Lightning, Thunder Orbs patterns
+			if scriptVars["timeSinceThunderStrike"] > 2.0 {
+				useAbilityAtTarget(myEntityId, "Thunder Strike", targetEntityId, 1.0)
+				scriptVars["timeSinceThunderStrike"] = 0.0
+			}
+			if scriptVars["timeSinceChainLightning"] > 6.0 {
+				useAbilityAtTarget(myEntityId, "Chain Lightning", targetEntityId, 1.0)
+				scriptVars["timeSinceChainLightning"] = 0.0
+			}
+			if scriptVars["timeSinceThunderOrbs"] > 8.0 {
+				useAbilityAtPosition(myEntityId, "Thunder Orbs", randomPositionInCurrentRoom(myEntityId, 3.0))
+				scriptVars["timeSinceThunderOrbs"] = 0.0
+			}
+		} else {
+			// Phase 2: Storm Surge, Voltage Blast, Lightning Nova, Storm Finisher patterns
+			if scriptVars["timeSinceStormSurge"] > 8.0 {
+				useAbilityAtPosition(myEntityId, "Storm Surge", entityPosition(myEntityId))
+				scriptVars["timeSinceStormSurge"] = 0.0
+			}
+			if scriptVars["timeSinceVoltageBlast"] > 3.0 {
+				useAbilityAtTarget(myEntityId, "Voltage Blast", targetEntityId, 1.0)
+				scriptVars["timeSinceVoltageBlast"] = 0.0
+			}
+			if scriptVars["timeSinceLightningNova"] > 6.0 {
+				useAbilityAtPosition(myEntityId, "Lightning Nova", entityPosition(myEntityId))
+				scriptVars["timeSinceLightningNova"] = 0.0
+			}
+			if scriptVars["timeSinceStormFinisher"] > 12.0 {
+				useAbilityAtPosition(myEntityId, "Storm Finisher", entityPosition(myEntityId))
+				scriptVars["timeSinceStormFinisher"] = 0.0
+			}
+		}
+	}
+}

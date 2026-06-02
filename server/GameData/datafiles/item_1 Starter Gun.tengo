@@ -1,0 +1,21 @@
+---item_1 Starter Gun---
+Type :: Quest Item
+Slot :: Gun
+Gun Definition :: [[Basic Gun]]
+
+---gundef_Basic Gun---
+Fire Speed :: 0.3
+Bullets In Chamber :: 5
+Reload Speed :: 1
+Sprite :: weapons_29
+Fire Event :: pistol
+Reload Event :: pistolreload
+Bullet Definition :: [[pistol]]
+Archetype :: Handgun
+Muzzle VFX :: Muzzle 0.50
+
+---bulletdef_pistol---
+sprite PlayerBullet
+potency 60
+fire 16 relative -2 2
+

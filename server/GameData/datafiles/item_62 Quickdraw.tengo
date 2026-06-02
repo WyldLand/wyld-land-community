@@ -1,0 +1,26 @@
+---item_62 Quickdraw---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Quickdraw]]
+Rarity :: Common
+
+When the bog-standard firing speed just won't cut it.
+
+---gundef_Quickdraw---
+Fire Speed :: 0.3
+Bullets In Chamber :: 8
+Reload Speed :: 0.6
+Sprite :: weapons_61
+Fire Event :: pistolb
+Reload Event :: pistolreload
+Bullet Definition :: [[quickdraw]]
+Archetype :: Handgun
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: SemiAuto
+Bullet Lifetime :: 1.0
+
+---bulletdef_quickdraw---
+sprite PlayerBullet
+potency 66
+fire 16 relative -2 2 
+

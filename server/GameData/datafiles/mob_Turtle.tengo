@@ -1,0 +1,142 @@
+---mob_Turtle---
+Prefab :: turtle
+Range Behavior :: Medium Ranged
+Abilities :: [[Shell Pulse]] [[Turtle Attack]] [[Shell Expire]]
+Bounding Box :: 0.0 1.0 1.3 2.0
+Type :: Elite
+
+---prefab_turtle---
+
+Components :: [[TurtleSprite]] [[TurtleCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_TurtleCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+	"position": [0.0, 1.0],
+    "size": [1.3, 2.0]
+}
+
+---prefabcomponent_TurtleSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.42,
+    "pivotY": 1.0,
+    "sprite": "darkforest2/turtle",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_sfxturtleShell---
+
+Components :: [[SFXTurtleShell]]
+
+---prefabcomponent_SFXTurtleShell---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest2/turtleShell.wav"],
+	"spatial": true
+}
+
+---prefab_sfxturtleUnshell---
+
+Components :: [[SFXTurtleUnshell]]
+
+---prefabcomponent_SFXTurtleUnshell---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest2/turtleUnshell.wav"],
+	"spatial": true
+}
+
+---ability_Shell Expire---
+VFX Cast :: trigger:Unshell*
+
+---ability_Shell Pulse---
+Bullet Definition :: [[shellpulse]]
+VFX Cast :: trigger:Shell*
+
+---bulletdef_shellpulse---
+sprite Custom10
+color 2
+potency 100
+repeat bullets:36 speed:3 angle:0 maxAngle:360 delay:2 directionType:absolute
+	wait 120
+	vanish
+
+---ability_Turtle Attack---
+Bullet Definition :: [[turtleattack]]
+
+---bulletdef_turtleattack---
+sprite Custom11
+color 3
+potency 100
+nway speed:8 bullets:3 spread:30 angle:0.0 directionType:relative
+wait 2
+nway speed:8 bullets:5 spread:20 angle:-5.0 maxAngle:5.0 directionType:relative
+
+---script_turtle_Monster---
+if is_undefined(scriptVars["timeInState"]) {
+	scriptVars["timeInState"] = 3.5
+	scriptVars["inShell"] = false
+	scriptVars["timeSinceBasicAttack"] = 1.0
+}
+
+if targetEntityId > 0 && !isDead {
+
+	scriptVars["timeInState"] += delta
+
+	if scriptVars["timeInState"] >= 4.0 {
+		scriptVars["timeInState"] = 0.0
+		scriptVars["inShell"] = !scriptVars["inShell"]
+		
+		if scriptVars["inShell"] {
+			useAbilityAtPosition(myEntityId, "Shell Pulse", entityPosition(myEntityId))
+			addAuraToEntity(myEntityId, "Shell Defense", 0, myEntityId)
+		} else {
+			useAbilityAtPosition(myEntityId, "Shell Expire", entityPosition(myEntityId))
+			dispelAuraOnEntity(myEntityId, "Shell Defense")
+		}
+	}
+
+	if scriptVars["inShell"] {
+		setSpeed(myEntityId, 0.0)
+	} else {
+		setSpeed(myEntityId, 1.0)
+	}
+
+	scriptVars["timeSinceBasicAttack"] += delta
+	if scriptVars["timeSinceBasicAttack"] >= 1.5 {
+		useAbilityAtTarget(myEntityId, "Turtle Attack", targetEntityId, 2.0)
+		scriptVars["timeSinceBasicAttack"] = 0.0
+	}
+}
+
+---aura_Shell Defense---
+Type :: Buff
+Duration :: -1
+Icon :: statusicons_8
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:ShellDefense]]
+
+---script_ShellDefense_IncomingDamage---
+
+additionalDamage = -1 * int(damage * 0.30)

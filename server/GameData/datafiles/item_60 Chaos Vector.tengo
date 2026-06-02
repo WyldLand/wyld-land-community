@@ -1,0 +1,29 @@
+---item_60 Chaos Vector---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Chaos Vector]]
+Rarity :: Legendary
+
+Shoots two projectiles instead of one.
+
+Double the damage. Double the fun.
+
+---gundef_Chaos Vector---
+Fire Speed :: 0.6
+Bullets In Chamber :: 14
+Reload Speed :: 2.2
+Sprite :: weapons_95
+Fire Event :: riflea
+Reload Event :: riflereload
+Bullet Definition :: [[chaosvector]]
+Archetype :: LongRangeRifle
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: SemiAuto
+Bullet Lifetime :: 1
+
+---bulletdef_chaosvector---
+sprite Rifle14
+potency 95
+fire 40 relative 0.5
+fire 40 relative -0.5
+

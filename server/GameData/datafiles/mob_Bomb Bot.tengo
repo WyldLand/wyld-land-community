@@ -1,0 +1,92 @@
+---mob_Bomb Bot---
+Prefab :: bombbot
+Range Behavior :: Melee Ranged
+Abilities :: [[Bomb]]
+Speed :: 1000
+Options :: nodeathsmoke
+
+---prefab_bombbot---
+
+Components :: [[BombBotSprite]] [[BombBotCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_BombBotCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+	"position": [0, 0.3],
+    "size": [1.0, 1.0]
+}
+
+---prefabcomponent_BombBotSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.65,
+    "pivotY": 0.6,
+    "sprite": "darkforest3/bombbot",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_sfxbombbotDig---
+
+Components :: [[SFXBombBotDig]]
+
+---prefabcomponent_SFXBombBotDig---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest3/bombbotDig.wav"],
+	"spatial": true
+}
+
+---ability_Bomb---
+Bullet Definition :: [[bomb]]
+Lock Time :: 1.0
+VFX Cast :: trigger:Dig*
+
+---bulletdef_bomb---
+sprite CirclePool 4
+potency 250
+fire 0 relative 0
+	aoeexplosion
+	damageAll
+	radius 4
+	timedFill 3
+	damageEvery 3
+	wait 1
+	vfx BombExplosion 5
+	wait 1
+	vfx ShakeLarge 5
+	vanish
+
+---script_bombbot_Monster---
+
+if is_undefined(scriptVars["didDie"]) {
+	scriptVars["didDie"] = false
+}
+
+if !scriptVars["didDie"] && isDead {
+	useAbilityAtPosition(myEntityId, "Bomb", entityPosition(myEntityId))
+	scriptVars["didDie"] = true
+} else if !isDead {
+	if distToEntity(myEntityId, closestEnemyEntityId(myEntityId)) < 2.0 {
+		useAbilityAtPosition(myEntityId, "Bomb", entityPosition(myEntityId))
+		scriptVars["didDie"] = true
+		killEntity(myEntityId)
+	}
+}
+

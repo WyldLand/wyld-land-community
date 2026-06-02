@@ -1,0 +1,166 @@
+---aura_Enhanced Fortitude---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 99
+Time Per Tick :: 10.0
+Definitions :: [[AuraAffectStat/Enhanced Fortitude]]
+
+---auraaffectstat_Enhanced Fortitude---
+Stat :: Vitality
+Boost :: 2.5
+
+---aura_Heavy Frame---
+Type :: Debuff
+Duration :: -1
+Max Stacks :: 99
+Time Per Tick :: 10.0
+Definitions :: [[AuraAffectStat/Heavy Frame]]
+
+---auraaffectstat_Heavy Frame---
+Stat :: Speed
+Boost :: -2.5
+
+---aura_Taunt I---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+
+---aura_Taunt II---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+
+---aura_Taunt III---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+
+---echonode_Tank Class Unlock---
+Auras :: 
+Cost :: 1000
+ID :: tankclassunlock
+Icon :: ability1_66
+Requires Activation :: true
+Class :: true
+
+Unlock the Tank class upgrades.
+
+---echonode_Taunt I---
+Auras :: [[Taunt I]]
+Cost :: 1000
+ID :: tanksynergy1
+Icon :: ability0_98
+Prev Node :: enhancedfortitude3
+
+Unlock taunt level 1.
+
+---echonode_Taunt II---
+Auras :: [[Taunt II]]
+Cost :: 2000
+ID :: tanksynergy2
+Icon :: ability0_98
+Prev Node :: enhancedfortitude6
+
+Unlock taunt level 2 and increase the duration of your taunt.
+
+---echonode_Taunt III---
+Auras :: [[Taunt III]]
+Cost :: 5000
+ID :: tanksynergy3
+Icon :: ability0_98
+Prev Node :: enhancedfortitude10
+
+Unlock taunt level 3 and increase the duration of your taunt.
+
+---echonode_Enhanced Fortitude I---
+Auras :: [[Enhanced Fortitude]] [[Heavy Frame]]
+Cost :: 100
+ID :: enhancedfortitude1
+Icon :: ability0_35
+Prev Node :: tankclassunlock
+
+Gain an additional 2.5% boost to your Vitality stat, but lose 2.5% Speed.
+
+---echonode_Enhanced Fortitude II---
+Auras :: [[Enhanced Fortitude]] [[Heavy Frame]]
+Cost :: 200
+ID :: enhancedfortitude2
+Icon :: ability0_35
+Prev Node :: enhancedfortitude1
+
+Gain an additional 2.5% boost to your Vitality stat, but lose 2.5% Speed.
+
+---echonode_Enhanced Fortitude III---
+Auras :: [[Enhanced Fortitude]] [[Heavy Frame]]
+Cost :: 400
+ID :: enhancedfortitude3
+Icon :: ability0_35
+Prev Node :: enhancedfortitude2
+
+Gain an additional 2.5% boost to your Vitality stat, but lose 2.5% Speed.
+
+---echonode_Enhanced Fortitude IV---
+Auras :: [[Enhanced Fortitude]] [[Heavy Frame]]
+Cost :: 800
+ID :: enhancedfortitude4
+Icon :: ability0_35
+Prev Node :: enhancedfortitude3
+
+Gain an additional 2.5% boost to your Vitality stat, but lose 2.5% Speed.
+
+---echonode_Enhanced Fortitude V---
+Auras :: [[Enhanced Fortitude]] [[Heavy Frame]]
+Cost :: 1000
+ID :: enhancedfortitude5
+Icon :: ability0_35
+Prev Node :: enhancedfortitude4
+
+Gain an additional 2.5% boost to your Vitality stat, but lose 2.5% Speed.
+
+---echonode_Enhanced Fortitude VI---
+Auras :: [[Enhanced Fortitude]] [[Heavy Frame]]
+Cost :: 1200
+ID :: enhancedfortitude6
+Icon :: ability0_35
+Prev Node :: enhancedfortitude5
+
+Gain an additional 2.5% boost to your Vitality stat, but lose 2.5% Speed.
+
+---echonode_Enhanced Fortitude VII---
+Auras :: [[Enhanced Fortitude]] [[Heavy Frame]]
+Cost :: 1400
+ID :: enhancedfortitude7
+Icon :: ability0_35
+Prev Node :: enhancedfortitude6
+
+Gain an additional 2.5% boost to your Vitality stat, but lose 2.5% Speed.
+
+---echonode_Enhanced Fortitude VIII---
+Auras :: [[Enhanced Fortitude]] [[Heavy Frame]]
+Cost :: 1600
+ID :: enhancedfortitude8
+Icon :: ability0_35
+Prev Node :: enhancedfortitude7
+
+Gain an additional 2.5% boost to your Vitality stat, but lose 2.5% Speed.
+
+---echonode_Enhanced Fortitude IX---
+Auras :: [[Enhanced Fortitude]] [[Heavy Frame]]
+Cost :: 1800
+ID :: enhancedfortitude9
+Icon :: ability0_35
+Prev Node :: enhancedfortitude8
+
+Gain an additional 2.5% boost to your Vitality stat, but lose 2.5% Speed.
+
+---echonode_Enhanced Fortitude X---
+Auras :: [[Enhanced Fortitude]] [[Heavy Frame]]
+Cost :: 2000
+ID :: enhancedfortitude10
+Icon :: ability0_35
+Prev Node :: enhancedfortitude9
+
+Gain an additional 2.5% boost to your Vitality stat, but lose 2.5% Speed.

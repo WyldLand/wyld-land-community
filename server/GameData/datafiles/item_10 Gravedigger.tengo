@@ -1,0 +1,193 @@
+---item_10 Gravedigger---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Gravedigger]]
+Rarity :: Exotic
+Durability :: 4
+
+On kill, reload instantly.
+Every 5th projectile impacts spawns a ghoul. (Max 4 ghouls)
+
+Call me Reaper. You'll know why soon.
+
+---gundef_Gravedigger---
+Fire Speed :: 0.25
+Bullets In Chamber :: 6
+Reload Speed :: 1.8
+Sprite :: weapons_93
+Fire Event :: revolver
+Reload Event :: revolverreload
+Bullet Definition :: [[gravedigger]]
+Archetype :: Revolver
+Innate Spikes :: [[Gravedigger]]
+Muzzle VFX :: Muzzle 0.60
+
+---bulletdef_gravedigger---
+sprite Lance14
+color 10
+potency 120
+fire 16 relative -0 0
+
+---spike_Gravedigger---
+Auras :: [[Gravedigger]]
+Icon :: 
+
+Whenever you kill an enemy, gun reloads instantly.
+Every 5 projectile impacts spawns a ghoul to fight alongside you. (Max 4 ghouls)
+
+---aura_Gravedigger---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:Gravedigger]]
+
+---script_Gravedigger_DamageDealt---
+
+if abilityId == auraAbilityId {
+	// Initialize impact counter if not set
+	if is_undefined(scriptVars["impactCount"]) {
+		scriptVars["impactCount"] = 0
+	}
+	
+	// Initialize ghoul spawn times list if not set
+	if is_undefined(scriptVars["ghoulSpawnTimes"]) {
+		scriptVars["ghoulSpawnTimes"] = []
+	}
+	
+	// Check if we killed the enemy (existing functionality)
+	if getPoints(damageSenderId, "hp", "current") <= 0 {
+		//We killed them.
+		reloadGunInSlot(myEntityId, abilityId)
+	}
+	
+	// Increment impact counter for any hit
+	scriptVars["impactCount"] += 1
+	
+	// Check if we've reached 5 impacts
+	if scriptVars["impactCount"] >= 5 {
+		// Reset the counter
+		scriptVars["impactCount"] = 0
+		
+		// Clean up old ghoul spawn times (older than 10 seconds)
+		currentTime := globalTick * 0.05  // Convert ticks to seconds
+		cleanSpawnTimes := []
+		for i := 0; i < len(scriptVars["ghoulSpawnTimes"]); i++ {
+			spawnTime := scriptVars["ghoulSpawnTimes"][i]
+			if currentTime - spawnTime < 10.0 {
+				cleanSpawnTimes = append(cleanSpawnTimes, spawnTime)
+			}
+		}
+		scriptVars["ghoulSpawnTimes"] = cleanSpawnTimes
+		
+		// Only spawn if we have less than 4 active ghouls
+		if len(scriptVars["ghoulSpawnTimes"]) < 4 {
+			// Spawn a ghoul near the player
+			spawnPos := randomPositionNearby(myEntityId, 3.0, 1.0)
+			newGhoulId := summonEntity("friendlyghoul", spawnPos, monsterLevel(myEntityId))
+			
+			// Make the ghoul friendly and follow the player
+			addAIFollower(newGhoulId, myEntityId)
+			aggroMyTargets(myEntityId, newGhoulId)
+			
+			// Apply the lifespan aura to the newly spawned ghoul
+			addAuraToEntity(myEntityId, "Ghoul Lifespan", abilityId, newGhoulId)
+			
+			// Record the spawn time
+			scriptVars["ghoulSpawnTimes"] = append(scriptVars["ghoulSpawnTimes"], currentTime)
+		}
+	}
+}
+
+---mob_Friendly Ghoul---
+Prefab :: friendlyghoul
+Range Behavior :: Melee Ranged
+Abilities :: [[Weak Melee Attack]]
+Speed :: 1250
+Type :: Friendly
+
+---prefab_friendlyghoul---
+
+Components :: [[FriendlyGhoulSprite]] [[FriendlyGhoulCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_FriendlyGhoulCollider---
+
+Component :: Collider
+
+{
+    "layer": "Friendly",
+    "position": [0.0, 0.6],
+    "size": [1.0, 1.2]
+}
+
+---prefabcomponent_FriendlyGhoulSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.467,
+    "pivotY": 0.97,
+    "sprite": "darkforest3/skeletonarmored",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ],
+    "play": "Summon"
+}
+
+---prefab_sfxfriendlyghoulAttack---
+
+Components :: [[SFXFriendlyGhoulAttack]]
+
+---prefabcomponent_SFXFriendlyGhoulAttack---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest3/ghoulAttack.wav"],
+	"spatial": true
+}
+
+---ability_Summoned---
+Lock Time :: 1.5
+Cast Time :: 0.25
+
+---ability_Weak Melee Attack---
+Bullet Definition :: [[weakmelee]]
+Cooldown :: 1.5
+VFX Cast :: trigger:Attack*
+
+---bulletdef_weakmelee---
+potency 1
+sprite Invisible
+radial speed:14 bullets:12 directionType:relative angle:0
+	nododge
+	wait 2
+	vanish
+
+---aura_Ghoul Lifespan---
+Type :: Buff
+Duration :: 10.0
+Icon :: statusicons_5
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:GhoulLifespan]]
+
+---script_GhoulLifespan_Expire---
+
+killEntity(myEntityId)
+
+---script_ghoul_Monster---
+
+if !scriptVars.playedSummon {
+    scriptVars.playedSummon = true
+    useAbilityAtPosition(myEntityId, "Summoned", entityPosition(myEntityId))
+}

@@ -1,0 +1,123 @@
+---item_94 Well Worn Wraps---
+Type :: Equippable
+Slot :: Bracer
+Icon :: items_524
+Rarity :: Uncommon
+Color :: Sand_Secondary
+
+Protect your hands from the cold dark void.
+
+---item_91 Power Grips---
+Type :: Equippable
+Slot :: Bracer
+Icon :: items_522
+Rarity :: Legendary
+Gun Definition :: [[Power Grips]]
+Color :: Violet_Secondary
+
+Gives a small but noticeable boost to your Damage.
+
+Power coils spin up energy to give you more power. Watch out for the sparks, though.
+
+---gundef_Power Grips---
+Fire Speed :: 0
+Bullets In Chamber :: 1
+Reload Speed :: 15.0
+Sprite :: items_522
+Fire Event :: 
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Power Grips]]
+
+---spike_Power Grips---
+Auras :: [[Power Grips]]
+
+---aura_Power Grips---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Power Grips]]
+
+---auraaffectstat_Power Grips---
+Stat :: Damage
+Boost :: 8.0
+
+---item_92 Quick Loader---
+Type :: Equippable
+Slot :: Bracer
+Icon :: items_523
+Rarity :: Rare
+Gun Definition :: [[Quick Loader]]
+Color :: Hunt_Tertiary
+
+Reduces the reload speed of all weapons.
+
+His hands flew quickly around the gun, clearly practiced.
+
+---gundef_Quick Loader---
+Fire Speed :: 0
+Bullets In Chamber :: 1
+Reload Speed :: 15.0
+Sprite :: items_523
+Fire Event :: 
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Quick Loader]]
+
+---spike_Quick Loader---
+Auras :: [[Quick Loader]]
+
+---aura_Quick Loader---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:QuickLoader]]
+
+---script_QuickLoader_ReloadWeapon---
+reloadTime = reloadTime * 0.85
+
+---item_93 Elemental Gauntlets---
+Type :: Equippable
+Slot :: Bracer
+Icon :: items_524
+Rarity :: Exotic
+Gun Definition :: [[Elemental Gauntlets]]
+Color :: Styx_Secondary
+
+Chance to apply Burn, Shock, or Slow on hit from any weapon.
+
+For the ultimate in death and destruction, choose Elemental.
+
+---gundef_Elemental Gauntlets---
+Fire Speed :: 0
+Bullets In Chamber :: 1
+Reload Speed :: 15.0
+Sprite :: items_524
+Fire Event :: 
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Elemental Gauntlets]]
+
+---spike_Elemental Gauntlets---
+Auras :: [[Elemental Gauntlets]]
+
+---aura_Elemental Gauntlets---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:ElementalGauntlets]]
+
+---script_ElementalGauntlets_DamageDealt---
+rand := import("rand")
+
+if rand.float() < 0.15 {
+	possibleEffects := ["Burn", "Shock", "Slow"]
+    effect := possibleEffects[rand.intn(len(possibleEffects))]
+    addAuraToEntity(myEntityId, effect, auraAbilityId, damageSenderId)
+}

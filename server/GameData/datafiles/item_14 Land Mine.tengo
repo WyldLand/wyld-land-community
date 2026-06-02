@@ -1,0 +1,37 @@
+---item_14 Land Mine---
+Type :: Equippable
+Slot :: Active
+Icon :: items_719
+Gun Definition :: [[Trip Mine]]
+Rarity :: Rare
+Durability :: 6
+
+On use, leaves behind a bomb
+
+The timer dial goes to 11, but only a maniac would set it that high.
+
+---gundef_Trip Mine---
+Fire Speed :: 15.0
+Bullets In Chamber :: -1
+Reload Speed :: 0.0
+Sprite :: items_719
+Fire Event :: tripmine
+Reload Event :: 
+Archetype :: EquippableItem
+
+Bullet Definition :: [[tripmine]]
+
+---bulletdef_tripmine---
+sprite BluePool 2
+potency 250
+fire 0 relative 0
+	aoeexplosion
+	radius 2
+	damageEvery 15
+	wait 14
+	vfx SmallBombExplosion 5
+	wait 1
+	vfx ShakeSmall 5
+	wait 1
+	vanish
+

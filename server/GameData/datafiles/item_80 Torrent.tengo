@@ -1,0 +1,26 @@
+---item_80 Torrent---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Torrent]]
+Rarity :: Rare
+
+They wanted to see how fast they could fire -- I'm not sure they thought about whether or not that was a good idea.
+
+---gundef_Torrent---
+Fire Speed :: 0.04
+Bullets In Chamber :: 100
+Reload Speed :: 1.8
+Sprite :: weapons_78
+Fire Event :: smga
+Reload Event :: smgreload
+Bullet Definition :: [[torrent]]
+Archetype :: Automatic
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: FullAuto
+Bullet Lifetime :: 1.0
+
+---bulletdef_torrent---
+sprite PlayerBullet
+potency 11
+fire 17 relative -7 7
+

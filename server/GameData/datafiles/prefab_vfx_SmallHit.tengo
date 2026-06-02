@@ -1,0 +1,15 @@
+---prefab_SmallHit---
+
+Components :: [[SmallHitSprite]]
+
+---prefabcomponent_SmallHitSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "vfx/SmallHit",
+    "play": "default"
+     
+}

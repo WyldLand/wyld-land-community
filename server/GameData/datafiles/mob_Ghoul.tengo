@@ -1,0 +1,79 @@
+---mob_Ghoul---
+Prefab :: ghoul
+Range Behavior :: Melee Ranged
+Abilities :: [[Melee Attack]]
+Speed :: 1250
+Type :: Minion
+
+---prefab_ghoul---
+
+Components :: [[GhoulSprite]] [[GhoulCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_GhoulCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+    "position": [0.0, 0.6],
+    "size": [1.0, 1.2]
+}
+
+---prefabcomponent_GhoulSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.467,
+    "pivotY": 0.97,
+    "sprite": "darkforest3/skeletonarmored",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ],
+    "play": "Summon"
+}
+
+---prefab_sfxghoulAttack---
+
+Components :: [[SFXGhoulAttack]]
+
+---prefabcomponent_SFXGhoulAttack---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest3/ghoulAttack.wav"],
+	"spatial": true
+}
+
+---ability_Summoned---
+Lock Time :: 1.5
+Cast Time :: 0.25
+
+---ability_Melee Attack---
+Bullet Definition :: [[melee]]
+Cooldown :: 1.5
+VFX Cast :: trigger:Attack*
+
+---bulletdef_melee---
+potency 150
+sprite Invisible
+radial speed:14 bullets:12 directionType:relative angle:0
+	nododge
+	wait 2
+	vanish
+
+---script_ghoul_Monster---
+
+if !scriptVars.playedSummon {
+    scriptVars.playedSummon = true
+    useAbilityAtPosition(myEntityId, "Summoned", entityPosition(myEntityId))
+}

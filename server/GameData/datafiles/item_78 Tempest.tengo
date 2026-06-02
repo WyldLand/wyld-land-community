@@ -1,0 +1,26 @@
+---item_78 Tempest---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Tempest]]
+Rarity :: Uncommon
+
+When you don't really worry about your ammo budget, use this.
+
+---gundef_Tempest---
+Fire Speed :: 0.06
+Bullets In Chamber :: 60
+Reload Speed :: 1.5
+Sprite :: weapons_76
+Fire Event :: smga
+Reload Event :: smgreload
+Bullet Definition :: [[tempest]]
+Archetype :: Automatic
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: FullAuto
+Bullet Lifetime :: 1.0
+
+---bulletdef_tempest---
+sprite PlayerBullet
+potency 14
+fire 16 relative -5 5
+

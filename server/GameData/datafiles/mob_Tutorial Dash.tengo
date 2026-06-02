@@ -1,0 +1,52 @@
+---mob_Tutorial Dash---
+ID :: tutorialdash
+Prefab :: obstacle
+Range Behavior :: Stationary
+Abilities :: [[Tutorial Shot]]
+Bounding Box :: 0.0 0.6 1.0 1.2
+Type :: Normal
+
+---ability_Tutorial Shot---
+Bullet Definition :: [[tutorialshot]]
+Cooldown :: 1.5
+Auras :: [[Tutorial Damage Teleport]]
+
+---bulletdef_tutorialshot---
+sprite Basic
+color 2
+potency 100
+nway speed:5 bullets:25 spread:60 angle:90 directionType:absolute
+
+---aura_Tutorial Immunity---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:TutorialImmunity]]
+
+---aura_Tutorial Damage Teleport---
+Type :: Buff
+Duration :: 0.1
+Max Stacks :: 1
+Time Per Tick :: 0.1
+Definitions :: [[Custom:TutorialDamageTeleport]]
+
+---script_TutorialDamageTeleport_Tick---
+//setPosition(myEntityId, positionInCurrentRoom(myEntityId, [56.0, 17.0, 0.0]))
+
+---script_TutorialImmunity_IncomingDamage---
+// Negate all incoming damage
+additionalDamage = -1 * damage
+
+---script_tutorialdash_Monster---
+if !isDead {
+    // Add immunity aura if we don't have it
+    if len(getAurasOnEntity(myEntityId)) == 0 {
+        addAuraToEntity(myEntityId, "Tutorial Immunity", 0, myEntityId)
+    }
+    
+    // Fire attack regardless of aggro
+    if castingAction == 0 {
+        useAbilityAtPosition(myEntityId, "Tutorial Shot", entityPosition(myEntityId))
+    }
+}

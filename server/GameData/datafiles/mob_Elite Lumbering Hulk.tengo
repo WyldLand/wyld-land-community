@@ -1,0 +1,146 @@
+---mob_Elite Lumbering Hulk---
+Prefab :: elitelumberinghulk
+Range Behavior :: Close Ranged
+Abilities :: [[Elite Cleave]] [[Seismic Slam]] [[Power Charge]] [[Hulk Stomp]]
+Speed :: 200
+Type :: Elite
+Auras :: [[Stalwart Foes]]
+
+---prefab_elitelumberinghulk---
+
+Components :: [[EliteLumberingHulkSprite]] [[EliteLumberingHulkCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_EliteLumberingHulkCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+    "position": [0, 1.0],
+    "size": [1.5, 2.0]
+}
+
+---prefabcomponent_EliteLumberingHulkSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.266,
+    "pivotY": 1.0,
+    "sprite": "darkforest2/elitelumberinghulk",
+    "color": "Violet",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_sfxelitelumberinghulkAttack---
+
+Components :: [[SFXLumberingHulkAttack]]
+
+---ability_Elite Cleave---
+Bullet Definition :: [[elitecleave]]
+Cooldown :: 3.0
+VFX Cast :: trigger:Attack*
+Lock Time :: 0.75
+
+---bulletdef_elitecleave---
+sprite Custom11
+color 4
+potency 100
+nway speed:7 bullets:7 spread:80 angle:0 directionType:relative
+wait 5
+nway speed:6 bullets:5 spread:50 angle:0 directionType:relative bulletShift:2
+wait 5
+nway speed:5 bullets:3 spread:30 angle:0 directionType:relative bulletShift:4
+
+---ability_Seismic Slam---
+Bullet Definition :: [[seismicslam]]
+Cooldown :: 4.9
+Max Range :: 8.0
+VFX Cast :: trigger:Attack*
+
+---bulletdef_seismicslam---
+sprite PurplePool 4
+potency 125
+fire 0 relative 0
+	aoeexplosion
+	radius 4
+	timedFill 25
+	damageEvery 25
+	wait 25
+	vfx BombExplosion 5
+	wait 1
+	vfx ShakeLarge 5
+	fire seismicwaves
+	vanish
+
+---bulletdef_seismicwaves---
+sprite Custom10
+color 4
+potency 100
+radial bullets:24 speed:7
+	wait 60
+	vanish
+
+---ability_Power Charge---
+Bullet Definition :: [[powercharge]]
+Cooldown :: 6.0
+VFX Cast :: trigger:Attack*
+Lock Time :: 0.5
+Cast Time :: 1.0
+
+---bulletdef_powercharge---
+sprite Custom7
+color 4
+potency 150
+fire 12 relative 0
+	piercing 3
+	wait 40
+	vanish
+
+---ability_Hulk Stomp---
+Bullet Definition :: [[hulkstomp]]
+Cooldown :: 4.0
+Max Range :: 100.0
+VFX Cast :: trigger:Attack*
+
+---bulletdef_hulkstomp---
+sprite PurplePool 2
+potency 150
+repeat bullets:5 speed:0 angle:0 angleChange:72 delay:8 directionType:relative
+	aoeexplosion
+	radius 2
+	timedFill 15
+	damageEvery 15
+	wait 15
+	vfx SmallBombExplosion 5
+	wait 1
+	fire stompshockwave
+	vanish
+
+---bulletdef_stompshockwave---
+sprite Custom10
+color 4
+potency 75
+radial bullets:8 speed:5
+	wait 40
+	vanish
+
+---script_elitelumberinghulk_Monster---
+
+if !isDead && targetEntityId > 0 {
+	// Charge ability when target is far away
+	distanceToTarget := distToEntity(myEntityId, targetEntityId)
+	if distanceToTarget > 6.0 && castingAction == 0 {
+		useAbilityAtTarget(myEntityId, "Power Charge", targetEntityId, 1.0)
+	}
+}

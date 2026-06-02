@@ -1,0 +1,123 @@
+---mob_Player---
+Prefab :: player
+Range Behavior :: Stationary
+Abilities :: [[0-PlayerWeapon1]] [[1-PlayerWeapon2]] [[2-PlayerWeapon3]] [[3-PlayerItem1]] [[4-PlayerItem2]] [[5-PlayerItem3]] [[6-PlayerDash]]
+Innate Auras :: [[PlayerDealtDamage]]
+Speed :: 500
+Type :: Friendly
+
+---prefab_player---
+
+Components :: [[PlayerSprite]] [[PlayerHeadSprite]] [[PlayerGun]] [[Monster]] [[Nameplate]] [[PlayerAvatar]] [[PlayerCollider]] [[PlayerNoCombatBGM]] [[PlayerCombatBGM]]
+
+---prefabcomponent_PlayerSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.81,
+    "sprite": "player/hero",
+    "animations": [
+        {
+            "name": "idledown"
+        },
+        {
+            "name": "Run L/R",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefabcomponent_PlayerHeadSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.81,
+    "sprite": "player/herohead",
+    "isChild": true,
+    "animations": [
+        {
+            "name": "idledown"
+        },
+        {
+            "name": "Run L/R",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefabcomponent_PlayerGun---
+
+Component :: PlayerGun
+
+{
+    "pivotX": 0.0,
+    "pivotY": 0.5,
+    "sprite": "player/weapons",
+    "isChild": true,
+    "frame": 1
+}
+
+---prefabcomponent_PlayerCollider---
+
+Component :: Collider
+
+{
+    "layer": "Friendly",
+    "position": [0.0, 0.55],
+    "size": [0.6, 0.6]
+}
+
+---ability_0-PlayerWeapon1---
+Ability IDs 0-3 are reserved for the Player's Weapon firing (so we can check in auras and the like to see what gun caused the damage)
+
+---ability_1-PlayerWeapon2---
+Always must be the first ability
+
+---ability_2-PlayerWeapon3---
+
+
+---ability_3-PlayerItem1---
+
+
+---ability_4-PlayerItem2---
+
+
+---ability_5-PlayerItem3---
+
+
+---ability_6-PlayerDash---
+
+---prefabcomponent_PlayerNoCombatBGM---
+
+Component :: Sound
+
+{
+    "sources": ["bgm_nocombat/track1.wav", "bgm_nocombat/track2.wav", "bgm_nocombat/track3.wav", "bgm_nocombat/track4.wav", "bgm_nocombat/track5.wav", "bgm_nocombat/track6.wav"],
+    "channel": "bgm",
+    "select": "random",
+    "loop": true,
+    "priority": 1,
+    "selfOnly": true
+}
+
+---prefabcomponent_PlayerCombatBGM---
+
+Component :: Sound
+
+{
+    "sources": ["bgm_combat/track1.wav", "bgm_combat/track2.wav", "bgm_combat/track3.wav", "bgm_combat/track4.wav", "bgm_combat/track5.wav", "bgm_combat/track6.wav", "bgm_combat/track7.wav"],
+    "channel": "bgm",
+    "priority": 2,
+    "select": "random",
+    "loop": true,
+    "combatOnly": true,
+    "selfOnly": true
+}

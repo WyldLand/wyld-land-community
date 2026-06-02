@@ -1,0 +1,35 @@
+---item_124 Violet Dash---
+Type :: Usable
+Icon :: items_587
+Slot :: Dash
+Rarity :: Rare
+Meta :: PlayerDash2
+
+Purple energy waits to be unleashed.
+
+---item_125 Wyld Dash---
+Type :: Usable
+Icon :: items_605
+Slot :: Dash
+Rarity :: Rare
+Meta :: PlayerDash3
+
+A unique effect for traversing the Dark Forest.
+
+---item_126 Flame Dash---
+Type :: Usable
+Icon :: items_584
+Slot :: Dash
+Rarity :: Rare
+Meta :: PlayerDash4
+
+Captured fire is bottled up inside.
+
+---item_127 Electric Dash---
+Type :: Usable
+Icon :: items_591
+Slot :: Dash
+Rarity :: Rare
+Meta :: PlayerDash5
+
+Electricity hums across the circutis of this curious device.

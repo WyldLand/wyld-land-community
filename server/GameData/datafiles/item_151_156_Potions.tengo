@@ -1,0 +1,53 @@
+---item_151 Minor Vitality Potion---
+Icon :: potion_vitality_minor
+Type :: Usable
+Rarity :: Uncommon
+Slot :: Item
+Max Stacks :: 99
+
+Temporarily increases maximum health by 10 for 30 seconds.
+
+---item_152 Major Vitality Potion---
+Icon :: potion_vitality_major
+Type :: Usable
+Rarity :: Rare
+Slot :: Item
+Max Stacks :: 99
+
+Temporarily increases maximum health by 25 for 30 seconds.
+
+---item_153 Minor Attack Potion---
+Icon :: potion_attack_minor
+Type :: Usable
+Rarity :: Uncommon
+Slot :: Item
+Max Stacks :: 99
+
+Temporarily increases damage by 10% for 30 seconds.
+
+---item_154 Major Attack Potion---
+Icon :: potion_attack_major
+Type :: Usable
+Rarity :: Rare
+Slot :: Item
+Max Stacks :: 99
+
+Temporarily increases damage by 25% for 30 seconds.
+
+---item_155 Minor Recovery Potion---
+Icon :: potion_recovery_minor
+Type :: Usable
+Rarity :: Uncommon
+Slot :: Item
+Max Stacks :: 99
+
+Instantly restores 25 health.
+
+---item_156 Major Recovery Potion---
+Icon :: potion_recovery_major
+Type :: Usable
+Rarity :: Rare
+Slot :: Item
+Max Stacks :: 99
+
+Instantly restores 75 health.

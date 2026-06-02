@@ -1,0 +1,41 @@
+---mob_CleanseBox---
+Prefab :: cleansebox
+Range Behavior :: Stationary
+Speed :: 0
+Type :: Friendly
+
+---prefab_cleansebox---
+
+Components :: [[CleanseBoxSprite]] [[CleanseBoxCollider]] [[Monster]] [[Nameplate]] [[UsableObject]]
+
+---prefabcomponent_CleanseBoxCollider---
+
+Component :: Collider
+
+{
+    "layer": "Friendly",
+    "position": [0.0, 0.0],
+    "size": [0.5, 0.5]
+}
+
+---prefabcomponent_CleanseBoxSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "pickups/cleansebox",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+

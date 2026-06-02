@@ -1,0 +1,406 @@
+---mobdefinition_Servitor---
+ID :: servitor
+Prefab :: servitor
+Range Behavior :: [[Medium Ranged]]
+Abilities :: [[Summon Shield Orbs]] [[Energy Barrage]] [[Beam Array]] [[Ring of Fire]] [[Cross Blast]] [[Spiral Storm]] [[Void Blast]] [[Servitor Phase Shift]] [[Vulnerability Blast]]
+Type :: Boss
+Loot :: [[Servitor]]
+
+---prefab_servitor---
+
+Components :: [[ServitorSprite]] [[ServitorCollider]] [[Monster]] [[Nameplate]] [[BGMServitor]]
+
+---prefabcomponent_ServitorCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+	"position": [0.0, 2.9],
+    "size": [2.2, 4.0]
+}
+
+---prefabcomponent_ServitorSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.3,
+    "pivotY": 1.0,
+    "sprite": "servitor/servitor",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_sfxservitorAttack---
+
+Components :: [[SFXServitorAttack]]
+
+---prefabcomponent_SFXServitorAttack---
+
+Component :: Sound
+
+{
+    "sources": ["servitor/servitorAttack.wav"],
+	"spatial": true
+}
+
+---prefab_sfxservitorAttack2---
+
+Components :: [[SFXServitorAttack2]]
+
+---prefabcomponent_SFXServitorAttack2---
+
+Component :: Sound
+
+{
+    "sources": ["servitor/servitorAttack2.wav"],
+	"spatial": true
+}
+
+---prefabcomponent_BGMServitor---
+
+Component :: Sound
+{
+	"sources": ["servitor/bgm1.wav", "servitor/bgm2.wav", "servitor/bgm3.wav", "servitor/bgm4.wav"],
+	"channel": "bgm",
+	"loop": true,
+	"select": "random",
+	"priority": 2,
+	"combatOnly": true
+}
+
+---loottable_Servitor---
+[[191 Servitor's Power Cell]] @ 67.0
+[[25 Spray and Pray]] @ 2.0
+[[105 Chronoshift Marksman]] @ 2.0
+[[703 Stamina Spa]] @ 15.0
+[[604 Suppression Pulse]] @ 15.0
+
+---ability_Summon Shield Orbs---
+VFX Charging :: trigger:Attack2*
+Cast Time :: 1.0
+Script :: SummonShieldOrbs
+
+---script_SummonShieldOrbs_Cast---
+if frameNum == 5 {
+	// Spawn Red Balls in a pentagon formation around the room
+	positions := [
+		[8.0, 8.0],   // Top left
+		[24.0, 8.0],  // Top right
+		[8.0, 24.0],  // Bottom left
+		[24.0, 24.0]  // Bottom right
+	]
+	
+	for i := 0; i < len(positions); i++ {
+		newId := summonEntity("redball", positionInCurrentRoom(myEntityId, [positions[i][0], positions[i][1], 0.0]), monsterLevel(myEntityId))
+		aggroMyTargets(myEntityId, newId)
+		killEntityIfEntityDies(newId, myEntityId)
+	}
+}
+
+if frameNum == 19 {    
+	// Add shield aura
+	addAuraToEntity(myEntityId, "Guardian Shield", 0, myEntityId)
+}
+
+---ability_Energy Barrage---
+Bullet Definition :: [[energybarrage]]
+VFX Cast :: trigger:Attack4*
+
+---bulletdef_energybarrage---
+sprite Custom10
+color 3
+potency 100
+nway speed:8 bullets:5 spread:30 angle:0 directionType:relative
+wait 3
+nway speed:8 bullets:5 spread:30 angle:15 directionType:relative
+wait 3
+nway speed:8 bullets:5 spread:30 angle:-15 directionType:relative
+
+---ability_Beam Array---
+Bullet Definition :: [[beamarray]]
+VFX Cast :: trigger:Attack2*
+
+---bulletdef_beamarray---
+sprite Laser14
+color 4
+potency 0
+repeat bullets:8 angleChange:45 angle:0 directionType:relative speed:3
+	wait 10
+	fire guardianbeam
+	wait 1
+	vanish
+
+---bulletdef_guardianbeam---
+sprite RectPool 0.5 0.5
+potency 0
+repeat bullets:10 speedChange:20 speed:29 angle:0 directionType:relative
+	aoedot
+	wait 1
+	speed 0
+	wait 10
+	vanish
+wait 10
+sprite Laser14
+color 4
+potency 0
+fire 230 relative 0
+	piercing 100
+sprite Invisible
+potency 100
+wait 3
+fire 230 relative 0
+	radius 0.6
+	piercing 100
+wait 3
+fire 230 relative 0
+	radius 0.6
+	piercing 100
+
+---ability_Ring of Fire---
+Bullet Definition :: [[ringoffire]]
+VFX Cast :: trigger:Attack3*
+
+---bulletdef_ringoffire---
+sprite Custom7
+color 2
+potency 100
+repeat bullets:22 speed:3 angle:0 maxAngle:360 delay:2 directionType:absolute
+	wait 240
+	vanish
+wait 10
+repeat bullets:22 speed:4 angle:5 maxAngle:360 delay:2 directionType:absolute
+	wait 240
+	vanish
+
+---ability_Cross Blast---
+Bullet Definition :: [[crossblast]]
+VFX Cast :: trigger:Attack3*
+
+---bulletdef_crossblast---
+sprite CirclePool 2
+potency 100
+radial bullets:3 speed:3 angle:0 directionType:relative
+	lifetime 210
+	aoedot
+	damageEvery 10
+	radius 2
+	wait 20
+	direction relative 5
+	repeat
+wait 5
+sprite Basic
+potency 100
+nway speed:8 bullets:4 spread:25 angle:45 directionType:relative
+nway speed:8 bullets:4 spread:25 angle:135 directionType:relative
+nway speed:8 bullets:4 spread:25 angle:225 directionType:relative
+nway speed:8 bullets:4 spread:25 angle:315 directionType:relative
+
+---ability_Spiral Storm---
+Bullet Definition :: [[spiralstorm]]
+VFX Cast :: trigger:Attack*
+
+---bulletdef_spiralstorm---
+sprite Custom11
+color 5
+potency 100
+repeat bullets:3 speed:3 angle:0 angleChange:120 directionType:relative
+	wait 1000
+wait 5
+repeat bullets:3 speed:3 angle:15 angleChange:120 directionType:relative
+	wait 1000
+wait 5
+repeat bullets:3 speed:3 angle:30 angleChange:120 directionType:relative
+	wait 1000
+
+---ability_Void Blast---
+Bullet Definition :: [[voidblast]]
+VFX Cast :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_voidblast---
+sprite CirclePool 5
+potency 175
+fire 0 relative 0
+	aoeexplosion
+	radius 5
+	timedFill 25
+	damageEvery 25
+	wait 25
+	vfx BombExplosion 3
+	wait 1
+	fire voidwave
+	wait 1
+	vanish
+
+---bulletdef_voidwave---
+sprite Basic
+color 5
+potency 75
+radial bullets:24 speed:6
+wait 3
+radial bullets:24 speed:5 angle:7.5 directionType:absolute
+
+---ability_Servitor Phase Shift---
+VFX Charging :: trigger:Attack4*
+Cast Time :: 1.0
+Lock Time :: 1.0
+Script :: ServitorPhaseShift
+
+---script_ServitorPhaseShift_Cast---
+setSpeed(myEntityId, 0.0)
+
+if frameNum == 5 {
+	setCollisionLayer(myEntityId, CollisionLayerDynamic)
+}
+
+if frameNum == 15 {
+	targetPos := randomPositionInCurrentRoom(myEntityId, 6.0)
+	setPosition(myEntityId, targetPos)
+	setCollisionLayer(myEntityId, CollisionLayerMonster)
+}
+
+---ability_Vulnerability Blast---
+Bullet Definition :: [[vulnerabilityblast]]
+VFX Cast :: trigger:Attack4*
+Lock Time :: 1.0
+
+---bulletdef_vulnerabilityblast---
+sprite CirclePool 4
+potency 200
+fire 0 relative 0
+	aoeexplosion
+	radius 4
+	timedFill 30
+	damageEvery 30
+	wait 30
+	vfx BombExplosion 4
+	wait 1
+	fire vulnerabilitywaves
+	vanish
+
+---bulletdef_vulnerabilitywaves---
+sprite Basic
+color 1
+potency 100
+radial bullets:48 speed:6 angle:0 directionType:absolute
+wait 3
+radial bullets:48 speed:5 angle:3.75 directionType:absolute
+
+---aura_Guardian Shield---
+Type :: Buff
+Duration :: -1
+Icon :: statusicons_8
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:GuardianShield]]
+
+---script_GuardianShield_IncomingDamage---
+// Negate all damage while shield is active
+additionalDamage = -1 * damage
+
+---script_servitor_Monster---
+resetVars := func() {
+	scriptVars["phase"] = 1
+	scriptVars["vulnerableTimer"] = 10.0
+	scriptVars["currentAttackPattern"] = 0
+	scriptVars["timeSinceLastAttack"] = 0.0
+	scriptVars["shieldPhaseTimer"] = 0.0
+	scriptVars["timeSinceTeleport"] = 0.0
+}
+
+if !isDead {
+	if is_undefined(scriptVars["phase"]) {
+		resetVars()
+	}
+
+	if targetEntityId > 0 {
+		// Check for Red Ball deaths
+		nearby := getNearbyEntities(myEntityId)
+		redBallCount := 0
+		for i := 0; i < len(nearby); i++ {
+			if nearby[i].prefab == "redball" && !isEntityDead(nearby[i].id) {
+				redBallCount++
+			}
+		}
+
+		// Update timers
+		scriptVars["timeSinceLastAttack"] += delta
+		scriptVars["timeSinceTeleport"] += delta
+		scriptVars["shieldPhaseTimer"] += delta
+		
+		if redBallCount == 0 {
+			// Vulnerable phase
+			if hasAura := getAurasOnEntity(myEntityId); len(hasAura) > 0 {
+				// Remove shield when all orbs are dead
+				for i := 0; i < len(hasAura); i++ {
+					if hasAura[i]["name"] == "Guardian Shield" {
+						dispelAuraOnEntity(myEntityId, "Guardian Shield")
+					}
+				}
+			}
+			
+			scriptVars["vulnerableTimer"] += delta
+			
+			if scriptVars["vulnerableTimer"] >= 26.0 {
+				// Reset for next shield phase
+				scriptVars["vulnerableTimer"] = 0.0
+				useAbilityAtPosition(myEntityId, "Summon Shield Orbs", entityPosition(myEntityId))
+			} else if castingAction == 0 {
+				// Vulnerable phase attacks
+				if scriptVars["timeSinceTeleport"] > 5.0 {
+					useAbilityAtTarget(myEntityId, "Void Blast", targetEntityId, 1.0)
+					useAbilityAtTarget(myEntityId, "Servitor Phase Shift", targetEntityId, 0.5)
+					scriptVars["timeSinceTeleport"] = 0.0
+				} else if scriptVars["timeSinceLastAttack"] > 3.0 {
+					useAbilityAtPosition(myEntityId, "Ring of Fire", entityPosition(myEntityId))
+					useAbilityAtPosition(myEntityId, "Vulnerability Blast", entityPosition(myEntityId))
+					scriptVars["timeSinceLastAttack"] = 0.0
+				}
+			}
+		} else {
+			// Shielded phase
+			
+			if castingAction == 0 {
+				if scriptVars["currentAttackPattern"] == 0 {
+					// Pattern 1: Energy + Cross
+					if scriptVars["timeSinceLastAttack"] > 2.0 {
+						useAbilityAtTarget(myEntityId, "Energy Barrage", targetEntityId, 1.0)
+						useAbilityAtPosition(myEntityId, "Cross Blast", entityPosition(myEntityId))
+						scriptVars["timeSinceLastAttack"] = 0.0
+					}
+				} else if scriptVars["currentAttackPattern"] == 1 {
+					// Pattern 2: Beam + Ring
+					if scriptVars["timeSinceLastAttack"] > 2.5 {
+						useAbilityAtTarget(myEntityId, "Beam Array", targetEntityId, 1.0)
+						useAbilityAtPosition(myEntityId, "Ring of Fire", entityPosition(myEntityId))
+						scriptVars["timeSinceLastAttack"] = 0.0
+					}
+				} else {
+					// Pattern 3: Spiral + Void
+					if scriptVars["timeSinceLastAttack"] > 3.0 {
+						useAbilityAtPosition(myEntityId, "Spiral Storm", entityPosition(myEntityId))
+						useAbilityAtTarget(myEntityId, "Void Blast", targetEntityId, 1.0)
+						scriptVars["timeSinceLastAttack"] = 0.0
+					}
+				}
+				
+				// Change attack pattern every 10 seconds
+				if scriptVars["shieldPhaseTimer"] >= 10.0 {
+					scriptVars["currentAttackPattern"] = (scriptVars["currentAttackPattern"] + 1) % 3
+					scriptVars["shieldPhaseTimer"] = 0.0
+				}
+			}
+		}
+	}
+}

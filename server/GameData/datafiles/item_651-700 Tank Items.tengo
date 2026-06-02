@@ -1,0 +1,149 @@
+---item_651 Tanky Pulse---
+Type :: Equippable
+Slot :: Active 
+Icon :: items_727
+Gun Definition :: [[Tanky Pulse]]
+Rarity :: Legendary
+Durability :: 4
+
+On use, reduces damage from enemy attacks for 2 seconds. If the player has Taunt echo nodes unlocked enemies will be aggroed and damage reduction duration will increase. 
+
+The earth vitalizes you and if you've got the juice it will draw enemies towards you. 
+
+---gundef_Tanky Pulse---
+Fire Speed :: 30.0
+Bullets In Chamber :: -1
+Reload Speed :: 0.7
+Sprite :: items_727
+Fire Event :: crystalcast
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Tanky Pulse]]
+
+---spike_Tanky Pulse---
+Auras :: [[Tanky Pulse]]
+
+---aura_Tanky Pulse---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:TankyPulse]]
+
+---aura_Aggro I---
+Type :: Buff
+Duration :: 2.0
+Icon :: statusicons_4
+Max Stacks :: 1
+Time Per Tick :: 1.0
+
+---aura_Aggro II---
+Type :: Buff
+Duration :: 4.0
+Icon :: statusicons_4
+Max Stacks :: 1
+Time Per Tick :: 1.0
+
+---aura_Aggro III---
+Type :: Buff
+Duration :: 6.0
+Icon :: statusicons_4
+Max Stacks :: 1
+Time Per Tick :: 1.0
+
+---aura_Damage Reduction I---
+Type :: Buff
+Duration :: 2.0
+Icon :: statusicons_8
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:DamageReductionI]]
+
+---script_DamageReductionI_IncomingDamage---
+// Reduce incoming damage by 10 points
+if damage > 0 {
+	damageReduction := 10
+	if damage <= damageReduction {
+		// If damage is 10 or less, negate all damage
+		additionalDamage = -1 * damage
+	} else {
+		// Otherwise, reduce damage by 10
+		additionalDamage = -damageReduction
+	}
+}
+
+---aura_Damage Reduction II---
+Type :: Buff
+Duration :: 4.0
+Icon :: statusicons_8
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:DamageReductionII]]
+
+---script_DamageReductionII_IncomingDamage---
+// Reduce incoming damage by 10 points
+if damage > 0 {
+	damageReduction := 10
+	if damage <= damageReduction {
+		// If damage is 10 or less, negate all damage
+		additionalDamage = -1 * damage
+	} else {
+		// Otherwise, reduce damage by 10
+		additionalDamage = -damageReduction
+	}
+}
+
+---aura_Damage Reduction III---
+Type :: Buff
+Duration :: 6.0
+Icon :: statusicons_8
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:DamageReductionIII]]
+
+---script_DamageReductionIII_IncomingDamage---
+// Reduce incoming damage by 10 points
+if damage > 0 {
+	damageReduction := 10
+	if damage <= damageReduction {
+		// If damage is 10 or less, negate all damage
+		additionalDamage = -1 * damage
+	} else {
+		// Otherwise, reduce damage by 10
+		additionalDamage = -damageReduction
+	}
+}
+
+---script_TankyPulse_FireWeapon---
+if abilityId == auraAbilityId {
+
+    auras := getAurasOnEntity(myEntityId)
+    highestLevelTauntFound := 0
+    for j := 0; j < len(auras); j++ {
+       if (auras[j]["name"] == "Taunt I") && highestLevelTauntFound < 1 {
+            highestLevelTauntFound = 1
+       } else if (auras[j]["name"] == "Taunt II") && highestLevelTauntFound < 2 {
+            highestLevelTauntFound = 2
+       } else if (auras[j]["name"] == "Taunt III") && highestLevelTauntFound < 3 {
+            highestLevelTauntFound = 3
+       }
+    }
+
+     if highestLevelTauntFound == 3 {
+        addAuraToEntity(myEntityId, "Aggro III", -99, myEntityId)
+        addAuraToEntity(myEntityId, "Damage Reduction III", -99, myEntityId)
+        log("Taunt III Activated")
+    } else if highestLevelTauntFound == 2 {
+        addAuraToEntity(myEntityId, "Aggro II", -99, myEntityId)
+        addAuraToEntity(myEntityId, "Damage Reduction II", -99, myEntityId)
+        log("Taunt II  Activated")
+    } else if highestLevelTauntFound == 1 {
+        addAuraToEntity(myEntityId, "Aggro I", -99, myEntityId)
+        addAuraToEntity(myEntityId, "Damage Reduction I", -99, myEntityId)
+        log("Taunt I Activated")
+    } else if highestLevelTauntFound == 0 {
+        addAuraToEntity(myEntityId, "Damage Reduction I", -99, myEntityId)
+        log("Taunt Not Activated")
+    }
+}

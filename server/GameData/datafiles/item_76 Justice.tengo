@@ -1,0 +1,30 @@
+---item_76 Justice---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Justice]]
+Rarity :: Rare
+
+Sometimes you have to take the law into your own hands.
+
+---gundef_Justice---
+Fire Speed :: 0.4
+Bullets In Chamber :: 10
+Reload Speed :: 1.8
+Sprite :: weapons_74
+Fire Event :: shotguna
+Reload Event :: shotgunreload
+Bullet Definition :: [[justice]]
+Archetype :: Shotgun
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: SemiAuto
+Bullet Lifetime :: 0.85
+
+---bulletdef_justice---
+sprite Custom10
+potency 10
+nway speed:14 bullets:4 spread:20 directionType:relative angle:0 bulletShift:4
+wait 1
+nway speed:14 bullets:4 spread:20 directionType:relative angle:0 bulletShift:4
+wait 1
+nway speed:14 bullets:4 spread:20 directionType:relative angle:0 bulletShift:4
+

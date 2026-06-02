@@ -1,0 +1,52 @@
+---mob_Tutorial Recall---
+ID :: tutorialrecall
+Prefab :: obstacle
+Range Behavior :: Stationary
+Abilities :: [[Tutorial Explosion]]
+Bounding Box :: 0 0.3 1.0 1.0
+Speed :: 0
+Type :: Normal
+Options :: nodeathsmoke
+
+---ability_Tutorial Explosion---
+Bullet Definition :: [[tutorialexplosion]]
+Lock Time :: 1.0
+
+---bulletdef_tutorialexplosion---
+sprite CirclePool 4
+potency 500
+fire 0 relative 0
+	aoeexplosion
+	damageAll
+	radius 4
+	timedFill 3
+	damageEvery 3
+	wait 1
+	vfx BombExplosion 5
+	wait 1
+	vfx ShakeSmall 5
+	vanish
+
+---script_TutorialImmunity_IncomingDamage---
+// Negate all incoming damage
+additionalDamage = -1 * damage
+
+---script_tutorialrecall_Monster---
+if is_undefined(scriptVars["didExplode"]) {
+	scriptVars["didExplode"] = false
+}
+
+if len(getAurasOnEntity(myEntityId)) == 0 {
+    addAuraToEntity(myEntityId, "Tutorial Immunity", 0, myEntityId)
+}
+
+if !scriptVars["didExplode"] && isDead {
+	useAbilityAtPosition(myEntityId, "Tutorial Explosion", entityPosition(myEntityId))
+	scriptVars["didExplode"] = true
+} else if !isDead {
+	if distToEntity(myEntityId, closestEnemyEntityId(myEntityId)) < 1.5 {
+		useAbilityAtPosition(myEntityId, "Tutorial Explosion", entityPosition(myEntityId))
+		scriptVars["didExplode"] = true
+		killEntity(myEntityId)
+	}
+}

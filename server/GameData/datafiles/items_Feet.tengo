@@ -1,0 +1,171 @@
+---item_87 Swift Runners---
+Type :: Equippable
+Slot :: Feet
+Icon :: items_404
+Rarity :: Uncommon
+Color :: Violet_Secondary
+Gun Definition :: [[Swift Runners]]
+
+Ever have those shoes that make you just feel like you can go faster than before?
+
+---gundef_Swift Runners---
+Fire Speed :: 0
+Bullets In Chamber :: 1
+Reload Speed :: 15.0
+Sprite :: items_404
+Fire Event :: 
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Swift Runners]]
+
+---spike_Swift Runners---
+Auras :: [[Swift Runners]]
+
+---aura_Swift Runners---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Swift Runners]]
+
+---auraaffectstat_Swift Runners---
+Stat :: Speed
+Boost :: 1.0
+
+---item_88 Shock Absorbers---
+Type :: Equippable
+Slot :: Feet
+Icon :: items_405
+Rarity :: Rare
+Color :: Razz_Secondary
+Gun Definition :: [[Shock Absorbers]]
+
+Reduces incoming Shock damage by 25%.
+
+In a world where everyone wants to find a spark, maybe you should just avoid it altogether.
+
+---gundef_Shock Absorbers---
+Fire Speed :: 0
+Bullets In Chamber :: 1
+Reload Speed :: 15.0
+Sprite :: items_405
+Fire Event :: 
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Shock Absorbers]]
+
+---spike_Shock Absorbers---
+Auras :: [[Shock Absorbers]]
+
+---aura_Shock Absorbers---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:ShockAbsorbers]]
+
+---script_ShockAbsorbers_IncomingDamage---
+if damageType == "Shock" {
+    additionalDamage = int(-0.25 * float(damage))
+}
+
+---item_89 Phase Boots---
+Type :: Equippable
+Slot :: Feet
+Icon :: items_406
+Rarity :: Legendary
+Color :: Retro_Secondary
+Gun Definition :: [[Phase Boots]]
+
+Grants a 15% chance to phase through enemy projectiles.
+
+One minute he was there, the next minute he was someplace else.
+
+---gundef_Phase Boots---
+Fire Speed :: 0
+Bullets In Chamber :: 1
+Reload Speed :: 15.0
+Sprite :: items_406
+Fire Event :: 
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Phase Boots]]
+
+---spike_Phase Boots---
+Auras :: [[Phase Boots]]
+
+---aura_Phase Boots---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:PhaseBoots]]
+
+---script_PhaseBoots_IncomingDamage---
+rand := import("rand")
+
+if rand.float() < 0.15 {
+    additionalDamage = -damage + 1
+    showVfxAtPosition(myEntityId, "EnergyBurst", entityPosition(myEntityId))
+}
+
+---item_90 Quantum Striders---
+Type :: Equippable
+Slot :: Feet
+Icon :: items_407
+Rarity :: Exotic
+Color :: Hunt_Secondary
+Gun Definition :: [[Quantum Striders]]
+
+Every now and then, after taking damage, teleport to a random nearby location and gain a brief speed boost.
+
+Sometimes you just want to ride the chaos stream and see where you end up.
+
+---gundef_Quantum Striders---
+Fire Speed :: 0
+Bullets In Chamber :: 1
+Reload Speed :: 15.0
+Sprite :: items_407
+Fire Event :: 
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Quantum Striders]]
+
+---spike_Quantum Striders---
+Auras :: [[Quantum Striders]]
+
+---aura_Quantum Striders---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:QuantumStriders]]
+
+---script_QuantumStriders_IncomingDamage---
+if is_undefined(scriptVars["lastTeleport"]) {
+    scriptVars["lastTeleport"] = 0
+}
+
+if globalTick - scriptVars["lastTeleport"] > 600 {
+    newPosition := randomPositionNearby(myEntityId, 10.0, 3.0)
+    setPosition(myEntityId, newPosition)
+    addAuraToEntity(myEntityId, "Quantum Speed", auraAbilityId, myEntityId)
+    scriptVars["lastTeleport"] = globalTick
+    showVfxAtPosition(myEntityId, "GainBuff", newPosition)
+}
+
+---aura_Quantum Speed---
+Type :: Buff
+Duration :: 3
+Icon :: statusicons_8
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[AuraAffectStat/Quantum Speed]]
+
+---auraaffectstat_Quantum Speed---
+Stat :: Speed
+Boost :: 100.0

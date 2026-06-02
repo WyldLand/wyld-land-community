@@ -1,0 +1,40 @@
+---mob_Travel Shrine---
+Prefab :: travelshrine
+Range Behavior :: Stationary
+Speed :: 500
+Options :: noaggronearby
+
+---prefab_travelshrine---
+
+Components :: [[TravelShrineSprite]] [[TravelShrineCollider]] [[Monster]]
+
+---prefabcomponent_TravelShrineCollider---
+
+Component :: Collider
+
+{
+    "layer": "Dynamic",
+    "position": [0.0, 1.28],
+    "size": [6.125, 2.8125]
+}
+
+---prefabcomponent_TravelShrineSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "haven/travelshrine",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}

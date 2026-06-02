@@ -1,0 +1,48 @@
+---mob_Loot Container---
+Prefab :: lootcontainer
+Range Behavior :: Stationary
+Speed :: 500
+Type :: Friendly
+
+---prefab_lootcontainer---
+
+Components :: [[LootContainerSprite]] [[LootContainerCollider]] [[LootContainer]] [[UsableObject]]
+
+---prefabcomponent_LootContainerCollider---
+
+Component :: Collider
+
+{
+    "layer": "Dynamic",
+    "position": [0.0, 0.0],
+    "size": [0.5, 0.5]
+}
+
+---prefabcomponent_LootContainerSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "pickups/lootbox",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefabcomponent_LootContainer---
+
+Component :: LootContainer
+
+---prefabcomponent_UsableObject---
+
+Component :: UsableObject

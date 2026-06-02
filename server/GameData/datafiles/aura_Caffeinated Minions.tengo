@@ -1,0 +1,10 @@
+---aura_Caffeinated Minions---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[AuraAffectStat/Caffeinated Minions]]
+
+---auraaffectstat_Caffeinated Minions---
+Stat :: Speed
+Boost :: 100.0

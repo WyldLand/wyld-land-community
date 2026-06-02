@@ -1,0 +1,9 @@
+---achievement_Destructor Master---
+Kill :: [[Mobs/Destructor|Destructor]]@1
+Tags :: NoDamage
+Title :: Destructionator
+XP :: 50
+ResetOnDeath :: False
+
+Take out Destructor without taking any damage.
+

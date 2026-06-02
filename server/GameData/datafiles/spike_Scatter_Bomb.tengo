@@ -1,0 +1,50 @@
+---aura_Scatter Bomb---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:ScatterBomb]]
+
+---spike_Scatter Bomb---
+Slot :: Gun
+Auras :: [[Scatter Bomb]]
+Rarity :: Exotic
+Archetypes :: [[ExplosiveLaunchers]]
+
+Deal bonus damage to enemies above 90% health.
+
+---ability_Scatter Bomb Trigger---
+Bullet Definition :: [[scatterbomblets]]
+Cast Time :: 0.0
+Lock Time :: 0.0
+Max Range :: 100.0
+
+---bulletdef_scatterbomblets---
+sprite Invisible
+potency 0
+fire 0 relative 0
+	wait 8
+	radial bullets:8 speed:8
+		sprite Custom4
+		color 1
+		potency 80
+		wait 18
+		aoeexplosion
+		radius 1.5
+		damageEvery 3
+		vfx SmallBombExplosion 4
+		wait 1
+		vfx ShakeSmall 3
+		wait 1
+		vanish
+	vanish
+
+---script_ScatterBomb_DamageDealt---
+rand := import("rand")
+
+if abilityId == auraAbilityId && rand.float() < 0.30 {
+	targetPos := entityPosition(damageSenderId)
+	useAbilityAtPosition(myEntityId, "Scatter Bomb Trigger", targetPos, targetPos)
+	showVfxAtPosition(myEntityId, "BigBombExplosion", targetPos)
+}

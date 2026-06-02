@@ -1,0 +1,39 @@
+---mob_Elio Voss---
+Prefab :: magicmerchant
+Range Behavior :: Stationary
+Type :: Friendly
+
+---prefab_magicmerchant---
+
+Components :: [[MagicMerchantSprite]] [[MagicMerchantCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_MagicMerchantCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+    "position": [0, 1.1875],
+    "size": [1.25, 2.125]
+}
+
+---prefabcomponent_MagicMerchantSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "haven/magicmerchant",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+---prefab_ShardCreated---
+
+Components :: [[ShardCreatedSprite]]
+
+---prefabcomponent_ShardCreatedSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "vfx/ShardCreated",
+    "play": "default"
+     
+}

@@ -1,0 +1,93 @@
+---mob_Shielder---
+Prefab :: shielder
+Range Behavior :: Medium Ranged
+Abilities :: [[Shielder Slam]] [[Shielder Shoot]]
+Speed :: 500
+Type :: Elite
+
+---prefab_shielder---
+
+Components :: [[ShielderSprite]] [[ShielderCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_ShielderCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+    "position": [0.0, 0.9],
+    "size": [1.2, 1.8]
+}
+
+---prefabcomponent_ShielderSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.472,
+    "pivotY": 1.0,
+    "sprite": "darkforest1/shielder",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_sfxshielderShoot---
+
+Components :: [[SFXShielderShoot]]
+
+---prefabcomponent_SFXShielderShoot---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest1/shielderShoot.wav"],
+    "delay": [1.0],
+	"spatial": true
+}
+
+---prefab_sfxshielderSlam---
+
+Components :: [[SFXShielderSlam]]
+
+---prefabcomponent_SFXShielderSlam---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest1/shielderSlam.wav"],
+    "delay": [0.50],
+	"spatial": true
+}
+
+---ability_Shielder Slam---
+Bullet Definition :: [[shielderslam]]
+Cooldown :: 5.0
+VFX Charging :: trigger:Slam*
+Cast Time :: 1.0
+Lock Time :: 0.75
+
+---bulletdef_shielderslam---
+potency 150
+nway speed:7 bullets:8 spread:90 angle:0 directionType:relative
+wait 4
+radial bullets:36 speed:6
+
+---ability_Shielder Shoot---
+Bullet Definition :: [[shieldershoot]]
+Cooldown :: 2.0
+VFX Charging :: trigger:Shoot*
+Cast Time :: 0.75
+Lock Time :: 0.75
+
+---bulletdef_shieldershoot---
+line speed:6 bullets:8 delay:2 angle:-10 maxAngle:10 directionType:relative speedChange:0.25
+

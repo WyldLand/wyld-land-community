@@ -1,0 +1,2569 @@
+---mobdefinition_Corrupted Dark Hunter---
+ID :: corruptedhunter
+Prefab :: hunter
+Range Behavior :: [[Close Ranged]]
+Abilities :: [[CorruptedHunter Phase One Mines]] [[CorruptedHunter Phase One Shotgun]] [[CorruptedHunter Phase Two Divider]] [[CorruptedHunter Phase Two Boss Shotgun]] [[CorruptedHunter Phase Two Turret Shotgun]] [[CorruptedHunter Phase Three Stationary Bullet Big]] [[CorruptedHunter Phase Three Shotgun Waves]] [[CorruptedHunter Phase Three Stationary Bullet Small]] [[CorruptedHunter Phase Three Teleport Waves]] [[CorruptedHunter Phase Three Teleport Explosion]] [[CorruptedHunter Phase Three Teleport Shotgun]] [[CorruptedHunter Phase Four Divider]] [[CorruptedHunter Phase Four Boss Shotgun]] [[CorruptedHunter Phase Four Turret Shotgun]] [[CorruptedHunter Phase Four Middle Explosion]] [[CorruptedHunter Phase Four Boss Chase Explosion]] [[CorruptedHunter Phase Five Turrets Two]] [[CorruptedHunter Phase Five Turrets One]] [[CorruptedHunter Phase Five Walls]] [[CorruptedHunter Phase Five Room Divider]] [[CorruptedHunter Phase Five Room Limiter]] [[CorruptedHunter Phase Five Shotguns]] [[CorruptedHunter Phase Five Big Shotgun]] [[CorruptedHunter Phase Six Spiral]] [[CorruptedHunter Phase Six Middle Explosion]] [[CorruptedHunter Phase Six Room Limiter]] [[CorruptedHunter Phase Six Micro]] [[CorruptedHunter Phase Six Attack Two Throw]] [[CorruptedHunter Phase Six Attack One Explosion]] [[CorruptedHunter Phase Six Attack One Line]] [[CorruptedHunter Phase Six Attack One Shotgun]] [[CorruptedHunter Phase Six Mines]] [[CorruptedHunter Phase Seven Spiral]] [[CorruptedHunter Phase Seven Mine Big]] [[CorruptedHunter Phase Seven Mine Small]] [[CorruptedHunter Phase Seven Small Bomb]] [[CorruptedHunter Phase Seven Big Bomb]] [[CorruptedHunter Phase Seven Shotgun]] [[CorruptedHunter Phase Seven Corner Bomb]] [[CorruptedHunter Phase Two HM Middle Explosion]] [[CorruptedHunter Phase Two HM Line]] [[CorruptedHunter Phase Special Room Limiter]] [[CorruptedHunter Phase Special Explosion]] [[CorruptedHunter Phase Special Boss Shotgun]] [[CorruptedHunter Phase Special Divider]] [[CorruptedHunter Phase Two Boss Shotgun Two]] [[CorruptedHunter Phase Two Boss Shotgun Three]] [[CorruptedHunter Phase Four Get Away]]
+Bounding Box :: 0 2.73 2.5 3.0
+Speed :: 100
+Type :: Boss
+Loot :: [[CorruptedHunter]]
+
+---loottable_CorruptedHunter---
+[[102 Mortality Driver]] @ 2.0
+[[113 Dark Rabbit]] @ 5.0
+[[183 Hunter's Cloak]] @ 67.0
+
+---ability_CorruptedHunter Phase One Mines---
+Bullet Definition :: [[corruptedhunterponemines]]
+Max Range :: 100.0
+VFX Cast :: trigger:Ascend*
+
+---bulletdef_corruptedhunterponemines---
+sprite CirclePool 2
+potency 225
+fire 0 relative 0
+	aoeexplosion
+	radius 1.85
+	timedFill 40
+	damageEvery 40
+	wait 40
+	vfx ColossusExplosion 5
+	wait 1
+	vanish
+wait 40
+sprite CirclePool 2
+potency 225
+fire 0 absolute 0
+	radius 1.85
+	wait 150
+sprite Basic
+potency 100
+radial bullets:12 speed:3 directionType:relative
+	wait 2000
+	
+
+---ability_CorruptedHunter Phase One Shotgun---
+Bullet Definition :: [[corruptedhunterponesgun]]
+VFX Charging :: trigger:Attack*
+
+---bulletdef_corruptedhunterponesgun---
+potency 100
+color 3
+radial bullets:24 speed:4
+	wait 100
+wait 3
+radial bullets:24 speed:4
+	wait 100
+
+
+
+---mobdefinition_Corrupted Hunter Assassin---
+Prefab :: assassin
+ID :: corruptedhunterassassin
+Range Behavior :: [[Close Ranged]]
+Abilities :: [[Abilities/Corrupted Hunter Assassin]]
+Bounding Box :: 0.0 0.6 1.0 1.2
+Speed :: 300
+
+---ability_Corrupted Hunter Assassin---
+Bullet Definition :: [[corruptedhunterassassin]]
+Cooldown :: 1.5
+VFX Charging :: trigger:Attack*
+
+---bulletdef_corruptedhunterassassin---
+potency 100
+sprite Custom7
+nway bullets:4 speed:6 spread:45 angle:0 maxAngle:135 directionType:relative
+wait 4
+nway bullets:4 speed:6 spread:45 angle:0 maxAngle:135 directionType:relative
+	wait 1000
+
+---ability_CorruptedHunter Phase Two HM Line---
+Bullet Definition :: [[corruptedhunterptwohmline]]
+VFX Charging :: trigger:Ascend*
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterptwohmline---
+sprite OrangePool 0.5
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 20
+	wait 20
+	wait 1
+	vanish
+wait 20
+potency 100
+sprite Custom7
+line bullets:5 speed:7 delay:2 directionType:relative
+	wait 1000
+
+
+---ability_CorruptedHunter Phase Two HM Middle Explosion---
+Bullet Definition :: [[corruptedhunterptwohmmidbomb]]
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterptwohmmidbomb---
+sprite CirclePool 1
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 0
+	timedFill 40
+	damageEvery 40
+	wait 41
+	vanish
+wait 40
+sprite Basic
+potency 250
+radial bullets:30 speed:1 angle:0 directionType:absolute
+	wait 50
+	vanish
+
+---ability_CorruptedHunter Phase Two Divider---
+Bullet Definition :: [[corruptedhunterptwodivider]]
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterptwodivider---
+sprite CirclePool 1
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 0
+	timedFill 40
+	damageEvery 40
+	wait 41
+	vanish
+wait 40
+sprite Custom7
+potency 125
+line speed:8 bullets:1 delay:0 angle:90 directionType:absolute
+	wait 30
+	vanish
+line speed:8 bullets:1 delay:0 angle:180 directionType:absolute
+	wait 30
+	vanish
+line speed:8 bullets:1 delay:0 angle:270 directionType:absolute
+	wait 30
+	vanish
+line speed:8 bullets:1 delay:0 angle:360 directionType:absolute
+	wait 30
+	vanish
+wait 2
+line speed:8 bullets:1 delay:0 angle:90 directionType:absolute
+	wait 30
+	vanish
+line speed:8 bullets:1 delay:0 angle:180 directionType:absolute
+	wait 30
+	vanish
+line speed:8 bullets:1 delay:0 angle:270 directionType:absolute
+	wait 30
+	vanish
+line speed:8 bullets:1 delay:0 angle:360 directionType:absolute
+	wait 30
+	vanish
+wait 2
+line speed:8 bullets:1 delay:0 angle:90 directionType:absolute
+	wait 30
+	vanish
+line speed:8 bullets:1 delay:0 angle:180 directionType:absolute
+	wait 30
+	vanish
+line speed:8 bullets:1 delay:0 angle:270 directionType:absolute
+	wait 30
+	vanish
+line speed:8 bullets:1 delay:0 angle:360 directionType:absolute
+	wait 30
+	vanish
+wait 2
+line speed:8 bullets:1 delay:0 angle:90 directionType:absolute
+	wait 30
+	vanish
+line speed:8 bullets:1 delay:0 angle:180 directionType:absolute
+	wait 30
+	vanish
+line speed:8 bullets:1 delay:0 angle:270 directionType:absolute
+	wait 30
+	vanish
+line speed:8 bullets:1 delay:0 angle:360 directionType:absolute
+	wait 30
+	vanish
+wait 2
+line speed:8 bullets:1 delay:0 angle:90 directionType:absolute
+	wait 30
+	vanish
+line speed:8 bullets:1 delay:0 angle:180 directionType:absolute
+	wait 30
+	vanish
+line speed:8 bullets:1 delay:0 angle:270 directionType:absolute
+	wait 30
+	vanish
+line speed:8 bullets:1 delay:0 angle:360 directionType:absolute
+	wait 30
+	vanish
+wait 2
+line speed:8 bullets:1 delay:0 angle:90 directionType:absolute
+	wait 30
+	vanish
+line speed:8 bullets:1 delay:0 angle:180 directionType:absolute
+	wait 30
+	vanish
+line speed:8 bullets:1 delay:0 angle:270 directionType:absolute
+	wait 30
+	vanish
+line speed:8 bullets:1 delay:0 angle:360 directionType:absolute
+	wait 30
+	vanish
+	
+---ability_CorruptedHunter Phase Two Boss Shotgun---
+Bullet Definition :: [[corruptedhunterptwobshotgun]]
+VFX Charging :: trigger:Ascend*
+
+---bulletdef_corruptedhunterptwobshotgun---
+potency 125
+nway speed:4 bullets:32 spread:90 angle:225  directionType:absolute
+	wait 100
+nway speed:4 bullets:32 spread:90 angle:45  directionType:absolute
+	wait 100
+wait 10
+nway speed:4 bullets:18 spread:88 angle:225 directionType:absolute
+	wait 100
+nway speed:4 bullets:18 spread:88 angle:45 directionType:absolute
+	wait 100
+wait 8
+nway speed:4 bullets:18 spread:86 angle:225 directionType:absolute
+	wait 100
+nway speed:4 bullets:18 spread:86 angle:45 directionType:absolute
+	wait 100
+wait 10
+nway speed:4 bullets:32 spread:84 angle:225 directionType:absolute
+	wait 100
+nway speed:4 bullets:32 spread:84 angle:45 directionType:absolute
+	wait 100
+wait 18
+nway speed:4 bullets:32 spread:90 angle:315 directionType:absolute
+	wait 100
+nway speed:4 bullets:32 spread:90 angle:135 directionType:absolute
+	wait 100
+wait 10
+nway speed:4 bullets:18 spread:88 angle:315 directionType:absolute
+	wait 100
+nway speed:4 bullets:18 spread:88 angle:135 directionType:absolute
+	wait 100
+wait 8
+nway speed:4 bullets:18 spread:88 angle:315 directionType:absolute
+	wait 100
+nway speed:4 bullets:18 spread:88 angle:135 directionType:absolute
+	wait 100
+wait 10
+nway speed:4 bullets:32 spread:84 angle:315 directionType:absolute
+	wait 100
+nway speed:4 bullets:32 spread:84 angle:135 directionType:absolute
+	wait 100
+
+---ability_CorruptedHunter Phase Two Boss Shotgun Two---
+Bullet Definition :: [[corruptedhunterptwobshotguntwo]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterptwobshotguntwo---
+potency 100
+nway speed:4 bullets:32 spread:90 angle:135  directionType:absolute
+	wait 100
+nway speed:4 bullets:32 spread:90 angle:45  directionType:absolute
+	wait 100
+wait 10
+nway speed:4 bullets:18 spread:88 angle:135 directionType:absolute
+	wait 100
+nway speed:4 bullets:18 spread:88 angle:45 directionType:absolute
+	wait 100
+wait 8
+nway speed:4 bullets:18 spread:86 angle:135 directionType:absolute
+	wait 100
+nway speed:4 bullets:18 spread:86 angle:45 directionType:absolute
+	wait 100
+wait 10
+nway speed:4 bullets:32 spread:84 angle:135 directionType:absolute
+	wait 100
+nway speed:4 bullets:32 spread:84 angle:45 directionType:absolute
+	wait 100
+wait 18
+nway speed:4 bullets:32 spread:90 angle:315 directionType:absolute
+	wait 100
+nway speed:4 bullets:32 spread:90 angle:225 directionType:absolute
+	wait 100
+wait 10
+nway speed:4 bullets:18 spread:88 angle:315 directionType:absolute
+	wait 100
+nway speed:4 bullets:18 spread:88 angle:225 directionType:absolute
+	wait 100
+wait 8
+nway speed:4 bullets:18 spread:88 angle:315 directionType:absolute
+	wait 100
+nway speed:4 bullets:18 spread:88 angle:225 directionType:absolute
+	wait 100
+wait 10
+nway speed:4 bullets:32 spread:84 angle:315 directionType:absolute
+	wait 100
+nway speed:4 bullets:32 spread:84 angle:225 directionType:absolute
+	wait 100
+
+---ability_CorruptedHunter Phase Two Boss Shotgun Three---
+Bullet Definition :: [[corruptedhunterptwobshotgunthree]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterptwobshotgunthree---
+potency 100
+nway speed:4 bullets:32 spread:90 angle:315  directionType:absolute
+	wait 100
+nway speed:4 bullets:32 spread:90 angle:135  directionType:absolute
+	wait 100
+wait 10
+nway speed:4 bullets:18 spread:88 angle:315 directionType:absolute
+	wait 100
+nway speed:4 bullets:18 spread:88 angle:135 directionType:absolute
+	wait 100
+wait 8
+nway speed:4 bullets:18 spread:86 angle:315 directionType:absolute
+	wait 100
+nway speed:4 bullets:18 spread:86 angle:135 directionType:absolute
+	wait 100
+wait 10
+nway speed:4 bullets:32 spread:84 angle:315 directionType:absolute
+	wait 100
+nway speed:4 bullets:32 spread:84 angle:135 directionType:absolute
+	wait 100
+wait 18
+nway speed:4 bullets:32 spread:90 angle:225 directionType:absolute
+	wait 100
+nway speed:4 bullets:32 spread:90 angle:45 directionType:absolute
+	wait 100
+wait 10
+nway speed:4 bullets:18 spread:88 angle:225 directionType:absolute
+	wait 100
+nway speed:4 bullets:18 spread:88 angle:45 directionType:absolute
+	wait 100
+wait 8
+nway speed:4 bullets:18 spread:88 angle:225 directionType:absolute
+	wait 100
+nway speed:4 bullets:18 spread:88 angle:45 directionType:absolute
+	wait 100
+wait 10
+nway speed:4 bullets:32 spread:84 angle:225 directionType:absolute
+	wait 100
+nway speed:4 bullets:32 spread:84 angle:45 directionType:absolute
+	wait 100
+
+
+---ability_CorruptedHunter Phase Two Turret Shotgun---
+Bullet Definition :: [[corruptedhunterptwotshotgun]]
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterptwotshotgun---
+sprite CirclePool 1
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 0
+	timedFill 40
+	damageEvery 40
+	wait 41
+	vanish
+wait 40
+sprite Basic
+color 2
+potency 125
+radial bullets:18 speed:3 angle:2 directionType:relative
+	wait 100
+	vanish
+wait 15
+radial bullets:18 speed:3 angle:-2 directionType:relative
+	wait 100
+	vanish
+
+---ability_CorruptedHunter Phase Three Stationary Bullet Big---
+Bullet Definition :: [[corruptedhunterpthreebulletbig]]
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterpthreebulletbig---
+sprite CirclePool 0.9
+potency 200
+fire 0 relative 0
+	radius 0.85
+	timedFill 25
+	damageEvery 25
+	wait 26
+	vanish
+
+---ability_CorruptedHunter Phase Three Shotgun Waves---
+Bullet Definition :: [[corruptedhunterpthreeshotgunwaves]]
+VFX Charging :: trigger:Attack2*
+
+---bulletdef_corruptedhunterpthreeshotgunwaves---
+potency 150
+wait 2
+sprite Custom7
+color 3
+radial bullets:10 speed:3 angle:0 directionType:absolute
+	wait 1000
+wait 3
+radial bullets:10 speed:3 angle:0 directionType:absolute
+	wait 1000
+wait 3
+radial bullets:10 speed:3 angle:0 directionType:absolute
+	wait 1000
+wait 3
+radial bullets:10 speed:3 angle:0 directionType:absolute
+	wait 1000
+wait 3
+radial bullets:10 speed:3 angle:0 directionType:absolute
+	wait 1000
+wait 3
+radial bullets:10 speed:3 angle:0 directionType:absolute
+	wait 1000
+wait 6
+radial bullets:10 speed:3 angle:17.5 directionType:absolute
+	wait 1000
+sprite Basic
+radial bullets:10 speed:6 angle:0 directionType:absolute
+	wait 1000
+wait 3
+sprite Custom7
+radial bullets:10 speed:3 angle:17.5 directionType:absolute
+	wait 1000
+sprite Basic
+radial bullets:10 speed:6 angle:25 directionType:absolute
+	wait 1000
+wait 3
+sprite Custom7
+radial bullets:10 speed:3 angle:17.5 directionType:absolute
+	wait 1000
+sprite Basic
+radial bullets:10 speed:6 angle:50 directionType:absolute
+	wait 1000
+wait 3
+sprite Custom7
+radial bullets:10 speed:3 angle:17.5 directionType:absolute
+	wait 1000
+sprite Basic
+radial bullets:10 speed:6 angle:75 directionType:absolute
+	wait 1000
+wait 3
+sprite Custom7
+radial bullets:10 speed:3 angle:17.5 directionType:absolute
+	wait 1000
+sprite Basic
+radial bullets:10 speed:6 angle:100 directionType:absolute
+	wait 1000
+wait 3
+sprite Custom7
+radial bullets:10 speed:3 angle:17.5 directionType:absolute
+	wait 1000
+sprite Basic
+radial bullets:10 speed:6 angle:125 directionType:absolute
+	wait 1000
+wait 3
+sprite Custom7
+radial bullets:10 speed:3 angle:0 directionType:absolute
+	wait 1000
+sprite Basic
+radial bullets:10 speed:6 angle:150 directionType:absolute
+	wait 1000
+wait 3
+sprite Custom7
+radial bullets:10 speed:3 angle:0 directionType:absolute
+	wait 1000
+sprite Basic
+radial bullets:10 speed:6 angle:175 directionType:absolute
+	wait 1000
+wait 3
+sprite Custom7
+radial bullets:10 speed:3 angle:0 directionType:absolute
+	wait 1000
+sprite Basic
+radial bullets:10 speed:6 angle:200 directionType:absolute
+	wait 1000
+wait 3
+sprite Custom7
+radial bullets:10 speed:3 angle:0 directionType:absolute
+	wait 1000
+sprite Basic
+radial bullets:10 speed:6 angle:225 directionType:absolute
+	wait 1000
+wait 3
+sprite Custom7
+radial bullets:10 speed:3 angle:0 directionType:absolute
+	wait 1000
+sprite Basic
+radial bullets:10 speed:6 angle:250 directionType:absolute
+	wait 1000
+wait 3
+sprite Custom7
+radial bullets:10 speed:3 angle:0 directionType:absolute
+	wait 1000
+sprite Basic
+radial bullets:10 speed:6 angle:275 directionType:absolute
+	wait 1000
+wait 3
+radial bullets:10 speed:6 angle:300 directionType:absolute
+	wait 1000
+wait 3
+radial bullets:10 speed:6 angle:325 directionType:absolute
+	wait 1000
+radial bullets:40 speed:2 angle:0 directionType:absolute
+	wait 1000
+wait 3
+radial bullets:10 speed:6 angle:350 directionType:absolute
+	wait 1000
+wait 3
+radial bullets:10 speed:6 angle:375 directionType:absolute
+	wait 1000
+wait 3
+radial bullets:10 speed:6 angle:400 directionType:absolute
+	wait 1000
+radial bullets:40 speed:2 angle:15 directionType:absolute
+	wait 1000
+
+---ability_CorruptedHunter Phase Three Stationary Bullet Small---
+Bullet Definition :: [[corruptedhunterpthreebulletsmall]]
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterpthreebulletsmall---
+sprite CirclePool 0.75
+potency 200
+fire 0 relative 0
+	radius 0.7
+	timedFill 25
+	damageEvery 25
+	wait 26
+	vanish
+
+---ability_CorruptedHunter Phase Three Teleport Shotgun---
+Bullet Definition :: [[corruptedhunterpthreetpshotgun]]
+VFX Charging :: trigger:Attack3*
+
+
+---bulletdef_corruptedhunterpthreetpshotgun---
+potency 175
+color 3
+wait 5
+radial bullets:10 speed:2 angle:0 directionType:absolute
+	wait 10000
+wait 4
+radial bullets:10 speed:2 angle:0 directionType:absolute
+	wait 10000
+wait 4
+radial bullets:10 speed:2 angle:0 directionType:absolute
+	wait 10000
+wait 4
+radial bullets:10 speed:2 angle:0 directionType:absolute
+	wait 10000
+radial bullets:10 speed:2 angle:17.5 directionType:absolute
+	wait 10000
+wait 4
+radial bullets:10 speed:2 angle:0 directionType:absolute
+	wait 10000
+radial bullets:10 speed:2 angle:17.5 directionType:absolute
+	wait 10000
+wait 4
+radial bullets:10 speed:2 angle:0 directionType:absolute
+	wait 10000
+radial bullets:10 speed:2 angle:17.5 directionType:absolute
+	wait 10000
+wait 4
+radial bullets:10 speed:2 angle:17.5 directionType:absolute
+	wait 10000
+wait 4
+radial bullets:10 speed:2 angle:17.5 directionType:absolute
+	wait 10000
+radial bullets:10 speed:2 angle:27.25 directionType:absolute
+	wait 10000
+radial bullets:10 speed:2 angle:-27.25 directionType:absolute
+	wait 10000
+wait 4
+radial bullets:10 speed:2 angle:17.5 directionType:absolute
+	wait 10000
+radial bullets:10 speed:2 angle:27.25 directionType:absolute
+	wait 10000
+radial bullets:10 speed:2 angle:-27.25 directionType:absolute
+	wait 10000
+wait 4
+radial bullets:10 speed:2 angle:27.25 directionType:absolute
+	wait 10000
+radial bullets:10 speed:2 angle:-27.25 directionType:absolute
+	wait 10000
+wait 4
+radial bullets:10 speed:2 angle:27.25 directionType:absolute
+	wait 10000
+radial bullets:10 speed:2 angle:-27.25 directionType:absolute
+	wait 10000
+wait 4
+radial bullets:10 speed:2 angle:27.25 directionType:absolute
+	wait 10000
+radial bullets:10 speed:2 angle:-27.25 directionType:absolute
+	wait 10000
+wait 4
+radial bullets:10 speed:2 angle:27.25 directionType:absolute
+	wait 10000
+radial bullets:10 speed:2 angle:-27.25 directionType:absolute
+	wait 10000
+
+
+
+---ability_CorruptedHunter Phase Three Teleport Waves---
+Bullet Definition :: [[corruptedhunterpthreetpwaves]]
+VFX Charging :: trigger:Ascend*
+
+---bulletdef_corruptedhunterpthreetpwaves---
+potency 150
+color 3
+wait 5
+radial bullets:60 speed:2 angle:0 directionType:absolute
+	wait 10000
+wait 4
+potency 125
+radial bullets:99 speed:7 angle:0 directionType:absolute
+	wait 10000
+wait 16
+potency 150
+radial bullets:60 speed:2 angle:2 directionType:absolute
+	wait 10000
+wait 4
+potency 125
+radial bullets:99 speed:7 angle:0 directionType:absolute
+	wait 10000
+wait 16
+potency 150
+radial bullets:60 speed:2 angle:4 directionType:absolute
+	wait 10000
+wait 4
+potency 125
+radial bullets:99 speed:7 angle:0 directionType:absolute
+	wait 10000
+
+
+
+---ability_CorruptedHunter Phase Three Teleport Explosion---
+Bullet Definition :: [[corruptedhunterpthreetpboom]]
+VFX Charging :: trigger:Attack3*
+
+
+---bulletdef_corruptedhunterpthreetpboom---
+sprite CirclePool 7
+potency 450
+fire 0 relative 0
+	aoeexplosion
+	radius 6.9
+	timedFill 80
+	damageEvery 80
+	wait 80
+	vfx ColossusExplosion 7
+	wait 1
+wait 75
+sprite Basic
+color 3
+potency 150
+radial bullets:40 speed:3 angle:0 directionType:absolute
+	wait 1000
+wait 16
+radial bullets:40 speed:3 angle:4 directionType:absolute
+	wait 1000
+
+
+---ability_CorruptedHunter Phase Special Room Limiter---
+Bullet Definition :: [[corruptedhunterpspelimit]]
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterpspelimit---
+sprite CirclePool 2
+potency 0
+radial bullets:1 speed:0
+	aoeexplosion
+	radius 0
+	timedFill 30
+	damageEvery 30
+	wait 31
+	vanish
+wait 30
+color 2
+sprite Basic
+potency 120
+radial bullets:26 speed:3 directionType:relative
+	wait 1000
+potency 150
+radial bullets:4 speed:7 angle:0
+	wait 2
+	speed -7
+	fire hp8next
+wait 50
+sprite CirclePool 2
+potency 0
+radial bullets:1 speed:0
+	aoeexplosion
+	radius 0
+	timedFill 30
+	damageEvery 30
+	wait 31
+	vanish
+wait 30
+potency 120
+sprite Basic
+color 2
+radial bullets:26 speed:3 directionType:relative
+	wait 1000
+potency 150
+radial bullets:4 speed:7 angle:45
+	wait 2
+	speed -7
+	fire hp8next
+
+---bulletdef_hp8next---
+potency 150
+color 2
+radial bullets:1 speed:7 angle:0 directionType:relative
+	wait 2
+	speed -7
+	fire hp8next
+
+
+---ability_CorruptedHunter Phase Special Explosion---
+Bullet Definition :: [[corruptedhunterpspeboom]]
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterpspeboom---
+sprite CirclePool 1
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 20
+	wait 20
+	wait 1
+	vanish
+wait 20
+potency 120
+sprite Basic
+color 2
+radial bullets:12 speed:3 directionType:relative
+	wait 1000
+
+---ability_CorruptedHunter Phase Special Boss Shotgun---
+Bullet Definition :: [[corruptedhunterpspebsgun]]
+
+---bulletdef_corruptedhunterpspebsgun---
+repeat bullets:32 speed:5 spread:10 angle:0 maxAngle:360 directionType:relative
+	wait 1000
+wait 8
+repeat bullets:32 speed:5 spread:10 angle:0 maxAngle:360 directionType:relative
+	wait 1000
+
+---ability_CorruptedHunter Phase Special Divider---
+Bullet Definition :: [[corruptedhunterpspedivider]]
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterpspedivider---
+sprite CirclePool 1
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 0
+	timedFill 40
+	damageEvery 40
+	wait 41
+	vanish
+wait 40
+sprite Custom7
+potency 175
+line speed:8 bullets:1 delay:0 angle:90 directionType:absolute
+	wait 32
+	vanish
+line speed:8 bullets:1 delay:0 angle:180 directionType:absolute
+	wait 32
+	vanish
+line speed:8 bullets:1 delay:0 angle:270 directionType:absolute
+	wait 32
+	vanish
+line speed:8 bullets:1 delay:0 angle:360 directionType:absolute
+	wait 32
+	vanish
+wait 2
+line speed:8 bullets:1 delay:0 angle:90 directionType:absolute
+	wait 32
+	vanish
+line speed:8 bullets:1 delay:0 angle:180 directionType:absolute
+	wait 32
+	vanish
+line speed:8 bullets:1 delay:0 angle:270 directionType:absolute
+	wait 32
+	vanish
+line speed:8 bullets:1 delay:0 angle:360 directionType:absolute
+	wait 32
+	vanish
+wait 2
+line speed:8 bullets:1 delay:0 angle:90 directionType:absolute
+	wait 32
+	vanish
+line speed:8 bullets:1 delay:0 angle:180 directionType:absolute
+	wait 32
+	vanish
+line speed:8 bullets:1 delay:0 angle:270 directionType:absolute
+	wait 32
+	vanish
+line speed:8 bullets:1 delay:0 angle:360 directionType:absolute
+	wait 32
+	vanish
+wait 2
+line speed:8 bullets:1 delay:0 angle:90 directionType:absolute
+	wait 32
+	vanish
+line speed:8 bullets:1 delay:0 angle:180 directionType:absolute
+	wait 32
+	vanish
+line speed:8 bullets:1 delay:0 angle:270 directionType:absolute
+	wait 32
+	vanish
+line speed:8 bullets:1 delay:0 angle:360 directionType:absolute
+	wait 32
+	vanish
+wait 2
+line speed:8 bullets:1 delay:0 angle:90 directionType:absolute
+	wait 32
+	vanish
+line speed:8 bullets:1 delay:0 angle:180 directionType:absolute
+	wait 32
+	vanish
+line speed:8 bullets:1 delay:0 angle:270 directionType:absolute
+	wait 32
+	vanish
+line speed:8 bullets:1 delay:0 angle:360 directionType:absolute
+	wait 32
+	vanish
+wait 2
+line speed:8 bullets:1 delay:0 angle:90 directionType:absolute
+	wait 32
+	vanish
+line speed:8 bullets:1 delay:0 angle:180 directionType:absolute
+	wait 32
+	vanish
+line speed:8 bullets:1 delay:0 angle:270 directionType:absolute
+	wait 32
+	vanish
+line speed:8 bullets:1 delay:0 angle:360 directionType:absolute
+	wait 32
+	vanish
+
+---ability_CorruptedHunter Phase Four Get Away---
+Bullet Definition :: [[corruptedhunterpfourleave]]
+Max Range :: 0.0
+
+---bulletdef_corruptedhunterpfourleave---
+color 2
+radial bullets:20 speed:2.5
+	wait 20
+	speed -1
+	wait 8
+	speed -1
+	wait 2
+	vanish
+
+---ability_CorruptedHunter Phase Four Boss Chase Explosion---
+Bullet Definition :: [[corruptedhunterpfourbchasebomb]]
+Max Range :: 0.0
+
+---bulletdef_corruptedhunterpfourbchasebomb---
+sprite CirclePool 1
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 20
+	wait 31
+	vanish
+wait 20
+sprite Basic
+color 3
+potency 140
+radial bullets:30 speed:4 angle:0 directionType:relative
+	wait 100
+	vanish
+
+---ability_CorruptedHunter Phase Four Middle Explosion---
+Bullet Definition :: [[corruptedhunterpfourmidbomb]]
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterpfourmidbomb---
+sprite CirclePool 1
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 0
+	timedFill 40
+	damageEvery 40
+	wait 41
+	vanish
+wait 40
+sprite Basic
+potency 200
+radial bullets:30 speed:1 angle:0 directionType:absolute
+	wait 50
+	vanish
+
+---ability_CorruptedHunter Phase Four Divider---
+Bullet Definition :: [[corruptedhunterpfourdivider]]
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterpfourdivider---
+sprite CirclePool 1
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 0
+	timedFill 40
+	damageEvery 40
+	wait 41
+	vanish
+wait 40
+sprite Custom7
+potency 175
+line speed:8 bullets:1 delay:0 angle:45 directionType:absolute
+	wait 45
+	vanish
+line speed:8 bullets:1 delay:0 angle:135 directionType:absolute
+	wait 45
+	vanish
+line speed:8 bullets:1 delay:0 angle:225 directionType:absolute
+	wait 45
+	vanish
+line speed:8 bullets:1 delay:0 angle:315 directionType:absolute
+	wait 45
+	vanish
+wait 2
+line speed:8 bullets:1 delay:0 angle:45 directionType:absolute
+	wait 45
+	vanish
+line speed:8 bullets:1 delay:0 angle:135 directionType:absolute
+	wait 45
+	vanish
+line speed:8 bullets:1 delay:0 angle:225 directionType:absolute
+	wait 45
+	vanish
+line speed:8 bullets:1 delay:0 angle:315 directionType:absolute
+	wait 45
+	vanish
+wait 2
+line speed:8 bullets:1 delay:0 angle:45 directionType:absolute
+	wait 45
+	vanish
+line speed:8 bullets:1 delay:0 angle:135 directionType:absolute
+	wait 45
+	vanish
+line speed:8 bullets:1 delay:0 angle:225 directionType:absolute
+	wait 45
+	vanish
+line speed:8 bullets:1 delay:0 angle:315 directionType:absolute
+	wait 45
+	vanish
+wait 2
+line speed:8 bullets:1 delay:0 angle:45 directionType:absolute
+	wait 45
+	vanish
+line speed:8 bullets:1 delay:0 angle:135 directionType:absolute
+	wait 45
+	vanish
+line speed:8 bullets:1 delay:0 angle:225 directionType:absolute
+	wait 45
+	vanish
+line speed:8 bullets:1 delay:0 angle:315 directionType:absolute
+	wait 45
+	vanish
+wait 2
+line speed:8 bullets:1 delay:0 angle:45 directionType:absolute
+	wait 45
+	vanish
+line speed:8 bullets:1 delay:0 angle:135 directionType:absolute
+	wait 45
+	vanish
+line speed:8 bullets:1 delay:0 angle:225 directionType:absolute
+	wait 45
+	vanish
+line speed:8 bullets:1 delay:0 angle:315 directionType:absolute
+	wait 45
+	vanish
+wait 2
+line speed:8 bullets:1 delay:0 angle:45 directionType:absolute
+	wait 45
+	vanish
+line speed:8 bullets:1 delay:0 angle:135 directionType:absolute
+	wait 45
+	vanish
+line speed:8 bullets:1 delay:0 angle:225 directionType:absolute
+	wait 45
+	vanish
+line speed:8 bullets:1 delay:0 angle:315 directionType:absolute
+	wait 45
+	vanish
+
+---ability_CorruptedHunter Phase Four Boss Shotgun---
+Bullet Definition :: [[corruptedhunterpfourbshotgun]]
+VFX Charging :: trigger:Attack3*
+
+
+---bulletdef_corruptedhunterpfourbshotgun---
+potency 135
+color 3
+radial bullets:20 speed:4 angle:0 directionType:relative
+	wait 1000
+wait 3
+radial bullets:20 speed:4 angle:5 directionType:relative
+	wait 1000
+wait 3
+radial bullets:20 speed:4 angle:0 directionType:relative
+	wait 1000
+wait 3
+radial bullets:20 speed:4 angle:-5 directionType:relative
+	wait 1000
+wait 3
+radial bullets:20 speed:4 angle:0 directionType:relative
+	wait 1000
+
+
+---ability_CorruptedHunter Phase Four Turret Shotgun---
+Bullet Definition :: [[corruptedhunterpfourtshotgun]]
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterpfourtshotgun---
+sprite CirclePool 1
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 0
+	timedFill 40
+	damageEvery 40
+	wait 41
+	vanish
+wait 40
+sprite Basic
+potency 125
+radial bullets:14 speed:2 angle:0 directionType:absolute
+	wait 90
+	vanish
+wait 6
+radial bullets:14 speed:2 angle:17.5 directionType:absolute
+	wait 90
+	vanish
+
+---ability_CorruptedHunter Phase Five Big Shotgun---
+Bullet Definition :: [[corruptedhunterpfivebigun]]
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterpfivebigun---
+sprite Basic
+potency 150
+radial bullets:20 speed:3 angle:0 directionType:absolute
+	wait 1000
+
+
+---ability_CorruptedHunter Phase Five Turrets Two---
+Bullet Definition :: [[corruptedhunterpfivettwo]]
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterpfivettwo---
+sprite CirclePool 1
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 0
+	timedFill 40
+	damageEvery 40
+	wait 41
+	vanish
+wait 40
+sprite Basic
+potency 125
+repeat bullets:6 speed:3 spread:10 angle:180 maxAngle:360 directionType:absolute
+	wait 5000
+
+
+
+---ability_CorruptedHunter Phase Five Turrets One---
+Bullet Definition :: [[corruptedhunterpfivetone]]
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterpfivetone---
+sprite CirclePool 1
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 0
+	timedFill 40
+	damageEvery 40
+	wait 41
+	vanish
+wait 40
+sprite Basic
+potency 125
+repeat bullets:6 speed:3 spread:10 angle:0 maxAngle:180 directionType:absolute
+	wait 2000
+
+
+---ability_CorruptedHunter Phase Five Shotguns---
+Bullet Definition :: [[corruptedhunterpfiveshotgun]]
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterpfiveshotgun---
+sprite Basic
+potency 150
+color 3
+nway bullets:3 speed:5 angle:0 spread:20 directionType:relative
+	wait 2000
+nway bullets:3 speed:5 angle:180 spread:20 directionType:relative
+	wait 2000
+wait 3
+nway bullets:3 speed:5 angle:0 spread:20 directionType:relative
+	wait 2000
+nway bullets:3 speed:5 angle:180 spread:20 directionType:relative
+	wait 2000
+
+---ability_CorruptedHunter Phase Five Walls---
+Bullet Definition :: [[corruptedhunterpfivewalls]]
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterpfivewalls---
+sprite Custom7
+potency 175
+color 3
+radial bullets:1 speed:5 angle:180 directionType:absolute
+	wait 2000
+radial bullets:1 speed:5 angle:360 directionType:absolute
+	wait 2000
+wait 3
+radial bullets:1 speed:5 angle:180 directionType:absolute
+	wait 2000
+radial bullets:1 speed:5 angle:360 directionType:absolute
+	wait 2000
+
+---ability_CorruptedHunter Phase Five Room Limiter---
+Bullet Definition :: [[corruptedhunterpfiveroomlimiter]]
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterpfiveroomlimiter---
+sprite CirclePool 2
+potency 200
+radial bullets:1 speed:5 angle:180 directionType:absolute
+	radius 1.95
+	wait 2000
+
+---ability_CorruptedHunter Phase Five Room Divider---
+Bullet Definition :: [[corruptedhunterpfiveroomdivider]]
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterpfiveroomdivider---
+sprite CirclePool 2
+potency 200
+radial bullets:1 speed:5 angle:90 directionType:absolute
+	radius 1.95
+	wait 2000
+
+//phase 6
+
+---ability_CorruptedHunter Phase Six Mines---
+Bullet Definition :: [[corruptedhunterpsixmines]]
+Max Range :: 0.0
+
+---bulletdef_corruptedhunterpsixmines---
+sprite CirclePool 1
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 20
+	wait 21
+	vanish
+wait 20
+sprite Basic 3.8
+potency 175
+radial bullets:1 speed:0 angle:0 directionType:absolute
+	radius 0.6
+	wait 350
+
+
+---ability_CorruptedHunter Phase Six Spiral---
+Bullet Definition :: [[corruptedhunterpsixspiral]]
+VFX Cast :: trigger:Intense*
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterpsixspiral---
+sprite Basic
+potency 125
+repeat bullets:3 speed:3 angle:0 angleChange:120 directionType:absolute
+	wait 1000
+wait 5
+repeat bullets:3 speed:3 angle:15 angleChange:120 directionType:absolute
+	wait 1000
+wait 5
+repeat bullets:3 speed:3 angle:30 angleChange:120 directionType:absolute
+	wait 1000
+wait 5
+repeat bullets:3 speed:3 angle:45 angleChange:120 directionType:absolute
+	wait 1000
+wait 5
+repeat bullets:3 speed:3 angle:60 angleChange:120 directionType:absolute
+	wait 1000
+wait 5
+repeat bullets:3 speed:3 angle:75 angleChange:120 directionType:absolute
+	wait 1000
+wait 5
+repeat bullets:3 speed:3 angle:90 angleChange:120 directionType:absolute
+	wait 1000
+wait 5
+repeat bullets:3 speed:3 angle:105 angleChange:120 directionType:absolute
+	wait 1000
+
+
+---ability_CorruptedHunter Phase Six Middle Explosion---
+Bullet Definition :: [[corruptedhunterpsixmidbomb]]
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterpsixmidbomb---
+sprite CirclePool 5
+potency 200
+radial bullets:1 speed:0 angle:0 directionType:absolute
+	radius 4.95
+	wait 210
+
+---ability_CorruptedHunter Phase Six Room Limiter---
+Bullet Definition :: [[corruptedhunterpsixroomlimiter]]
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterpsixroomlimiter---
+sprite CirclePool 3
+potency 200
+radial bullets:1 speed:0 angle:0 directionType:absolute
+	radius 2.95
+	wait 210
+
+
+---ability_CorruptedHunter Phase Six Attack Two Throw---
+Bullet Definition :: [[corruptedhunterpsixatt]]
+VFX Charging :: trigger:Ascend*
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterpsixatt---
+sprite OrangePool 0.5
+repeat bullets:4 speed:6 angle:0 angleChange:90 directionType:relative
+	radius 0
+	timedFill 30
+	wait 30
+	fire corruptedhunterpsixspecial
+	vanish
+
+---bulletdef_corruptedhunterpsixspecial---
+sprite Basic 0.55
+potency 110
+radial bullets:12 speed:1 directionType:absolute angle:0
+	radius 0.03
+	wait 1000
+sprite Basic 1.5
+
+---ability_CorruptedHunter Phase Six Micro---
+Bullet Definition :: [[corruptedhunterpsixmicro]]
+Max Range :: 100.0
+VFX Cast :: trigger:Ascend*
+
+---bulletdef_corruptedhunterpsixmicro---
+sprite Basic 0.55
+color 3
+potency 110
+radial bullets:36 speed:1 angle:0 directionType:absolute
+	radius 0.03
+	wait 10000
+wait 3
+color 1
+repeat bullets:4 speed:3 angle:0 angleChange:90 directionType:absolute
+	radius 0.03
+	wait 5000
+wait 3
+repeat bullets:4 speed:3 angle:15 angleChange:90 directionType:absolute
+	radius 0.03
+	wait 5000
+wait 3
+repeat bullets:4 speed:3 angle:30 angleChange:90 directionType:absolute
+	radius 0.03
+	wait 5000
+wait 3
+repeat bullets:4 speed:3 angle:45 angleChange:90 directionType:absolute
+	radius 0.03
+	wait 5000
+wait 3
+repeat bullets:4 speed:3 angle:60 angleChange:90 directionType:absolute
+	radius 0.03
+	wait 5000
+wait 3
+repeat bullets:4 speed:3 angle:75 angleChange:90 directionType:absolute
+	radius 0.03
+	wait 5000
+wait 3
+repeat bullets:4 speed:3 angle:90 angleChange:90 directionType:absolute
+	radius 0.03
+	wait 5000
+wait 3
+repeat bullets:4 speed:3 angle:75 angleChange:90 directionType:absolute
+	radius 0.03
+	wait 5000
+wait 3
+color 3
+radial bullets:36 speed:1 angle:20 directionType:absolute
+	radius 0.03
+	wait 10000
+color 1
+repeat bullets:4 speed:3 angle:60 angleChange:90 directionType:absolute
+	radius 0.03
+	wait 5000
+wait 3
+repeat bullets:4 speed:3 angle:45 angleChange:90 directionType:absolute
+	radius 0.03
+	wait 5000
+wait 3
+repeat bullets:4 speed:3 angle:30 angleChange:90 directionType:absolute
+	radius 0.03
+	wait 5000
+wait 3
+repeat bullets:4 speed:3 angle:15 angleChange:90 directionType:absolute
+	radius 0.03
+	wait 5000
+
+---ability_CorruptedHunter Phase Six Attack One Shotgun---
+Bullet Definition :: [[corruptedhunterpsixaos]]
+VFX Charging :: trigger:Intense*
+Max Range :: 0.0
+
+---bulletdef_corruptedhunterpsixaos---
+potency 110
+color 3
+radial speed:4 bullets:20 angle:0 directionType:relative
+	wait 1000
+wait 10
+radial speed:4 bullets:16 angle:15 directionType:relative
+	wait 1000
+
+---ability_CorruptedHunter Phase Six Attack One Line---
+Bullet Definition :: [[corruptedhunterpsixaol]]
+VFX Charging :: trigger:Intense*
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterpsixaol---
+sprite OrangePool 0.5
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 0
+	timedFill 10
+	damageEvery 10
+	wait 10
+	wait 1
+	vanish
+wait 10
+potency 100
+sprite Custom7
+line bullets:6 speed:7 delay:1 directionType:relative
+	wait 1000
+
+---ability_CorruptedHunter Phase Six Attack One Explosion---
+Bullet Definition :: [[corruptedhunterpsixaoe]]
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterpsixaoe---
+sprite CirclePool 2
+potency 200
+radial bullets:1 speed:0 angle:0 directionType:absolute
+	aoeexplosion
+	radius 1.9
+	timedFill 20
+	damageEvery 20
+	wait 21
+	vanish
+
+---ability_CorruptedHunter Phase Six Middle Warning---
+Bullet Definition :: [[corruptedhunterpsixmidwarning]]
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterpsixmidwarning---
+sprite CirclePool 5
+potency 200
+radial bullets:1 speed:0 angle:0 directionType:absolute
+	radius 0
+	timedFill 100
+	wait 100
+	vanish
+
+---ability_CorruptedHunter Phase Six Room Warning---
+Bullet Definition :: [[corruptedhunterpsixroomwarning]]
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterpsixroomwarning---
+sprite CirclePool 3
+potency 200
+radial bullets:1 speed:0 angle:0 directionType:absolute
+	radius 0
+	timedFill 100
+	wait 100
+	vanish
+
+//phase 7 
+
+---ability_CorruptedHunter Phase Seven Shotgun---
+Bullet Definition :: [[corruptedhunterpsevenshotgun]]
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterpsevenshotgun---
+sprite Basic
+potency 125
+color 2
+radial bullets:32 speed:4 angle:0 directionType:absolute
+	wait 1000
+wait 8
+radial bullets:32 speed:4 angle:30 directionType:absolute
+	wait 1000
+
+
+---ability_CorruptedHunter Phase Seven Mine Big---
+Bullet Definition :: [[corruptedhunterpsevenminebig]]
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterpsevenminebig---
+sprite CirclePool 0.8
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 20
+	wait 21
+	vanish
+wait 20
+sprite Basic 3.6
+potency 175
+radial bullets:1 speed:0 angle:0 directionType:absolute
+	radius 0.5
+	wait 280
+
+---ability_CorruptedHunter Phase Seven Mine Small---
+Bullet Definition :: [[corruptedhunterpsevenminesmall]]
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterpsevenminesmall---
+sprite CirclePool 0.6
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 20
+	wait 21
+	vanish
+wait 20
+sprite Basic 1.8
+potency 200
+radial bullets:1 speed:0 angle:0 directionType:absolute
+	radius 0.25
+	wait 280
+
+
+---ability_CorruptedHunter Phase Seven Spiral---
+Bullet Definition :: [[corruptedhunterpsevenspiral]]
+VFX Cast :: trigger:Ascend*
+Max Range :: 100.0
+
+
+---bulletdef_corruptedhunterpsevenspiral---
+sprite CirclePool 0.7
+potency 200
+repeat bullets:4 speed:2 angle:0 angleChange:90 directionType:absolute
+	wait 1000
+	radius 0.6
+wait 3
+repeat bullets:4 speed:2 angle:4.5 angleChange:90 directionType:absolute
+	radius 0.6
+	wait 1000
+wait 3
+repeat bullets:4 speed:2 angle:9 angleChange:90 directionType:absolute
+	radius 0.6
+	wait 1000
+wait 3
+repeat bullets:4 speed:2 angle:13.5 angleChange:90 directionType:absolute
+	radius 0.6
+	wait 1000
+wait 3
+repeat bullets:4 speed:2 angle:18 angleChange:90 directionType:absolute
+	radius 0.6
+	wait 1000
+wait 3
+repeat bullets:4 speed:2 angle:22.5 angleChange:90 directionType:absolute
+	radius 0.6
+	wait 1000
+wait 3
+repeat bullets:4 speed:2 angle:27 angleChange:90 directionType:absolute
+	radius 0.6
+	wait 1000
+wait 3
+repeat bullets:4 speed:2 angle:31.5 angleChange:90 directionType:absolute
+	radius 0.6
+	wait 1000
+wait 3
+repeat bullets:4 speed:2 angle:36 angleChange:90 directionType:absolute
+	radius 0.6
+	wait 1000
+wait 3
+repeat bullets:4 speed:2 angle:40.5 angleChange:90 directionType:absolute
+	radius 0.6
+	wait 1000
+wait 3
+repeat bullets:4 speed:2 angle:45 angleChange:90 directionType:absolute
+	radius 0.6
+	wait 1000
+wait 3
+repeat bullets:4 speed:2 angle:49.5 angleChange:90 directionType:absolute
+	radius 0.6
+	wait 1000
+wait 3
+repeat bullets:4 speed:2 angle:54 angleChange:90 directionType:absolute
+	radius 0.6
+	wait 1000
+wait 3
+repeat bullets:4 speed:2 angle:58.5 angleChange:90 directionType:absolute
+	radius 0.6
+	wait 1000
+wait 3
+repeat bullets:4 speed:2 angle:63 angleChange:90 directionType:absolute
+	radius 0.6
+	wait 1000
+wait 3
+repeat bullets:4 speed:2 angle:67.5 angleChange:90 directionType:absolute
+	radius 0.6
+	wait 1000
+wait 3
+repeat bullets:4 speed:2 angle:72 angleChange:90 directionType:absolute
+	radius 0.6
+	wait 1000
+wait 3
+repeat bullets:4 speed:2 angle:76.5 angleChange:90 directionType:absolute
+	radius 0.6
+	wait 1000
+wait 3
+repeat bullets:4 speed:2 angle:81 angleChange:90 directionType:absolute
+	radius 0.6
+	wait 1000
+wait 3
+repeat bullets:4 speed:2 angle:85.5 angleChange:90 directionType:absolute
+	radius 0.6
+	wait 1000
+
+---ability_CorruptedHunter Phase Seven Small Bomb---
+Bullet Definition :: [[corruptedhunterpsevensmallbomb]]
+VFX Charging :: trigger:Intense*
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterpsevensmallbomb---
+sprite OrangePool 0.75
+potency 200
+color 3
+radial bullets:1 speed:0 angle:0 directionType:absolute
+	radius 0.65
+	timedFill 30
+	damageEvery 30
+	wait 30
+	vanish
+wait 30
+sprite Basic
+potency 140
+radial bullets:20 speed:1.5 directionType:absolute angle:0
+	wait 1000
+
+---ability_CorruptedHunter Phase Seven Big Bomb---
+Bullet Definition :: [[corruptedhunterpsevenbigbomb]]
+VFX Charging :: trigger:Intense*
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterpsevenbigbomb---
+sprite OrangePool 1.7
+potency 250
+color 3
+radial bullets:1 speed:0 angle:0 directionType:absolute
+	radius 1.6
+	timedFill 30
+	damageEvery 30
+	wait 30
+	vanish
+wait 30
+sprite Basic
+potency 140
+radial bullets:20 speed:1.5 directionType:absolute angle:0
+	wait 1000
+
+---ability_CorruptedHunter Phase Seven Corner Bomb---
+Bullet Definition :: [[corruptedhunterpsevencornerbomb]]
+VFX Charging :: trigger:Intense*
+Max Range :: 100.0
+
+---bulletdef_corruptedhunterpsevencornerbomb---
+sprite CirclePool 2.7
+potency 200
+color 3
+radial bullets:4 speed:3 angle:0 directionType:absolute
+	radius 2.35
+	wait 4000
+
+
+
+---aura_CorruptedHunter Boss Max Hp---
+Type :: Buff
+Duration :: -1
+Max stacks :: 1 
+Time Per Tick :: 1.0
+Definitions :: [[AuraAffectStat/CorruptedHunter Boss Max Hp]]
+
+---auraaffectstat_CorruptedHunter Boss Max Hp---
+Stat :: Vitality
+Boost :: 100.0
+
+---aura_CorruptedHunter Phase One Speed---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1 
+Time Per Tick :: 1.0
+Definitions :: [[CorruptedHunter Phase One Speed]]
+
+---auraaffectstat_CorruptedHunter Phase One Speed---
+Stat :: Speed
+Boost :: 200.0
+
+---aura_CorruptedHunter Phase Three Speed---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1 
+Time Per Tick :: 1.0
+Definitions :: [[CorruptedHunter Phase Three Speed]]
+
+---auraaffectstat_CorruptedHunter Phase Three Speed---
+Stat :: Speed
+Boost :: 4900.0
+
+---aura_CorruptedHunter Phase Special Speed---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1 
+Time Per Tick :: 1.0
+Definitions :: [[AuraAffectStat/CorruptedHunter Phase Special Speed]]
+
+---auraaffectstat_CorruptedHunter Phase Special Speed---
+Stat :: Speed
+Boost :: 300.0
+
+---aura_CorruptedHunter Phase Four Speed---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1 
+Time Per Tick :: 1.0
+Definitions :: [[AuraAffectStat/CorruptedHunter Phase Four Speed]]
+
+---auraaffectstat_CorruptedHunter Phase Four Speed---
+Stat :: Speed
+Boost :: 50.0
+
+---aura_CorruptedHunter Phase Six Speed---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1 
+Time Per Tick :: 1.0
+Definitions :: [[AuraAffectStat/CorruptedHunter Phase Six Speed]]
+
+---auraaffectstat_CorruptedHunter Phase Six Speed---
+Stat :: Speed
+Boost :: 700.0
+
+
+---script_corruptedhunter_Monster---
+
+if is_undefined(scriptVars["phase"]) {
+	scriptVars["phase"] = 1
+}
+
+if is_undefined(scriptVars["wait"]) {
+	scriptVars["wait"] = 0.0
+}
+
+if !isDead && targetEntityId != 0 {
+
+	//hp
+	hp := getPoints(myEntityId, "hp", "current")
+	//log(hp)
+	//log(getStat(myEntityId, "Speed"))
+	pthp := getPoints(myEntityId, "hp", "max")
+	//wait
+	if scriptVars["phase"] == 2 || scriptVars["phase"] == 4 || scriptVars["phase"] == 6 || scriptVars["phase"] == 8 || scriptVars["phase"] == 10 || scriptVars["phase"] == 12 || scriptVars["phase"] == 14 {
+		if scriptVars["wait"] == 0.0 {
+			clearBulletsForEntity(myEntityId)
+		}
+		scriptVars["wait"] += delta
+		setPosition(myEntityId, positionInCurrentRoom(myEntityId, [16.0, 18.0, 0.0]))
+		changeAttackBehaviour(myEntityId, "Stationary")
+		setCollisionLayer(myEntityId, CollisionLayerDynamic)
+		if scriptVars["wait"] > 5.0 {
+			setCollisionLayer(myEntityId, CollisionLayerMonster)
+			scriptVars["phase"] += 1
+		}
+	}
+
+
+	//phase 1
+
+	if hp < 0.93 * pthp && scriptVars["phase"] == 1 {
+		dispelAuraOnEntity(myEntityId, "CorruptedHunter Phase One Speed")
+		log("phase 2")
+		scriptVars["wait"] = 0.0
+		scriptVars["phase"] += 1
+	}
+	if scriptVars["phase"] == 1 {
+		if !isDead {
+			scriptVars["wait"] = 0.0
+			if is_undefined(scriptVars["hp1limit"]) {
+				scriptVars["hp1limit"] = 1
+				addAuraToEntity(myEntityId, "CorruptedHunter Boss Max Hp", 0, myEntityId)
+				addHitPoints(myEntityId, 100000000)
+				log("phase 1 corrupted")
+			}
+			if scriptVars["hp1limit"] <= 1 && targetEntityId != 0 {
+				summonEntity("corruptedhunterassassin", positionInCurrentRoom(myEntityId, [18.0, 18.0, 0.0]), monsterLevel(myEntityId))
+				summonEntity("corruptedhunterassassin", positionInCurrentRoom(myEntityId, [20.0, 20.0, 0.0]), monsterLevel(myEntityId))
+				summonEntity("corruptedhunterassassin", positionInCurrentRoom(myEntityId, [15.0, 15.0, 0.0]), monsterLevel(myEntityId))
+				addAuraToEntity(myEntityId, "CorruptedHunter Phase One Speed", 0, myEntityId)
+				scriptVars["hp1limit"] = scriptVars["hp1limit"] + 1
+			}
+			if is_undefined(scriptVars["hp1bullets"]) {
+				scriptVars["hp1bullets"] = 4.0
+			}
+			scriptVars["hp1bullets"] += delta
+			if scriptVars["hp1bullets"] > 5.0 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase One Mines", positionInCurrentRoom(myEntityId, [26.0, 26.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase One Mines", positionInCurrentRoom(myEntityId, [6.0, 6.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase One Mines", positionInCurrentRoom(myEntityId, [26.0, 6.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase One Mines", positionInCurrentRoom(myEntityId, [6.0, 26.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase One Mines", positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase One Mines", positionInCurrentRoom(myEntityId, [16.0, 6.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase One Mines", positionInCurrentRoom(myEntityId, [6.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase One Mines", positionInCurrentRoom(myEntityId, [26.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase One Mines", positionInCurrentRoom(myEntityId, [16.0, 26.0, 0.0]))
+				scriptVars["hp1bullets"] = 0
+			}
+			if is_undefined(scriptVars["hp1attack"]) {
+				scriptVars["hp1attack"] = 0.0
+			}
+			scriptVars["hp1attack"] += delta
+			if scriptVars["hp1attack"] > 1.5 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase One Shotgun", [0.0, 0.0, 0.0], positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+				scriptVars["hp1attack"] = 0
+			}
+		}
+	}
+
+	//phase 2
+
+	if hp < 0.85 * pthp && scriptVars["phase"] == 3 {
+		addAuraToEntity(myEntityId, "CorruptedHunter Phase Three Speed", 0, myEntityId)
+		log("phase 3")
+		scriptVars["wait"] = 0.0
+		scriptVars["phase"] += 1
+	}
+	if scriptVars["phase"] == 3 {
+
+
+		if !isDead {
+			scriptVars["wait"] = 0.0
+			setPosition(myEntityId, positionInCurrentRoom(myEntityId, [16.0, 18.0, 0.0]))
+			if is_undefined(scriptVars["hp2bullets"]) {
+				scriptVars["hp2bullets"] = 0.0
+				scriptVars["hp2shotgun"] = 0.0
+				scriptVars["hp2boss shotgun"] = 10.0
+				scriptVars["hp2bossshotguntwo"] = 5.0
+				scriptVars["hp2bossshotgunthree"] = 0.0
+				scriptVars["hp2midbomb"] = 0.0
+			}
+			changeAttackBehaviour(myEntityId, "Stationary")
+			scriptVars["hp2bullets"] += delta
+			if scriptVars["hp2bullets"] > 1.1 && targetEntityId != 0 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Two Divider", positionInCurrentRoom(myEntityId, [29.0, 15.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Two Divider", positionInCurrentRoom(myEntityId, [16.0, 29.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Two Divider", positionInCurrentRoom(myEntityId, [3.0, 15.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Two Divider", positionInCurrentRoom(myEntityId, [16.0, 3.0, 0.0]))
+				scriptVars["hp2bullets"] = 0
+			}
+
+			scriptVars["hp2shotgun"] += delta
+			if scriptVars["hp2shotgun"] > 1.5 && targetEntityId != 0 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Two Turret Shotgun", positionInCurrentRoom(myEntityId, [29.0, 3.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Two Turret Shotgun", positionInCurrentRoom(myEntityId, [29.0, 29.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Two Turret Shotgun", positionInCurrentRoom(myEntityId, [3.0, 29.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Two Turret Shotgun", positionInCurrentRoom(myEntityId, [3.0, 3.0, 0.0]), entityPosition(targetEntityId))
+				scriptVars["hp2shotgun"] = 0
+			}
+
+			scriptVars["hp2boss shotgun"] += delta
+			if scriptVars["hp2boss shotgun"] > 15.0 && targetEntityId != 0 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Two Boss Shotgun", positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+				scriptVars["hp2boss shotgun"] = 0
+			}
+
+			scriptVars["hp2bossshotguntwo"] += delta
+			if scriptVars["hp2bossshotguntwo"] > 15.0 && targetEntityId != 0 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Two Boss Shotgun Two", positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+				scriptVars["hp2bossshotguntwo"] = 0
+			}
+
+			scriptVars["hp2bossshotgunthree"] += delta
+			if scriptVars["hp2bossshotgunthree"] > 15.0 && targetEntityId != 0 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Two Boss Shotgun Three", positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+				scriptVars["hp2bossshotgunthree"] = 0
+			}
+
+			scriptVars["hp2midbomb"] += delta
+			if scriptVars["hp2midbomb"] > 4.0 && targetEntityId != 0 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Two HM Middle Explosion", positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Two HM Line", positionInCurrentRoom(myEntityId, [20.0, 12.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Two HM Line", positionInCurrentRoom(myEntityId, [12.0, 20.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Two HM Line", positionInCurrentRoom(myEntityId, [20.0, 20.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Two HM Line", positionInCurrentRoom(myEntityId, [12.0, 12.0, 0.0]))
+				scriptVars["hp2midbomb"] = 0
+			}
+		}
+	}
+
+	//phase 3
+
+	if hp < 0.74 * pthp && scriptVars["phase"] == 5 {
+		dispelAuraOnEntity(myEntityId, "CorruptedHunter Phase Three Speed")
+		addAuraToEntity(myEntityId, "CorruptedHunter Phase Special Speed", 0, myEntityId)
+		log("phase special")
+		scriptVars["wait"] = 0.0
+		scriptVars["phase"] += 1
+	}
+	if scriptVars["phase"] == 5 {
+
+		if !isDead && targetEntityId != 0 {
+			scriptVars["wait"] - 0.0
+			if is_undefined(scriptVars["hp3random mines"]) {
+				scriptVars["hp3random mines"] = 0.0
+				scriptVars["hp3bullets"] = 0.0
+				scriptVars["hp3shotgun"] = 0
+				scriptVars["hp3boss"] = 0
+				scriptVars["hp3timer"] = 0
+				scriptVars["hp3pls"] = 0
+			}
+			scriptVars["hp3random mines"] += delta
+			if scriptVars["hp3random mines"] >= 1.8 {
+				for i:= 0;
+				i < 20;
+				i++{
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Three Stationary Bullet Big", randomPositionInCurrentRoom(myEntityId, 2.0))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Three Stationary Bullet Small", randomPositionInCurrentRoom(myEntityId, 2.0))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Three Stationary Bullet Small", randomPositionInCurrentRoom(myEntityId, 2.0))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Three Stationary Bullet Small", randomPositionInCurrentRoom(myEntityId, 2.0))
+					scriptVars["hp3random mines"] = 0
+				}
+			}
+			scriptVars["hp3bullets"] += delta
+			if scriptVars["hp3bullets"] >= 1.0 {
+				scriptVars["hp3shotgun"] += 1
+				scriptVars["hp3timer"] += 1
+				scriptVars["hp3bullets"] -= 1.0
+			}
+			if scriptVars["hp3shotgun"] >= 1 && scriptVars["hp3shotgun"] <= 6 && scriptVars["hp3boss"] < 1 {
+				changeAttackBehaviour(myEntityId, "Stationary")
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Three Shotgun Waves", [0.0, 0.0, 0.0], positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+				scriptVars["hp3boss"] += 1
+			} else if scriptVars["hp3shotgun"] > 6 && scriptVars["hp3shotgun"] < 25 {
+				changeAttackBehaviour(myEntityId, "Melee Ranged")
+				scriptVars["hp3shotgun"] = 0
+				scriptVars["hp3boss"] = 0
+			}
+			if scriptVars["hp3timer"] >= 27 {
+				scriptVars["hp3shotgun"] = 30
+				if scriptVars["hp3timer"] <= 30 && scriptVars["hp3pls"] == 0 {
+					scriptVars["hp3pls"] += 1
+					setPosition(myEntityId, positionInCurrentRoom(myEntityId, [16.0, 6.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Three Teleport Shotgun", positionInCurrentRoom(myEntityId, [29.0, 3.0, 0.0]))
+				} else if scriptVars["hp3timer"] < 35 && scriptVars["hp3pls"] == 1 && scriptVars["hp3timer"] >= 32 {
+					setPosition(myEntityId, positionInCurrentRoom(myEntityId, [16.0, 11.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Three Teleport Waves", positionInCurrentRoom(myEntityId, [29.0, 3.0, 0.0]))
+					scriptVars["hp3pls"] += 1
+				} else if scriptVars["hp3timer"] <= 42 && scriptVars["hp3pls"] == 2 && scriptVars["hp3timer"] >= 38 {
+					setPosition(myEntityId, positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Three Teleport Explosion", positionInCurrentRoom(myEntityId, [29.0, 3.0, 0.0]))
+					scriptVars["hp3pls"] += 1
+				} else if scriptVars["hp3timer"] <= 45 && scriptVars["hp3pls"] == 3 && scriptVars["hp3timer"] >= 43 {
+					setPosition(myEntityId, positionInCurrentRoom(myEntityId, [16.0, 21.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Three Teleport Waves", positionInCurrentRoom(myEntityId, [29.0, 3.0, 0.0]))
+					scriptVars["hp3pls"] += 1
+				} else if scriptVars["hp3timer"] <= 49 && scriptVars["hp3pls"] == 4 && scriptVars["hp3timer"] >= 49 {
+					setPosition(myEntityId, positionInCurrentRoom(myEntityId, [16.0, 26.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Three Teleport Shotgun", positionInCurrentRoom(myEntityId, [29.0, 3.0, 0.0]))
+					scriptVars["hp3pls"] += 1
+				} else if scriptVars["hp3timer"] >= 45 && scriptVars["hp3pls"] == 5 {
+					scriptVars["hp3shotgun"] = 0
+					scriptVars["hp3timer"] = 0
+					scriptVars["hp3pls"] = 0
+				}
+			}
+		}
+	}
+	//phase special
+
+	if hp < 0.62 * pthp && scriptVars["phase"] == 7 {
+		dispelAuraOnEntity(myEntityId, "CorruptedHunter Phase Special Speed")
+		addAuraToEntity(myEntityId, "CorruptedHunter Phase Four Speed", 0, myEntityId)
+		log("phase 4")
+		scriptVars["wait"] = 0.0
+		scriptVars["phase"] += 1
+	}
+	if scriptVars["phase"] == 7 {
+
+		if !isDead && targetEntityId != 0 {
+			scriptVars["wait"] = 0.0
+			changeAttackBehaviour(myEntityId, "Close Ranged")
+			if is_undefined(scriptVars["hp8roomdivider"]) {
+				scriptVars["hp8roomdivider"] = 0.0
+				scriptVars["hp8roomlimiter"] = 7.0
+				scriptVars["hp8boomone"] = 2.0
+				scriptVars["hp8boomtwo"] = 0.0
+				scriptVars["hp8bossattack"] = 0.0
+			}
+			scriptVars["hp8roomdivider"] += delta
+			if scriptVars["hp8roomdivider"] > 1.0 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Special Divider", positionInCurrentRoom(myEntityId, [29.0, 3.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Special Divider", positionInCurrentRoom(myEntityId, [29.0, 29.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Special Divider", positionInCurrentRoom(myEntityId, [3.0, 29.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Special Divider", positionInCurrentRoom(myEntityId, [3.0, 3.0, 0.0]))
+				scriptVars["hp8roomdivider"] = 0
+
+			}
+			scriptVars["hp8roomlimiter"] += delta
+			if scriptVars["hp8roomlimiter"] > 8.0 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Special Room Limiter", positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+				scriptVars["hp8roomlimiter"] = 0
+
+			}
+			scriptVars["hp8boomone"] += delta
+			if scriptVars["hp8boomone"] > 4.0 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Special Explosion", positionInCurrentRoom(myEntityId, [24.0, 24.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Special Explosion", positionInCurrentRoom(myEntityId, [8.0, 8.0, 0.0]))
+				scriptVars["hp8boomone"] = 0
+
+			}
+			scriptVars["hp8boomtwo"] += delta
+			if scriptVars["hp8boomtwo"] > 4.0 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Special Explosion", positionInCurrentRoom(myEntityId, [8.0, 24.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Special Explosion", positionInCurrentRoom(myEntityId, [24.0, 8.0, 0.0]))
+				scriptVars["hp8boomtwo"] = 0
+
+			}
+			scriptVars["hp8bossattack"] += delta
+			if scriptVars["hp8bossattack"] > 2.0 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Special Boss Shotgun", positionInCurrentRoom(myEntityId, [23.0, 3.0, 0.0]))
+				scriptVars["hp8bossattack"] = 0.0
+			}
+		}
+	}
+
+	//phase 4
+
+	if hp < 0.47 * pthp && scriptVars["phase"] == 9 {
+		dispelAuraOnEntity(myEntityId, "CorruptedHunter Phase Four Speed")
+		log("phase 5")
+		scriptVars["wait"] = 0.0
+		scriptVars["phase"] += 1
+	}
+	if scriptVars["phase"] == 9 {
+
+		if !isDead && targetEntityId != 0 {
+			scriptVars["wait"] = 0.0
+			changeAttackBehaviour(myEntityId, "Close Ranged")
+			if is_undefined(scriptVars["hp4bullets"]) {
+				scriptVars["hp4bullets"] = 0.0
+				scriptVars["hp4shotgun"] = 0.0
+				scriptVars["hp4boss shotgun"] = 0.0
+				scriptVars["hp4attack"] = 0.0
+				scriptVars["hp4anotherattack"] = 0.0
+			}
+			scriptVars["hp4bullets"] += delta
+			if scriptVars["hp4bullets"] > 1.2 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Four Turret Shotgun", positionInCurrentRoom(myEntityId, [29.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Four Turret Shotgun", positionInCurrentRoom(myEntityId, [16.0, 29.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Four Turret Shotgun", positionInCurrentRoom(myEntityId, [3.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Four Turret Shotgun", positionInCurrentRoom(myEntityId, [16.0, 3.0, 0.0]))
+				scriptVars["hp4bullets"] = 0
+			}
+
+			scriptVars["hp4shotgun"] += delta
+			if scriptVars["hp4shotgun"] > 1 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Four Divider", positionInCurrentRoom(myEntityId, [29.0, 3.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Four Divider", positionInCurrentRoom(myEntityId, [29.0, 29.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Four Divider", positionInCurrentRoom(myEntityId, [3.0, 29.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Four Divider", positionInCurrentRoom(myEntityId, [3.0, 3.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Four Get Away", positionInCurrentRoom(myEntityId, [3.0, 3.0, 0.0]))
+				scriptVars["hp4shotgun"] = 0
+			}
+
+			scriptVars["hp4boss shotgun"] += delta
+			if scriptVars["hp4boss shotgun"] > 3 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Four Middle Explosion", positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+				scriptVars["hp4boss shotgun"] = 0
+			}
+
+			scriptVars["hp4attack"] += delta
+			if scriptVars["hp4attack"] > 2.5 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Four Boss Chase Explosion", [0.0, 0.0, 0.0], positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+				scriptVars["hp4attack"] = 0.0
+			}
+
+			scriptVars["hp4anotherattack"] += delta
+			if scriptVars["hp4anotherattack"] > 4.0 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Four Boss Shotgun", [0.0, 0.0, 0.0])
+				scriptVars["hp4anotherattack"] = 0.0
+			}
+		}
+	}
+
+	//phase 5
+	if hp < 0.28 * pthp && scriptVars["phase"] == 11 {
+		addAuraToEntity(myEntityId, "CorruptedHunter Phase Six Speed", 0, myEntityId)
+		log("phase 6")
+		scriptVars["wait"] = 0.0
+		scriptVars["phase"] += 1
+
+		nearby := getNearbyEntities(myEntityId)
+	
+		for i := 0; i < len(nearby); i++ {
+			if isEnemyOfEntity(myEntityId, nearby[i].id) {
+				addAuraToEntity(nearby[i].id, "Hunter Player Speed Cap", -99, nearby[i].id)
+			}
+		}
+	}
+
+	if scriptVars["phase"] == 11 {
+
+		if !isDead && targetEntityId != 0 {
+			scriptVars["wait"] = 0.0
+			setPosition(myEntityId, positionInCurrentRoom(myEntityId, [16.0, 18.0, 0.0]))
+			if is_undefined(scriptVars["hp5phase five boss shotgun"]) {
+				scriptVars["hp5phase five boss shotgun"] = 0.0
+				scriptVars["hp5roomdividers"] = 0.0
+				scriptVars["hp5turretsone"] = 0.0
+				scriptVars["hp5turretstwo"] = 1.5
+				scriptVars["hp5bullets"] = 0.0
+				scriptVars["hp5shotgun"] = 0
+				scriptVars["hp5boss"] = 0
+				scriptVars["hp5timer"] = 0
+				scriptVars["hp5pls"] = 0
+			}
+			changeAttackBehaviour(myEntityId, "Stationary")
+			scriptVars["hp5phase five boss shotgun"] += delta
+			if scriptVars["hp5phase five boss shotgun"] > 15 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Big Shotgun", positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+				scriptVars["hp5phase five boss shotgun"] = 0
+			}
+
+			scriptVars["hp5roomdividers"] += delta
+			if scriptVars["hp5roomdividers"] > 0.5 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Room Limiter", positionInCurrentRoom(myEntityId, [23.0, 3.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Room Limiter", positionInCurrentRoom(myEntityId, [4.0, 3.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Room Limiter", positionInCurrentRoom(myEntityId, [25.5, 3.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Room Limiter", positionInCurrentRoom(myEntityId, [6.5, 3.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Room Limiter", positionInCurrentRoom(myEntityId, [28.0, 3.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Room Limiter", positionInCurrentRoom(myEntityId, [9.0, 3.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Room Divider", positionInCurrentRoom(myEntityId, [3.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Room Divider", positionInCurrentRoom(myEntityId, [3.0, 29.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Room Divider", positionInCurrentRoom(myEntityId, [3.0, 3.0, 0.0]))
+				scriptVars["hp5roomdividers"] = 0.0
+			}
+
+			scriptVars["hp5turretsone"] += delta
+			if scriptVars["hp5turretsone"] > 3.0 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Turrets Two", positionInCurrentRoom(myEntityId, [26.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Turrets One", positionInCurrentRoom(myEntityId, [6.0, 21.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Turrets Two", positionInCurrentRoom(myEntityId, [26.0, 6.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Turrets One", positionInCurrentRoom(myEntityId, [6.0, 11.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Turrets Two", positionInCurrentRoom(myEntityId, [26.0, 26.0, 0.0]))
+				scriptVars["hp5turretsone"] = 0.0
+			}
+
+			scriptVars["hp5turretstwo"] += delta
+			if scriptVars["hp5turretstwo"] > 3.0 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Turrets Two", positionInCurrentRoom(myEntityId, [26.0, 11.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Turrets One", positionInCurrentRoom(myEntityId, [6.0, 26.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Turrets Two", positionInCurrentRoom(myEntityId, [26.0, 21.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Turrets One", positionInCurrentRoom(myEntityId, [6.0, 6.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Turrets One", positionInCurrentRoom(myEntityId, [6.0, 16.0, 0.0]))
+				scriptVars["hp5turretstwo"] = 0.0
+			}
+			scriptVars["hp5bullets"] += delta
+			if scriptVars["hp5bullets"] >= 1.0 {
+				scriptVars["hp5shotgun"] += 1
+				scriptVars["hp5timer"] += 1
+				scriptVars["hp5bullets"] -= 1.0
+			}
+			if scriptVars["hp5timer"] <= 1 && scriptVars["hp5pls"] == 0 {
+				scriptVars["hp5pls"] += 1
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [21.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [20.5, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [11.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [11.5, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [20.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [12.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [19.5, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [12.5, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [19.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [13.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [18.5, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [13.5, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [18.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [14.0, 16.0, 0.0]))
+			} else if scriptVars["hp5timer"] < 3 && scriptVars["hp5pls"] == 1 && scriptVars["hp5timer"] >= 2 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [16.5, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [15.5, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [17.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [15.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [14.5, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [17.5, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [14.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [18.0, 16.0, 0.0]))
+				scriptVars["hp5pls"] += 1
+			} else if scriptVars["hp5timer"] <= 4 && scriptVars["hp5pls"] == 2 && scriptVars["hp5timer"] >= 3 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [19.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [18.5, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [13.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [13.5, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [18.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [14.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [16.5, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [15.5, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [12.5, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [19.5, 16.0, 0.0]))
+				scriptVars["hp5pls"] += 1
+			} else if scriptVars["hp5timer"] <= 5 && scriptVars["hp5pls"] == 3 && scriptVars["hp5timer"] >= 4 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [18.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [20.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [14.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [12.0, 16.0, 0.0]))
+				scriptVars["hp5pls"] += 1
+			} else if scriptVars["hp5timer"] <= 6 && scriptVars["hp5pls"] == 4 && scriptVars["hp5timer"] >= 5 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [17.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [15.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [13.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [19.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [11.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Walls", positionInCurrentRoom(myEntityId, [21.0, 16.0, 0.0]))
+				scriptVars["hp5pls"] += 1
+			} else if scriptVars["hp5timer"] <= 7 && scriptVars["hp5pls"] == 5 && scriptVars["hp5timer"] >= 6 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [15.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [17.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [19.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [13.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				scriptVars["hp5pls"] += 1
+			} else if scriptVars["hp5timer"] <= 8 && scriptVars["hp5pls"] == 6 && scriptVars["hp5timer"] >= 7 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [21.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [11.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [12.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [20.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [13.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				scriptVars["hp5pls"] += 1
+			} else if scriptVars["hp5timer"] <= 9 && scriptVars["hp5pls"] == 7 && scriptVars["hp5timer"] >= 8 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [17.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [15.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [21.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [11.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				scriptVars["hp5pls"] += 1
+			} else if scriptVars["hp5timer"] <= 10 && scriptVars["hp5pls"] == 8 && scriptVars["hp5timer"] >= 9 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [15.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [17.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [14.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [13.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [12.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [11.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [18.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [19.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [20.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [21.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				scriptVars["hp5pls"] += 1
+			} else if scriptVars["hp5timer"] <= 12 && scriptVars["hp5pls"] == 9 && scriptVars["hp5timer"] >= 10 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [10.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [9.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [8.0, 17.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [7.0, 18.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [6.0, 19.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [22.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [23.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [24.0, 15.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [25.0, 14.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [26.0, 13.0, 0.0]), entityPosition(targetEntityId))
+				scriptVars["hp5pls"] += 1
+			} else if scriptVars["hp5timer"] <= 13 && scriptVars["hp5pls"] == 10 && scriptVars["hp5timer"] >= 12 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [10.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [9.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [8.0, 15.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [7.0, 14.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [6.0, 13.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [22.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [23.0, 16.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [24.0, 17.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [25.0, 18.0, 0.0]), entityPosition(targetEntityId))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Five Shotguns", positionInCurrentRoom(myEntityId, [26.0, 19.0, 0.0]), entityPosition(targetEntityId))
+				scriptVars["hp5pls"] += 1
+			} else if scriptVars["hp5timer"] >= 13 && scriptVars["hp5pls"] == 11 {
+
+				scriptVars["hp5timer"] = 0
+				scriptVars["hp5pls"] = 0
+			}
+		}
+	}
+
+	//phase 6
+
+	if hp < 0.04 * pthp && scriptVars["phase"] == 13 {
+		log("phase 7")
+		scriptVars["wait"] = 0.0
+		scriptVars["phase"] += 1
+
+		nearby := getNearbyEntities(myEntityId)
+	
+		for i := 0; i < len(nearby); i++ {
+			dispelAuraOnEntity(nearby[i].id, "Hunter Player Speed Cap")
+		}
+	}
+	if scriptVars["phase"] == 13 {
+
+		//attack 1
+		if is_undefined(scriptVars["hp6timer"]) {
+			scriptVars["hp6timer"] = 0.0
+			scriptVars["phase6warningtimer"] = 0.0
+		}
+		scriptVars["hp6timer"] += delta
+		scriptVars["phase6warningtimer"] += delta
+		if scriptVars["hp6timer"] < 8 {
+			changeAttackBehaviour(myEntityId, "Stationary")
+			setPosition(myEntityId, positionInCurrentRoom(myEntityId, [16.0, 18.0, 0.0]))
+			setCollisionLayer(myEntityId, CollisionLayerDynamic)
+			if scriptVars["phase6warningtimer"] > 5 && scriptVars["phase6warningtimer"] < 6 {
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Middle Warning", positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Warning", positionInCurrentRoom(myEntityId, [28.0, 28.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Warning", positionInCurrentRoom(myEntityId, [28.0, 4.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Warning", positionInCurrentRoom(myEntityId, [4.0, 4.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Warning", positionInCurrentRoom(myEntityId, [28.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Warning", positionInCurrentRoom(myEntityId, [4.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Warning", positionInCurrentRoom(myEntityId, [16.0, 4.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Warning", positionInCurrentRoom(myEntityId, [16.0, 28.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Warning", positionInCurrentRoom(myEntityId, [4.0, 28.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Warning", positionInCurrentRoom(myEntityId, [28.0, 10.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Warning", positionInCurrentRoom(myEntityId, [10.0, 4.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Warning", positionInCurrentRoom(myEntityId, [4.0, 10.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Warning", positionInCurrentRoom(myEntityId, [10.0, 28.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Warning", positionInCurrentRoom(myEntityId, [4.0, 22.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Warning", positionInCurrentRoom(myEntityId, [22.0, 4.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Warning", positionInCurrentRoom(myEntityId, [22.0, 28.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Warning", positionInCurrentRoom(myEntityId, [28.0, 22.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Warning", positionInCurrentRoom(myEntityId, [6.0, 6.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Warning", positionInCurrentRoom(myEntityId, [26.0, 26.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Warning", positionInCurrentRoom(myEntityId, [26.0, 6.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Warning", positionInCurrentRoom(myEntityId, [6.0, 26.0, 0.0]))
+			}
+
+		}
+		if scriptVars["hp6timer"] > 8.0 && scriptVars["hp6timer"] < 48.0 {
+			if !isDead && targetEntityId != 0 {
+				setCollisionLayer(myEntityId, CollisionLayerMonster)
+				changeAttackBehaviour(myEntityId, "Close Ranged")
+				if is_undefined(scriptVars["hp6mines"]) {
+					scriptVars["hp6mines"] = 0.0
+					scriptVars["hp6spiral"] = 1.0
+					scriptVars["hp6midbomb"] = 1.0
+					scriptVars["hp6firstattackbomb"] = 0.0
+					scriptVars["hp6first"] = 0.0
+				}
+				scriptVars["hp6mines"] += delta
+				if scriptVars["hp6mines"] >= 1.5 {
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Mines", [0.0, 0.0, 0.0], positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+					scriptVars["hp6mines"] = 0
+				}
+
+				scriptVars["hp6spiral"] += delta
+				if scriptVars["hp6spiral"] > 2.3 {
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Spiral", positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+					scriptVars["hp6spiral"] = 0.0
+				}
+
+				scriptVars["hp6midbomb"] += delta
+				if scriptVars["hp6midbomb"] > 1 {
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Middle Explosion", positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [28.0, 28.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [28.0, 4.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [4.0, 4.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [28.0, 16.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [4.0, 16.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [16.0, 4.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [16.0, 28.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [4.0, 28.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [28.0, 10.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [10.0, 4.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [4.0, 10.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [10.0, 28.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [4.0, 22.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [22.0, 4.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [22.0, 28.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [28.0, 22.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [6.0, 6.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [26.0, 26.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [26.0, 6.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [6.0, 26.0, 0.0]))
+					scriptVars["hp6midbomb"] = 0
+				}
+
+				scriptVars["hp6firstattackbomb"] += delta
+				if scriptVars["hp6firstattackbomb"] > 3.0 {
+					scriptVars["hp66phase"] = entityPosition(myEntityId)
+					scriptVars["hp66test"] = scriptVars["hp66phase"][0]
+					scriptVars["hp66test1"] = scriptVars["hp66phase"][1]
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Attack One Explosion", [scriptVars["hp66test"] + 9, scriptVars["hp66test1"] + 2.5, 0.0])
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Attack One Explosion", [scriptVars["hp66test"] + 2.5, scriptVars["hp66test1"] + 9, 0.0])
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Attack One Explosion", [scriptVars["hp66test"] - 9, scriptVars["hp66test1"] + 2.5, 0.0])
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Attack One Explosion", [scriptVars["hp66test"] - 2.5, scriptVars["hp66test1"] - 9, 0.0])
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Attack One Explosion", [scriptVars["hp66test"] + 7, scriptVars["hp66test1"] + 7, 0.0])
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Attack One Explosion", [scriptVars["hp66test"] + 7, scriptVars["hp66test1"] - 7, 0.0])
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Attack One Explosion", [scriptVars["hp66test"] - 7, scriptVars["hp66test1"] + 7, 0.0])
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Attack One Explosion", [scriptVars["hp66test"] - 7, scriptVars["hp66test1"] - 7, 0.0])
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Attack One Explosion", [scriptVars["hp66test"] - 9, scriptVars["hp66test1"] - 2.5, 0.0])
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Attack One Explosion", [scriptVars["hp66test"] + 9, scriptVars["hp66test1"] - 2.5, 0.0])
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Attack One Explosion", [scriptVars["hp66test"] - 2.5, scriptVars["hp66test1"] + 9, 0.0])
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Attack One Explosion", [scriptVars["hp66test"] + 2.5, scriptVars["hp66test1"] - 9, 0.0])
+					scriptVars["hp6firstattackbomb"] = 0
+
+				}
+
+				scriptVars["hp6first"] += delta
+				if scriptVars["hp6first"] > 1.5 {
+					scriptVars["hp6phase"] = entityPosition(myEntityId)
+					scriptVars["hp6test"] = scriptVars["hp6phase"][0]
+					scriptVars["hp6test1"] = scriptVars["hp6phase"][1]
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Attack One Line", [scriptVars["hp6test"] - 5, scriptVars["hp6test1"] - 5, 0.0])
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Attack One Line", [scriptVars["hp6test"] + 5, scriptVars["hp6test1"] - 5, 0.0])
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Attack One Line", [scriptVars["hp6test"] - 5, scriptVars["hp6test1"] + 5, 0.0])
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Attack One Line", [scriptVars["hp6test"] + 5, scriptVars["hp6test1"] + 5, 0.0])
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Attack One Shotgun", positionInCurrentRoom(myEntityId, [23.0, 3.0, 0.0]))
+					scriptVars["hp6first"] = 0.0
+				}
+			}
+
+		}
+
+		//interval 
+
+		if scriptVars["hp6timer"] > 48 && scriptVars["hp6timer"] < 56 {
+			changeAttackBehaviour(myEntityId, "Stationary")
+			setPosition(myEntityId, positionInCurrentRoom(myEntityId, [16.0, 18.0, 0.0]))
+			setCollisionLayer(myEntityId, CollisionLayerDynamic)
+
+		}
+
+		//attack 2
+		if scriptVars["hp6timer"] > 56.0 {
+			if !isDead && targetEntityId != 0 {
+				setCollisionLayer(myEntityId, CollisionLayerMonster)
+				setPosition(myEntityId, positionInCurrentRoom(myEntityId, [16.0, 18.0, 0.0]))
+				hp := getPoints(myEntityId, "hp", "current")
+
+				scriptVars["hp6spiral"] += delta
+				if scriptVars["hp6spiral"] > 2.3 {
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Spiral", positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+					scriptVars["hp6spiral"] = 0.0
+				}
+
+				scriptVars["hp6midbomb"] += delta
+				if scriptVars["hp6midbomb"] > 1 {
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Middle Explosion", positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [28.0, 28.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [28.0, 4.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [4.0, 4.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [28.0, 16.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [4.0, 16.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [16.0, 4.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [16.0, 28.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [4.0, 28.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [28.0, 10.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [10.0, 4.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [4.0, 10.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [10.0, 28.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [4.0, 22.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [22.0, 4.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [22.0, 28.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [28.0, 22.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [6.0, 6.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [26.0, 26.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [26.0, 6.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [6.0, 26.0, 0.0]))
+					scriptVars["hp6midbomb"] = 0
+				}
+				if is_undefined(scriptVars["hp6atk2micro"]) {
+					scriptVars["hp6atk2micro"] = 0.0
+				}
+				scriptVars["hp6atk2micro"] += delta
+				if scriptVars["hp6atk2micro"] > 5.0 {
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Micro", positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]), entityPosition(targetEntityId))
+					scriptVars["hp6atk2micro"] = 0
+
+				}
+				if is_undefined(scriptVars["hp6throw"]) {
+					scriptVars["hp6throw"] = 0.0
+				}
+				scriptVars["hp6throw"] += delta
+				if scriptVars["hp6throw"] > 2.0 {
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Six Attack Two Throw", [0.0, 0.0, 0.0])
+					scriptVars["hp6throw"] = 0
+				}
+			}
+		}
+		if scriptVars["hp6timer"] > 81.0 {
+			scriptVars["hp6timer"] = 0.0
+		}
+	}
+
+	//phase 7
+
+	if scriptVars["phase"] == 15 {
+		if is_undefined(scriptVars["SurvTimer"]) {
+			scriptVars["SurvTimer"] = 0.0
+			scriptVars["hp7bullets"] = 0.0
+			scriptVars["hp7shotgun"] = 0
+			scriptVars["hp7boss"] = 0
+			scriptVars["hp7timertwo"] = 0
+			scriptVars["hp7pls"] = 0
+		}
+		scriptVars["SurvTimer"] += delta
+		if scriptVars["SurvTimer"] < 60 {
+			if !isDead && targetEntityId != 0 {
+				setCollisionLayer(myEntityId, CollisionLayerDynamic)
+				changeAttackBehaviour(myEntityId, "Stationary")
+				setPosition(myEntityId, positionInCurrentRoom(myEntityId, [16.0, 18.0, 0.0]))
+				hp := getPoints(myEntityId, "hp", "current")
+				if is_undefined(scriptVars["hp7dontstandthere"]) {
+					scriptVars["hp7dontstandthere"] = 0
+				}
+				scriptVars["hp7dontstandthere"] += delta
+				if scriptVars["hp7dontstandthere"] > 1.0 {
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Corner Bomb", positionInCurrentRoom(myEntityId, [29.0, 29.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Corner Bomb", positionInCurrentRoom(myEntityId, [3.0, 3.0, 0.0]))
+					scriptVars["hp7dontstandthere"] = 0.0
+				}
+				if is_undefined(scriptVars["hp7bosshotgun"]) {
+					scriptVars["hp7bosshotgun"] = 0
+				}
+				scriptVars["hp7bosshotgun"] += delta
+				if scriptVars["hp7bosshotgun"] > 3.5 {
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Shotgun", positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+					scriptVars["hp7bosshotgun"] = 0.0
+				}
+				if is_undefined(scriptVars["hp7random mines"]) {
+					scriptVars["hp7random mines"] = 14.0
+				}
+				scriptVars["hp7random mines"] += delta
+				if scriptVars["hp7random mines"] >= 15.0 {
+					for i := 0;
+					i < 25;
+					i++{
+						useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Mine Big", randomPositionInCurrentRoom(myEntityId, 2.0))
+						useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Mine Small", randomPositionInCurrentRoom(myEntityId, 2.0))
+						useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Mine Small", randomPositionInCurrentRoom(myEntityId, 2.0))
+						useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Mine Small", randomPositionInCurrentRoom(myEntityId, 2.0))
+						scriptVars["hp7random mines"] = 0
+					}
+				}
+				if is_undefined(scriptVars["hp7spiral"]) {
+					scriptVars["hp7spiral"] = 3.0
+				}
+				scriptVars["hp7spiral"] += delta
+				if scriptVars["hp7spiral"] > 3.8 {
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Spiral", positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+					scriptVars["hp7spiral"] = 0.0
+				}
+				scriptVars["hp7bullets"] += delta
+				if scriptVars["hp7bullets"] >= 1.0 {
+					scriptVars["hp7shotgun"] += 1
+					scriptVars["hp7timertwo"] += 1
+					scriptVars["hp7bullets"] -= 1.0
+				}
+				if scriptVars["hp7timertwo"] <= 1 && scriptVars["hp7pls"] == 0 {
+					scriptVars["hp7pls"] += 1
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Big Bomb", positionInCurrentRoom(myEntityId, [4.0, 16.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Small Bomb", positionInCurrentRoom(myEntityId, [21.0, 16.0, 0.0]))
+				} else if scriptVars["hp7timertwo"] < 4 && scriptVars["hp7pls"] == 1 && scriptVars["hp7timertwo"] >= 2 {
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Big Bomb", positionInCurrentRoom(myEntityId, [4.0, 10.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Small Bomb", positionInCurrentRoom(myEntityId, [21.0, 19.0, 0.0]))
+					scriptVars["hp7pls"] += 1
+				} else if scriptVars["hp7timertwo"] <= 6 && scriptVars["hp7pls"] == 2 && scriptVars["hp7timertwo"] >= 5 {
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Big Bomb", positionInCurrentRoom(myEntityId, [10.0, 4.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Small Bomb", positionInCurrentRoom(myEntityId, [19.0, 21.0, 0.0]))
+					scriptVars["hp7pls"] += 1
+				} else if scriptVars["hp7timertwo"] <= 8 && scriptVars["hp7pls"] == 3 && scriptVars["hp7timertwo"] >= 7 {
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Big Bomb", positionInCurrentRoom(myEntityId, [16.0, 4.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Small Bomb", positionInCurrentRoom(myEntityId, [16.0, 21.0, 0.0]))
+					scriptVars["hp7pls"] += 1
+				} else if scriptVars["hp7timertwo"] <= 10 && scriptVars["hp7pls"] == 4 && scriptVars["hp7timertwo"] >= 9 {
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Big Bomb", positionInCurrentRoom(myEntityId, [22.0, 4.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Small Bomb", positionInCurrentRoom(myEntityId, [13.0, 21.0, 0.0]))
+					scriptVars["hp7pls"] += 1
+				} else if scriptVars["hp7timertwo"] <= 12 && scriptVars["hp7pls"] == 5 && scriptVars["hp7timertwo"] >= 11 {
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Big Bomb", positionInCurrentRoom(myEntityId, [28.0, 10.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Small Bomb", positionInCurrentRoom(myEntityId, [11.0, 19.0, 0.0]))
+					scriptVars["hp7pls"] += 1
+				} else if scriptVars["hp7timertwo"] <= 14 && scriptVars["hp7pls"] == 6 && scriptVars["hp7timertwo"] >= 13 {
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Big Bomb", positionInCurrentRoom(myEntityId, [28.0, 16.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Small Bomb", positionInCurrentRoom(myEntityId, [11.0, 16.0, 0.0]))
+					scriptVars["hp7pls"] += 1
+				} else if scriptVars["hp7timertwo"] <= 16 && scriptVars["hp7pls"] == 7 && scriptVars["hp7timertwo"] >= 15 {
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Big Bomb", positionInCurrentRoom(myEntityId, [28.0, 22.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Small Bomb", positionInCurrentRoom(myEntityId, [11.0, 13.0, 0.0]))
+					scriptVars["hp7pls"] += 1
+				} else if scriptVars["hp7timertwo"] <= 18 && scriptVars["hp7pls"] == 8 && scriptVars["hp7timertwo"] >= 17 {
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Big Bomb", positionInCurrentRoom(myEntityId, [22.0, 28.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Small Bomb", positionInCurrentRoom(myEntityId, [13.0, 11.0, 0.0]))
+					scriptVars["hp7pls"] += 1
+				} else if scriptVars["hp7timertwo"] <= 20 && scriptVars["hp7pls"] == 9 && scriptVars["hp7timertwo"] >= 19 {
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Big Bomb", positionInCurrentRoom(myEntityId, [16.0, 28.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Small Bomb", positionInCurrentRoom(myEntityId, [16.0, 11.0, 0.0]))
+					scriptVars["hp7pls"] += 1
+				} else if scriptVars["hp7timertwo"] <= 22 && scriptVars["hp7pls"] == 10 && scriptVars["hp7timertwo"] >= 21 {
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Big Bomb", positionInCurrentRoom(myEntityId, [10.0, 28.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Small Bomb", positionInCurrentRoom(myEntityId, [19.0, 11.0, 0.0]))
+					scriptVars["hp7pls"] += 1
+				} else if scriptVars["hp7timertwo"] <= 24 && scriptVars["hp7pls"] == 11 && scriptVars["hp7timertwo"] >= 23 {
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Big Bomb", positionInCurrentRoom(myEntityId, [4.0, 22.0, 0.0]))
+					useAbilityAtPosition(myEntityId, "CorruptedHunter Phase Seven Small Bomb", positionInCurrentRoom(myEntityId, [21.0, 13.0, 0.0]))
+					scriptVars["hp7pls"] += 1
+				} else if scriptVars["hp7timertwo"] >= 25 && scriptVars["hp7pls"] == 12 {
+
+					scriptVars["hp7timertwo"] = 0
+					scriptVars["hp7pls"] = 0
+				}
+			}
+		} else if scriptVars["SurvTimer"] > 60 {
+			setCollisionLayer(myEntityId, CollisionLayerMonster)
+		}
+	}
+}

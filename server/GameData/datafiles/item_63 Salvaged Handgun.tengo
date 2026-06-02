@@ -1,0 +1,26 @@
+---item_63 Salvaged Handgun---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Salvaged Handgun]]
+Rarity :: Rare
+
+They called him the sheriff. I'm not sure why.
+
+---gundef_Salvaged Handgun---
+Fire Speed :: 0.4
+Bullets In Chamber :: 10
+Reload Speed :: 1
+Sprite :: weapons_62
+Fire Event :: pistola
+Reload Event :: pistolreload
+Bullet Definition :: [[handgun]]
+Archetype :: Handgun
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: SemiAuto
+Bullet Lifetime :: 1.0
+
+---bulletdef_handgun---
+sprite PlayerBullet
+potency 96
+fire 16 relative -2 2
+

@@ -1,0 +1,47 @@
+---item_21 Poultry Pummeler---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Chicken Gun]]
+Rarity :: Unobtainable
+Durability :: 3
+
+These chickens aren't like us -- they're specifically bred to be used in weapons, and genetically modified for maximum damage.
+
+---gundef_Chicken Gun---
+Fire Speed :: 0.5
+Bullets In Chamber :: 1
+Reload Speed :: 1.5
+Sprite :: weapons_10
+Fire Event :: chickengun
+Reload Event :: revolverreload
+Bullet Definition :: [[chickengun]]
+Archetype :: ExplosiveLauncher
+Innate Spikes :: [[Chicken Gun]]
+Muzzle VFX :: Muzzle 1.0
+
+---bulletdef_chickengun---
+potency 300
+sprite Custom_1
+fire 7 relative 0
+
+---spike_Chicken Gun---
+Auras :: [[Chicken Gun]]
+Icon :: 
+
+Cluck cluck, motherfucker.
+
+---aura_Chicken Gun---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:ChickenGun]]
+
+---script_ChickenGun_BulletHit---
+
+if auraAbilityId == abilityId { //was a bullet hit with our gun
+	newEntId := summonEntity("gunchicken", hitPosition, 10)
+	aggroMyTargets(myEntityId, newEntId)
+}
+

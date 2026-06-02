@@ -1,0 +1,33 @@
+---aura_Life Link---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:LifeLink]]
+
+---script_LifeLink_IncomingDamage---
+// When this entity takes damage, spread some to nearby allies
+if damage > 0 && abilityId != auraAbilityId {
+	nearbyAllies := getAlliesSortedByHealth(myEntityId)
+	if len(nearbyAllies) > 1 {
+		damageToShare := int(0.4 * float(damage))  // Share 40% of the damage
+		damagePerAlly := int(float(damageToShare) / float(len(nearbyAllies)))
+		
+		// Reduce damage to self
+		additionalDamage = -damageToShare
+		
+		// Distribute damage to allies
+		for i := 0; i < len(nearbyAllies); i++ {
+			if nearbyAllies[i]["id"] != myEntityId {
+				//Cap damage at 10% of allie's health
+				allyMaxHealth := getPoints(nearbyAllies[i]["id"], "hp", "max")
+				damageThisAlly := damagePerAlly
+				maxDamage := int(float(allyMaxHealth) * 0.10)
+				if damageThisAlly > maxDamage {
+					damageThisAlly = maxDamage
+				}
+				attackEntity(damageSenderId, nearbyAllies[i]["id"], damageThisAlly, auraAbilityId)
+			}
+		}
+	}
+}

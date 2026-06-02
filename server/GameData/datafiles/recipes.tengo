@@ -1,0 +1,237 @@
+---recipe_Concentrated Wyld Essence---
+Ingredients :: [[115 Wyld Essence]]@10 [[159 Sunpetal Bloom]]@3 [[158 Umbral Morel]]@3 [[148 Carp]]@1
+Crafts :: [[166 Concentrated Wyld Essence]]
+Time :: 60.0
+
+---recipe_Fishing Lure---
+Ingredients :: [[110 Weapon Parts]]@2 [[157 Glimmerfern Sprout]]@3
+Crafts :: [[139 Fishing Lure]]
+Time :: 5.0
+
+---recipe_Advanced Lure---
+Ingredients :: [[139 Fishing Lure]]@1 [[110 Weapon Parts]]@3 [[147 Sunfish]]@1 [[115 Wyld Essence]]@1 [[160 Ironwood Sapling]]@2
+Crafts :: [[140 Advanced Lure]]
+Time :: 15.0
+
+---recipe_Wyld Lure---
+Ingredients :: [[140 Advanced Lure]]@1 [[110 Weapon Parts]]@5 [[148 Carp]]@1 [[115 Wyld Essence]]@3 [[159 Sunpetal Bloom]]@2
+Crafts :: [[141 Wyld Lure]]
+Time :: 45.0
+
+---recipe_Wyld Luck---
+Ingredients :: [[115 Wyld Essence]]@3 [[157 Glimmerfern Sprout]]@5 [[146 Catfish]]@2 [[109 Armor Parts]]@5
+Crafts :: [[27 Wyld Luck]]
+Time :: 20.0
+
+---recipe_Corrupted Wyld Luck---
+Ingredients :: [[27 Wyld Luck]]@2 [[115 Wyld Essence]]@5 [[147 Sunfish]]@2 [[158 Umbral Morel]]@3 [[110 Weapon Parts]]@10
+Crafts :: [[29 Corrupted Wyld Luck]]
+Time :: 90.0
+
+---recipe_Refined Wyld Luck---
+Ingredients :: [[29 Corrupted Wyld Luck]]@2 [[166 Concentrated Wyld Essence]]@1 [[149 Volcano Trout]]@1 [[159 Sunpetal Bloom]]@5
+Crafts :: [[30 Refined Wyld Luck]]
+Time :: 115.0
+
+---recipe_Destructor's Favor---
+Ingredients :: [[182 Destructor's Plating]]@19 [[29 Corrupted Wyld Luck]]@1 [[166 Concentrated Wyld Essence]]@2 [[110 Weapon Parts]]@20 [[109 Armor Parts]]@20
+Crafts :: [[520 Destructor's Favor]]
+Time :: 600.0
+
+---recipe_Minor Vitality Potion---
+Ingredients :: [[160 Ironwood Sapling]]@5 [[145 Grouper]]@3 [[157 Glimmerfern Sprout]]@2 [[115 Wyld Essence]]@1
+Crafts :: [[151 Minor Vitality Potion]]
+Required Unlock :: [[32 Unused]]
+Time :: 10.0
+
+---recipe_Major Vitality Potion---
+Ingredients :: [[151 Minor Vitality Potion]]@2 [[160 Ironwood Sapling]]@10 [[148 Carp]]@1 [[115 Wyld Essence]]@3 [[109 Armor Parts]]@5
+Crafts :: [[152 Major Vitality Potion]]
+Required Unlock :: [[32 Unused]]
+Time :: 45.0
+
+---recipe_Minor Recovery Potion---
+Ingredients :: [[157 Glimmerfern Sprout]]@5 [[146 Catfish]]@3 [[158 Umbral Morel]]@1 [[115 Wyld Essence]]@1
+Crafts :: [[155 Minor Recovery Potion]]
+Required Unlock :: [[32 Unused]]
+Time :: 10.0
+
+---recipe_Major Recovery Potion---
+Ingredients :: [[155 Minor Recovery Potion]]@2 [[158 Umbral Morel]]@3 [[147 Sunfish]]@2 [[115 Wyld Essence]]@3 [[157 Glimmerfern Sprout]]@10
+Crafts :: [[156 Major Recovery Potion]]
+Required Unlock :: [[32 Unused]]
+Time :: 45.0
+
+---recipe_Minor Attack Potion---
+Ingredients :: [[159 Sunpetal Bloom]]@3 [[147 Sunfish]]@1 [[110 Weapon Parts]]@3 [[115 Wyld Essence]]@1
+Crafts :: [[153 Minor Attack Potion]]
+Required Unlock :: [[32 Unused]]
+Time :: 10.0
+
+---recipe_Major Attack Potion---
+Ingredients :: [[153 Minor Attack Potion]]@2 [[159 Sunpetal Bloom]]@7 [[149 Volcano Trout]]@1 [[115 Wyld Essence]]@3 [[110 Weapon Parts]]@10
+Crafts :: [[154 Major Attack Potion]]
+Required Unlock :: [[32 Unused]]
+Time :: 45.0
+
+---recipe_Cant Miss---
+Ingredients :: [[180 Guardian's Core]]@25 [[110 Weapon Parts]]@60 [[166 Concentrated Wyld Essence]]@4 [[149 Volcano Trout]]@5 [[159 Sunpetal Bloom]]@10
+Crafts :: [[22 Cant Miss]]
+Required Unlock :: [[22 Cant Miss]]
+Time :: 1800.0
+
+---recipe_Elemental Gauntlets---
+Ingredients :: [[181 Architect's Blueprint]]@25 [[109 Armor Parts]]@60 [[166 Concentrated Wyld Essence]]@4 [[149 Volcano Trout]]@5 [[159 Sunpetal Bloom]]@10
+Crafts :: [[93 Elemental Gauntlets]]
+Required Unlock :: [[93 Elemental Gauntlets]]
+Time :: 1800.0
+
+---recipe_Quantum Striders---
+Ingredients :: [[181 Architect's Blueprint]]@25 [[109 Armor Parts]]@60 [[166 Concentrated Wyld Essence]]@4 [[149 Volcano Trout]]@5 [[159 Sunpetal Bloom]]@10
+Crafts :: [[90 Quantum Striders]]
+Required Unlock :: [[90 Quantum Striders]]
+Time :: 1800.0
+
+---recipe_Gravedigger---
+Ingredients :: [[182 Destructor's Plating]]@25 [[110 Weapon Parts]]@60 [[166 Concentrated Wyld Essence]]@4 [[149 Volcano Trout]]@5 [[159 Sunpetal Bloom]]@10
+Crafts :: [[10 Gravedigger]]
+Required Unlock :: [[10 Gravedigger]]
+Time :: 1800.0
+
+---recipe_Mini Mines---
+Ingredients :: [[184 Flameclaw's Talon]]@25 [[110 Weapon Parts]]@60 [[166 Concentrated Wyld Essence]]@4 [[149 Volcano Trout]]@5 [[159 Sunpetal Bloom]]@10
+Crafts :: [[9 Mini Mines]]
+Required Unlock :: [[9 Mini Mines]]
+Time :: 1800.0
+
+---recipe_Neverending Story---
+Ingredients :: [[184 Flameclaw's Talon]]@25 [[110 Weapon Parts]]@60 [[166 Concentrated Wyld Essence]]@4 [[149 Volcano Trout]]@5 [[159 Sunpetal Bloom]]@10
+Crafts :: [[28 Neverending Story]]
+Required Unlock :: [[28 Neverending Story]]
+Time :: 1800.0
+
+---recipe_Gravity Collapse---
+Ingredients :: [[186 Wyrmscale Fragment]]@25 [[110 Weapon Parts]]@60 [[166 Concentrated Wyld Essence]]@4 [[149 Volcano Trout]]@5 [[159 Sunpetal Bloom]]@10
+Crafts :: [[103 Gravity Collapse]]
+Required Unlock :: [[103 Gravity Collapse]]
+Time :: 1800.0
+
+---recipe_Void Embrace---
+Ingredients :: [[186 Wyrmscale Fragment]]@25 [[109 Armor Parts]]@60 [[166 Concentrated Wyld Essence]]@4 [[149 Volcano Trout]]@5 [[159 Sunpetal Bloom]]@10
+Crafts :: [[98 Void Embrace]]
+Required Unlock :: [[98 Void Embrace]]
+Time :: 1800.0
+
+---recipe_Frenemies---
+Ingredients :: [[187 Hoarder's Bloodstone]]@25 [[110 Weapon Parts]]@60 [[166 Concentrated Wyld Essence]]@4 [[149 Volcano Trout]]@5 [[159 Sunpetal Bloom]]@10
+Crafts :: [[26 Frenemies]]
+Required Unlock :: [[26 Frenemies]]
+Time :: 1800.0
+
+---recipe_Rampage---
+Ingredients :: [[188 Juggernaut's Ember]]@25 [[110 Weapon Parts]]@60 [[166 Concentrated Wyld Essence]]@4 [[149 Volcano Trout]]@5 [[159 Sunpetal Bloom]]@10
+Crafts :: [[31 Rampage]]
+Required Unlock :: [[31 Rampage]]
+Time :: 1800.0
+
+---recipe_Proximity---
+Ingredients :: [[189 Flayer's Psychic Nodule]]@25 [[110 Weapon Parts]]@60 [[166 Concentrated Wyld Essence]]@4 [[149 Volcano Trout]]@5 [[159 Sunpetal Bloom]]@10
+Crafts :: [[137 Proximity]]
+Required Unlock :: [[137 Proximity]]
+Time :: 1800.0
+
+---recipe_Bloody Thirst---
+Ingredients :: [[190 Crimson Ooze]]@25 [[110 Weapon Parts]]@60 [[166 Concentrated Wyld Essence]]@4 [[149 Volcano Trout]]@5 [[159 Sunpetal Bloom]]@10
+Crafts :: [[101 Bloody Thirst]]
+Required Unlock :: [[101 Bloody Thirst]]
+Time :: 1800.0
+
+---recipe_Spray and Pray---
+Ingredients :: [[191 Servitor's Power Cell]]@25 [[110 Weapon Parts]]@60 [[166 Concentrated Wyld Essence]]@4 [[149 Volcano Trout]]@5 [[159 Sunpetal Bloom]]@10
+Crafts :: [[25 Spray and Pray]]
+Required Unlock :: [[25 Spray and Pray]]
+Time :: 1800.0
+
+---recipe_Chronoshift Marksman---
+Ingredients :: [[191 Servitor's Power Cell]]@25 [[110 Weapon Parts]]@60 [[166 Concentrated Wyld Essence]]@4 [[149 Volcano Trout]]@5 [[159 Sunpetal Bloom]]@10
+Crafts :: [[105 Chronoshift Marksman]]
+Required Unlock :: [[105 Chronoshift Marksman]]
+Time :: 1800.0
+
+---recipe_Desperation---
+Ingredients :: [[195 Widow's Venom Sac]]@25 [[110 Weapon Parts]]@60 [[166 Concentrated Wyld Essence]]@4 [[149 Volcano Trout]]@5 [[159 Sunpetal Bloom]]@10
+Crafts :: [[23 Desperation]]
+Required Unlock :: [[23 Desperation]]
+Time :: 1800.0
+
+---recipe_Pain Converter---
+Ingredients :: [[195 Widow's Venom Sac]]@25 [[110 Weapon Parts]]@60 [[166 Concentrated Wyld Essence]]@4 [[149 Volcano Trout]]@5 [[159 Sunpetal Bloom]]@10
+Crafts :: [[104 Pain Converter]]
+Required Unlock :: [[104 Pain Converter]]
+Time :: 1800.0
+
+---recipe_Double Barrel Shotgun---
+Ingredients :: [[183 Hunter's Cloak]]@25 [[110 Weapon Parts]]@60 [[166 Concentrated Wyld Essence]]@4 [[149 Volcano Trout]]@5 [[159 Sunpetal Bloom]]@10
+Crafts :: [[114 Double Barrel Shotgun]]
+Required Unlock :: [[114 Double Barrel Shotgun]]
+Time :: 1800.0
+
+---recipe_Ancient Guardian's Favor---
+Ingredients :: [[180 Guardian's Core]]@19 [[30 Refined Wyld Luck]]@1 [[166 Concentrated Wyld Essence]]@2 [[110 Weapon Parts]]@20 [[109 Armor Parts]]@20
+Crafts :: [[522 Ancient Guardian's Favor]]
+Time :: 600.0
+
+---recipe_Architect's Favor---
+Ingredients :: [[181 Architect's Blueprint]]@19 [[30 Refined Wyld Luck]]@1 [[166 Concentrated Wyld Essence]]@2 [[110 Weapon Parts]]@20 [[109 Armor Parts]]@20
+Crafts :: [[523 Architect's Favor]]
+Time :: 600.0
+
+---recipe_Flameclaw's Favor---
+Ingredients :: [[184 Flameclaw's Talon]]@19 [[30 Refined Wyld Luck]]@1 [[166 Concentrated Wyld Essence]]@2 [[110 Weapon Parts]]@20 [[109 Armor Parts]]@20
+Crafts :: [[524 Flameclaw's Favor]]
+Time :: 600.0
+
+---recipe_Great Wyrm's Favor---
+Ingredients :: [[186 Wyrmscale Fragment]]@19 [[30 Refined Wyld Luck]]@1 [[166 Concentrated Wyld Essence]]@2 [[110 Weapon Parts]]@20 [[109 Armor Parts]]@20
+Crafts :: [[525 Great Wyrm's Favor]]
+Time :: 600.0
+
+---recipe_Heart Hoarder's Favor---
+Ingredients :: [[187 Hoarder's Bloodstone]]@19 [[30 Refined Wyld Luck]]@1 [[166 Concentrated Wyld Essence]]@2 [[110 Weapon Parts]]@20 [[109 Armor Parts]]@20
+Crafts :: [[526 Heart Hoarder's Favor]]
+Time :: 600.0
+
+---recipe_Inferno Juggernaut's Favor---
+Ingredients :: [[188 Juggernaut's Ember]]@19 [[30 Refined Wyld Luck]]@1 [[166 Concentrated Wyld Essence]]@2 [[110 Weapon Parts]]@20 [[109 Armor Parts]]@20
+Crafts :: [[527 Inferno Juggernaut's Favor]]
+Time :: 600.0
+
+---recipe_Mind Flayer's Favor---
+Ingredients :: [[189 Flayer's Psychic Nodule]]@19 [[30 Refined Wyld Luck]]@1 [[166 Concentrated Wyld Essence]]@2 [[110 Weapon Parts]]@20 [[109 Armor Parts]]@20
+Crafts :: [[528 Mind Flayer's Favor]]
+Time :: 600.0
+
+---recipe_Red King's Favor---
+Ingredients :: [[190 Crimson Ooze]]@19 [[30 Refined Wyld Luck]]@1 [[166 Concentrated Wyld Essence]]@2 [[110 Weapon Parts]]@20 [[109 Armor Parts]]@20
+Crafts :: [[529 Red King's Favor]]
+Time :: 600.0
+
+---recipe_Servitor's Favor---
+Ingredients :: [[191 Servitor's Power Cell]]@19 [[30 Refined Wyld Luck]]@1 [[166 Concentrated Wyld Essence]]@2 [[110 Weapon Parts]]@20 [[109 Armor Parts]]@20
+Crafts :: [[531 Servitor's Favor]]
+Time :: 600.0
+
+---recipe_Voltage Vanguard's Favor---
+Ingredients :: [[194 Vanguard's Capacitor]]@19 [[30 Refined Wyld Luck]]@1 [[166 Concentrated Wyld Essence]]@2 [[110 Weapon Parts]]@20 [[109 Armor Parts]]@20
+Crafts :: [[532 Voltage Vanguard's Favor]]
+Time :: 600.0
+
+---recipe_Widow's Favor---
+Ingredients :: [[195 Widow's Venom Sac]]@19 [[30 Refined Wyld Luck]]@1 [[166 Concentrated Wyld Essence]]@2 [[110 Weapon Parts]]@20 [[109 Armor Parts]]@20
+Crafts :: [[533 Widow's Favor]]
+Time :: 600.0
+
+---recipe_Shadow's Favor---
+Ingredients :: [[193 Shadow Core]]@19 [[30 Refined Wyld Luck]]@1 [[166 Concentrated Wyld Essence]]@2 [[110 Weapon Parts]]@20 [[109 Armor Parts]]@20
+Crafts :: [[521 Shadow's Favor]]
+Time :: 600.0

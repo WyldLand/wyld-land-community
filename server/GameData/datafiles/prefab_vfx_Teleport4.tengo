@@ -1,0 +1,15 @@
+---prefab_Teleport4---
+
+Components :: [[Teleport4Sprite]] [[TeleportSound]]
+
+---prefabcomponent_Teleport4Sprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.73,
+    "sprite": "vfx/Teleport4",
+    "play": "default"
+     
+}

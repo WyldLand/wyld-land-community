@@ -1,0 +1,112 @@
+---mob_Mushroom Dagger---
+Prefab :: mushroomdagger
+Range Behavior :: Short Ranged
+Abilities :: [[Mushroom Dagger Shot]]
+Speed :: 500
+Type :: Normal
+
+---prefab_mushroomdagger---
+
+Components :: [[MushroomDaggerSprite]] [[MushroomDaggerCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_MushroomDaggerCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+	"position": [0.0, 0.75],
+    "size": [1.5, 1.5]
+}
+
+---prefabcomponent_MushroomDaggerSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.2,
+    "pivotY": 1.0,
+    "sprite": "darkforest1/mushroomdagger",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ],
+    "allowBatch": true
+}
+
+---prefab_sfxmushroomdaggerAttack---
+
+Components :: [[SFXMushroomDaggerAttack]]
+
+---prefabcomponent_SFXMushroomDaggerAttack---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest1/mushroomdaggerAttack.wav"],
+	"spatial": true
+}
+
+---ability_Mushroom Dagger Shot---
+Bullet Definition :: [[mushroomdaggershoot]]
+Cooldown :: 3.0
+Auras :: [[Shock]]
+VFX Charging :: trigger:Attack*
+Lock Time :: 0.75
+Cast Time :: 0.40
+
+---bulletdef_mushroomdaggershoot---
+sprite Shock
+potency 120
+fire 7 relative 0
+	wait 14
+	fire mushroomdaggerpool
+	wait 1
+	fire mushroomdaggerspread
+	sfx 
+	wait 1
+	vanish
+
+---bulletdef_mushroomdaggerpool---
+sprite OrangePool 2
+potency 10
+fire 0 relative 0
+	aoedot
+	radius 2
+	damageEvery 5
+	vfx ShockPool
+	wait 81
+	vanish
+
+---bulletdef_mushroomdaggerspread---
+potency 120
+sprite Shock
+nway speed:8 bullets:3 spread:20 directionType:relative angle:0
+nway speed:6 bullets:3 spread:40 directionType:relative angle:0
+
+---ability_Mushroom Dagger Death---
+Bullet Definition :: [[mushroomdaggerpool]]
+Auras :: [[Auras/Shock]]
+VFX Cast :: trigger:Death*
+
+---script_mushroomdagger_Monster---
+
+if is_undefined(scriptVars["didExplode"]) {
+	scriptVars["didExplode"] = false
+}
+
+if getPoints(myEntityId, "hp", "current") < 1 {
+	if !scriptVars["didExplode"] {
+		scriptVars["didExplode"] = true
+		useAbilityAtPosition(myEntityId, "Mushroom Dagger Death", entityPosition(myEntityId))
+	}
+}
+
+

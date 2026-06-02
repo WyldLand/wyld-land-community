@@ -1,0 +1,30 @@
+---item_48 Void Whisperer---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Void Whisperer]]
+Rarity :: Rare
+
+It seems like the second bullet is intentional. Seems.
+
+---gundef_Void Whisperer---
+Fire Speed :: 0.15
+Bullets In Chamber :: 24
+Reload Speed :: 0.8
+Sprite :: weapons_48
+Fire Event :: blasterd
+Reload Event :: blasterreload
+Bullet Definition :: [[voidwhisperer]]
+Archetype :: Handgun
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: FullAuto
+Bullet Lifetime :: 1.0
+
+---bulletdef_voidwhisperer---
+sprite Custom10
+color 5
+potency 18
+fire 17 relative 0 0
+	position 0.0 -0.3
+fire 17 relative 0 0
+	position 0.0 0.3
+

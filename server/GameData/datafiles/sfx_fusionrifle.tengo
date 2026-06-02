@@ -1,0 +1,59 @@
+---prefab_sfxfusionriflea---
+
+Components :: [[SFXFusionRifleA]]
+
+---prefabcomponent_SFXFusionRifleA---
+
+Component :: Sound
+
+{
+    "sources": ["sfxfusionrifle/fusionriflea1.wav", "sfxfusionrifle/fusionriflea2.wav", "sfxfusionrifle/fusionriflea3.wav"],
+    "select": "all",
+    "randomPitch": 0.15,
+    "delay": [0.0, 0.05, 0.10],
+    "channel": "gfx"
+}
+
+---prefab_sfxfusionrifleb---
+
+Components :: [[SFXFusionRifleB]]
+
+---prefabcomponent_SFXFusionRifleB---
+
+Component :: Sound
+
+{
+    "sources": ["sfxfusionrifle/fusionrifleb1.wav", "sfxfusionrifle/fusionrifleb2.wav", "sfxfusionrifle/fusionrifleb3.wav"],
+    "select": "random",
+    "randomPitch": 0.15,
+    "channel": "gfx"
+}
+
+---prefab_sfxfusionriflec---
+
+Components :: [[SFXFusionRifleC]]
+
+---prefabcomponent_SFXFusionRifleC---
+
+Component :: Sound
+
+{
+    "sources": ["sfxfusionrifle/fusionriflec1.wav", "sfxfusionrifle/fusionriflec2.wav", "sfxfusionrifle/fusionriflec3.wav", "sfxfusionrifle/fusionriflec4.wav"],
+    "select": "all",
+    "randomPitch": 0.15,
+    "delay": [0.0, 0.05, 0.10, 0.20],
+    "channel": "gfx"
+}
+
+---prefab_sfxfusionriflereload---
+
+Components :: [[SFXFusionRifleReload]]
+
+---prefabcomponent_SFXFusionRifleReload---
+
+Component :: Sound
+
+{
+    "sources": ["sfxfusionrifle/fusionriflereload.wav"],
+    "channel": "gfx"
+}

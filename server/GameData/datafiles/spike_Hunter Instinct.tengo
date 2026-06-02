@@ -1,0 +1,34 @@
+---aura_Hunter Instinct---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:HunterInstinct]]
+
+---spike_Hunter Instinct---
+Slot :: Gun
+Auras :: [[Hunter Instinct]]
+Rarity :: Legendary
+Archetypes :: [[Handgun]]
+
+Deal bonus damage to enemies above 90% health.
+
+---script_HunterInstinct_DamageDealt---
+
+if abilityId == auraAbilityId {
+	targetMaxHp := float(getPoints(damageSenderId, "hp", "max"))
+	targetCurrentHp := float(getPoints(damageSenderId, "hp", "current"))
+	
+	// Check if enemy is above 90% health
+	healthPercentage := targetCurrentHp / targetMaxHp
+	
+	if healthPercentage >= 0.90 {
+		// Deal 60% bonus damage to high-health enemies
+		bonusDamage := int(float(damage) * 0.60)
+		attackEntity(myEntityId, damageSenderId, bonusDamage, -99)
+		
+		// Visual feedback
+		say(myEntityId, "Hunter's instinct activated!", "Hunter's Instinct", true)
+	}
+}

@@ -1,0 +1,78 @@
+---item_9 Mini Mines---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Mini Mines]]
+Rarity :: Exotic
+Durability :: 3
+
+On hit, mine the target to explode
+Increased damage on reload
+
+Exercise caution around explosives, or learn the hard way.
+
+---gundef_Mini Mines---
+Fire Speed :: 0.5
+Bullets In Chamber :: 6
+Reload Speed :: 1.2
+Sprite :: weapons_40
+Fire Event :: revolver
+Reload Event :: revolverreload
+Bullet Definition :: [[minimines]]
+Archetype :: Handgun
+Innate Spikes :: [[Mini Mines]]
+Muzzle VFX :: Muzzle 0.60
+
+---bulletdef_minimines---
+sprite Laser14 0.6
+color 2
+potency 130
+fire 15 relative -1 1
+
+---spike_Mini Mines---
+Auras :: [[Mini Mines]]
+Icon ::
+
+---aura_Mini Mines---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:MiniMines]]
+
+---aura_Mini Mines Attached---
+Type :: Debuff
+Icon ::
+Duration :: 1.5
+Max Stacks :: 1
+Existing :: DontApply
+Time Per Tick :: 1.0
+Definitions :: [[Custom:MiniMinesAttached]]
+
+---ability_Mini Mine Explode---
+Bullet Definition :: [[minimineexplosion]]
+Max Range :: 100.0
+
+---bulletdef_minimineexplosion---
+sprite BluePool 2.5
+potency 91
+fire 0 relative 0
+	aoeexplosion
+	radius 2.5
+	damageEvery 5
+	wait 3
+	vfx SmallBombExplosion 5
+	wait 1
+	vfx ShakeSmall 5
+	wait 1
+	vanish
+
+---script_MiniMines_DamageDealt---
+
+if abilityId == auraAbilityId {
+	addAuraToEntity(myEntityId, "Mini Mines Attached", auraAbilityId, damageSenderId)
+}
+
+---script_MiniMinesAttached_Expire---
+
+useAbilityAtPosition(sourceEntityId, "Mini Mine Explode", entityPosition(myEntityId))

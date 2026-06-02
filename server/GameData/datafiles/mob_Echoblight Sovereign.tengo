@@ -1,0 +1,2678 @@
+---mobdefinition_Echoblight Sovereign---
+ID :: echoblightsovereign
+Prefab :: echoblightsovereign
+Range Behavior :: [[Medium Ranged]]
+Abilities :: [[Spawn Minions]] [[Fire Arena]] [[Lava Protection Pool]]
+Type :: Boss
+Speed :: 350
+Loot :: [[Echoblight]]
+
+---prefab_raidbosshealtower---
+
+Components :: [[RaidBossHealTowerSprite]] [[RaidBossHealTowerCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_RaidBossHealTowerCollider---
+
+Component :: Collider
+
+{
+	"layer": "Enemy",
+	"position": [-0.03125, 2.34375],
+	"size": [2.3125, 4.6875]
+}
+
+---prefabcomponent_RaidBossHealTowerSprite---
+
+Component :: Sprite
+
+{
+	"pivotX": 0.4951,
+	"pivotY": 0.9158,
+	"sprite": "raidbosshealtower/raidbosshealtower",
+	"animations": [
+		{
+			"name": "idle"
+		},
+		{
+			"name": "move",
+			"property": "Speed",
+			"condition": ">",
+			"value": 0.1
+		}
+	]
+}
+
+---prefab_echoblightsovereign---
+
+Components :: [[EchoblightSovereignSprite]] [[EchoblightSovereignCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_EchoblightSovereignCollider---
+
+Component :: Collider
+
+{
+	"layer": "Enemy",
+	"position": [0.02884334, 1.023018],
+	"size": [2.713026, 2.105215]
+}
+
+---prefabcomponent_EchoblightSovereignSprite---
+
+Component :: Sprite
+
+{
+	"pivotX": 0.45,
+	"pivotY": 1.0,
+	"sprite": "echoblightsovereign/echoblightsovereign",
+	"animations": [
+		{
+			"name": "idle"
+		},
+		{
+			"name": "move",
+			"property": "Speed",
+			"condition": ">",
+			"value": 0.1
+		}
+	]
+}
+
+---loottable_Echoblight---
+[[301 Flame Guard]] @ 20.0
+[[86 Helm of the Enternal]] @ 5.0
+[[325 Mini Echoblight]] @ 20.0
+
+
+---ability_Spawn Minions---
+Script :: SpawnMinions
+
+---script_SpawnMinions_Cast---
+if frameNum == 0 {
+	// Choose which enemy type to spawn this time
+	rand := import("rand")
+	entityTypes := ["anklebiter", "mushroomdagger"]
+	selectedType := entityTypes[rand.intn(len(entityTypes))]
+	
+	// Spawn at the four designated positions
+	spawnPositions := [
+		 positionInCurrentRoom(myEntityId,[81.0, 76.0, 0.0]),
+		 positionInCurrentRoom(myEntityId,[81.0, 14.0, 0.0]),
+		 positionInCurrentRoom(myEntityId,[16.0, 76.0, 0.0]),
+		 positionInCurrentRoom(myEntityId,[16.0, 14.0, 0.0])
+	]
+	
+	for i := 0; i < len(spawnPositions); i++ {
+	   newEntityId := summonEntity(selectedType, spawnPositions[i], monsterLevel(myEntityId))
+	   killEntityIfEntityDies(newEntityId, myEntityId)
+	   aggroMyTargets(myEntityId, newEntityId)
+	}
+}
+
+---ability_Fire Arena---
+Bullet Definition :: [[firearena]]
+Max Range :: 10000000000000.0
+Cooldown :: 2.0
+Script :: FireArena
+
+---bulletdef_firearena---
+sprite Invisible
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 800
+	damageEvery 1
+	wait 1
+	vanish
+
+---script_FireArena_Cast---
+// Custom logic to apply The Floor Is Lava only to players without Lava Protection
+nearby := getNearbyEntities(myEntityId)
+
+for i := 0; i < len(nearby); i++ {
+	targetId := nearby[i]["id"]
+	
+	// Check if this entity is within the Fire Arena radius (800 units)
+	dist := distToEntity(myEntityId, targetId)
+	if dist <= 800 {
+		// Check if the target is an enemy of this entity (i.e., a player)
+		// Since this is cast by a monster/boss, players will be enemies
+		if isEnemyOfEntity(myEntityId, targetId) {
+			// Additional check: make sure it's actually a player by checking prefab name
+			prefabName := getPrefabNameOfEntity(targetId)
+			if prefabName == "player" {
+				// Check if the target has Lava Protection aura
+				hasFireProtection := false
+				targetAuras := getAurasOnEntity(targetId)
+				
+				for j := 0; j < len(targetAuras); j++ {
+					if targetAuras[j]["name"] == "Lava Protection" {
+						hasFireProtection = true
+						break
+					}
+				}
+				
+				// Only apply The Floor Is Lava if the target doesn't have Lava Protection
+				if !hasFireProtection {
+					addAuraToEntity(myEntityId, "The Floor Is Lava", abilityId, targetId)
+				}
+			}
+		}
+	}
+}
+
+---aura_The Floor Is Lava---
+Type :: Debuff
+Duration :: 2.0
+Icon :: statusicons_9
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[AuraDealDamage/The Floor Is Lava]]
+
+---auradealdamage_The Floor Is Lava---
+Damage Type :: Burn
+Potency :: 25
+
+---ability_Lava Protection Pool---
+Bullet Definition :: [[fireprotectionpool]]
+Max Range :: 100.0
+Auras :: [[Lava Protection]]
+
+---bulletdef_fireprotectionpool---
+sprite GreenPool 4
+potency 0
+fire 0 relative 0
+	aoedot
+	nododge
+	radius 4
+	damageEvery 5
+	wait 50
+	vanish
+
+---aura_Lava Protection---
+Type :: Buff
+Duration :: 50.0
+Icon :: statusicons_8
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:FireProtection]]
+
+---script_FireProtection_IncomingDamage---
+dispelAuraOnEntity(targetEntityId, "The Floor Is Lava")
+
+// Check if damage is from Fire Arena ability
+if getAbilityName(abilityId) == "Fire Arena" {
+	// Negate all fire arena damage
+	additionalDamage = -1 * damage
+}
+
+
+
+---aura_Sovereign Invulnerability---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Icon :: statusicons_36
+Definitions :: [[Custom:SovereignInvulnerability]]
+
+---script_SovereignInvulnerability_IncomingDamage---
+// Complete immunity to all damage while guardian is alive
+additionalDamage = -1 * damage
+
+---ability_Fire Vortex---
+Bullet Definition :: [[firevortex]]
+Max Range :: 100.0
+
+---bulletdef_firevortex---
+sprite OrangePool 3
+color 2
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 3
+	timedFill 15
+	damageEvery 15
+	wait 16
+	vanish
+wait 15
+sprite Custom10
+color 2
+potency 80
+repeat bullets:3 speed:2.5 angle:0 angleChange:120 directionType:absolute
+	wait 100
+	direction relative 15
+	wait 100
+	direction relative 15
+	wait 100
+	direction relative 15
+	wait 100
+	vanish
+wait 5
+repeat bullets:3 speed:2.5 angle:60 angleChange:120 directionType:absolute
+	wait 100
+	direction relative -15
+	wait 100
+	direction relative -15
+	wait 100
+	direction relative -15
+	wait 100
+	vanish
+
+---ability_Ember Mines---
+Bullet Definition :: [[embermines]]
+Max Range :: 100.0
+
+---bulletdef_embermines---
+sprite OrangePool 2
+color 2
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 2
+	timedFill 20
+	damageEvery 20
+	wait 21
+	vanish
+wait 20
+sprite Basic
+color 2
+potency 80
+radial bullets:12 speed:2.5 angle:0 directionType:absolute
+	wait 60
+	vanish
+wait 5
+radial bullets:12 speed:2.5 angle:15 directionType:absolute
+	wait 60
+	vanish
+
+// Phase 1
+
+---ability_Web Spray---
+Bullet Definition :: [[webspray]]
+Auras :: [[Slow]]
+Cooldown :: 3.0
+
+---bulletdef_webspray---
+sprite Custom11
+color 0
+potency 100
+// Create a spiral effect by using repeat with increasing angles
+repeat bullets:24 speed:8 angle:0 angleChange:15 delay:1 directionType:relative
+	wait 120
+	vanish
+// Add a second spiral with different timing
+wait 5
+repeat bullets:24 speed:6 angle:180 angleChange:15 delay:1 directionType:relative
+	wait 120
+	vanish
+
+---ability_Flame Burst---
+Bullet Definition :: [[flameburst]]
+Cooldown :: 4.5
+Auras :: [[Slow]]
+VFX Cast :: trigger:Attack
+
+---bulletdef_flameburst---
+sprite WhitePool 15
+potency 175
+fire 0 relative 0
+	aoeexplosion
+	radius 15
+	timedFill 50
+	damageEvery 50
+	wait 50
+	vfx BombExplosion 4
+	wait 1
+	fire flameburstwave
+	vanish
+
+---bulletdef_flameburstwave---
+sprite Custom7
+color 0
+potency 75
+// First star pattern - 8 points with 45-degree spacing
+nway speed:8 bullets:8 spread:360 angle:0 directionType:absolute
+	wait 60
+	vanish
+// Second star pattern - 8 points offset from first pattern
+wait 5
+nway speed:7 bullets:8 spread:360 angle:22.5 directionType:absolute
+	wait 60
+	vanish
+// Third dense star pattern with more bullets
+wait 5
+nway speed:6 bullets:16 spread:360 angle:11.25 directionType:absolute
+	wait 60
+	vanish
+
+// Web Corridor Abilities Phase 1
+
+---ability_Web Corridor1---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor2---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor3---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor4---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor5---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor6---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor7---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor8---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor9---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor10---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor11---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor12---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor13---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor14---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor15---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor16---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor17---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor18---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor19---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor20---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor21---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor22---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor23---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor24---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor25---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor26---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor27---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor28---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor29---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor30---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor31---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor32---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor33---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor34---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor85---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor36---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor37---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor38---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor39---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor40---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor41---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor42---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor43---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor44---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor45---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor46---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor47---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor48---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor49---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor50---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor51---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor52---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor53---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor54---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor55---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor56---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor57---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor58---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor59---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor60---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor61---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor62---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor63---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor64---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor65---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor66---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor67---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor68---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor69---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor70---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor71---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor72---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor73---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor74---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor75---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor76---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor77---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor78---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor79---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor80---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor81---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor82---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor83---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor84---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---ability_Web Corridor85---
+Bullet Definition :: [[webcorridor]]
+Max Range :: 100.0
+
+---bulletdef_webcorridor---
+line speed:6 bullets:1 angle:90 directionType:absolute
+	wait 1000
+	vanish
+
+// Phase 2
+
+---ability_Bottom Line1---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line2---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line3---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line4---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line5---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line6---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line7---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line8---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line9---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line10---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line11---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line12---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line13---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line14---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line15---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line16---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line17---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line18---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line19---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line20---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line21---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line22---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line23---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line24---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line25---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line26---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line27---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line28---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line29---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line30---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line31---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line32---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line33---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line34---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line35---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line36---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line37---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line38---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line39---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line40---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line41---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line42---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line43---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line44---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line45---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line46---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line47---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line48---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line49---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line50---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line51---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line52---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line53---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line54---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line55---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line56---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line57---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line58---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line59---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line60---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line61---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line62---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line63---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line64---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line65---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line66---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line67---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line68---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line69---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line70---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line71---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line72---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line73---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line74---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line75---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line76---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line77---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line78---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line79---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line80---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line81---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line82---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line83---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line84---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line85---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line86---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line87---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line88---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line89---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line90---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line91---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line92---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---ability_Bottom Line93---
+Bullet Definition :: [[bottomline]]
+Max Range :: 100.0
+
+---bulletdef_bottomline---
+line speed:6 bullets:1 angle:0 directionType:absolute
+	wait 1000
+	vanish
+
+---ability_Fire Vortex Phase 2---
+Bullet Definition :: [[firevortexphase2]]
+Max Range :: 100.0
+
+---bulletdef_firevortexphase2---
+sprite OrangePool 4
+color 2
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 4
+	timedFill 12
+	damageEvery 12
+	wait 13
+	vanish
+wait 12
+sprite Custom10
+color 2
+potency 100
+// First triple spiral set with clockwise rotation
+repeat bullets:4 speed:3 angle:0 angleChange:90 directionType:absolute
+	wait 75
+	direction relative 20
+	wait 75
+	direction relative 20
+	wait 75
+	direction relative 20
+	wait 75
+	vanish
+// Second triple spiral set with counterclockwise rotation
+wait 3
+repeat bullets:4 speed:3 angle:45 angleChange:90 directionType:absolute
+	wait 75
+	direction relative -20
+	wait 75
+	direction relative -20
+	wait 75
+	direction relative -20
+	wait 75
+	vanish
+// Third spiral set with expanding radius
+wait 5
+sprite Custom10
+color 2
+potency 80
+repeat bullets:6 speed:1.5 angle:0 angleChange:60 directionType:absolute
+	wait 30
+	speed 4
+	wait 30
+	speed 2
+	direction relative 15
+	wait 90
+	vanish
+
+---ability_Ember Mines Phase 2---
+Bullet Definition :: [[emberminesphase2]]
+Max Range :: 100.0
+
+---bulletdef_emberminesphase2---
+sprite OrangePool 3
+color 2
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 3
+	timedFill 15
+	damageEvery 15
+	wait 16
+	vanish
+wait 15
+sprite Basic
+color 2
+potency 100
+// First wave - circular pattern
+radial bullets:16 speed:3 angle:0 directionType:absolute
+	wait 90
+	vanish
+// Second wave - offset circular pattern
+wait 2
+radial bullets:16 speed:3 angle:11.25 directionType:absolute
+	wait 90
+	vanish
+// Third wave - scatter pattern
+wait 5
+sprite Custom7
+color 2
+potency 75
+repeat bullets:8 speed:5 angle:0 maxAngle:360 delay:1 directionType:absolute
+	wait 15
+	speed 2
+	wait 75
+	vanish
+// Fourth wave - delayed mines
+wait 30
+sprite OrangePool 2
+color 2
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 2
+	timedFill 10
+	damageEvery 10
+	wait 11
+	vanish
+wait 10
+sprite Basic
+color 2
+potency 100
+radial bullets:12 speed:4 angle:0 directionType:absolute
+	wait 60
+	vanish
+
+---ability_Web Spray Phase 2---
+Bullet Definition :: [[websprayphase2]]
+Auras :: [[Slow]]
+Cooldown :: 3.0
+
+---bulletdef_websprayphase2---
+sprite Custom11
+color 0
+potency 120
+// Double spiral with faster bullets and longer lifetime
+repeat bullets:36 speed:9 angle:0 angleChange:10 delay:1 directionType:relative
+	wait 180
+	vanish
+// Second spiral offset and slightly delayed
+wait 3
+repeat bullets:36 speed:7 angle:180 angleChange:10 delay:1 directionType:relative
+	wait 180
+	vanish
+// Third spiral with different timing to create gaps
+wait 5
+repeat bullets:18 speed:8 angle:90 angleChange:20 delay:2 directionType:relative
+	wait 180
+	vanish
+// Fourth spiral from another angle
+wait 3
+repeat bullets:18 speed:8 angle:270 angleChange:20 delay:2 directionType:relative
+	wait 180
+	vanish
+
+---ability_Flame Burst Phase 2---
+Bullet Definition :: [[flameburstphase2]]
+Cooldown :: 4.0
+Auras :: [[Slow]]
+VFX Cast :: trigger:Attack
+
+---bulletdef_flameburstphase2---
+sprite WhitePool 18
+potency 200
+fire 0 relative 0
+	aoeexplosion
+	radius 18
+	timedFill 50
+	damageEvery 50
+	wait 50
+	vfx BombExplosion 5
+	wait 1
+	fire flameburstwave2
+	vanish
+
+---bulletdef_flameburstwave2---
+sprite Custom7
+color 0
+potency 90
+// First star pattern - 12 points
+nway speed:9 bullets:12 spread:360 angle:0 directionType:absolute
+	wait 90
+	vanish
+// Second star pattern - 12 points offset
+wait 3
+nway speed:8 bullets:12 spread:360 angle:15 directionType:absolute
+	wait 90
+	vanish
+// Third dense star pattern with more bullets
+wait 3
+nway speed:7 bullets:24 spread:360 angle:7.5 directionType:absolute
+	wait 90
+	vanish
+// Fourth pattern - spiraling bullets
+wait 5
+sprite Custom7
+color 2
+potency 90
+repeat bullets:8 speed:7 angle:0 angleChange:45 delay:2 directionType:absolute
+	wait 20
+	speed 3
+	direction relative 20
+	wait 70
+	vanish
+
+// Phase 3
+
+---ability_Web Corridor Left1---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left2---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left3---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left4---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left5---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left6---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left7---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left8---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left9---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left10---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left11---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left12---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left13---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left14---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left15---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left16---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left17---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left18---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left19---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left20---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left21---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left22---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left23---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left24---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left25---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left26---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left27---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left28---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left29---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left30---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left31---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left32---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left33---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left34---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left35---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left36---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left37---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left38---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left39---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left40---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left41---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left42---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left43---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left44---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left45---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left46---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left47---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left48---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left49---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left50---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left51---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left52---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left53---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left54---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left55---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left56---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left57---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left58---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left59---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left60---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left61---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left62---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left63---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left64---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left65---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left66---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left67---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left68---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left69---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left70---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left71---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left72---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left73---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left74---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left75---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left76---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left77---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left78---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left79---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left80---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left81---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left82---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left83---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left84---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---ability_Web Corridor Left85---
+Bullet Definition :: [[webcorridorleft]]
+Max Range :: 100.0
+
+---bulletdef_webcorridorleft---
+line speed:6 bullets:1 angle:270 directionType:absolute
+	wait 1000
+	vanish
+
+---ability_Void Timer---
+Bullet Definition :: [[voidtimer]]
+Max Range :: 100.0
+Auras :: [[Slow]]
+
+---bulletdef_voidtimer---
+sprite WhitePool 4
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 4
+	timedFill 30
+	damageEvery 30
+	wait 30
+	fire voidexplosion
+	wait 1
+	vanish
+
+---bulletdef_voidexplosion---
+sprite Custom10
+color 0
+potency 100
+repeat bullets:12 speed:3 angle:0 angleChange:30 delay:2 directionType:absolute
+	wait 25
+	speed 7
+	wait 75
+	vanish
+
+---script_echoblightsovereign_Monster---
+resetVars := func() {
+	scriptVars["timeSinceSpawn"] = 0.0
+	scriptVars["timeSinceFire"] = 0.0
+	scriptVars["firstFrame"] = true
+	scriptVars["poolsCreated"] = false
+	scriptVars["engaged"] = false
+	scriptVars["timePoolCheck"] = 0.0
+	scriptVars["guardiansSpawned"] = false
+	scriptVars["guardianId1"] = 0
+	scriptVars["guardianId2"] = 0
+	scriptVars["guardian1RespawnTimer"] = 0.0
+	scriptVars["guardian2RespawnTimer"] = 0.0
+	scriptVars["guardian1Dead"] = false
+	scriptVars["guardian2Dead"] = false
+	scriptVars["guardianRespawnTime"] = 45.0  // 10 seconds respawn time
+	
+	
+
+	// Phase 1 attack timers
+	scriptVars["timeSinceWebSpray"] = 0.0
+	scriptVars["timeSinceFlameBurst"] = 0.0
+	scriptVars["timeSinceWebCorridor"] = 0.0
+	scriptVars["timeSinceFireVortex"] = 0.0
+	scriptVars["timeSinceEmberMines"] = 0.0
+	scriptVars["timeSinceBottomLine"] = 0.0
+	scriptVars["phase"] = 1
+
+	// Phase 2 attack timers
+	scriptVars["timeSinceWebSprayPhase2"] = 0.0
+	scriptVars["timeSinceFlameBurstPhase2"] = 0.0
+	scriptVars["timeSinceFireVortexPhase2"] = 0.0
+	scriptVars["timeSinceEmberMinesPhase2"] = 0.0
+
+	// Phase 3 timers
+	scriptVars["timeSinceVoidTimer"] = 0.0
+
+	// Teleport variables
+
+	scriptVars["timeSinceTeleport"] = 0.0
+	scriptVars["teleportIndex"] = 0
+	
+	// Define predefined teleport locations
+	// These should be coordinates within your current room
+	scriptVars["teleportLocations"] = [
+		[27.0, 27.0, 0.0],
+		[72.0, 27.0, 0.0],
+		[27.0, 63.0, 0.0],
+		[72.0, 63.0, 0.0]
+	]
+}
+
+if !isDead {
+	if is_undefined(scriptVars["timeSinceSpawn"]) {
+		resetVars()
+	}
+
+	// Set initial boss position when first spawned
+	if scriptVars["firstFrame"] {
+		setPosition(myEntityId, positionInCurrentRoom(myEntityId, [48.0, 44.0, 0.0]))
+		scriptVars["firstFrame"] = false
+	}
+
+	if targetEntityId > 0 {
+	currentHealth := float(getPoints(myEntityId, "hp", "current"))
+	maxHealth := float(getPoints(myEntityId, "hp", "max"))
+
+	// Phase transitions
+	if currentHealth < maxHealth * 0.66 && scriptVars["phase"] == 1 {
+			clearBulletsForEntity(myEntityId)
+			scriptVars["phase"] = 2
+		} else if currentHealth < maxHealth * 0.33 && scriptVars["phase"] == 2 {
+			clearBulletsForEntity(myEntityId)
+			scriptVars["phase"] = 3 
+		}
+	}
+	
+	// Check guardians status and handle respawning
+	if scriptVars["guardiansSpawned"] {
+		// Check and handle first guardian
+		if isEntityDead(scriptVars["guardianId1"]) {
+			if !scriptVars["guardian1Dead"] {
+				// First time detecting this guardian's death
+				scriptVars["guardian1Dead"] = true
+				scriptVars["guardian1RespawnTimer"] = 0.0
+			} else {
+				// Increment respawn timer
+				scriptVars["guardian1RespawnTimer"] += delta
+				
+				if scriptVars["guardian1RespawnTimer"] >= scriptVars["guardianRespawnTime"] {
+					// Time to respawn guardian 1
+					guardianPos1 := positionInCurrentRoom(myEntityId, [48.0, 12.0, 0.0])
+					scriptVars["guardianId1"] = summonEntity("echoblightguardian", guardianPos1, monsterLevel(myEntityId))
+					scriptVars["guardian1Dead"] = false
+					scriptVars["guardian1RespawnTimer"] = 0.0
+				}
+			}
+		} else {
+			scriptVars["guardian1Dead"] = false
+		}
+		
+		// Check and handle second guardian
+		if isEntityDead(scriptVars["guardianId2"]) {
+			if !scriptVars["guardian2Dead"] {
+				// First time detecting this guardian's death
+				scriptVars["guardian2Dead"] = true
+				scriptVars["guardian2RespawnTimer"] = 0.0
+			} else {
+				// Increment respawn timer
+				scriptVars["guardian2RespawnTimer"] += delta
+				
+				if scriptVars["guardian2RespawnTimer"] >= scriptVars["guardianRespawnTime"] {
+					// Time to respawn guardian 2
+					guardianPos2 := positionInCurrentRoom(myEntityId, [48.0, 76.0, 0.0])
+					scriptVars["guardianId2"] = summonEntity("echoblightguardian", guardianPos2, monsterLevel(myEntityId))
+					scriptVars["guardian2Dead"] = false
+					scriptVars["guardian2RespawnTimer"] = 0.0
+				}
+			}
+		} else {
+			scriptVars["guardian2Dead"] = false
+		}
+		
+		// Only remove invulnerability if BOTH guardians are dead
+		bothGuardiansDead := isEntityDead(scriptVars["guardianId1"]) && isEntityDead(scriptVars["guardianId2"])
+		
+		if bothGuardiansDead {
+			// Both guardians are dead, remove invulnerability temporarily
+			if hasAura := getAurasOnEntity(myEntityId); len(hasAura) > 0 {
+				for i := 0; i < len(hasAura); i++ {
+					if hasAura[i]["name"] == "Sovereign Invulnerability" {
+						dispelAuraOnEntity(myEntityId, "Sovereign Invulnerability")
+					}
+				}
+			}
+		} else {
+			// At least one guardian is alive, ensure invulnerability is active
+			hasInvulnerability := false
+			if hasAura := getAurasOnEntity(myEntityId); len(hasAura) > 0 {
+				for i := 0; i < len(hasAura); i++ {
+					if hasAura[i]["name"] == "Sovereign Invulnerability" {
+						hasInvulnerability = true
+						break
+					}
+				}
+			}
+			
+			if !hasInvulnerability {
+				addAuraToEntity(myEntityId, "Sovereign Invulnerability", 0, myEntityId)
+			}
+
+			// Check if it's time to teleport (every 30 seconds)
+			if scriptVars["timeSinceTeleport"] >= 30.0 {
+				// Reset the timer
+				scriptVars["timeSinceTeleport"] = 0.0
+				
+				// Move to the next location in the predefined list
+				scriptVars["teleportIndex"] = (scriptVars["teleportIndex"] + 1) % len(scriptVars["teleportLocations"])
+				
+				// Get the new position
+				newPosition := positionInCurrentRoom(myEntityId, scriptVars["teleportLocations"][scriptVars["teleportIndex"]])
+				
+				// Teleport the entity to the new position
+				setPosition(myEntityId, newPosition)
+				
+			}
+		}
+	}
+	
+	if targetEntityId > 0 {
+		// Spawn the guardians when the player is first detected
+		if !scriptVars["guardiansSpawned"] {
+			// Spawn first guardian at the top of the arena
+			guardianPos1 := positionInCurrentRoom(myEntityId, [48.0, 12.0, 0.0])
+			scriptVars["guardianId1"] = summonEntity("echoblightguardian", guardianPos1, monsterLevel(myEntityId))
+			
+			// Spawn second guardian at the bottom of the arena
+			guardianPos2 := positionInCurrentRoom(myEntityId, [48.0, 76.0, 0.0])
+			scriptVars["guardianId2"] = summonEntity("echoblightguardian", guardianPos2, monsterLevel(myEntityId))
+			
+			scriptVars["guardiansSpawned"] = true
+			
+			// Add invulnerability to the boss until guardians are killed
+			addAuraToEntity(myEntityId, "Sovereign Invulnerability", 0, myEntityId)
+		}
+		
+		// Create Lava Protection pools only after the boss has engaged with a player
+		if !scriptVars["poolsCreated"] {
+			// Create the first pool at position [33,44,0]
+			useAbilityAtPosition(myEntityId, "Lava Protection Pool", 
+				positionInCurrentRoom(myEntityId, [33.0, 44.0, 0.0]))
+			
+			// Create the second pool at position [65,44,0]
+			useAbilityAtPosition(myEntityId, "Lava Protection Pool", 
+				positionInCurrentRoom(myEntityId, [65.0, 44.0, 0.0]))
+			
+			scriptVars["poolsCreated"] = true
+			
+			// Mark that the boss is now engaged
+			scriptVars["engaged"] = true
+		}
+
+		// Update all timers
+		scriptVars["timeSinceSpawn"] += delta
+		scriptVars["timeSinceFire"] += delta
+		scriptVars["timePoolCheck"] += delta
+		scriptVars["timeSinceTeleport"] += delta
+		
+		// Update Phase 1 ability timers
+		scriptVars["timeSinceWebSpray"] += delta
+		scriptVars["timeSinceFlameBurst"] += delta
+		scriptVars["timeSinceWebCorridor"] += delta
+		scriptVars["timeSinceFireVortex"] += delta  
+		scriptVars["timeSinceEmberMines"] += delta
+		scriptVars["timeSinceBottomLine"] += delta
+
+		// Periodically check and recreate pools if needed
+		if scriptVars["timePoolCheck"] >= 2.0 {
+			// Recreate pools to ensure they're always present
+			useAbilityAtPosition(myEntityId, "Lava Protection Pool", 
+				positionInCurrentRoom(myEntityId, [33.0, 44.0, 0.0]))
+			useAbilityAtPosition(myEntityId, "Lava Protection Pool", 
+				positionInCurrentRoom(myEntityId, [65.0, 44.0, 0.0]))
+			
+			scriptVars["timePoolCheck"] = 0.0
+		}
+
+		// Handle spawn minions timer
+		if scriptVars["timeSinceSpawn"] >= 7.5 {
+		   useAbilityAtPosition(myEntityId, "Spawn Minions", entityPosition(myEntityId))
+			scriptVars["timeSinceSpawn"] = 0.0
+		}
+		
+		// Periodically apply the fire arena effect, but only after we've created the protection pools
+		if scriptVars["timeSinceFire"] >= 2.0 {
+			useAbilityAtPosition(myEntityId, "Fire Arena", positionInCurrentRoom(myEntityId, [48.0, 44.0, 0.0]))
+			scriptVars["timeSinceFire"] = 0.0
+		}
+
+
+		
+		// PHASE 1 ABILITIES
+		if scriptVars["phase"] == 1 {
+			// Boss Direct Attacks
+			
+			// Web Spray - Direct attack from boss
+			if scriptVars["timeSinceWebSpray"] >= 3.0 {
+				useAbilityAtTarget(myEntityId, "Web Spray", targetEntityId, 1.0)
+				scriptVars["timeSinceWebSpray"] = 0.0
+			}
+			
+			// Flame Burst - Direct AoE attack from boss
+			if scriptVars["timeSinceFlameBurst"] >= 4.5 {
+				useAbilityAtPosition(myEntityId, "Flame Burst", entityPosition(myEntityId))
+				scriptVars["timeSinceFlameBurst"] = 0.0
+			}
+			
+			// Stationary point patterns
+			
+			// Web Corridor - Creates web lines from fixed points
+			if scriptVars["timeSinceWebCorridor"] >= 2.5 {
+				useAbilityAtPosition(myEntityId, "Web Corridor1", positionInCurrentRoom(myEntityId, [3.0, 4.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor2", positionInCurrentRoom(myEntityId, [3.0, 5.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor3", positionInCurrentRoom(myEntityId, [3.0, 6.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor4", positionInCurrentRoom(myEntityId, [3.0, 7.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor5", positionInCurrentRoom(myEntityId, [3.0, 8.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor6", positionInCurrentRoom(myEntityId, [3.0, 9.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor7", positionInCurrentRoom(myEntityId, [3.0, 10.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor8", positionInCurrentRoom(myEntityId, [3.0, 11.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor9", positionInCurrentRoom(myEntityId, [3.0, 12.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor10", positionInCurrentRoom(myEntityId, [3.0, 13.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor11", positionInCurrentRoom(myEntityId, [3.0, 14.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor12", positionInCurrentRoom(myEntityId, [3.0, 15.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor13", positionInCurrentRoom(myEntityId, [3.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor14", positionInCurrentRoom(myEntityId, [3.0, 17.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor15", positionInCurrentRoom(myEntityId, [3.0, 18.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor16", positionInCurrentRoom(myEntityId, [3.0, 19.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor17", positionInCurrentRoom(myEntityId, [3.0, 20.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor18", positionInCurrentRoom(myEntityId, [3.0, 21.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor19", positionInCurrentRoom(myEntityId, [3.0, 22.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor20", positionInCurrentRoom(myEntityId, [3.0, 23.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor21", positionInCurrentRoom(myEntityId, [3.0, 24.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor22", positionInCurrentRoom(myEntityId, [3.0, 25.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor23", positionInCurrentRoom(myEntityId, [3.0, 26.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor24", positionInCurrentRoom(myEntityId, [3.0, 27.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor25", positionInCurrentRoom(myEntityId, [3.0, 28.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor26", positionInCurrentRoom(myEntityId, [3.0, 29.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor27", positionInCurrentRoom(myEntityId, [3.0, 30.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor28", positionInCurrentRoom(myEntityId, [3.0, 31.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor29", positionInCurrentRoom(myEntityId, [3.0, 32.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor30", positionInCurrentRoom(myEntityId, [3.0, 33.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor31", positionInCurrentRoom(myEntityId, [3.0, 34.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor32", positionInCurrentRoom(myEntityId, [3.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor33", positionInCurrentRoom(myEntityId, [3.0, 36.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor34", positionInCurrentRoom(myEntityId, [3.0, 37.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor85", positionInCurrentRoom(myEntityId, [3.0, 38.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor36", positionInCurrentRoom(myEntityId, [3.0, 39.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor37", positionInCurrentRoom(myEntityId, [3.0, 40.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor38", positionInCurrentRoom(myEntityId, [3.0, 41.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor39", positionInCurrentRoom(myEntityId, [3.0, 42.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor40", positionInCurrentRoom(myEntityId, [3.0, 43.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor41", positionInCurrentRoom(myEntityId, [3.0, 44.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor42", positionInCurrentRoom(myEntityId, [3.0, 45.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor43", positionInCurrentRoom(myEntityId, [3.0, 46.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor44", positionInCurrentRoom(myEntityId, [3.0, 47.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor45", positionInCurrentRoom(myEntityId, [3.0, 48.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor46", positionInCurrentRoom(myEntityId, [3.0, 49.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor47", positionInCurrentRoom(myEntityId, [3.0, 50.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor48", positionInCurrentRoom(myEntityId, [3.0, 51.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor49", positionInCurrentRoom(myEntityId, [3.0, 52.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor50", positionInCurrentRoom(myEntityId, [3.0, 53.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor51", positionInCurrentRoom(myEntityId, [3.0, 54.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor52", positionInCurrentRoom(myEntityId, [3.0, 55.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor53", positionInCurrentRoom(myEntityId, [3.0, 56.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor54", positionInCurrentRoom(myEntityId, [3.0, 57.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor55", positionInCurrentRoom(myEntityId, [3.0, 58.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor56", positionInCurrentRoom(myEntityId, [3.0, 59.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor57", positionInCurrentRoom(myEntityId, [3.0, 60.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor58", positionInCurrentRoom(myEntityId, [3.0, 61.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor59", positionInCurrentRoom(myEntityId, [3.0, 62.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor60", positionInCurrentRoom(myEntityId, [3.0, 63.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor61", positionInCurrentRoom(myEntityId, [3.0, 64.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor62", positionInCurrentRoom(myEntityId, [3.0, 65.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor63", positionInCurrentRoom(myEntityId, [3.0, 66.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor64", positionInCurrentRoom(myEntityId, [3.0, 67.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor65", positionInCurrentRoom(myEntityId, [3.0, 68.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor66", positionInCurrentRoom(myEntityId, [3.0, 69.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor67", positionInCurrentRoom(myEntityId, [3.0, 70.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor68", positionInCurrentRoom(myEntityId, [3.0, 71.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor69", positionInCurrentRoom(myEntityId, [3.0, 72.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor70", positionInCurrentRoom(myEntityId, [3.0, 73.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor71", positionInCurrentRoom(myEntityId, [3.0, 74.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor72", positionInCurrentRoom(myEntityId, [3.0, 75.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor73", positionInCurrentRoom(myEntityId, [3.0, 76.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor74", positionInCurrentRoom(myEntityId, [3.0, 77.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor75", positionInCurrentRoom(myEntityId, [3.0, 78.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor76", positionInCurrentRoom(myEntityId, [3.0, 79.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor77", positionInCurrentRoom(myEntityId, [3.0, 80.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor78", positionInCurrentRoom(myEntityId, [3.0, 81.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor79", positionInCurrentRoom(myEntityId, [3.0, 82.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor80", positionInCurrentRoom(myEntityId, [3.0, 83.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor81", positionInCurrentRoom(myEntityId, [3.0, 84.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor82", positionInCurrentRoom(myEntityId, [3.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor83", positionInCurrentRoom(myEntityId, [3.0, 86.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor84", positionInCurrentRoom(myEntityId, [3.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor85", positionInCurrentRoom(myEntityId, [3.0, 88.0, 0.0]))
+				scriptVars["timeSinceWebCorridor"] = 0.0
+			}
+			
+			// Fire Vortex - Creates spinning fire patterns from fixed points
+			if scriptVars["timeSinceFireVortex"] >= 6.0 {
+				// Place fire vortices at corners and other strategic points
+				useAbilityAtPosition(myEntityId, "Fire Vortex", 
+					positionInCurrentRoom(myEntityId, [15.0, 15.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Fire Vortex", 
+					positionInCurrentRoom(myEntityId, [81.0, 15.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Fire Vortex", 
+					positionInCurrentRoom(myEntityId, [15.0, 73.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Fire Vortex", 
+					positionInCurrentRoom(myEntityId, [81.0, 73.0, 0.0]))
+				scriptVars["timeSinceFireVortex"] = 0.0
+			}
+			
+			// Random spawning attack
+			
+			// Ember Mines - Spawns randomly throughout the room
+			if scriptVars["timeSinceEmberMines"] >= 3.5 {
+				rand := import("rand")
+				// Create 4-6 random ember mines throughout the room
+				numMines := rand.intn(3) + 4  // 4 to 6 mines
+				
+				for i := 0; i < numMines; i++ {
+					// Generate random coordinates within the combat area
+					xPos := 3.0 + rand.float() * 90.0  // Between 3 and 93
+					yPos := 4.0 + rand.float() * 80.0  // Between 4 and 84
+					
+					useAbilityAtPosition(myEntityId, "Ember Mines", 
+						positionInCurrentRoom(myEntityId, [xPos, yPos, 0.0]))
+				}
+				scriptVars["timeSinceEmberMines"] = 0.0
+			}
+		}
+
+		// Phase 2 
+		if scriptVars["phase"] == 2 {
+
+			 scriptVars["timeSinceWebSprayPhase2"] += delta
+			 scriptVars["timeSinceFlameBurstPhase2"] += delta
+			 scriptVars["timeSinceFireVortexPhase2"] += delta
+			 scriptVars["timeSinceEmberMinesPhase2"] += delta
+
+			if scriptVars["timeSinceWebSprayPhase2"] >= 2.5 {  // Slightly faster cooldown than Phase 1
+				useAbilityAtTarget(myEntityId, "Web Spray Phase 2", targetEntityId, 1.0)
+				scriptVars["timeSinceWebSprayPhase2"] = 0.0
+			}
+	
+			if scriptVars["timeSinceFlameBurstPhase2"] >= 4.0 {  // Slightly faster cooldown than Phase 1
+				useAbilityAtPosition(myEntityId, "Flame Burst Phase 2", entityPosition(myEntityId))
+				scriptVars["timeSinceFlameBurstPhase2"] = 0.0
+			}
+
+			// Enhanced Fire Vortex
+			if scriptVars["timeSinceFireVortexPhase2"] >= 5.0 {
+				// Place enhanced fire vortices at corners and additional points
+				useAbilityAtPosition(myEntityId, "Fire Vortex Phase 2", 
+					positionInCurrentRoom(myEntityId, [15.0, 15.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Fire Vortex Phase 2", 
+					positionInCurrentRoom(myEntityId, [81.0, 15.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Fire Vortex Phase 2", 
+					positionInCurrentRoom(myEntityId, [15.0, 73.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Fire Vortex Phase 2", 
+					positionInCurrentRoom(myEntityId, [81.0, 73.0, 0.0]))
+				// Add a center vortex for Phase 2
+				useAbilityAtPosition(myEntityId, "Fire Vortex Phase 2", 
+					positionInCurrentRoom(myEntityId, [48.0, 44.0, 0.0]))
+				scriptVars["timeSinceFireVortexPhase2"] = 0.0
+			}
+	
+			// Enhanced Ember Mines
+			if scriptVars["timeSinceEmberMinesPhase2"] >= 3.0 {
+				rand := import("rand")
+				// Create 6-8 enhanced ember mines throughout the room
+				numMines := rand.intn(3) + 6  // 6 to 8 mines
+				
+				for i := 0; i < numMines; i++ {
+					// Generate random coordinates within the combat area
+					xPos := 3.0 + rand.float() * 90.0  // Between 3 and 93
+					yPos := 4.0 + rand.float() * 80.0  // Between 4 and 84
+					
+					useAbilityAtPosition(myEntityId, "Ember Mines Phase 2", 
+						positionInCurrentRoom(myEntityId, [xPos, yPos, 0.0]))
+				}
+				scriptVars["timeSinceEmberMinesPhase2"] = 0.0
+			}
+
+			// Bottom Line - Creates a line of bullets moving upward from the bottom
+			if scriptVars["timeSinceBottomLine"] >= 2.0 {
+				useAbilityAtPosition(myEntityId, "Bottom Line1", positionInCurrentRoom(myEntityId, [3.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line2", positionInCurrentRoom(myEntityId, [4.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line3", positionInCurrentRoom(myEntityId, [5.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line4", positionInCurrentRoom(myEntityId, [6.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line5", positionInCurrentRoom(myEntityId, [7.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line6", positionInCurrentRoom(myEntityId, [8.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line7", positionInCurrentRoom(myEntityId, [9.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line8", positionInCurrentRoom(myEntityId, [10.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line9", positionInCurrentRoom(myEntityId, [11.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line10", positionInCurrentRoom(myEntityId, [12.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line11", positionInCurrentRoom(myEntityId, [13.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line12", positionInCurrentRoom(myEntityId, [14.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line13", positionInCurrentRoom(myEntityId, [15.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line14", positionInCurrentRoom(myEntityId, [16.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line15", positionInCurrentRoom(myEntityId, [17.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line16", positionInCurrentRoom(myEntityId, [18.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line17", positionInCurrentRoom(myEntityId, [19.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line18", positionInCurrentRoom(myEntityId, [20.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line19", positionInCurrentRoom(myEntityId, [21.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line20", positionInCurrentRoom(myEntityId, [22.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line21", positionInCurrentRoom(myEntityId, [23.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line22", positionInCurrentRoom(myEntityId, [24.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line23", positionInCurrentRoom(myEntityId, [25.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line24", positionInCurrentRoom(myEntityId, [26.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line25", positionInCurrentRoom(myEntityId, [27.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line26", positionInCurrentRoom(myEntityId, [28.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line27", positionInCurrentRoom(myEntityId, [29.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line28", positionInCurrentRoom(myEntityId, [30.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line29", positionInCurrentRoom(myEntityId, [31.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line30", positionInCurrentRoom(myEntityId, [32.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line31", positionInCurrentRoom(myEntityId, [33.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line32", positionInCurrentRoom(myEntityId, [34.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line33", positionInCurrentRoom(myEntityId, [35.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line34", positionInCurrentRoom(myEntityId, [36.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line35", positionInCurrentRoom(myEntityId, [37.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line36", positionInCurrentRoom(myEntityId, [38.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line37", positionInCurrentRoom(myEntityId, [39.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line38", positionInCurrentRoom(myEntityId, [40.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line39", positionInCurrentRoom(myEntityId, [41.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line40", positionInCurrentRoom(myEntityId, [42.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line41", positionInCurrentRoom(myEntityId, [43.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line42", positionInCurrentRoom(myEntityId, [44.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line43", positionInCurrentRoom(myEntityId, [45.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line44", positionInCurrentRoom(myEntityId, [46.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line45", positionInCurrentRoom(myEntityId, [47.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line46", positionInCurrentRoom(myEntityId, [48.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line47", positionInCurrentRoom(myEntityId, [49.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line48", positionInCurrentRoom(myEntityId, [50.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line49", positionInCurrentRoom(myEntityId, [51.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line50", positionInCurrentRoom(myEntityId, [52.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line51", positionInCurrentRoom(myEntityId, [53.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line52", positionInCurrentRoom(myEntityId, [54.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line53", positionInCurrentRoom(myEntityId, [55.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line54", positionInCurrentRoom(myEntityId, [56.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line55", positionInCurrentRoom(myEntityId, [57.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line56", positionInCurrentRoom(myEntityId, [58.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line57", positionInCurrentRoom(myEntityId, [59.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line58", positionInCurrentRoom(myEntityId, [60.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line59", positionInCurrentRoom(myEntityId, [61.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line60", positionInCurrentRoom(myEntityId, [62.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line61", positionInCurrentRoom(myEntityId, [63.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line62", positionInCurrentRoom(myEntityId, [64.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line63", positionInCurrentRoom(myEntityId, [65.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line64", positionInCurrentRoom(myEntityId, [66.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line65", positionInCurrentRoom(myEntityId, [67.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line66", positionInCurrentRoom(myEntityId, [68.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line67", positionInCurrentRoom(myEntityId, [69.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line68", positionInCurrentRoom(myEntityId, [70.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line69", positionInCurrentRoom(myEntityId, [71.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line70", positionInCurrentRoom(myEntityId, [72.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line71", positionInCurrentRoom(myEntityId, [73.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line72", positionInCurrentRoom(myEntityId, [74.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line73", positionInCurrentRoom(myEntityId, [75.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line74", positionInCurrentRoom(myEntityId, [76.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line75", positionInCurrentRoom(myEntityId, [77.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line76", positionInCurrentRoom(myEntityId, [78.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line77", positionInCurrentRoom(myEntityId, [79.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line78", positionInCurrentRoom(myEntityId, [80.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line79", positionInCurrentRoom(myEntityId, [81.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line80", positionInCurrentRoom(myEntityId, [82.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line81", positionInCurrentRoom(myEntityId, [83.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line82", positionInCurrentRoom(myEntityId, [84.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line83", positionInCurrentRoom(myEntityId, [85.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line84", positionInCurrentRoom(myEntityId, [86.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line85", positionInCurrentRoom(myEntityId, [87.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line86", positionInCurrentRoom(myEntityId, [88.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line87", positionInCurrentRoom(myEntityId, [89.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line88", positionInCurrentRoom(myEntityId, [90.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line89", positionInCurrentRoom(myEntityId, [91.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line90", positionInCurrentRoom(myEntityId, [92.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line91", positionInCurrentRoom(myEntityId, [93.0, 87.0, 0.0]))
+				
+				scriptVars["timeSinceBottomLine"] = 0.0
+			}
+
+			if scriptVars["timeSinceWebCorridor"] >= 2.0 {
+				useAbilityAtPosition(myEntityId, "Web Corridor1", positionInCurrentRoom(myEntityId, [3.0, 4.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor2", positionInCurrentRoom(myEntityId, [3.0, 5.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor3", positionInCurrentRoom(myEntityId, [3.0, 6.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor4", positionInCurrentRoom(myEntityId, [3.0, 7.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor5", positionInCurrentRoom(myEntityId, [3.0, 8.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor6", positionInCurrentRoom(myEntityId, [3.0, 9.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor7", positionInCurrentRoom(myEntityId, [3.0, 10.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor8", positionInCurrentRoom(myEntityId, [3.0, 11.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor9", positionInCurrentRoom(myEntityId, [3.0, 12.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor10", positionInCurrentRoom(myEntityId, [3.0, 13.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor11", positionInCurrentRoom(myEntityId, [3.0, 14.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor12", positionInCurrentRoom(myEntityId, [3.0, 15.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor13", positionInCurrentRoom(myEntityId, [3.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor14", positionInCurrentRoom(myEntityId, [3.0, 17.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor15", positionInCurrentRoom(myEntityId, [3.0, 18.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor16", positionInCurrentRoom(myEntityId, [3.0, 19.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor17", positionInCurrentRoom(myEntityId, [3.0, 20.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor18", positionInCurrentRoom(myEntityId, [3.0, 21.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor19", positionInCurrentRoom(myEntityId, [3.0, 22.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor20", positionInCurrentRoom(myEntityId, [3.0, 23.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor21", positionInCurrentRoom(myEntityId, [3.0, 24.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor22", positionInCurrentRoom(myEntityId, [3.0, 25.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor23", positionInCurrentRoom(myEntityId, [3.0, 26.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor24", positionInCurrentRoom(myEntityId, [3.0, 27.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor25", positionInCurrentRoom(myEntityId, [3.0, 28.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor26", positionInCurrentRoom(myEntityId, [3.0, 29.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor27", positionInCurrentRoom(myEntityId, [3.0, 30.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor28", positionInCurrentRoom(myEntityId, [3.0, 31.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor29", positionInCurrentRoom(myEntityId, [3.0, 32.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor30", positionInCurrentRoom(myEntityId, [3.0, 33.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor31", positionInCurrentRoom(myEntityId, [3.0, 34.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor32", positionInCurrentRoom(myEntityId, [3.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor33", positionInCurrentRoom(myEntityId, [3.0, 36.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor34", positionInCurrentRoom(myEntityId, [3.0, 37.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor85", positionInCurrentRoom(myEntityId, [3.0, 38.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor36", positionInCurrentRoom(myEntityId, [3.0, 39.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor37", positionInCurrentRoom(myEntityId, [3.0, 40.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor38", positionInCurrentRoom(myEntityId, [3.0, 41.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor39", positionInCurrentRoom(myEntityId, [3.0, 42.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor40", positionInCurrentRoom(myEntityId, [3.0, 43.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor41", positionInCurrentRoom(myEntityId, [3.0, 44.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor42", positionInCurrentRoom(myEntityId, [3.0, 45.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor43", positionInCurrentRoom(myEntityId, [3.0, 46.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor44", positionInCurrentRoom(myEntityId, [3.0, 47.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor45", positionInCurrentRoom(myEntityId, [3.0, 48.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor46", positionInCurrentRoom(myEntityId, [3.0, 49.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor47", positionInCurrentRoom(myEntityId, [3.0, 50.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor48", positionInCurrentRoom(myEntityId, [3.0, 51.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor49", positionInCurrentRoom(myEntityId, [3.0, 52.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor50", positionInCurrentRoom(myEntityId, [3.0, 53.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor51", positionInCurrentRoom(myEntityId, [3.0, 54.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor52", positionInCurrentRoom(myEntityId, [3.0, 55.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor53", positionInCurrentRoom(myEntityId, [3.0, 56.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor54", positionInCurrentRoom(myEntityId, [3.0, 57.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor55", positionInCurrentRoom(myEntityId, [3.0, 58.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor56", positionInCurrentRoom(myEntityId, [3.0, 59.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor57", positionInCurrentRoom(myEntityId, [3.0, 60.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor58", positionInCurrentRoom(myEntityId, [3.0, 61.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor59", positionInCurrentRoom(myEntityId, [3.0, 62.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor60", positionInCurrentRoom(myEntityId, [3.0, 63.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor61", positionInCurrentRoom(myEntityId, [3.0, 64.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor62", positionInCurrentRoom(myEntityId, [3.0, 65.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor63", positionInCurrentRoom(myEntityId, [3.0, 66.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor64", positionInCurrentRoom(myEntityId, [3.0, 67.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor65", positionInCurrentRoom(myEntityId, [3.0, 68.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor66", positionInCurrentRoom(myEntityId, [3.0, 69.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor67", positionInCurrentRoom(myEntityId, [3.0, 70.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor68", positionInCurrentRoom(myEntityId, [3.0, 71.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor69", positionInCurrentRoom(myEntityId, [3.0, 72.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor70", positionInCurrentRoom(myEntityId, [3.0, 73.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor71", positionInCurrentRoom(myEntityId, [3.0, 74.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor72", positionInCurrentRoom(myEntityId, [3.0, 75.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor73", positionInCurrentRoom(myEntityId, [3.0, 76.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor74", positionInCurrentRoom(myEntityId, [3.0, 77.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor75", positionInCurrentRoom(myEntityId, [3.0, 78.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor76", positionInCurrentRoom(myEntityId, [3.0, 79.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor77", positionInCurrentRoom(myEntityId, [3.0, 80.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor78", positionInCurrentRoom(myEntityId, [3.0, 81.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor79", positionInCurrentRoom(myEntityId, [3.0, 82.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor80", positionInCurrentRoom(myEntityId, [3.0, 83.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor81", positionInCurrentRoom(myEntityId, [3.0, 84.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor82", positionInCurrentRoom(myEntityId, [3.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor83", positionInCurrentRoom(myEntityId, [3.0, 86.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor84", positionInCurrentRoom(myEntityId, [3.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor85", positionInCurrentRoom(myEntityId, [3.0, 88.0, 0.0]))
+				scriptVars["timeSinceWebCorridor"] = 0.0
+			}  
+		}
+
+		// Phase 3
+		if scriptVars["phase"] == 3 {
+
+			 scriptVars["timeSinceWebSprayPhase2"] += delta
+			 scriptVars["timeSinceFlameBurstPhase2"] += delta
+			 scriptVars["timeSinceFireVortexPhase2"] += delta
+			 scriptVars["timeSinceEmberMinesPhase2"] += delta
+			 scriptVars["timeSinceVoidTimer"] += delta
+
+			 // Void Timer - Spawns white pools with a timer that explode into bullets
+			if scriptVars["timeSinceVoidTimer"] >= 2.0 {
+				rand := import("rand")
+				// Create 2-3 void timers throughout the room
+				numVoidTimers := 5
+				
+				for i := 0; i < numVoidTimers; i++ {
+					// Generate random coordinates within the combat area
+					xPos := 10.0 + rand.float() * 76.0  // Between 10 and 86
+					yPos := 10.0 + rand.float() * 68.0  // Between 10 and 78
+					
+					useAbilityAtPosition(myEntityId, "Void Timer", 
+						positionInCurrentRoom(myEntityId, [xPos, yPos, 0.0]))
+				}
+				scriptVars["timeSinceVoidTimer"] = 0.0
+			}
+
+			if scriptVars["timeSinceWebSprayPhase2"] >= 2.5 {  // Slightly faster cooldown than Phase 1
+				useAbilityAtTarget(myEntityId, "Web Spray Phase 2", targetEntityId, 1.0)
+				scriptVars["timeSinceWebSprayPhase2"] = 0.0
+			}
+	
+			if scriptVars["timeSinceFlameBurstPhase2"] >= 4.0 {  // Slightly faster cooldown than Phase 1
+				useAbilityAtPosition(myEntityId, "Flame Burst Phase 2", entityPosition(myEntityId))
+				scriptVars["timeSinceFlameBurstPhase2"] = 0.0
+			}
+
+			// Enhanced Fire Vortex
+			if scriptVars["timeSinceFireVortexPhase2"] >= 5.0 {
+				// Place enhanced fire vortices at corners and additional points
+				useAbilityAtPosition(myEntityId, "Fire Vortex Phase 2", 
+					positionInCurrentRoom(myEntityId, [15.0, 15.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Fire Vortex Phase 2", 
+					positionInCurrentRoom(myEntityId, [81.0, 15.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Fire Vortex Phase 2", 
+					positionInCurrentRoom(myEntityId, [15.0, 73.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Fire Vortex Phase 2", 
+					positionInCurrentRoom(myEntityId, [81.0, 73.0, 0.0]))
+				// Add a center vortex for Phase 2
+				useAbilityAtPosition(myEntityId, "Fire Vortex Phase 2", 
+					positionInCurrentRoom(myEntityId, [48.0, 44.0, 0.0]))
+				scriptVars["timeSinceFireVortexPhase2"] = 0.0
+			}
+	
+			// Enhanced Ember Mines
+			if scriptVars["timeSinceEmberMinesPhase2"] >= 3.0 {
+				rand := import("rand")
+				// Create 6-8 enhanced ember mines throughout the room
+				numMines := rand.intn(3) + 6  // 6 to 8 mines
+				
+				for i := 0; i < numMines; i++ {
+					// Generate random coordinates within the combat area
+					xPos := 3.0 + rand.float() * 90.0  // Between 3 and 93
+					yPos := 4.0 + rand.float() * 80.0  // Between 4 and 84
+					
+					useAbilityAtPosition(myEntityId, "Ember Mines Phase 2", 
+						positionInCurrentRoom(myEntityId, [xPos, yPos, 0.0]))
+				}
+				scriptVars["timeSinceEmberMinesPhase2"] = 0.0
+			}
+
+			// Bottom Line - Creates a line of bullets moving upward from the bottom
+			if scriptVars["timeSinceBottomLine"] >= 2.0 {
+				useAbilityAtPosition(myEntityId, "Bottom Line1", positionInCurrentRoom(myEntityId, [3.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line2", positionInCurrentRoom(myEntityId, [4.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line3", positionInCurrentRoom(myEntityId, [5.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line4", positionInCurrentRoom(myEntityId, [6.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line5", positionInCurrentRoom(myEntityId, [7.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line6", positionInCurrentRoom(myEntityId, [8.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line7", positionInCurrentRoom(myEntityId, [9.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line8", positionInCurrentRoom(myEntityId, [10.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line9", positionInCurrentRoom(myEntityId, [11.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line10", positionInCurrentRoom(myEntityId, [12.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line11", positionInCurrentRoom(myEntityId, [13.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line12", positionInCurrentRoom(myEntityId, [14.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line13", positionInCurrentRoom(myEntityId, [15.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line14", positionInCurrentRoom(myEntityId, [16.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line15", positionInCurrentRoom(myEntityId, [17.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line16", positionInCurrentRoom(myEntityId, [18.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line17", positionInCurrentRoom(myEntityId, [19.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line18", positionInCurrentRoom(myEntityId, [20.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line19", positionInCurrentRoom(myEntityId, [21.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line20", positionInCurrentRoom(myEntityId, [22.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line21", positionInCurrentRoom(myEntityId, [23.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line22", positionInCurrentRoom(myEntityId, [24.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line23", positionInCurrentRoom(myEntityId, [25.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line24", positionInCurrentRoom(myEntityId, [26.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line25", positionInCurrentRoom(myEntityId, [27.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line26", positionInCurrentRoom(myEntityId, [28.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line27", positionInCurrentRoom(myEntityId, [29.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line28", positionInCurrentRoom(myEntityId, [30.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line29", positionInCurrentRoom(myEntityId, [31.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line30", positionInCurrentRoom(myEntityId, [32.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line31", positionInCurrentRoom(myEntityId, [33.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line32", positionInCurrentRoom(myEntityId, [34.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line33", positionInCurrentRoom(myEntityId, [35.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line34", positionInCurrentRoom(myEntityId, [36.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line35", positionInCurrentRoom(myEntityId, [37.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line36", positionInCurrentRoom(myEntityId, [38.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line37", positionInCurrentRoom(myEntityId, [39.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line38", positionInCurrentRoom(myEntityId, [40.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line39", positionInCurrentRoom(myEntityId, [41.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line40", positionInCurrentRoom(myEntityId, [42.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line41", positionInCurrentRoom(myEntityId, [43.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line42", positionInCurrentRoom(myEntityId, [44.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line43", positionInCurrentRoom(myEntityId, [45.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line44", positionInCurrentRoom(myEntityId, [46.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line45", positionInCurrentRoom(myEntityId, [47.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line46", positionInCurrentRoom(myEntityId, [48.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line47", positionInCurrentRoom(myEntityId, [49.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line48", positionInCurrentRoom(myEntityId, [50.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line49", positionInCurrentRoom(myEntityId, [51.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line50", positionInCurrentRoom(myEntityId, [52.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line51", positionInCurrentRoom(myEntityId, [53.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line52", positionInCurrentRoom(myEntityId, [54.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line53", positionInCurrentRoom(myEntityId, [55.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line54", positionInCurrentRoom(myEntityId, [56.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line55", positionInCurrentRoom(myEntityId, [57.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line56", positionInCurrentRoom(myEntityId, [58.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line57", positionInCurrentRoom(myEntityId, [59.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line58", positionInCurrentRoom(myEntityId, [60.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line59", positionInCurrentRoom(myEntityId, [61.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line60", positionInCurrentRoom(myEntityId, [62.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line61", positionInCurrentRoom(myEntityId, [63.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line62", positionInCurrentRoom(myEntityId, [64.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line63", positionInCurrentRoom(myEntityId, [65.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line64", positionInCurrentRoom(myEntityId, [66.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line65", positionInCurrentRoom(myEntityId, [67.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line66", positionInCurrentRoom(myEntityId, [68.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line67", positionInCurrentRoom(myEntityId, [69.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line68", positionInCurrentRoom(myEntityId, [70.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line69", positionInCurrentRoom(myEntityId, [71.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line70", positionInCurrentRoom(myEntityId, [72.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line71", positionInCurrentRoom(myEntityId, [73.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line72", positionInCurrentRoom(myEntityId, [74.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line73", positionInCurrentRoom(myEntityId, [75.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line74", positionInCurrentRoom(myEntityId, [76.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line75", positionInCurrentRoom(myEntityId, [77.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line76", positionInCurrentRoom(myEntityId, [78.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line77", positionInCurrentRoom(myEntityId, [79.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line78", positionInCurrentRoom(myEntityId, [80.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line79", positionInCurrentRoom(myEntityId, [81.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line80", positionInCurrentRoom(myEntityId, [82.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line81", positionInCurrentRoom(myEntityId, [83.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line82", positionInCurrentRoom(myEntityId, [84.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line83", positionInCurrentRoom(myEntityId, [85.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line84", positionInCurrentRoom(myEntityId, [86.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line85", positionInCurrentRoom(myEntityId, [87.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line86", positionInCurrentRoom(myEntityId, [88.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line87", positionInCurrentRoom(myEntityId, [89.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line88", positionInCurrentRoom(myEntityId, [90.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line89", positionInCurrentRoom(myEntityId, [91.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line90", positionInCurrentRoom(myEntityId, [92.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Bottom Line91", positionInCurrentRoom(myEntityId, [93.0, 85.0, 0.0]))
+				
+				scriptVars["timeSinceBottomLine"] = 0.0
+			}
+
+			if scriptVars["timeSinceWebCorridor"] >= 2.0 {
+				useAbilityAtPosition(myEntityId, "Web Corridor1", positionInCurrentRoom(myEntityId, [3.0, 4.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor2", positionInCurrentRoom(myEntityId, [3.0, 5.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor3", positionInCurrentRoom(myEntityId, [3.0, 6.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor4", positionInCurrentRoom(myEntityId, [3.0, 7.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor5", positionInCurrentRoom(myEntityId, [3.0, 8.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor6", positionInCurrentRoom(myEntityId, [3.0, 9.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor7", positionInCurrentRoom(myEntityId, [3.0, 10.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor8", positionInCurrentRoom(myEntityId, [3.0, 11.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor9", positionInCurrentRoom(myEntityId, [3.0, 12.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor10", positionInCurrentRoom(myEntityId, [3.0, 13.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor11", positionInCurrentRoom(myEntityId, [3.0, 14.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor12", positionInCurrentRoom(myEntityId, [3.0, 15.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor13", positionInCurrentRoom(myEntityId, [3.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor14", positionInCurrentRoom(myEntityId, [3.0, 17.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor15", positionInCurrentRoom(myEntityId, [3.0, 18.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor16", positionInCurrentRoom(myEntityId, [3.0, 19.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor17", positionInCurrentRoom(myEntityId, [3.0, 20.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor18", positionInCurrentRoom(myEntityId, [3.0, 21.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor19", positionInCurrentRoom(myEntityId, [3.0, 22.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor20", positionInCurrentRoom(myEntityId, [3.0, 23.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor21", positionInCurrentRoom(myEntityId, [3.0, 24.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor22", positionInCurrentRoom(myEntityId, [3.0, 25.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor23", positionInCurrentRoom(myEntityId, [3.0, 26.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor24", positionInCurrentRoom(myEntityId, [3.0, 27.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor25", positionInCurrentRoom(myEntityId, [3.0, 28.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor26", positionInCurrentRoom(myEntityId, [3.0, 29.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor27", positionInCurrentRoom(myEntityId, [3.0, 30.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor28", positionInCurrentRoom(myEntityId, [3.0, 31.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor29", positionInCurrentRoom(myEntityId, [3.0, 32.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor30", positionInCurrentRoom(myEntityId, [3.0, 33.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor31", positionInCurrentRoom(myEntityId, [3.0, 34.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor32", positionInCurrentRoom(myEntityId, [3.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor33", positionInCurrentRoom(myEntityId, [3.0, 36.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor34", positionInCurrentRoom(myEntityId, [3.0, 37.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor85", positionInCurrentRoom(myEntityId, [3.0, 38.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor36", positionInCurrentRoom(myEntityId, [3.0, 39.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor37", positionInCurrentRoom(myEntityId, [3.0, 40.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor38", positionInCurrentRoom(myEntityId, [3.0, 41.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor39", positionInCurrentRoom(myEntityId, [3.0, 42.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor40", positionInCurrentRoom(myEntityId, [3.0, 43.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor41", positionInCurrentRoom(myEntityId, [3.0, 44.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor42", positionInCurrentRoom(myEntityId, [3.0, 45.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor43", positionInCurrentRoom(myEntityId, [3.0, 46.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor44", positionInCurrentRoom(myEntityId, [3.0, 47.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor45", positionInCurrentRoom(myEntityId, [3.0, 48.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor46", positionInCurrentRoom(myEntityId, [3.0, 49.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor47", positionInCurrentRoom(myEntityId, [3.0, 50.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor48", positionInCurrentRoom(myEntityId, [3.0, 51.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor49", positionInCurrentRoom(myEntityId, [3.0, 52.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor50", positionInCurrentRoom(myEntityId, [3.0, 53.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor51", positionInCurrentRoom(myEntityId, [3.0, 54.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor52", positionInCurrentRoom(myEntityId, [3.0, 55.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor53", positionInCurrentRoom(myEntityId, [3.0, 56.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor54", positionInCurrentRoom(myEntityId, [3.0, 57.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor55", positionInCurrentRoom(myEntityId, [3.0, 58.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor56", positionInCurrentRoom(myEntityId, [3.0, 59.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor57", positionInCurrentRoom(myEntityId, [3.0, 60.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor58", positionInCurrentRoom(myEntityId, [3.0, 61.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor59", positionInCurrentRoom(myEntityId, [3.0, 62.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor60", positionInCurrentRoom(myEntityId, [3.0, 63.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor61", positionInCurrentRoom(myEntityId, [3.0, 64.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor62", positionInCurrentRoom(myEntityId, [3.0, 65.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor63", positionInCurrentRoom(myEntityId, [3.0, 66.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor64", positionInCurrentRoom(myEntityId, [3.0, 67.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor65", positionInCurrentRoom(myEntityId, [3.0, 68.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor66", positionInCurrentRoom(myEntityId, [3.0, 69.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor67", positionInCurrentRoom(myEntityId, [3.0, 70.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor68", positionInCurrentRoom(myEntityId, [3.0, 71.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor69", positionInCurrentRoom(myEntityId, [3.0, 72.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor70", positionInCurrentRoom(myEntityId, [3.0, 73.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor71", positionInCurrentRoom(myEntityId, [3.0, 74.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor72", positionInCurrentRoom(myEntityId, [3.0, 75.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor73", positionInCurrentRoom(myEntityId, [3.0, 76.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor74", positionInCurrentRoom(myEntityId, [3.0, 77.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor75", positionInCurrentRoom(myEntityId, [3.0, 78.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor76", positionInCurrentRoom(myEntityId, [3.0, 79.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor77", positionInCurrentRoom(myEntityId, [3.0, 80.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor78", positionInCurrentRoom(myEntityId, [3.0, 81.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor79", positionInCurrentRoom(myEntityId, [3.0, 82.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor80", positionInCurrentRoom(myEntityId, [3.0, 83.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor81", positionInCurrentRoom(myEntityId, [3.0, 84.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor82", positionInCurrentRoom(myEntityId, [3.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor83", positionInCurrentRoom(myEntityId, [3.0, 86.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor84", positionInCurrentRoom(myEntityId, [3.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor85", positionInCurrentRoom(myEntityId, [3.0, 88.0, 0.0]))
+
+				useAbilityAtPosition(myEntityId, "Web Corridor Left1", positionInCurrentRoom(myEntityId, [94.0, 4.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left2", positionInCurrentRoom(myEntityId, [94.0, 5.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left3", positionInCurrentRoom(myEntityId, [94.0, 6.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left4", positionInCurrentRoom(myEntityId, [94.0, 7.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left5", positionInCurrentRoom(myEntityId, [94.0, 8.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left6", positionInCurrentRoom(myEntityId, [94.0, 9.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left7", positionInCurrentRoom(myEntityId, [94.0, 10.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left8", positionInCurrentRoom(myEntityId, [94.0, 11.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left9", positionInCurrentRoom(myEntityId, [94.0, 12.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left10", positionInCurrentRoom(myEntityId, [94.0, 13.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left11", positionInCurrentRoom(myEntityId, [94.0, 14.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left12", positionInCurrentRoom(myEntityId, [94.0, 15.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left13", positionInCurrentRoom(myEntityId, [94.0, 16.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left14", positionInCurrentRoom(myEntityId, [94.0, 17.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left15", positionInCurrentRoom(myEntityId, [94.0, 18.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left16", positionInCurrentRoom(myEntityId, [94.0, 19.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left17", positionInCurrentRoom(myEntityId, [94.0, 20.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left18", positionInCurrentRoom(myEntityId, [94.0, 21.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left19", positionInCurrentRoom(myEntityId, [94.0, 22.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left20", positionInCurrentRoom(myEntityId, [94.0, 23.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left21", positionInCurrentRoom(myEntityId, [94.0, 24.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left22", positionInCurrentRoom(myEntityId, [94.0, 25.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left23", positionInCurrentRoom(myEntityId, [94.0, 26.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left24", positionInCurrentRoom(myEntityId, [94.0, 27.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left25", positionInCurrentRoom(myEntityId, [94.0, 28.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left26", positionInCurrentRoom(myEntityId, [94.0, 29.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left27", positionInCurrentRoom(myEntityId, [94.0, 30.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left28", positionInCurrentRoom(myEntityId, [94.0, 31.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left29", positionInCurrentRoom(myEntityId, [94.0, 32.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left30", positionInCurrentRoom(myEntityId, [94.0, 33.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left31", positionInCurrentRoom(myEntityId, [94.0, 34.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left32", positionInCurrentRoom(myEntityId, [94.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left33", positionInCurrentRoom(myEntityId, [94.0, 36.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left34", positionInCurrentRoom(myEntityId, [94.0, 37.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left85", positionInCurrentRoom(myEntityId, [94.0, 38.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left36", positionInCurrentRoom(myEntityId, [94.0, 39.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left37", positionInCurrentRoom(myEntityId, [94.0, 40.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left38", positionInCurrentRoom(myEntityId, [94.0, 41.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left39", positionInCurrentRoom(myEntityId, [94.0, 42.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left40", positionInCurrentRoom(myEntityId, [94.0, 43.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left41", positionInCurrentRoom(myEntityId, [94.0, 44.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left42", positionInCurrentRoom(myEntityId, [94.0, 45.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left43", positionInCurrentRoom(myEntityId, [94.0, 46.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left44", positionInCurrentRoom(myEntityId, [94.0, 47.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left45", positionInCurrentRoom(myEntityId, [94.0, 48.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left46", positionInCurrentRoom(myEntityId, [94.0, 49.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left47", positionInCurrentRoom(myEntityId, [94.0, 50.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left48", positionInCurrentRoom(myEntityId, [94.0, 51.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left49", positionInCurrentRoom(myEntityId, [94.0, 52.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left50", positionInCurrentRoom(myEntityId, [94.0, 53.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left51", positionInCurrentRoom(myEntityId, [94.0, 54.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left52", positionInCurrentRoom(myEntityId, [94.0, 55.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left53", positionInCurrentRoom(myEntityId, [94.0, 56.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left54", positionInCurrentRoom(myEntityId, [94.0, 57.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left55", positionInCurrentRoom(myEntityId, [94.0, 58.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left56", positionInCurrentRoom(myEntityId, [94.0, 59.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left57", positionInCurrentRoom(myEntityId, [94.0, 60.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left58", positionInCurrentRoom(myEntityId, [94.0, 61.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left59", positionInCurrentRoom(myEntityId, [94.0, 62.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left60", positionInCurrentRoom(myEntityId, [94.0, 63.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left61", positionInCurrentRoom(myEntityId, [94.0, 64.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left62", positionInCurrentRoom(myEntityId, [94.0, 65.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left63", positionInCurrentRoom(myEntityId, [94.0, 66.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left64", positionInCurrentRoom(myEntityId, [94.0, 67.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left65", positionInCurrentRoom(myEntityId, [94.0, 68.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left66", positionInCurrentRoom(myEntityId, [94.0, 69.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left67", positionInCurrentRoom(myEntityId, [94.0, 70.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left68", positionInCurrentRoom(myEntityId, [94.0, 71.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left69", positionInCurrentRoom(myEntityId, [94.0, 72.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left70", positionInCurrentRoom(myEntityId, [94.0, 73.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left71", positionInCurrentRoom(myEntityId, [94.0, 74.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left72", positionInCurrentRoom(myEntityId, [94.0, 75.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left73", positionInCurrentRoom(myEntityId, [94.0, 76.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left74", positionInCurrentRoom(myEntityId, [94.0, 77.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left75", positionInCurrentRoom(myEntityId, [94.0, 78.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left76", positionInCurrentRoom(myEntityId, [94.0, 79.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left77", positionInCurrentRoom(myEntityId, [94.0, 80.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left78", positionInCurrentRoom(myEntityId, [94.0, 81.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left79", positionInCurrentRoom(myEntityId, [94.0, 82.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left80", positionInCurrentRoom(myEntityId, [94.0, 83.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left81", positionInCurrentRoom(myEntityId, [94.0, 84.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left82", positionInCurrentRoom(myEntityId, [94.0, 85.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left83", positionInCurrentRoom(myEntityId, [94.0, 86.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left84", positionInCurrentRoom(myEntityId, [94.0, 87.0, 0.0]))
+				useAbilityAtPosition(myEntityId, "Web Corridor Left85", positionInCurrentRoom(myEntityId, [94.0, 88.0, 0.0]))
+				scriptVars["timeSinceWebCorridor"] = 0.0
+			}  
+		}
+	}
+}
+
+---mobdefinition_Echoblight Guardian---
+ID :: echoblightguardian
+Prefab :: raidbosshealtower
+Range Behavior :: [[Stationary]]
+Abilities :: [[Guardian Barrier]]
+Bounding Box :: -0.03125 2.34375 2.3125 4.6875
+Speed :: 0
+Type :: Elite
+Options :: alwaysattack
+
+---ability_Guardian Barrier---
+Bullet Definition :: [[guardianbarrier]]
+Cooldown :: 5.0
+
+---bulletdef_guardianbarrier---
+sprite PurplePool 3
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 3
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vfx ShockPool
+	wait 1
+	vanish
+wait 20
+sprite Basic
+color 4
+potency 80
+radial bullets:16 speed:6
+	wait 60
+	vanish
+
+---script_echoblightguardian_Monster---
+if is_undefined(scriptVars["initialized"]) {
+	scriptVars["initialized"] = true
+	scriptVars["timeSinceBarrier"] = 0.0
+}
+
+if !isDead {
+	scriptVars["timeSinceBarrier"] += delta
+	
+	// Cast barrier ability periodically
+	if scriptVars["timeSinceBarrier"] >= 5.0 {
+		useAbilityAtPosition(myEntityId, "Guardian Barrier", entityPosition(myEntityId))
+		scriptVars["timeSinceBarrier"] = 0.0
+	}
+}
+
+---mobdefinition_Raid Portal---
+ID :: raidportal
+Prefab :: raidportal1
+Range Behavior :: Stationary
+Bounding Box :: 0.0 1.28 6.125 2.8125
+Speed :: 0
+
+---aura_Invulnerability---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:Invulnerability]]
+
+---script_Invulnerability_IncomingDamage---
+additionalDamage = -1 * damage
+
+---script_raidportal1_Monster---
+// This script ensures the portal remains stationary and doesn't attack
+if !isDead {
+	addAuraToEntity(myEntityId, "Invulnerability", 0, myEntityId)
+}

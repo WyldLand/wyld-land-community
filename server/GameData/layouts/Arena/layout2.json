@@ -1,0 +1,536 @@
+{
+  "Rooms": [
+    {
+      "Room": {
+        "Name": "Spawn",
+        "Type": 2
+      },
+      "RoomDescription": {
+        "IsCorridor": false,
+        "RoomTemplates": [
+          {
+            "Name": "DungSpawn",
+            "Outline": {
+              "points": [
+                {
+                  "X": 0,
+                  "Y": 0
+                },
+                {
+                  "X": 0,
+                  "Y": 24
+                },
+                {
+                  "X": 24,
+                  "Y": 24
+                },
+                {
+                  "X": 24,
+                  "Y": 0
+                }
+              ]
+            },
+            "Doors": {
+              "$type": "Edgar.GraphBasedGenerator.Grid2D.SimpleDoorModeGrid2D, Edgar",
+              "DoorLength": 2,
+              "CornerDistance": 6,
+              "DoorSocket": null
+            },
+            "RepeatMode": null,
+            "AllowedTransformations": [
+              0
+            ]
+          }
+        ]
+      },
+      "Outline": {
+        "points": [
+          {
+            "X": 0,
+            "Y": 0
+          },
+          {
+            "X": 0,
+            "Y": 24
+          },
+          {
+            "X": 24,
+            "Y": 24
+          },
+          {
+            "X": 24,
+            "Y": 0
+          }
+        ]
+      },
+      "Position": {
+        "X": 0,
+        "Y": 0
+      },
+      "RoomTemplate": {
+        "Name": "DungSpawn",
+        "Outline": {
+          "points": [
+            {
+              "X": 0,
+              "Y": 0
+            },
+            {
+              "X": 0,
+              "Y": 24
+            },
+            {
+              "X": 24,
+              "Y": 24
+            },
+            {
+              "X": 24,
+              "Y": 0
+            }
+          ]
+        },
+        "Doors": {
+          "$type": "Edgar.GraphBasedGenerator.Grid2D.SimpleDoorModeGrid2D, Edgar",
+          "DoorLength": 2,
+          "CornerDistance": 6,
+          "DoorSocket": null
+        },
+        "RepeatMode": null,
+        "AllowedTransformations": [
+          0
+        ]
+      },
+      "IsCorridor": false,
+      "Doors": [
+        {
+          "FromRoom": {
+            "Name": "Spawn",
+            "Type": 2
+          },
+          "ToRoom": {
+            "Name": "Corridor",
+            "Type": 4
+          },
+          "DoorLine": {
+            "From": {
+              "X": 0,
+              "Y": 6
+            },
+            "To": {
+              "X": 0,
+              "Y": 8
+            },
+            "degeneratedDirection": 1,
+            "Length": 2
+          }
+        }
+      ],
+      "Transformation": 0
+    },
+    {
+      "Room": {
+        "Name": "Boss1",
+        "Type": 3
+      },
+      "RoomDescription": {
+        "IsCorridor": false,
+        "RoomTemplates": [
+          {
+            "Name": "Boss_HeartHoarder",
+            "Outline": {
+              "points": [
+                {
+                  "X": 0,
+                  "Y": 0
+                },
+                {
+                  "X": 0,
+                  "Y": 32
+                },
+                {
+                  "X": 32,
+                  "Y": 32
+                },
+                {
+                  "X": 32,
+                  "Y": 0
+                }
+              ]
+            },
+            "Doors": {
+              "$type": "Edgar.GraphBasedGenerator.Grid2D.SimpleDoorModeGrid2D, Edgar",
+              "DoorLength": 2,
+              "CornerDistance": 6,
+              "DoorSocket": null
+            },
+            "RepeatMode": null,
+            "AllowedTransformations": [
+              0
+            ]
+          },
+          {
+            "Name": "Boss_Lg",
+            "Outline": {
+              "points": [
+                {
+                  "X": 0,
+                  "Y": 0
+                },
+                {
+                  "X": 0,
+                  "Y": 42
+                },
+                {
+                  "X": 42,
+                  "Y": 42
+                },
+                {
+                  "X": 42,
+                  "Y": 0
+                }
+              ]
+            },
+            "Doors": {
+              "$type": "Edgar.GraphBasedGenerator.Grid2D.SimpleDoorModeGrid2D, Edgar",
+              "DoorLength": 2,
+              "CornerDistance": 6,
+              "DoorSocket": null
+            },
+            "RepeatMode": null,
+            "AllowedTransformations": [
+              0
+            ]
+          }
+        ]
+      },
+      "Outline": {
+        "points": [
+          {
+            "X": 0,
+            "Y": 0
+          },
+          {
+            "X": 0,
+            "Y": 42
+          },
+          {
+            "X": 42,
+            "Y": 42
+          },
+          {
+            "X": 42,
+            "Y": 0
+          }
+        ]
+      },
+      "Position": {
+        "X": -48,
+        "Y": -28
+      },
+      "RoomTemplate": {
+        "Name": "Boss_Lg",
+        "Outline": {
+          "points": [
+            {
+              "X": 0,
+              "Y": 0
+            },
+            {
+              "X": 0,
+              "Y": 42
+            },
+            {
+              "X": 42,
+              "Y": 42
+            },
+            {
+              "X": 42,
+              "Y": 0
+            }
+          ]
+        },
+        "Doors": {
+          "$type": "Edgar.GraphBasedGenerator.Grid2D.SimpleDoorModeGrid2D, Edgar",
+          "DoorLength": 2,
+          "CornerDistance": 6,
+          "DoorSocket": null
+        },
+        "RepeatMode": null,
+        "AllowedTransformations": [
+          0
+        ]
+      },
+      "IsCorridor": false,
+      "Doors": [
+        {
+          "FromRoom": {
+            "Name": "Boss1",
+            "Type": 3
+          },
+          "ToRoom": {
+            "Name": "Corridor",
+            "Type": 4
+          },
+          "DoorLine": {
+            "From": {
+              "X": 42,
+              "Y": 36
+            },
+            "To": {
+              "X": 42,
+              "Y": 34
+            },
+            "degeneratedDirection": 3,
+            "Length": 2
+          }
+        }
+      ],
+      "Transformation": 0
+    },
+    {
+      "Room": {
+        "Name": "Corridor",
+        "Type": 4
+      },
+      "RoomDescription": {
+        "IsCorridor": true,
+        "RoomTemplates": [
+          {
+            "Name": "Dungeon1_C46",
+            "Outline": {
+              "points": [
+                {
+                  "X": 0,
+                  "Y": 0
+                },
+                {
+                  "X": 0,
+                  "Y": 6
+                },
+                {
+                  "X": 4,
+                  "Y": 6
+                },
+                {
+                  "X": 4,
+                  "Y": 0
+                }
+              ]
+            },
+            "Doors": {
+              "$type": "Edgar.GraphBasedGenerator.Grid2D.ManualDoorModeGrid2D, Edgar",
+              "Doors": [
+                {
+                  "From": {
+                    "X": 1,
+                    "Y": 0
+                  },
+                  "To": {
+                    "X": 3,
+                    "Y": 0
+                  },
+                  "Socket": null
+                },
+                {
+                  "From": {
+                    "X": 1,
+                    "Y": 6
+                  },
+                  "To": {
+                    "X": 3,
+                    "Y": 6
+                  },
+                  "Socket": null
+                }
+              ]
+            },
+            "RepeatMode": null,
+            "AllowedTransformations": [
+              0
+            ]
+          },
+          {
+            "Name": "Dungeon1_C65",
+            "Outline": {
+              "points": [
+                {
+                  "X": 0,
+                  "Y": 0
+                },
+                {
+                  "X": 0,
+                  "Y": 5
+                },
+                {
+                  "X": 6,
+                  "Y": 5
+                },
+                {
+                  "X": 6,
+                  "Y": 0
+                }
+              ]
+            },
+            "Doors": {
+              "$type": "Edgar.GraphBasedGenerator.Grid2D.ManualDoorModeGrid2D, Edgar",
+              "Doors": [
+                {
+                  "From": {
+                    "X": 0,
+                    "Y": 2
+                  },
+                  "To": {
+                    "X": 0,
+                    "Y": 4
+                  },
+                  "Socket": null
+                },
+                {
+                  "From": {
+                    "X": 6,
+                    "Y": 2
+                  },
+                  "To": {
+                    "X": 6,
+                    "Y": 4
+                  },
+                  "Socket": null
+                }
+              ]
+            },
+            "RepeatMode": null,
+            "AllowedTransformations": [
+              0
+            ]
+          }
+        ]
+      },
+      "Outline": {
+        "points": [
+          {
+            "X": 0,
+            "Y": 0
+          },
+          {
+            "X": 0,
+            "Y": 5
+          },
+          {
+            "X": 6,
+            "Y": 5
+          },
+          {
+            "X": 6,
+            "Y": 0
+          }
+        ]
+      },
+      "Position": {
+        "X": -6,
+        "Y": 4
+      },
+      "RoomTemplate": {
+        "Name": "Dungeon1_C65",
+        "Outline": {
+          "points": [
+            {
+              "X": 0,
+              "Y": 0
+            },
+            {
+              "X": 0,
+              "Y": 5
+            },
+            {
+              "X": 6,
+              "Y": 5
+            },
+            {
+              "X": 6,
+              "Y": 0
+            }
+          ]
+        },
+        "Doors": {
+          "$type": "Edgar.GraphBasedGenerator.Grid2D.ManualDoorModeGrid2D, Edgar",
+          "Doors": [
+            {
+              "From": {
+                "X": 0,
+                "Y": 2
+              },
+              "To": {
+                "X": 0,
+                "Y": 4
+              },
+              "Socket": null
+            },
+            {
+              "From": {
+                "X": 6,
+                "Y": 2
+              },
+              "To": {
+                "X": 6,
+                "Y": 4
+              },
+              "Socket": null
+            }
+          ]
+        },
+        "RepeatMode": null,
+        "AllowedTransformations": [
+          0
+        ]
+      },
+      "IsCorridor": true,
+      "Doors": [
+        {
+          "FromRoom": {
+            "Name": "Corridor",
+            "Type": 4
+          },
+          "ToRoom": {
+            "Name": "Spawn",
+            "Type": 2
+          },
+          "DoorLine": {
+            "From": {
+              "X": 6,
+              "Y": 2
+            },
+            "To": {
+              "X": 6,
+              "Y": 4
+            },
+            "degeneratedDirection": 1,
+            "Length": 2
+          }
+        },
+        {
+          "FromRoom": {
+            "Name": "Corridor",
+            "Type": 4
+          },
+          "ToRoom": {
+            "Name": "Boss1",
+            "Type": 3
+          },
+          "DoorLine": {
+            "From": {
+              "X": 0,
+              "Y": 4
+            },
+            "To": {
+              "X": 0,
+              "Y": 2
+            },
+            "degeneratedDirection": 3,
+            "Length": 2
+          }
+        }
+      ],
+      "Transformation": 0
+    }
+  ]
+}

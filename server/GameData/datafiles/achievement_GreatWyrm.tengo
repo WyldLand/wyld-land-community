@@ -1,0 +1,14 @@
+---achievement_Wyrm Hunt---
+Kill :: [[Mobs/Great Wyrm|Great Wyrm]]@1
+XP :: 50
+
+Slay the Great Wyrm, an ancient creature of incredible power.
+
+---achievement_Dragon Slayer---
+Kill :: [[Mobs/Great Wyrm|Great Wyrm]]@1
+Tags :: NoDamage
+Title :: Wyrmslayer
+XP :: 50
+ResetOnDeath :: False
+
+Take out the Great Wyrm without taking any damage.

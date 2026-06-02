@@ -1,0 +1,523 @@
+---mob_Ancient Guardian---
+ID :: ancientguardian
+Prefab :: ancientguardian 
+Range Behavior :: [[Medium Ranged]]
+Abilities :: [[Phase One Turrets]] [[Phase One Shotgun]] [[Phase Two Walls]] [[Phase Two Spiral]] [[Phase Two Cross]] [[Phase Two Rain]] [[Phase Three Mines]] [[Phase Three Storm]] [[Phase Three Finale]] [[Phase Three Turrets]]
+Speed :: 200
+Type :: Boss
+Loot :: [[Ancient Guardian]]
+
+---prefab_ancientguardian---
+
+Components :: [[AncientGuardianSprite]] [[AncientGuardianCollider]] [[Monster]] [[Nameplate]] [[BGMAncientGuardian]]
+
+---prefabcomponent_AncientGuardianCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+	"position": [0, 1.5625],
+    "size": [1.8125, 2.125]
+}
+
+---prefabcomponent_AncientGuardianSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.46,
+    "pivotY": 1.0,
+    "sprite": "ancientguardian/ancientguardian",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_sfxancientguardianAttack---
+
+Components :: [[SFXAncientGuardianAttack]]
+
+---prefabcomponent_SFXAncientGuardianAttack---
+
+Component :: Sound
+
+{
+    "sources": ["ancientguardian/Attack.wav"],
+	"select": "all",
+	"delay": [0.30],
+	"spatial": true
+}
+
+---prefab_sfxancientguardianBlast---
+
+Components :: [[SFXAncientGuardianBlast]]
+
+---prefabcomponent_SFXAncientGuardianBlast---
+
+Component :: Sound
+
+{
+    "sources": ["ancientguardian/Blast.wav"],
+	"spatial": true
+}
+
+---prefab_sfxancientguardianLaser---
+
+Components :: [[SFXAncientGuardianLaser]]
+
+---prefabcomponent_SFXAncientGuardianLaser---
+
+Component :: Sound
+
+{
+    "sources": ["ancientguardian/Laser.wav"],
+	"spatial": true
+}
+
+---prefabcomponent_BGMAncientGuardian---
+
+Component :: Sound
+{
+	"sources": ["ancientguardian/bgm1.wav", "ancientguardian/bgm2.wav", "ancientguardian/bgm3.wav", "ancientguardian/bgm4.wav"],
+	"channel": "bgm",
+	"loop": true,
+	"select": "random",
+	"priority": 2,
+	"combatOnly": true
+}
+
+---loottable_Ancient Guardian---
+[[180 Guardian's Core]] @ 67.0
+[[22 Cant Miss]] @ 2.0
+[[31 Rampage]] @ 2.0
+[[106 Baby Chick]] @ 5.0
+[[701 Damage Pulse]] @ 15.0
+[[601 Frost Pulse]] @ 15.0
+
+---ability_Phase One Turrets---
+Bullet Definition :: [[phaseoneturrets]]
+Max Range :: 100.0
+
+---bulletdef_phaseoneturrets---
+sprite CirclePool 1
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 1
+	timedFill 40
+	damageEvery 40
+	wait 41
+	vanish
+wait 40
+sprite Basic
+potency 100
+radial bullets:12 speed:3 angle:10 directionType:absolute
+	wait 75
+	vanish
+wait 6
+radial bullets:12 speed:3 angle:40 directionType:absolute
+	wait 75
+	vanish
+
+---ability_Phase One Shotgun---
+Bullet Definition :: [[phasoneshotgun]]
+VFX Cast :: trigger:Laser*
+
+---bulletdef_phasoneshotgun---
+potency 100
+sprite Custom10
+nway speed:5 bullets:12 spread:30 angle:0 directionType:relative
+wait 5
+nway speed:5 bullets:12 spread:45 angle:180 directionType:relative
+
+---ability_Phase Two Walls---
+Bullet Definition :: [[phasetwowall]]
+Max Range :: 100.0
+
+---bulletdef_phasetwowall---
+sprite Custom7
+potency 150
+color 3 
+line speed:8 bullets:1 delay:0 angle:0 directionType:relative
+	wait 60
+	vanish
+line speed:8 bullets:1 delay:0 angle:90 directionType:relative  
+	wait 60
+	vanish
+line speed:8 bullets:1 delay:0 angle:180 directionType:relative
+	wait 60
+	vanish
+line speed:8 bullets:1 delay:0 angle:270 directionType:relative
+	wait 60
+	vanish
+
+---ability_Phase Two Spiral---
+Bullet Definition :: [[phasespiral]]
+Max Range :: 100.0
+VFX Cast :: trigger:Attack*
+
+---bulletdef_phasespiral---
+sprite Basic
+potency 125
+repeat bullets:3 speed:3 angle:0 angleChange:120 directionType:absolute
+	wait 1000
+wait 5
+repeat bullets:3 speed:3 angle:15 angleChange:120 directionType:absolute
+	wait 1000
+wait 5
+repeat bullets:3 speed:3 angle:30 angleChange:120 directionType:absolute
+	wait 1000
+
+---ability_Phase Two Cross---
+Bullet Definition :: [[phasetwocross]]
+Max Range :: 100.0
+VFX Cast :: trigger:Laser*
+
+---bulletdef_phasetwocross---
+sprite CirclePool 2
+potency 200
+radial bullets:1 speed:0 angle:0 directionType:absolute
+	radius 1.95
+	wait 210
+wait 5
+sprite Basic
+potency 150
+nway speed:8 bullets:4 spread:25 angle:45 directionType:absolute
+nway speed:8 bullets:4 spread:25 angle:135 directionType:absolute 
+nway speed:8 bullets:4 spread:25 angle:225 directionType:absolute
+nway speed:8 bullets:4 spread:25 angle:315 directionType:absolute
+
+---ability_Phase Two Rain---
+Bullet Definition :: [[phasetworain]]
+Max Range :: 100.0
+VFX Cast :: trigger:Blast*
+
+---bulletdef_phasetworain---
+sprite Custom10
+color 2
+potency 100
+repeat bullets:12 speed:6 angle:0 angleChange:30 delay:2 directionType:relative
+	wait 120
+	vanish
+
+---ability_Phase Three Mines---
+Bullet Definition :: [[phasethreemines]]
+Max Range :: 100.0
+
+---bulletdef_phasethreemines---
+sprite CirclePool 1.5
+potency 175
+fire 0 relative 0
+	aoeexplosion
+	radius 1.5
+	timedFill 20
+	damageEvery 20
+	wait 21
+	vanish
+wait 20
+sprite Basic 1.5
+potency 200
+nway speed:6 bullets:3 spread:30 angle:0 directionType:relative
+	wait 280
+	radius 1.0
+
+---ability_Phase Three Storm---
+Bullet Definition :: [[phasethreestorm]]
+VFX Cast :: trigger:Blast*
+
+---bulletdef_phasethreestorm---
+sprite Basic
+potency 100
+color 3
+radial bullets:36 speed:4 angle:0 directionType:absolute
+	wait 100
+wait 5
+radial bullets:36 speed:4 angle:5 directionType:absolute
+	wait 100
+
+---ability_Phase Three Finale---
+Bullet Definition :: [[phasethreefinale]]
+Max Range :: 100.0
+VFX Cast :: trigger:Laser*
+
+---bulletdef_phasethreefinale---
+sprite CirclePool 4
+potency 300
+fire 0 relative 0
+	aoeexplosion
+	radius 3.95
+	timedFill 60
+	damageEvery 60
+	wait 60
+	vfx BombExplosion 4
+	wait 1
+	fire finalespread
+	vanish
+
+---bulletdef_finalespread---
+sprite Basic
+color 5
+potency 150
+radial bullets:48 speed:6 angle:0 directionType:absolute
+wait 3
+radial bullets:48 speed:5 angle:3.75 directionType:absolute
+
+---ability_Immunity Pool---
+Bullet Definition :: [[immunitypool]]
+Max Range :: 100.0
+Auras :: [[MiniHunterImmunity]]
+
+---aura_MiniHunterImmunity---
+Type :: Buff
+Duration :: 1.5
+Icon :: statusicons_8
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:MiniHunterImmunity]]
+
+---script_MiniHunterImmunity_IncomingDamage---
+// When this entity takes damage, if it's fromthe Immunity Punish attack, negate the damage.
+if damage > 0 && getNameOfAbility(abilityId) == "Immunity Punish" {
+	additionalDamage = -1 * damage
+}
+
+
+---ability_Immunity Punish---
+Bullet Definition :: [[immunitypunish]]
+Max Range :: 100.0
+VFX Cast :: trigger:Attack*
+
+---bulletdef_immunitypool---
+sprite GreenPool 4
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 4
+	damageEvery 200
+	timedFill 200
+	vfx InterestPoint
+	wait 210
+	vanish
+
+---bulletdef_immunitypunish---
+wait 200
+sprite CirclePool 30
+potency 350
+fire 0 relative 0
+	aoeexplosion
+	radius 30
+	timedFill 10
+	damageEvery 10
+	wait 10
+	vfx BombExplosion 5
+	wait 1
+	vfx ShakeLarge 5
+	vanish
+
+
+---ability_Phase Three Turrets---
+Bullet Definition :: [[phaseturretscorner]]
+Max Range :: 100.0
+
+---bulletdef_phaseturretscorner---
+sprite CirclePool 1
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 1
+	timedFill 40
+	damageEvery 40
+	wait 41
+	vanish
+wait 40
+sprite Basic
+potency 125
+radial bullets:16 speed:3 angle:0 directionType:absolute
+	wait 90
+	vanish
+wait 4
+radial bullets:16 speed:3 angle:22.5 directionType:absolute
+	wait 90
+	vanish
+
+---script_ancientguardian_Monster---
+
+rand := import("rand")
+
+randPositions := [[7.0,7.0,0.0], [23.0,7.0,0.0], [23.0,23.0,0.0], [7.0,23.0,0.0]]
+
+resetVars := func() {
+	scriptVars["phase"] = 1
+	scriptVars["timeSinceTurret"] = 0.0
+	scriptVars["timeSinceShotgun"] = 0.0
+	scriptVars["timeSinceWall"] = 0.0
+	scriptVars["timeSinceSpiral"] = 0.0
+	scriptVars["timeSinceCross"] = 0.0
+	scriptVars["timeSinceRain"] = 0.0
+	scriptVars["timeSinceMine"] = 0.0
+	scriptVars["timeSinceStorm"] = 0.0
+	scriptVars["timeSinceFinale"] = 0.0
+	scriptVars["timeSinceImmunityCycle"] = 0.0
+	scriptVars["saidHello"] = false
+}
+
+if !isDead {
+	if is_undefined(scriptVars["phase"]) {
+		resetVars()
+	}
+
+	if targetEntityId > 0 {
+
+		if !scriptVars["saidHello"] {
+			scriptVars["saidHello"] = true
+			say(myEntityId, "Containment breach. Containment breach. Lethal force authorized.")
+		}
+
+		currentHealth := float(getPoints(myEntityId, "hp", "current"))
+		maxHealth := float(getPoints(myEntityId, "hp", "max"))
+
+		// Phase transitions
+		if currentHealth < maxHealth * 0.66 && scriptVars["phase"] == 1 {
+			clearBulletsForEntity(myEntityId)
+			scriptVars["phase"] = 2
+			say(myEntityId, "Program response initiated. Containment sequence A004.")
+		} else if currentHealth < maxHealth * 0.33 && scriptVars["phase"] == 2 {
+			say(myEntityId, "Emergency reactive measures authorized. Directive override.")
+			clearBulletsForEntity(myEntityId)
+			scriptVars["phase"] = 3
+		}
+
+		// Update timers
+		scriptVars["timeSinceTurret"] += delta
+		scriptVars["timeSinceShotgun"] += delta
+		scriptVars["timeSinceWall"] += delta  
+		scriptVars["timeSinceSpiral"] += delta
+		scriptVars["timeSinceCross"] += delta
+		scriptVars["timeSinceRain"] += delta
+		scriptVars["timeSinceMine"] += delta
+		scriptVars["timeSinceStorm"] += delta
+		scriptVars["timeSinceFinale"] += delta
+		scriptVars["timeSinceImmunityCycle"] += delta
+
+		// Phase 1: Six evenly spaced turrets + shotgun patterns
+		if scriptVars["phase"] == 1 {
+			if scriptVars["timeSinceTurret"] > 2.0 {
+				// Place 6 turrets around the room
+				useAbilityAtPosition(myEntityId, "Phase One Turrets", 
+					positionInCurrentRoom(myEntityId, [6.0,6.0,0.0]))
+				useAbilityAtPosition(myEntityId, "Phase One Turrets",
+					positionInCurrentRoom(myEntityId, [26.0,6.0,0.0]))
+				useAbilityAtPosition(myEntityId, "Phase One Turrets",
+					positionInCurrentRoom(myEntityId, [6.0,16.0,0.0]))
+				useAbilityAtPosition(myEntityId, "Phase One Turrets",
+					positionInCurrentRoom(myEntityId, [26.0,16.0,0.0]))
+				useAbilityAtPosition(myEntityId, "Phase One Turrets",
+					positionInCurrentRoom(myEntityId, [6.0,26.0,0.0]))
+				useAbilityAtPosition(myEntityId, "Phase One Turrets",
+					positionInCurrentRoom(myEntityId, [26.0,26.0,0.0]))
+				scriptVars["timeSinceTurret"] = 0.0
+			}
+			
+			if scriptVars["timeSinceShotgun"] > 2.0 {
+				useAbilityAtTarget(myEntityId, "Phase One Shotgun", targetEntityId, 1.0)
+				scriptVars["timeSinceShotgun"] = 0.0
+			}
+		} else if scriptVars["phase"] == 2 {
+		
+		// Phase 2: Multiple simultaneous patterns
+		
+			if scriptVars["timeSinceWall"] > 3.0 {
+				useAbilityAtPosition(myEntityId, "Phase Two Walls", 
+					positionInCurrentRoom(myEntityId, [16.0,16.0,0.0]))
+				scriptVars["timeSinceWall"] = 0.0
+			}
+			
+			if scriptVars["timeSinceSpiral"] > 3.5 {
+				useAbilityAtPosition(myEntityId, "Phase Two Spiral",
+					positionInCurrentRoom(myEntityId, [16.0,16.0,0.0]))
+				scriptVars["timeSinceSpiral"] = 0.0
+			}
+			
+			if scriptVars["timeSinceCross"] > 4.0 {
+				useAbilityAtPosition(myEntityId, "Phase Two Cross",
+					positionInCurrentRoom(myEntityId, [16.0,16.0,0.0]))
+				scriptVars["timeSinceCross"] = 0.0
+			}
+
+			// Added consistent bullet rain for more pressure
+			if scriptVars["timeSinceMine"] > 2.0 {
+				for i := 0; i < 3; i++ {
+					useAbilityAtPosition(myEntityId, "Phase Three Mines",
+						randomPositionInCurrentRoom(myEntityId, 2.0))
+				}
+				scriptVars["timeSinceMine"] = 0.0
+			}
+
+			if scriptVars["timeSinceImmunityCycle"] > 20.0 {
+				//Every 20 seconds, we will generate a random "good zone" on the ground where the player needs to go/
+				//Players inside of the green zone when the time expires are protected from the following room-wide Punish explosion.
+				say(myEntityId, "Cleanse cycle engaged. All personnel should proceed to the safety area.")
+				pos := positionInCurrentRoom(myEntityId, randPositions[rand.intn(4)])
+				useAbilityAtPosition(myEntityId, "Immunity Pool", pos)
+				useAbilityAtPosition(myEntityId, "Immunity Punish", entityPosition(myEntityId))
+				scriptVars["timeSinceImmunityCycle"] = 0.0
+			}
+
+		} else if scriptVars["phase"] == 3 {
+
+		
+		// Phase 3: All the things
+			// Corner turrets from phase 1
+			if scriptVars["timeSinceTurret"] > 2.5 {
+				useAbilityAtPosition(myEntityId, "Phase Three Turrets",
+					positionInCurrentRoom(myEntityId, [4.0,4.0,0.0]))
+				useAbilityAtPosition(myEntityId, "Phase Three Turrets",
+					positionInCurrentRoom(myEntityId, [28.0,4.0,0.0]))
+				useAbilityAtPosition(myEntityId, "Phase Three Turrets",
+					positionInCurrentRoom(myEntityId, [4.0,28.0,0.0]))
+				useAbilityAtPosition(myEntityId, "Phase Three Turrets",
+					positionInCurrentRoom(myEntityId, [28.0,28.0,0.0]))
+				scriptVars["timeSinceTurret"] = 0.0
+			}
+
+			if scriptVars["timeSinceMine"] > 2.0 {
+				for i := 0; i < 3; i++ {
+					useAbilityAtPosition(myEntityId, "Phase Three Mines",
+						randomPositionInCurrentRoom(myEntityId, 2.0))
+				}
+				scriptVars["timeSinceMine"] = 0.0
+			}
+			
+			if scriptVars["timeSinceStorm"] > 3.0 {
+				useAbilityAtPosition(myEntityId, "Phase Three Storm",
+					positionInCurrentRoom(myEntityId, [16.0,16.0,0.0]))
+				scriptVars["timeSinceStorm"] = 0.0
+			}
+			
+			if scriptVars["timeSinceFinale"] > 5.0 {
+				useAbilityAtPosition(myEntityId, "Phase Three Finale",
+					positionInCurrentRoom(myEntityId, [16.0,16.0,0.0]))
+				scriptVars["timeSinceFinale"] = 0.0
+			}
+
+			if scriptVars["timeSinceImmunityCycle"] > 20.0 {
+				//Every 20 seconds, we will generate a random "good zone" on the ground where the player needs to go/
+				//Players inside of the green zone when the time expires are protected from the following room-wide Punish explosion.
+				say(myEntityId, "Cleanse cycle engaged. All personnel should proceed to the safety area.")
+				pos := positionInCurrentRoom(myEntityId, randPositions[rand.intn(4)])
+				useAbilityAtPosition(myEntityId, "Immunity Pool", pos)
+				useAbilityAtPosition(myEntityId, "Immunity Punish", entityPosition(myEntityId))
+				scriptVars["timeSinceImmunityCycle"] = 0.0
+			}
+		}
+	}
+}

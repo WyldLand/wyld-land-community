@@ -1,0 +1,25 @@
+---prefab_LevelUp---
+
+Components :: [[LevelUpSprite]] [[SFXLevelUp]] [[LargeCameraShake]]
+
+---prefabcomponent_LevelUpSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.9,
+    "sprite": "vfx/LevelUp",
+    "play": "default"
+     
+}
+
+---prefabcomponent_SFXLevelUp---
+
+Component :: Sound
+
+{
+    "sources": ["player/levelup.wav"],
+    "channel": "sfx",
+    "spatial": true
+}

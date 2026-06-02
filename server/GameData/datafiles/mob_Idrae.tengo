@@ -1,0 +1,3558 @@
+---mob_Idrae---
+ID :: Idrae
+Prefab :: idrae
+Range Behavior :: Stationary
+Type :: Boss
+Speed :: 1000
+Options :: manualpathing
+Loot :: [[Idrae]]
+
+---loottable_Idrae---
+[[10 Gravedigger]] @ 2.0
+[[22 Cant Miss]] @ 2.0
+[[327 Mini Idrae]] @ 15.0
+
+---prefab_idrae---
+
+Components :: [[IdraeSprite]] [[IdraeCollider]] [[Monster]] [[Nameplate]] [[BGMIdrae]]
+
+---prefabcomponent_IdraeCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+	"position": [0.0, 0.5],
+    "size": [0.5, 0.5]
+}
+
+---prefabcomponent_IdraeSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.75,
+    "sprite": "idrae/idrae",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefabcomponent_BGMIdrae---
+
+Component :: Sound
+{
+	"sources": ["hunter/bgm1.wav"],
+	"channel": "bgm",
+	"loop": true,
+	"select": "random",
+	"priority": 2,
+	"combatOnly": true,
+	"notification": "Designed by france guy"
+}
+
+---prefab_blastertwo---
+
+Components :: [[BlasterTwoSprite]] [[BlasterTwoCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_BlasterTwoCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+    "position": [0.0, 0.75],
+    "size": [0.75, 1.5]
+}
+
+---prefabcomponent_BlasterTwoSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.186,
+    "pivotY": 1.0,
+    "sprite": "darkforest3/blaster",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---ability_Idrae Phase X Bomb---
+Bullet Definition :: [[Idraepxbomb]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraepxbomb---
+potency 175
+sprite CirclePool 2
+radial bullets:1
+	lifetime 1000
+	aoeexplosion
+	radius 1.85
+	timedFill 30
+	damageEvery 30
+	wait 30
+	vanish
+
+
+
+//Room Borders and warnings
+
+---ability_Idrae Get Out Of Spawn---
+Bullet Definition :: [[Idraegetoutofspawn]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraegetoutofspawn---
+sprite RectPool 1.0 1.0
+potency 200
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	damageEvery 10
+	radius 1.0 1.0
+
+---ability_Idrae Phase One Room Limiter---
+Bullet Definition :: [[Idraeponeroomlimiter]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraeponeroomlimiter---
+sprite RectPool 17.0 1.0
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	damageEvery 10
+	radius 17.0 0.85
+
+---ability_Idrae Phase One Room Limiter Two---
+Bullet Definition :: [[Idraeponeroomlimitertwo]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraeponeroomlimitertwo---
+sprite RectPool 1.0 19.0
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	damageEvery 10
+	radius 0.85 19.0
+
+---ability_Idrae Phase One Room Limiter Warning---
+Bullet Definition :: [[Idraeponeroomlimiterwarning]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraeponeroomlimiterwarning---
+sprite RectPool 17.0 1.0
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	radius 17.0 0.85
+	damageEvery 60
+	timedFill 60
+	wait 60
+	fire Idraeponeroomlimiter
+	wait 1
+	vanish
+
+---ability_Idrae Phase One Room Limiter Two Warning---
+Bullet Definition :: [[Idraeponeroomlimitertwowarning]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraeponeroomlimitertwowarning---
+sprite RectPool 1.0 19.0
+radial bullets:1
+	radius 0.85 19.0
+	lifetime 400
+	aoeexplosion
+	damageEvery 60
+	timedFill 60
+	wait 60
+	fire Idraeponeroomlimitertwo
+	wait 1
+	vanish
+
+
+
+
+---ability_Idrae Phase Two Room Limiter---
+Bullet Definition :: [[Idraeptworoomlimiter]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraeptworoomlimiter---
+sprite RectPool 17.0 1.0
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	damageEvery 10
+	radius 17.0 0.85
+
+---ability_Idrae Phase Two Room Limiter Two---
+Bullet Definition :: [[Idraeptworoomlimitertwo]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraeptworoomlimitertwo---
+sprite RectPool 1.0 19.0
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	damageEvery 10
+	radius 0.85 19.0
+
+---ability_Idrae Phase Two Room Limiter Three---
+Bullet Definition :: [[Idraeptworoomlimiterthree]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraeptworoomlimiterthree---
+sprite RectPool 10.0 1.5
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	damageEvery 10
+	radius 9.85 1.35
+
+---ability_Idrae Phase Two Room Limiter Four---
+Bullet Definition :: [[Idraeptworoomlimiterfour]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraeptworoomlimiterfour---
+sprite RectPool 1.5 10.0
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	damageEvery 10
+	radius 1.35 9.85
+
+
+---ability_Idrae Phase Two Room Limiter Warning---
+Bullet Definition :: [[Idraeptworoomlimiterwarning]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraeptworoomlimiterwarning---
+sprite RectPool 17.0 1.0
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	radius 17.0 0.85
+	damageEvery 60
+	timedFill 60
+	wait 60
+	fire Idraeptworoomlimiter
+	wait 1
+	vanish
+
+---ability_Idrae Phase Two Room Limiter Two Warning---
+Bullet Definition :: [[Idraeptworoomlimitertwowarning]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraeptworoomlimitertwowarning---
+sprite RectPool 1.0 19.0
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	radius 0.85 19.0
+	damageEvery 60
+	timedFill 60
+	wait 60
+	fire Idraeptworoomlimitertwo
+	wait 1
+	vanish
+
+---ability_Idrae Phase Two Room Limiter Three Warning---
+Bullet Definition :: [[Idraeptworoomlimiterthreewarning]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraeptworoomlimiterthreewarning---
+sprite RectPool 10.0 1.5
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	radius 9.85 1.35
+	damageEvery 60
+	timedFill 60
+	wait 60
+	fire Idraeptworoomlimiterthree
+	wait 1
+	vanish
+
+---ability_Idrae Phase Two Room Limiter Four Warning---
+Bullet Definition :: [[Idraeptworoomlimiterfourwarning]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraeptworoomlimiterfourwarning---
+sprite RectPool 1.5 10.0
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	radius 1.35 9.85
+	damageEvery 60
+	timedFill 60
+	wait 60
+	fire Idraeptworoomlimiterfour
+	wait 1
+	vanish
+
+
+---ability_Idrae Phase Three Room Limiter---
+Bullet Definition :: [[Idraepthreeroomlimiter]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraepthreeroomlimiter---
+sprite RectPool 14.0 2.5
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	damageEvery 10
+	radius 15.5 2.35
+
+---ability_Idrae Phase Three Room Limiter Two---
+Bullet Definition :: [[Idraepthreeroomlimitertwo]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraepthreeroomlimitertwo---
+sprite RectPool 2.5 19.0
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	damageEvery 10
+	radius 2.35 19.0
+
+---ability_Idrae Phase Three Room Limiter Warning---
+Bullet Definition :: [[Idraepthreeroomlimiterwarning]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraepthreeroomlimiterwarning---
+sprite RectPool 14.0 2.5
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	radius 15.5 2.35
+	damageEvery 60
+	timedFill 60
+	wait 60
+	fire Idraepthreeroomlimiter
+	wait 1
+	vanish
+
+---ability_Idrae Phase Three Room Limiter Two Warning---
+Bullet Definition :: [[Idraepthreeroomlimitertwowarning]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraepthreeroomlimitertwowarning---
+sprite RectPool 2.5 19.0
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	radius 2.35 19.0
+	damageEvery 60
+	timedFill 60
+	wait 60
+	fire Idraepthreeroomlimitertwo
+	wait 1
+	vanish
+
+
+---ability_Idrae Phase Four Room Limiter---
+Bullet Definition :: [[Idraepfourroomlimiter]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraepfourroomlimiter---
+sprite RectPool 9.0 5.0
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	damageEvery 10
+	radius 9.0 4.85
+
+---ability_Idrae Phase Four Room Limiter Two---
+Bullet Definition :: [[Idraepfourroomlimitertwo]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraepfourroomlimitertwo---
+sprite RectPool 5.0 19.0
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	damageEvery 10
+	radius 4.85 19.0
+
+---ability_Idrae Phase Four Room Limiter Three---
+Bullet Definition :: [[Idraepfourroomlimiterthree]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraepfourroomlimiterthree---
+sprite CirclePool 3.5
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	damageEvery 10
+	radius 3.35
+
+
+
+---ability_Idrae Phase Four Room Limiter Warning---
+Bullet Definition :: [[Idraepfourroomlimiterwarning]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraepfourroomlimiterwarning---
+sprite RectPool 9.0 5.0
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	radius 9.0 4.85
+	damageEvery 60
+	timedFill 60
+	wait 60
+	fire Idraepfourroomlimiter
+	wait 1
+	vanish
+
+---ability_Idrae Phase Four Room Limiter Two Warning---
+Bullet Definition :: [[Idraepfourroomlimitertwowarning]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraepfourroomlimitertwowarning---
+sprite RectPool 5.0 19.0
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	radius 4.85 19.0
+	damageEvery 60
+	timedFill 60
+	wait 60
+	fire Idraepfourroomlimitertwo
+	wait 1
+	vanish
+
+---ability_Idrae Phase Four Room Limiter Three Warning---
+Bullet Definition :: [[Idraepfourroomlimiterthreewarning]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraepfourroomlimiterthreewarning---
+sprite CirclePool 3.5
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	radius 3.35
+	damageEvery 60
+	timedFill 60
+	wait 60
+	fire Idraepfourroomlimiterthree
+	wait 1
+	vanish
+
+
+
+---ability_Idrae Phase Five Room Limiter---
+Bullet Definition :: [[Idraepfiveroomlimiter]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraepfiveroomlimiter---
+sprite RectPool 14.0 2.5
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	damageEvery 10
+	radius 14.0 2.35
+
+
+---ability_Idrae Phase Five Room Limiter Two---
+Bullet Definition :: [[Idraepfiveroomlimitertwo]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraepfiveroomlimitertwo---
+sprite RectPool 2.5 19.0
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	damageEvery 10
+	radius 2.35 19.0
+
+---ability_Idrae Phase Five Room Limiter Warning---
+Bullet Definition :: [[Idraepfiveroomlimiterwarning]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraepfiveroomlimiterwarning---
+sprite RectPool 14.0 2.5
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	radius 14.0 2.35
+	damageEvery 60
+	timedFill 60
+	wait 60
+	fire Idraepfiveroomlimiter
+	wait 1
+	vanish
+
+
+---ability_Idrae Phase Five Room Limiter Two Warning---
+Bullet Definition :: [[Idraepfiveroomlimitertwowarning]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraepfiveroomlimitertwowarning---
+sprite RectPool 2.5 19.0
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	radius 2.35 19.0
+	damageEvery 60
+	timedFill 60
+	wait 60
+	fire Idraepfiveroomlimitertwo
+	wait 1
+	vanish
+
+
+---ability_Idrae Phase Six Room Limiter---
+Bullet Definition :: [[Idraepsixroomlimiter]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraepsixroomlimiter---
+sprite RectPool 4.0 2.5
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	damageEvery 10
+	radius 4.0 2.35
+
+---ability_Idrae Phase Six Room Limiter Two---
+Bullet Definition :: [[Idraepsixroomlimitertwo]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraepsixroomlimitertwo---
+sprite RectPool 7.5 19.0
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	damageEvery 10
+	radius 7.35 19.0
+
+---ability_Idrae Phase Six Room Limiter Warning---
+Bullet Definition :: [[Idraepsixroomlimiterwarning]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraepsixroomlimiterwarning---
+sprite RectPool 4.0 2.5
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	radius 4.0 2.35
+	damageEvery 60
+	timedFill 60
+	wait 60
+	fire Idraepsixroomlimiter
+	wait 1
+	vanish
+
+---ability_Idrae Phase Six Room Limiter Two Warning---
+Bullet Definition :: [[Idraepsixroomlimitertwowarning]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraepsixroomlimitertwowarning---
+sprite RectPool 7.5 19.0
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	radius 7.35 19.0
+	damageEvery 60
+	timedFill 60
+	wait 60
+	fire Idraepsixroomlimitertwo
+	wait 1
+	vanish
+
+
+
+---ability_Idrae Phase Final Room Limiter---
+Bullet Definition :: [[Idraepfroomlimiter]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraepfroomlimiter---
+sprite RectPool 4.0 7.5
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	damageEvery 10
+	radius 4.0 7.35
+
+
+---ability_Idrae Phase Final Room Limiter Two---
+Bullet Definition :: [[Idraepfroomlimitertwo]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraepfroomlimitertwo---
+sprite RectPool 7.5 19.0
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	damageEvery 10
+	radius 7.35 19.0
+
+---ability_Idrae Phase Final Room Limiter Warning---
+Bullet Definition :: [[Idraepfroomlimiterwarning]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraepfroomlimiterwarning---
+sprite RectPool 4.0 7.5
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	radius 4.0 7.35
+	damageEvery 60
+	timedFill 60
+	wait 60
+	fire Idraepfroomlimiter
+	wait 1
+	vanish
+
+
+---ability_Idrae Phase Final Room Limiter Two Warning---
+Bullet Definition :: [[Idraepfroomlimitertwowarning]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraepfroomlimitertwowarning---
+sprite RectPool 7.5 19.0
+radial bullets:1
+	lifetime 400
+	aoeexplosion
+	radius 7.35 19.0
+	damageEvery 60
+	timedFill 60
+	wait 60
+	fire Idraepfroomlimitertwo
+	wait 1
+	vanish
+
+
+
+//Phase One Attacks
+
+
+
+
+
+---ability_Idrae Phase One Bullet Wall One---
+Bullet Definition :: [[Idraeponebulletwall]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraeponebulletwall---
+repeat bullets:27 speed:1 speedChange:2.5 angle:90 delay:3
+	lifetime 1000
+	wait 10
+	speed 3
+	direction absolute 0
+
+---ability_Idrae Phase One Bullet Wall Two---
+Bullet Definition :: [[Idraeponebulletwalltwo]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraeponebulletwalltwo---
+repeat bullets:27 speed:1 speedChange:2.5 delay:3
+	lifetime 1000
+	wait 10
+	speed 3
+	direction absolute -90
+
+---ability_Idrae Phase One Boss Shotgun---
+Bullet Definition :: [[Idraeponebossgun]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraeponebossgun---
+sprite Custom11
+color 3
+radial bullets:15 speed:4
+	lifetime 1000
+radial bullets:15 speed:4 angle:4
+	lifetime 1000
+radial bullets:15 speed:4 angle:-4
+	lifetime 1000
+wait 5
+radial bullets:15 speed:4
+	lifetime 1000
+radial bullets:15 speed:4 angle:4
+	lifetime 1000
+radial bullets:15 speed:4 angle:-4
+	lifetime 1000
+wait 5
+radial bullets:15 speed:4
+	lifetime 1000
+radial bullets:15 speed:4 angle:4
+	lifetime 1000
+radial bullets:15 speed:4 angle:-4
+	lifetime 1000
+wait 50
+radial bullets:15 speed:4 angle:12
+	lifetime 1000
+radial bullets:15 speed:4 angle:8
+	lifetime 1000
+radial bullets:15 speed:4 angle:16
+	lifetime 1000
+wait 5
+radial bullets:15 speed:4 angle:12
+	lifetime 1000
+radial bullets:15 speed:4 angle:8
+	lifetime 1000
+radial bullets:15 speed:4 angle:16
+	lifetime 1000
+wait 5
+radial bullets:15 speed:4 angle:12
+	lifetime 1000
+radial bullets:15 speed:4 angle:8
+	lifetime 1000
+radial bullets:15 speed:4 angle:16
+	lifetime 1000
+
+---ability_Idrae Phase One Side Shotguns---
+Bullet Definition :: [[Idraeponesideshotguns]]
+VFX Charging :: trigger:Attack*
+Max Range :: 100.0
+
+---bulletdef_Idraeponesideshotguns---
+sprite Custom7
+color 2
+nway bullets:10 speed:2.5 spread:200 bulletShift:2 directionType:relative
+	lifetime 1000
+
+
+
+
+
+//Phase Two Attacks
+
+
+---ability_Idrae Phase Two Middle Arrows---
+Bullet Definition :: [[Idraeptwomidarrows]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraeptwomidarrows---
+sprite CirclePool 0.5
+radial bullets:1
+	lifetime 100
+sprite Basic
+color 3
+radial bullets:4 speed:4 angle:45
+	lifetime 1000
+wait 4
+radial bullets:4 speed:4 angle:42
+	lifetime 1000
+radial bullets:4 speed:4 angle:48
+	lifetime 1000
+wait 8
+radial bullets:8 speed:4 angle:22.5
+	lifetime 1000
+wait 4
+radial bullets:8 speed:4 angle:19.5
+	lifetime 1000
+radial bullets:8 speed:4 angle:25.5
+	lifetime 1000
+wait 8
+radial bullets:4 speed:4
+	lifetime 1000
+wait 4
+radial bullets:4 speed:4 angle:3
+	lifetime 1000
+radial bullets:4 speed:4 angle:-3
+	lifetime 1000
+
+
+---ability_Idrae Phase Two Slow Radial---
+Bullet Definition :: [[Idraptwoslowradial]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraptwoslowradial---
+radial bullets:20 speed:1
+	lifetime 450
+	wait 100
+	speed -0.5
+
+
+---ability_Idrae Phase Two Boss Shotgun---
+Bullet Definition :: [[Idraeptwobossgun]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraeptwobossgun---
+color 7
+nway bullets:13 speed:2 spread:145 directionType:relative
+	lifetime 1000
+
+---ability_Idrae Phase Two Boss Shotgun Two---
+Bullet Definition :: [[Idraeptwobossguntwo]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraeptwobossguntwo---
+color 7
+radial bullets:13 speed:2.5 angle:-2 directionType:relative
+	lifetime 1000
+wait 8
+radial bullets:13 speed:2.5 angle:2 directionType:relative
+	lifetime 1000
+
+
+---ability_Idrae Phase Two Top Shotgun---
+Bullet Definition :: [[Idraeptwotopshotgun]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraeptwotopshotgun---
+sprite Custom7
+color 2
+nway bullets:14 speed:2 spread:180 delay:1 angle:180
+	lifetime 180
+nway bullets:14 speed:2 spread:-180 delay:1 angle:180
+	lifetime 180
+
+
+---ability_Idrae Phase Two Bottom Shotgun---
+Bullet Definition :: [[Idraeptwobottomshotgun]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraeptwobottomshotgun---
+sprite Custom7
+color 2
+nway bullets:14 speed:2 spread:180 delay:1
+	lifetime 160
+wait 1
+nway bullets:14 speed:2 spread:-180 delay:1
+	lifetime 160
+
+
+---ability_Idrae Phase Two Post Tower Shotgun---
+Bullet Definition :: [[Idraeptwoposttowershotgun]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraeptwoposttowershotgun---
+sprite WhitePool 3
+radial bullets:1
+	lifetime 100
+	radius 2.9
+color 2
+sprite Basic
+nway bullets:10 delay:1 spread:90 speed:2.5 directionType:relative
+	lifetime 100
+wait 10
+nway bullets:10 delay:1 spread:-90 speed:2.5 directionType:relative
+	lifetime 100
+
+
+
+
+//Phase Three Attacks
+
+
+
+---ability_Idrae Phase Three Middle Shotgun---
+Bullet Definition :: [[Idraepthreebossradial]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraepthreebossradial---
+sprite WhitePool 0.5
+radial bullets:1
+	lifetime 60
+color 3
+sprite Custom11
+potency 125
+nway bullets:10 speed:3.5 spread:90 angle:45 directionType:relative
+	lifetime 1000
+wait 10
+nway bullets:10 speed:1 spread:90 angle:45 directionType:relative
+	lifetime 1000
+
+
+---ability_Idrae Phase Three Boss Shotgun---
+Bullet Definition :: [[Idraepthreebossgun]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraepthreebossgun---
+color 7
+radial bullets:10 speed:2 directionType:relative
+	lifetime 1000
+
+
+
+
+---ability_Idrae Phase Three Boss Shotgun Two---
+Bullet Definition :: [[Idraepthreebossguntwo]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraepthreebossguntwo---
+color 4
+sprite Custom7
+nway bullets:4 speed:4 spread:120 directionType:relative
+	lifetime 1000
+wait 3
+nway bullets:4 speed:4 spread:120 directionType:relative
+	lifetime 1000
+
+
+
+
+//Phase Four Attacks
+
+
+
+---ability_Idrae Phase Four Boss Slow Radial---
+Bullet Definition :: [[Idraepfourbossradial]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraepfourbossradial---
+color 6
+sprite Custom7
+radial bullets:8 speed:0.5 directionType:relative
+	lifetime 1000
+
+
+
+
+---ability_Idrae Phase Four Spiral---
+Bullet Definition :: [[Idraepfourspiral]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraepfourspiral---
+radial bullets:2 speed:1
+	lifetime 250
+wait 4
+radial bullets:2 speed:1 angle:15
+	lifetime 250
+wait 4
+radial bullets:2 speed:1 angle:30
+	lifetime 250
+wait 4
+radial bullets:2 speed:1 angle:45
+	lifetime 250
+wait 4
+radial bullets:2 speed:1 angle:60
+	lifetime 250
+wait 4
+radial bullets:2 speed:1 angle:75
+	lifetime 250
+wait 4
+radial bullets:2 speed:1 angle:90
+	lifetime 250
+wait 4
+radial bullets:2 speed:1 angle:105
+	lifetime 250
+wait 4
+radial bullets:2 speed:1 angle:120
+	lifetime 250
+wait 4
+radial bullets:2 speed:1 angle:135
+	lifetime 250
+wait 4
+radial bullets:2 speed:1 angle:150
+	lifetime 250
+wait 4
+radial bullets:2 speed:1 angle:165
+	lifetime 250
+
+
+
+
+---ability_Idrae Phase Four Boss Shotgun---
+Bullet Definition :: [[Idraepfourbossgun]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraepfourbossgun---
+color 3
+sprite Custom7
+radial bullets:14 speed:3 directionType:relative
+	lifetime 1000
+
+
+
+
+//Phase Five Attacks
+
+
+
+---ability_Idrae Phase Five Boss Radial---
+Bullet Definition :: [[Idraepfivebossradial]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraepfivebossradial---
+sprite WhitePool 0.6
+radial bullets:1
+	lifetime 40
+	radius 0.45
+sprite Basic
+radial bullets:14 speed:1 directionType:relative
+	lifetime 1000
+wait 20
+radial bullets:12 speed:1 directionType:relative
+	lifetime 80
+wait 20
+radial bullets:12 speed:1 directionType:relative
+	lifetime 1000
+
+
+---ability_Idrae Phase Five Boss Shotgun---
+Bullet Definition :: [[Idraepfivebossgun]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraepfivebossgun---
+color 3
+sprite Custom7
+nway bullets:9 speed:6 spread:100 directionType:relative
+	lifetime 1000
+wait 2
+nway bullets:9 speed:6 spread:100 directionType:relative
+	lifetime 1000
+wait 8
+nway bullets:10 speed:6 spread:110 directionType:relative
+	lifetime 1000
+wait 2
+nway bullets:10 speed:6 spread:110 directionType:relative
+	lifetime 1000
+wait 8
+nway bullets:13 speed:6 spread:140 directionType:relative
+	lifetime 1000
+
+
+---ability_Idrae Phase Five Bomb Small---
+Bullet Definition :: [[Idraepfivebombsmall]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraepfivebombsmall---
+potency 150
+sprite CirclePool 1
+radial bullets:1
+	lifetime 1000
+	aoeexplosion
+	radius 0.85
+	timedFill 30
+	damageEvery 30
+	wait 30
+	vanish
+
+
+
+//Phase Six Attacks
+
+
+
+---ability_Idrae Phase Six Random Line---
+Bullet Definition :: [[Idraepsixbulletwall]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraepsixbulletwall---
+sprite Custom7
+repeat bullets:10 speed:3.5 angleChange:180 delay:2
+	lifetime 1000
+
+---ability_Idrae Phase Six Random Bullets One---
+Bullet Definition :: [[Idraepsixsidebulletwall]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraepsixsidebulletwall---
+color 3
+sprite Custom11
+repeat bullets:16 speed:2.5 delay:5 angle:185 maxAngle:355
+	lifetime 300
+	wait 110
+	direction absolute -90
+
+---ability_Idrae Phase Six Random Bullets Two---
+Bullet Definition :: [[Idraepsixsidebulletwalltwo]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraepsixsidebulletwalltwo---
+color 3
+sprite Custom11
+repeat bullets:16 speed:2.5 delay:5 angle:5 maxAngle:175
+	lifetime 300
+	wait 110
+	direction absolute 90
+
+---ability_Idrae Phase Six Boss Shotgun---
+Bullet Definition :: [[Idraepsixbossgun]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraepsixbossgun---
+color 7
+radial bullets:11 speed:1.5 directionType:relative
+	lifetime 1000
+
+---ability_Idrae Phase Six Shotgun---
+Bullet Definition :: [[Idraepsixbossguntwo]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraepsixbossguntwo---
+sprite PurplePool 0.5
+radial bullets:1
+	lifetime 1000
+	radius 0.35
+	timedFill 30
+	damageEvery 30
+	wait 30
+	vanish
+wait 30
+color 2
+sprite Custom12
+nway bullets:3 speed:1 spread:40 directionType:relative
+	lifetime 200
+nway bullets:2 speed:1 spread:30 angle:90 directionType:relative
+	lifetime 200
+nway bullets:3 speed:1 spread:40 angle:180 directionType:relative 
+	lifetime 200
+nway bullets:2 speed:1 spread:30 angle:270 directionType:relative
+	lifetime 200
+
+
+---ability_Idrae Phase Six Long Bomb---
+Bullet Definition :: [[Idraepsixlongbomb]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraepsixlongbomb---
+potency 125
+sprite RectPool 4.0 2.0
+radial bullets:1
+	lifetime 1000
+	aoeexplosion
+	radius 4.0 1.85
+	timedFill 40
+	damageEvery 40
+	wait 40
+	fire idraepsixbombextend
+	wait 80
+	vanish
+
+---bulletdef_idraepsixbombextend---
+potency 125
+sprite RectPool 4.0 2.0
+radial bullets:1
+	lifetime 1000
+	aoeexplosion
+	radius 4.0 1.85
+	damageEvery 5
+	wait 75
+	vanish
+
+
+
+
+//Final Phase Attacks
+
+//Part One
+
+
+---ability_Idrae Phase Final Line---
+Bullet Definition :: [[Idraepfline]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraepfline---
+sprite OrangePool 0.3
+radial bullets:1
+	lifetime 1000
+	radius 0
+	timedFill 20
+	damageEvery 20
+	wait 55
+	vanish
+wait 20
+sprite Custom11
+repeat bullets:6 speed:2.5 delay:4 directionType:relative
+	lifetime 80
+
+---ability_Idrae Phase Final Bullet wall---
+Bullet Definition :: [[Idraepfbulletwall]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraepfbulletwall---
+sprite OrangePool 0.3
+radial bullets:1
+	lifetime 140
+	radius 0
+	timedFill 20
+	damageEvery 20
+	wait 55
+	vanish
+wait 20
+color 2
+sprite Basic
+radial bullets:2 speed:2 angle:90
+	lifetime 140
+radial bullets:2 speed:2 
+	lifetime 140
+	wait 30
+	direction absolute 90
+radial bullets:2 speed:2 
+	lifetime 140
+	wait 30
+	direction absolute 270
+radial bullets:2 speed:2 
+	lifetime 140
+	wait 20
+	direction absolute 90
+radial bullets:2 speed:2
+	lifetime 140
+	wait 20
+	direction absolute 270
+radial bullets:2 speed:2
+	lifetime 140
+	wait 10
+	direction absolute 90
+radial bullets:2 speed:2 
+	lifetime 140
+	wait 10
+	direction absolute 270
+wait 30
+radial bullets:2 speed:2 angle:90
+	lifetime 140
+radial bullets:2 speed:2 
+	lifetime 140
+	wait 30
+	direction absolute 90
+radial bullets:2 speed:2 
+	lifetime 140
+	wait 30
+	direction absolute 270
+radial bullets:2 speed:2 
+	lifetime 140
+	wait 20
+	direction absolute 90
+radial bullets:2 speed:2
+	lifetime 140
+	wait 20
+	direction absolute 270
+radial bullets:2 speed:2
+	lifetime 140
+	wait 10
+	direction absolute 90
+radial bullets:2 speed:2 
+	lifetime 140
+	wait 10
+	direction absolute 270
+wait 30
+radial bullets:2 speed:2 angle:90
+	lifetime 140
+radial bullets:2 speed:2 
+	lifetime 140
+	wait 30
+	direction absolute 90
+radial bullets:2 speed:2 
+	lifetime 140
+	wait 30
+	direction absolute 270
+radial bullets:2 speed:2 
+	lifetime 140
+	wait 20
+	direction absolute 90
+radial bullets:2 speed:2
+	lifetime 140
+	wait 20
+	direction absolute 270
+radial bullets:2 speed:2
+	lifetime 140
+	wait 10
+	direction absolute 90
+radial bullets:2 speed:2 
+	lifetime 140
+	wait 10
+	direction absolute 270
+
+
+
+
+
+
+
+
+---ability_Idrae Phase Final Boss Stationary Shotgun---
+Bullet Definition :: [[Idraepfbossstationarygun]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraepfbossstationarygun---
+sprite Custom8
+color 7
+nway bullets:13 speed:1 spread:190 directionType:relative
+	lifetime 600
+	wait 240
+	speed 0
+nway bullets:12 speed:0 spread:160 directionType:relative
+	lifetime 600
+	wait 40
+	speed 1
+	wait 200
+	speed 0
+nway bullets:13 speed:0 spread:190 directionType:relative
+	lifetime 600
+	wait 80
+	speed 1
+	wait 160
+	speed 0
+nway bullets:12 speed:0 spread:160 directionType:relative
+	lifetime 600
+	wait 120
+	speed 1
+	wait 120
+	speed 0
+nway bullets:13 speed:0 spread:190 directionType:relative
+	lifetime 600
+	wait 160
+	speed 1
+	wait 80
+	speed 0
+nway bullets:12 speed:0 spread:160 directionType:relative
+	lifetime 600
+	wait 200
+	speed 1
+	wait 40
+	speed 0
+	
+
+
+---ability_Idrae Phase Final Boss Shotgun---
+Bullet Definition :: [[Idraepfbossgun]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraepfbossgun---
+sprite Custom7
+color 7
+nway bullets:7 speed:2 spread:110 directionType:relative
+	lifetime 1000
+
+---ability_Idrae Phase Final Spiral---
+Bullet Definition :: [[Idraepfspiral]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraepfspiral---
+sprite Custom9
+color 3
+radial bullets:1 speed:1 directionType:relative
+	lifetime 1000
+
+//Final Phase Part Two
+
+---ability_Idrae Phase Final Bullet Wall Two---
+Bullet Definition :: [[Idraepfbulletwalltwo]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraepfbulletwalltwo---
+repeat bullets:7 speed:1.25 speedChange:2 angle:90 delay:4
+	lifetime 110
+	wait 10
+	speed 2
+	direction absolute 0
+
+
+---ability_Idrae Phase Final Bullet Wall Three---
+Bullet Definition :: [[Idraepfbulletwallthree]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraepfbulletwallthree---
+repeat bullets:7 speed:1.25 speedChange:2 delay:4
+	lifetime 145
+	wait 10
+	speed 1.5
+	direction absolute -90
+
+
+---ability_Idrae Phase Final Spiral Two---
+Bullet Definition :: [[Idraepfspiraltwo]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraepfspiraltwo---
+sprite Custom12
+color 3
+radial bullets:1 speed:0.5 directionType:relative
+	lifetime 240
+
+
+---ability_Idrae Phase Final Boomerang---
+Bullet Definition :: [[Idraepfboomerang]]
+VFX Charging :: trigger:Attack2*
+Max Range :: 100.0
+
+---bulletdef_Idraepfboomerang---
+sprite Custom2
+nway bullets:13 spread:160 speed:2 directionType:relative
+	lifetime 250
+	wait 120
+	direction relative 180
+
+
+
+
+//Auras
+
+---aura_Invulnerability Indicator---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1 
+Time Per Tick :: 1.0
+Icon :: statusicons_3
+
+
+---aura_Idrae Phase Two Speed Buff---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1 
+Time Per Tick :: 1.0
+Definitions :: [[Idrae Phase Two Speed Buff]]
+
+---auraaffectstat_Idrae Phase Two Speed Buff---
+Stat :: Speed
+Boost :: 200.0
+
+
+---aura_Idrae Phase Two Speed Debuff---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1 
+Time Per Tick :: 1.0
+Definitions :: [[Idrae Phase Two Speed Debuff]]
+
+---auraaffectstat_Idrae Phase Two Speed Debuff---
+Stat :: Speed
+Boost :: -30.0
+
+
+---aura_Speed Cap---
+Type :: Debuff
+Duration :: -1
+Icon :: statusicons_4
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Speed Cap]]
+
+---auraaffectstat_Speed Cap---
+Stat :: Speed
+Cap :: 500
+
+
+---aura_Idrae Phase Three Speed---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1 
+Time Per Tick :: 1.0
+Definitions :: [[Idrae Phase Three Speed]]
+
+---auraaffectstat_Idrae Phase Three Speed---
+Stat :: Speed
+Boost :: 120.0
+
+
+---aura_Idrae Phase Four Speed---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1 
+Time Per Tick :: 1.0
+Definitions :: [[Idrae Phase Four Speed]]
+
+---auraaffectstat_Idrae Phase Four Speed---
+Stat :: Speed
+Boost :: 80.0
+
+---aura_Idrae Phase Five Speed---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1 
+Time Per Tick :: 1.0
+Definitions :: [[Idrae Phase Five Speed]]
+
+---auraaffectstat_Idrae Phase Five Speed---
+Stat :: Speed
+Boost :: 400.0
+
+
+---aura_Idrae Phase Six Speed---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1 
+Time Per Tick :: 1.0
+Definitions :: [[Idrae Phase Six Speed]]
+
+---auraaffectstat_Idrae Phase Six Speed---
+Stat :: Speed
+Boost :: -60.0
+
+
+---aura_Idrae Phase Final Rec Cap---
+Type :: Debuff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Idrae Phase Final Rec Cap]]
+
+---auraaffectstat_Idrae Phase Final Rec Cap---
+Stat :: Recovery
+Cap :: 0
+
+---aura_Sicken---
+Type :: Buff
+Duration :: -1
+Icon :: statusicons_5
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:Sicken]]
+
+---script_Sicken_IncomingHealing---
+        additionalDamage = -damage
+
+
+---aura_Idrae Death Speed---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1 
+Time Per Tick :: 1.0
+Definitions :: [[Idrae Death Speed]]
+
+---auraaffectstat_Idrae Death Speed---
+Stat :: Speed
+Boost :: -90.0
+
+
+
+---aura_Idrae Max Hp---
+Type :: Buff
+Duration :: -1
+Max stacks :: 1 
+Time Per Tick :: 1.0
+Definitions :: [[AuraAffectStat/Idrae Max Hp]]
+
+---auraaffectstat_Idrae Max Hp---
+Stat :: Vitality
+Boost :: 270.0
+
+
+---layout_layout2---
+
+---script_idrae_Monster---
+
+slowPlayer := func() {
+	currentNearby := getNearbyEntities(myEntityId)
+	for i := 0; i < len(currentNearby); i++ {
+		if isEnemyOfEntity(myEntityId, currentNearby[i].id) {
+			addAuraToEntity(myEntityId, "Idrae Phase X Speed Cap", 0, currentNearby[i].id)
+		}
+	}
+}
+
+
+unSlowPlayer := func() {
+	currentNearby := getNearbyEntities(myEntityId)
+	for i := 0; i < len(currentNearby); i++ {
+		if isEnemyOfEntity(myEntityId, currentNearby[i].id) {
+			dispelAuraOnEntity(currentNearby[i].id, "Idrae Phase X Speed Cap")
+		}
+	}
+}
+
+Sicken := func() {
+	currentNearby := getNearbyEntities(myEntityId)
+	for i := 0; i < len(currentNearby); i++ {
+		if isEnemyOfEntity(myEntityId, currentNearby[i].id) {
+			addAuraToEntity(myEntityId, "Idrae Phase Final Rec Cap", 0, currentNearby[i].id)
+			addAuraToEntity(myEntityId, "Sicken", 0, currentNearby[i].id)
+		}
+	}
+}
+
+unSicken := func() {
+	currentNearby := getNearbyEntities(myEntityId)
+	for i := 0; i < len(currentNearby); i++ {
+		if isEnemyOfEntity(myEntityId, currentNearby[i].id) {
+			dispelAuraOnEntity(currentNearby[i].id, "Idrae Phase Final Rec Cap")
+			dispelAuraOnEntity(currentNearby[i].id, "Sicken")
+		}
+	}
+}
+
+if !isDead && targetEntityId != 0 {
+
+
+//hp
+hp := getPoints(myEntityId, "hp", "current")
+pthp := getPoints(myEntityId, "hp", "max")
+//wait
+if scriptVars["PhaseTransitionCount"] == 2 || scriptVars["PhaseTransitionCount"] == 4 || scriptVars["PhaseTransitionCount"] == 6 || scriptVars["PhaseTransitionCount"] == 8 || scriptVars["PhaseTransitionCount"] == 10 || scriptVars["PhaseTransitionCount"] == 12 {
+	scriptVars["PhaseTransitionDelay"] += delta
+	changeAttackBehaviour(myEntityId, "Stationary")
+	addAuraToEntity(myEntityId, "Invulnerability Indicator", 0, myEntityId)
+	setCollisionLayer(myEntityId, CollisionLayerDynamic)
+	if scriptVars["PhaseTransitionDelay"] > 5.0	{
+		scriptVars["PhaseTransitionCount"] += 1
+	}
+}
+
+				if is_undefined(scriptVars["WallTimer"]){
+					setPosition(myEntityId, positionInCurrentRoom(myEntityId, [21.0,21.0,0.0]))
+					addAuraToEntity(myEntityId, "Idrae Max Hp", 0, myEntityId)
+					addHitPoints(myEntityId, 500000000)
+					scriptVars["BombTimer"]=0.0
+					scriptVars["BombCounter"]=0
+					scriptVars["SubAttackTimer"]=0.0
+					scriptVars["BossAttackTimer"]=0.0
+					scriptVars["WallTimer"]=0.0
+
+//Phase Transition stuff
+					scriptVars["PhaseTransitionCount"] = 1
+					scriptVars["PhaseTransitionDelay"]=0.0
+				}
+
+	
+
+
+
+
+//phase 2 setup
+
+if hp < 0.82 * pthp && scriptVars["PhaseTransitionCount"] == 1  {
+				log("phase 2")
+				clearBulletsForEntity(myEntityId)
+				scriptVars["PhaseTransitionDelay"] = 0.0
+				scriptVars["PhaseTransitionCount"]+=1
+					setCollisionLayer(myEntityId, CollisionLayerDynamic)
+					scriptVars["BombTimer"]=0.0
+					scriptVars["MidAttackTimer"]=0.0
+					scriptVars["MidAttackTwoTimer"]=4.0
+					scriptVars["BossAttackTimer"]=4.0
+					scriptVars["SubAttackTimer"]=0.0
+					scriptVars["WallTimer"]=0.0
+//Id stuff
+					scriptVars["towerCount"]=0
+					scriptVars["allyIDsTimer"]=0.0
+					scriptVars["allyIDsReady"]=0
+					scriptVars["towersDead"]=0
+//Pathing stuff
+					scriptVars["directionCounter"]=0
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [27.0,15.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					setPosition(myEntityId, positionInCurrentRoom(myEntityId, [21.0,21.0,0.0]))
+//Auras
+				addAuraToEntity(myEntityId, "Idrae Phase Two Speed Buff", 0, myEntityId)
+				addAuraToEntity(myEntityId, "Invulnerability Indicator", 0, myEntityId)
+				}
+
+//Phase 1
+
+if scriptVars["PhaseTransitionCount"] == 1 {
+				scriptVars["PhaseTransitionDelay"] = 0.0
+
+				scriptVars["SubAttackTimer"]+=delta
+				if scriptVars["SubAttackTimer"]>2.0	{
+				useAbilityAtPosition(myEntityId, "Idrae Phase One Bullet Wall One", positionInCurrentRoom(myEntityId, [3.0,39.0,0.0]))
+				useAbilityAtPosition(myEntityId, "Idrae Phase One Bullet Wall Two", positionInCurrentRoom(myEntityId, [39.0,39.0,0.0]))
+				scriptVars["SubAttackTimer"]=0.0
+				}
+
+				scriptVars["BossAttackTimer"]+=delta
+				if scriptVars["BossAttackTimer"]>5.0	{
+				useAbilityAtPosition(myEntityId, "Idrae Phase One Boss Shotgun", positionInCurrentRoom(myEntityId, [21.0,21.0,0.0]))
+				scriptVars["BossAttackTimer"]=0.0
+				}
+
+				scriptVars["WallTimer"]+=delta
+				if scriptVars["WallTimer"]<1.0	{
+				useAbilityAtPosition(myEntityId, "Idrae Phase One Room Limiter Warning", positionInCurrentRoom(myEntityId, [21.0,3.0,0.0]))
+				useAbilityAtPosition(myEntityId, "Idrae Phase One Room Limiter Warning", positionInCurrentRoom(myEntityId, [21.0,39.0,0.0]))
+				useAbilityAtPosition(myEntityId, "Idrae Phase One Room Limiter Two Warning", positionInCurrentRoom(myEntityId, [3.0,21.0,0.0]))
+				useAbilityAtPosition(myEntityId, "Idrae Phase One Room Limiter Two Warning", positionInCurrentRoom(myEntityId, [39.0,21.0,0.0]))
+				scriptVars["WallTimer"]=5.0
+				}
+				if scriptVars["WallTimer"]>15.0	{
+				useAbilityAtPosition(myEntityId, "Idrae Phase One Room Limiter", positionInCurrentRoom(myEntityId, [21.0,3.0,0.0]))
+				useAbilityAtPosition(myEntityId, "Idrae Phase One Room Limiter", positionInCurrentRoom(myEntityId, [21.0,39.0,0.0]))
+				useAbilityAtPosition(myEntityId, "Idrae Phase One Room Limiter Two", positionInCurrentRoom(myEntityId, [3.0,21.0,0.0]))
+				useAbilityAtPosition(myEntityId, "Idrae Phase One Room Limiter Two", positionInCurrentRoom(myEntityId, [39.0,21.0,0.0]))
+				useAbilityAtPosition(myEntityId, "Idrae Get Out Of Spawn", positionInCurrentRoom(myEntityId, [42.0,35.0,0.0]))
+				scriptVars["WallTimer"]=5.0
+				}
+
+
+
+//just a whole lot of bombs and the shotguns that fire from the walls. im sorry
+				scriptVars["BombTimer"]+=delta
+				if scriptVars["BombTimer"]>1.5	&& scriptVars["BombCounter"] == 0	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [36.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [6.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [21.0,36.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [21.0,6.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [36.0,17.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [6.0,17.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [17.0,36.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [17.0,6.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [36.0,25.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [6.0,25.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [25.0,36.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [25.0,6.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [36.0,13.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [6.0,13.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [13.0,36.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [13.0,6.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [36.0,29.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [6.0,29.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [29.0,36.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [29.0,6.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [36.0,9.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [6.0,9.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [9.0,36.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [9.0,6.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [36.0,33.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [6.0,33.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [33.0,36.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [33.0,6.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [28.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [14.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [21.0,28.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [21.0,14.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [28.0,17.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [14.0,17.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [17.0,28.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [17.0,14.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [28.0,25.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [14.0,25.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [25.0,28.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [25.0,14.0,0.0]))
+
+					useAbilityAtPosition(myEntityId, "Idrae Phase One Side Shotguns", positionInCurrentRoom(myEntityId, [39.0,39.0,0.0]), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+					useAbilityAtPosition(myEntityId, "Idrae Phase One Side Shotguns", positionInCurrentRoom(myEntityId, [3.0,39.0,0.0]), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+					useAbilityAtPosition(myEntityId, "Idrae Phase One Side Shotguns", positionInCurrentRoom(myEntityId, [39.0,3.0,0.0]), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+					useAbilityAtPosition(myEntityId, "Idrae Phase One Side Shotguns", positionInCurrentRoom(myEntityId, [3.0,3.0,0.0]), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+				scriptVars["BombCounter"] += 1
+				}
+				if scriptVars["BombTimer"]>3.0	&& scriptVars["BombCounter"] == 1	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [32.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [10.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [21.0,32.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [21.0,10.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [32.0,17.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [10.0,17.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [17.0,32.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [17.0,10.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [32.0,25.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [10.0,25.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [25.0,32.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [25.0,10.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [32.0,13.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [10.0,13.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [13.0,32.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [13.0,10.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [32.0,29.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [10.0,29.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [29.0,32.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [29.0,10.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [24.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [18.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [21.0,24.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [21.0,18.0,0.0]))
+
+					useAbilityAtPosition(myEntityId, "Idrae Phase One Side Shotguns", positionInCurrentRoom(myEntityId, [39.0,21.0,0.0]), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+					useAbilityAtPosition(myEntityId, "Idrae Phase One Side Shotguns", positionInCurrentRoom(myEntityId, [3.0,21.0,0.0]), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+					useAbilityAtPosition(myEntityId, "Idrae Phase One Side Shotguns", positionInCurrentRoom(myEntityId, [21.0,3.0,0.0]), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+					useAbilityAtPosition(myEntityId, "Idrae Phase One Side Shotguns", positionInCurrentRoom(myEntityId, [21.0,39.0,0.0]), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+				scriptVars["BombTimer"]=0.0
+				scriptVars["BombCounter"]=0
+				}
+
+
+
+}
+
+
+//Phase 3 setup
+if hp < 0.62 * pthp && scriptVars["PhaseTransitionCount"] == 3  {
+				log("phase 3")
+				clearBulletsForEntity(myEntityId)
+				scriptVars["PhaseTransitionDelay"] = 0.0
+				scriptVars["PhaseTransitionCount"]+=1
+				dispelAuraOnEntity(myEntityId, "Idrae Phase Two Speed Debuff")
+				unSlowPlayer ()
+
+					scriptVars["BombTimer"]=0.0
+					scriptVars["BombCounter"]=0
+					scriptVars["MidAttackTimer"]=0.0
+					scriptVars["BossAttackTimer"]=0.0
+					scriptVars["SubAttackTimer"]=0.0
+					scriptVars["WallTimer"]=0.0
+					scriptVars["MidAttackCounter"]=0
+//Pathing stuff
+					scriptVars["directionCounter"]=0
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [12.0,30.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					setPosition(myEntityId, positionInCurrentRoom(myEntityId, [21.0,21.0,0.0]))
+					addAuraToEntity(myEntityId, "Idrae Phase Three Speed", 0, myEntityId)
+//Minion stuff
+					scriptVars["minionCount"]=0
+					scriptVars["allyIDsTimer"]=0.0
+					scriptVars["allyIDsReady"]=0
+					scriptVars["towersDead"]=0
+				}
+
+//Phase 2
+
+if scriptVars["PhaseTransitionCount"] == 3 {
+				scriptVars["PhaseTransitionDelay"] = 0.0
+
+				slowPlayer()
+
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 0	&& scriptVars["towersDead"] == 0 	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [27.0,27.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=1
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 1	&& scriptVars["towersDead"] == 0 	{ 
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [15.0,27.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=2
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 2	&& scriptVars["towersDead"] == 0 	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [15.0,15.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=3
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 3	&& scriptVars["towersDead"] == 0 	{	
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [27.0,15.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=0
+				}
+
+
+				if scriptVars["towerCount"] == 0 {
+					summonEntity("blastertwo", positionInCurrentRoom(myEntityId, [36.0,6.0,0.0]), monsterLevel(myEntityId))
+					summonEntity("blastertwo", positionInCurrentRoom(myEntityId, [36.0,36.0,0.0]), monsterLevel(myEntityId))
+					summonEntity("blastertwo", positionInCurrentRoom(myEntityId, [6.0,6.0,0.0]), monsterLevel(myEntityId))
+					summonEntity("blastertwo", positionInCurrentRoom(myEntityId, [6.0,36.0,0.0]), monsterLevel(myEntityId))
+				scriptVars["towerCount"]=1
+				}
+
+				scriptVars["allyIDsTimer"]+=delta
+				if scriptVars["allyIDsTimer"]>2.5 && scriptVars["allyIDsReady"] == 0 {
+					scriptVars["allyIDs"]=getAlliesSortedByHealth(myEntityId)
+					scriptVars["towerOne"]=scriptVars["allyIDs"][1]["id"]
+					scriptVars["towerTwo"]=scriptVars["allyIDs"][2]["id"]
+					scriptVars["towerThree"]=scriptVars["allyIDs"][3]["id"]
+					scriptVars["towerFour"]=scriptVars["allyIDs"][4]["id"]
+					setCollisionLayer(scriptVars["towerOne"], CollisionLayerMonster)
+					setCollisionLayer(scriptVars["towerTwo"], CollisionLayerMonster)
+					setCollisionLayer(scriptVars["towerThree"], CollisionLayerMonster)
+					setCollisionLayer(scriptVars["towerFour"], CollisionLayerMonster)
+					dispelAuraOnEntity(scriptVars["towerOne"], "Invulnerability Indicator")
+					dispelAuraOnEntity(scriptVars["towerTwo"], "Invulnerability Indicator")
+					dispelAuraOnEntity(scriptVars["towerThree"], "Invulnerability Indicator")
+					dispelAuraOnEntity(scriptVars["towerFour"], "Invulnerability Indicator")
+					scriptVars["allyIDsReady"]=1
+				}
+
+
+				if isEntityDead(scriptVars["towerOne"]) == true && isEntityDead(scriptVars["towerTwo"]) == true && isEntityDead(scriptVars["towerThree"]) == true && isEntityDead(scriptVars["towerFour"]) == true && scriptVars["allyIDsReady"] == 1 {
+					clearBulletsForEntity(myEntityId)
+					clearBulletsForEntity(scriptVars["towerOne"])
+					clearBulletsForEntity(scriptVars["towerTwo"])
+					clearBulletsForEntity(scriptVars["towerThree"])
+					clearBulletsForEntity(scriptVars["towerFour"])
+
+					scriptVars["SubAttackTimer"]=0.0
+					scriptVars["towersDead"]=1
+					setCollisionLayer(myEntityId, CollisionLayerMonster)
+					scriptVars["allyIDsReady"]=2
+					dispelAuraOnEntity(myEntityId, "Idrae Phase Two Speed Buff")
+					dispelAuraOnEntity(myEntityId, "Invulnerability Indicator")
+					addAuraToEntity(myEntityId, "Idrae Phase Two Speed Debuff", 0, myEntityId)
+					changeAttackBehaviour(myEntityId, "Short Ranged")
+					pathTo(myEntityId, targetEntityId)
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Room Limiter", positionInCurrentRoom(myEntityId, [21.0,3.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Room Limiter", positionInCurrentRoom(myEntityId, [21.0,39.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Room Limiter Two", positionInCurrentRoom(myEntityId, [3.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Room Limiter Two", positionInCurrentRoom(myEntityId, [39.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Room Limiter Three", positionInCurrentRoom(myEntityId, [21.0,5.5,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Room Limiter Three", positionInCurrentRoom(myEntityId, [21.0,36.5,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Room Limiter Four", positionInCurrentRoom(myEntityId, [5.5,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Room Limiter Four", positionInCurrentRoom(myEntityId, [36.5,21.0,0.0]))
+				}
+
+
+
+				scriptVars["MidAttackTimer"]+=delta
+				if scriptVars["MidAttackTimer"]>1.5	&& scriptVars["towersDead"] == 0	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Middle Arrows", positionInCurrentRoom(myEntityId, [21.0,21.0,0.0]))
+				scriptVars["MidAttackTimer"]=0.0
+				}
+				if scriptVars["MidAttackTimer"]>1.5	&& scriptVars["towersDead"] == 1	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Middle Arrows", positionInCurrentRoom(myEntityId, [21.0,21.0,0.0]), 0.5)
+				scriptVars["MidAttackTimer"]=0.0
+				}
+
+
+				scriptVars["MidAttackTwoTimer"]+=delta
+				if scriptVars["MidAttackTwoTimer"]>3.5	&& scriptVars["towersDead"] == 1 {
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Slow Radial", positionInCurrentRoom(myEntityId, [21.0,21.0,0.0]))
+				scriptVars["MidAttackTwoTimer"]=0.0
+				}
+
+				scriptVars["BossAttackTimer"]+=delta
+				if scriptVars["BossAttackTimer"]>2.0	&& scriptVars["towersDead"] == 0	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Boss Shotgun", entityPosition(myEntityId), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+				scriptVars["BossAttackTimer"]=0.0
+				}
+
+//Accidentally used the += delta twice but i only realized after finishing the phase so now its a feature
+
+				scriptVars["BossAttackTimer"]+=delta
+				if scriptVars["BossAttackTimer"]>1.5	&& scriptVars["towersDead"] == 1	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Boss Shotgun Two", entityPosition(myEntityId), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+				scriptVars["BossAttackTimer"]=0.0
+				}
+
+				scriptVars["SubAttackTimer"]+=delta
+				if scriptVars["SubAttackTimer"]>2.0	&& scriptVars["towersDead"] == 0 {
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Top Shotgun", positionInCurrentRoom(myEntityId, [21.0,3.0,0.0]), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Bottom Shotgun", positionInCurrentRoom(myEntityId, [21.0,39.0,0.0]), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+				scriptVars["SubAttackTimer"]=0.0
+				}
+
+				if scriptVars["SubAttackTimer"]>2.0	&& scriptVars["towersDead"] == 1 {
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Post Tower Shotgun", positionInCurrentRoom(myEntityId, [35.0,35.0,0.0]), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [21.0,21.0,0.0])))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Post Tower Shotgun", positionInCurrentRoom(myEntityId, [7.0,7.0,0.0]), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [21.0,21.0,0.0])))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Post Tower Shotgun", positionInCurrentRoom(myEntityId, [7.0,35.0,0.0]), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [21.0,21.0,0.0])))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Post Tower Shotgun", positionInCurrentRoom(myEntityId, [35.0,7.0,0.0]), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [21.0,21.0,0.0])))
+				scriptVars["SubAttackTimer"]=0.0
+				}
+
+				scriptVars["WallTimer"]+=delta
+				if scriptVars["WallTimer"]<1.0	{
+					changeAttackBehaviour(myEntityId, "Ignore Targets")
+					setPosition(myEntityId, positionInCurrentRoom(myEntityId, [27.0,15.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Room Limiter Warning", positionInCurrentRoom(myEntityId, [21.0,3.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Room Limiter Warning", positionInCurrentRoom(myEntityId, [21.0,39.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Room Limiter Two Warning", positionInCurrentRoom(myEntityId, [3.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Room Limiter Two Warning", positionInCurrentRoom(myEntityId, [39.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Room Limiter Three Warning", positionInCurrentRoom(myEntityId, [21.0,5.5,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Room Limiter Three Warning", positionInCurrentRoom(myEntityId, [21.0,36.5,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Room Limiter Four Warning", positionInCurrentRoom(myEntityId, [5.5,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Room Limiter Four Warning", positionInCurrentRoom(myEntityId, [36.5,21.0,0.0]))
+				scriptVars["WallTimer"]=5.0
+				}
+				if scriptVars["WallTimer"]>15.0	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Room Limiter", positionInCurrentRoom(myEntityId, [21.0,3.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Room Limiter", positionInCurrentRoom(myEntityId, [21.0,39.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Room Limiter Two", positionInCurrentRoom(myEntityId, [3.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Room Limiter Two", positionInCurrentRoom(myEntityId, [39.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Room Limiter Three", positionInCurrentRoom(myEntityId, [21.0,5.5,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Room Limiter Three", positionInCurrentRoom(myEntityId, [21.0,36.5,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Room Limiter Four", positionInCurrentRoom(myEntityId, [5.5,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Two Room Limiter Four", positionInCurrentRoom(myEntityId, [36.5,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Get Out Of Spawn", positionInCurrentRoom(myEntityId, [42.0,35.0,0.0]))
+				scriptVars["WallTimer"]=5.0
+				}
+
+				scriptVars["BombTimer"]+=delta
+				if scriptVars["BombTimer"]>1.5	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [21.0,33.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [21.0,29.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [21.0,25.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [21.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [21.0,17.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [21.0,13.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [21.0,9.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [33.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [29.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [25.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [17.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [13.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [9.0,21.0,0.0]))
+				scriptVars["BombTimer"]=0.0
+				}
+
+
+
+}
+
+//phase 4 setup
+
+if hp < 0.54 * pthp && scriptVars["PhaseTransitionCount"] == 5  {
+				log("phase 4")
+				clearBulletsForEntity(myEntityId)
+				scriptVars["PhaseTransitionDelay"] = 0.0
+				scriptVars["PhaseTransitionCount"]+=1
+
+				dispelAuraOnEntity(myEntityId, "Idrae Phase Three Speed")
+					scriptVars["BombTimer"]=0.0
+					scriptVars["BombCounter"]=0
+					scriptVars["SubAttackTimer"]=0.0
+					scriptVars["BossAttackTimer"]=4.0
+					scriptVars["MidAttackTimer"]=6.0
+					scriptVars["WallTimer"]=0.0
+					setPosition(myEntityId, positionInCurrentRoom(myEntityId, [21.0,21.0,0.0]))
+					addAuraToEntity(myEntityId, "Idrae Phase Four Speed", 0, myEntityId)
+				}
+//Phase 3
+if scriptVars["PhaseTransitionCount"] == 5 {
+				scriptVars["PhaseTransitionDelay"] - 0.0
+
+				if scriptVars["minionCount"] == 0 {
+					summonEntity("cultist", positionInCurrentRoom(myEntityId, [35.0,7.0,0.0]), monsterLevel(myEntityId))
+					summonEntity("cultist", positionInCurrentRoom(myEntityId, [35.0,35.0,0.0]), monsterLevel(myEntityId))
+					summonEntity("cultist", positionInCurrentRoom(myEntityId, [7.0,7.0,0.0]), monsterLevel(myEntityId))
+					summonEntity("cultist", positionInCurrentRoom(myEntityId, [7.0,35.0,0.0]), monsterLevel(myEntityId))
+				scriptVars["minionCount"]=1
+				}
+
+				scriptVars["allyIDsTimer"]+=delta
+				if scriptVars["allyIDsTimer"]>2.0 && scriptVars["allyIDsReady"] == 0 {
+					scriptVars["allyIDs"]=getAlliesSortedByHealth(myEntityId)
+					scriptVars["towerOne"]=scriptVars["allyIDs"][1]["id"]
+					scriptVars["towerTwo"]=scriptVars["allyIDs"][2]["id"]
+					scriptVars["towerThree"]=scriptVars["allyIDs"][3]["id"]
+					scriptVars["towerFour"]=scriptVars["allyIDs"][4]["id"]
+					scriptVars["allyIDsReady"]=1
+				}
+
+
+
+
+
+
+				
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 0	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [30.0,30.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=1
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 1	{ 
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [30.0,12.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=2
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 2	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [12.0,12.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=3
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 3	{	
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [12.0,30.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=0
+				}	
+
+					
+
+				
+
+				scriptVars["MidAttackTimer"]+=delta
+				if scriptVars["MidAttackTimer"]>1.0 && scriptVars["MidAttackCounter"] == 0	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase Three Middle Shotgun", positionInCurrentRoom(myEntityId, [21.0,21.0,0.0]), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [40.0,40.0,0.0])))
+				scriptVars["MidAttackCounter"] += 1
+				}
+				if scriptVars["MidAttackTimer"]>2.0 && scriptVars["MidAttackCounter"] == 1	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase Three Middle Shotgun", positionInCurrentRoom(myEntityId, [21.0,21.0,0.0]), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [40.0,2.0,0.0])))
+				scriptVars["MidAttackCounter"] += 1
+				}
+				if scriptVars["MidAttackTimer"]>3.0 && scriptVars["MidAttackCounter"] == 2	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase Three Middle Shotgun", positionInCurrentRoom(myEntityId, [21.0,21.0,0.0]), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [2.0,2.0,0.0])))
+				scriptVars["MidAttackCounter"] += 1
+				}
+				if scriptVars["MidAttackTimer"]>4.0 && scriptVars["MidAttackCounter"] == 3	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase Three Middle Shotgun", positionInCurrentRoom(myEntityId, [21.0,21.0,0.0]), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [2.0,40.0,0.0])))
+				scriptVars["MidAttackTimer"]=0.0
+				scriptVars["MidAttackCounter"]=0
+				}
+
+
+
+				scriptVars["BossAttackTimer"]+=delta
+				if scriptVars["BossAttackTimer"]>0.3	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase Three Boss Shotgun", entityPosition(myEntityId), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [21.0,21.0,0.0])))
+				scriptVars["BossAttackTimer"]=0.0
+				}
+
+
+
+
+				scriptVars["SubAttackTimer"]+=delta
+				if scriptVars["SubAttackTimer"]>2.0	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase Three Boss Shotgun Two", entityPosition(myEntityId), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+				scriptVars["SubAttackTimer"]=0.0
+				}
+
+
+
+				scriptVars["WallTimer"]+=delta
+				if scriptVars["WallTimer"]<1.0	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase Three Room Limiter Warning", positionInCurrentRoom(myEntityId, [21.0,4.5,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Three Room Limiter Warning", positionInCurrentRoom(myEntityId, [21.0,37.5,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Three Room Limiter Two Warning", positionInCurrentRoom(myEntityId, [4.5,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Three Room Limiter Two Warning", positionInCurrentRoom(myEntityId, [37.5,21.0,0.0]))
+					changeAttackBehaviour(myEntityId, "Ignore Targets")
+					setCollisionLayer(myEntityId, CollisionLayerMonster)
+					dispelAuraOnEntity(myEntityId, "Invulnerability Indicator")
+				scriptVars["WallTimer"]=5.0
+				}
+				if scriptVars["WallTimer"]>15.0	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase Three Room Limiter", positionInCurrentRoom(myEntityId, [21.0,4.5,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Three Room Limiter", positionInCurrentRoom(myEntityId, [21.0,37.5,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Three Room Limiter Two", positionInCurrentRoom(myEntityId, [4.5,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Three Room Limiter Two", positionInCurrentRoom(myEntityId, [37.5,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Get Out Of Spawn", positionInCurrentRoom(myEntityId, [42.0,35.0,0.0]))
+				scriptVars["WallTimer"]=5.0
+				}
+
+				scriptVars["BombTimer"]+=delta
+				if scriptVars["BombTimer"]>1.5	&& scriptVars["BombCounter"] == 0	{
+
+
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [33.0,33.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [33.0,29.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [33.0,25.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [33.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [33.0,17.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [33.0,13.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [33.0,9.0,0.0]))
+
+
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [9.0,33.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [9.0,29.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [9.0,25.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [9.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [9.0,17.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [9.0,13.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [9.0,9.0,0.0]))
+
+				scriptVars["BombCounter"] += 1
+				}
+
+				if scriptVars["BombTimer"]>3.0	&& scriptVars["BombCounter"] == 1	|| scriptVars["BombTimer"]>9.0	&& scriptVars["BombCounter"] == 5 {
+
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [29.0,33.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [29.0,29.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [29.0,25.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [29.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [29.0,17.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [29.0,13.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [29.0,9.0,0.0]))
+
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [13.0,33.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [13.0,29.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [13.0,25.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [13.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [13.0,17.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [13.0,13.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [13.0,9.0,0.0]))
+
+				scriptVars["BombCounter"] += 1
+				}
+
+				if scriptVars["BombTimer"]>4.5	&& scriptVars["BombCounter"] == 2	|| scriptVars["BombTimer"]>7.5	&& scriptVars["BombCounter"] == 4 {
+
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [25.0,33.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [25.0,29.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [25.0,25.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [25.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [25.0,17.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [25.0,13.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [25.0,9.0,0.0]))
+
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [17.0,33.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [17.0,29.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [17.0,25.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [17.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [17.0,17.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [17.0,13.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [17.0,9.0,0.0]))
+
+				scriptVars["BombCounter"] += 1
+				}
+
+				if scriptVars["BombTimer"]>6.0	&& scriptVars["BombCounter"] == 3	{
+
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [21.0,33.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [21.0,29.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [21.0,25.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [21.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [21.0,17.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [21.0,13.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [21.0,9.0,0.0]))
+
+				scriptVars["BombCounter"] += 1
+				}
+
+				if scriptVars["BombCounter"] == 6	{
+				scriptVars["BombTimer"]=0.0
+				scriptVars["BombCounter"]=0
+				}
+
+
+
+
+}
+
+//phase 5 setup
+
+if hp < 0.32 * pthp && scriptVars["PhaseTransitionCount"] == 7  {
+				log("phase 5")
+				clearBulletsForEntity(myEntityId)
+				scriptVars["PhaseTransitionDelay"] = 0.0
+				scriptVars["PhaseTransitionCount"]+=1
+				dispelAuraOnEntity(myEntityId, "Idrae Phase Four Speed")
+
+					scriptVars["BombTimer"]=0.0
+					scriptVars["SubAttackTimer"]=0.0
+					scriptVars["WallTimer"]=0.0
+//Pathing stuff
+					scriptVars["ChasePauseTimer"]=0.0
+					scriptVars["directionCounter"]=0
+					scriptVars["direction"]=entityPosition(targetEntityId)
+					pathTo(myEntityId, scriptVars["direction"])
+					setPosition(myEntityId, positionInCurrentRoom(myEntityId, [21.0,21.0,0.0]))
+					addAuraToEntity(myEntityId, "Idrae Phase Five Speed", 0, myEntityId)
+				}
+
+//Phase 4
+if scriptVars["PhaseTransitionCount"] == 7 {
+				scriptVars["PhaseTransitionDelay"] = 0.0
+
+				scriptVars["SubAttackTimer"]+=delta
+				if scriptVars["SubAttackTimer"]>1.5 {
+					useAbilityAtPosition(myEntityId, "Idrae Phase Four Boss Slow Radial", entityPosition(myEntityId), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+				scriptVars["SubAttackTimer"]=0.0
+				}
+
+
+				scriptVars["BossAttackTimer"]+=delta
+				if scriptVars["BossAttackTimer"]>0.8	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase Four Boss Shotgun", entityPosition(myEntityId), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+				scriptVars["BossAttackTimer"]=0.0
+				}
+
+
+
+
+				scriptVars["MidAttackTimer"]+=delta
+				if scriptVars["MidAttackTimer"]>3.0	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase Four Spiral", positionInCurrentRoom(myEntityId, [21.0,21.0,0.0]))
+				scriptVars["MidAttackTimer"]=0.0
+				}
+
+
+
+				scriptVars["WallTimer"]+=delta
+				if scriptVars["WallTimer"]<1.0	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase Four Room Limiter Warning", positionInCurrentRoom(myEntityId, [21.0,7.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Four Room Limiter Warning", positionInCurrentRoom(myEntityId, [21.0,35.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Four Room Limiter Two Warning", positionInCurrentRoom(myEntityId, [7.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Four Room Limiter Two Warning", positionInCurrentRoom(myEntityId, [35.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Four Room Limiter Three Warning", positionInCurrentRoom(myEntityId, [21.0,21.0,0.0]))
+					pathTo(myEntityId, targetEntityId)
+					changeAttackBehaviour(myEntityId, "Short Ranged")
+					setCollisionLayer(myEntityId, CollisionLayerMonster)
+					dispelAuraOnEntity(myEntityId, "Invulnerability Indicator")
+					scriptVars["WallTimer"]=5.0
+				}
+				if scriptVars["WallTimer"]>15.0	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase Four Room Limiter", positionInCurrentRoom(myEntityId, [21.0,7.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Four Room Limiter", positionInCurrentRoom(myEntityId, [21.0,35.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Four Room Limiter Two", positionInCurrentRoom(myEntityId, [7.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Four Room Limiter Two", positionInCurrentRoom(myEntityId, [35.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Four Room Limiter Three", positionInCurrentRoom(myEntityId, [21.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Get Out Of Spawn", positionInCurrentRoom(myEntityId, [42.0,35.0,0.0]))
+				scriptVars["WallTimer"]=5.0
+				}
+
+				scriptVars["BombTimer"]+=delta
+				if scriptVars["BombTimer"]>1.5	&& scriptVars["BombCounter"] == 0	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [21.0,15.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [21.0,27.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [15.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [27.0,21.0,0.0]))
+				scriptVars["BombCounter"] += 1
+				}
+				if scriptVars["BombTimer"]>3.0	&& scriptVars["BombCounter"] == 1	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [15.0,15.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [15.0,27.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [27.0,27.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase X Bomb", positionInCurrentRoom(myEntityId, [27.0,15.0,0.0]))
+				scriptVars["BombTimer"]=0.0
+				scriptVars["BombCounter"]=0
+				}
+
+
+
+
+}
+
+//phase 6 setup is inside phase 5 since this is a minion killing phase
+
+//phase 5
+
+if scriptVars["PhaseTransitionCount"] == 9 {
+				scriptVars["PhaseTransitionDelay"] = 0.0
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 1.5	&&	scriptVars["directionCounter"] == 0	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase Five Boss Shotgun", entityPosition(myEntityId), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+					scriptVars["directionCounter"]=1
+					changeAttackBehaviour(myEntityId, "Stationary")
+
+				}
+//Boss paths to the players previous position instead of current one
+				if scriptVars["directionCounter"] == 1 {
+					scriptVars["ChasePauseTimer"]+=delta
+					if scriptVars["ChasePauseTimer"]>2.0	{
+						scriptVars["direction"]=entityPosition(targetEntityId)
+						pathTo(myEntityId, scriptVars["direction"])
+						scriptVars["directionCounter"]=0
+						scriptVars["ChasePauseTimer"]=0.0
+						changeAttackBehaviour(myEntityId, "Ignore Targets")
+					}
+
+				}
+
+
+				scriptVars["SubAttackTimer"]+=delta
+				if scriptVars["SubAttackTimer"]>1.5 {
+					useAbilityAtPosition(myEntityId, "Idrae Phase Five Boss Radial", entityPosition(myEntityId), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+				scriptVars["SubAttackTimer"]=0.0
+				}
+
+
+
+				scriptVars["WallTimer"]+=delta
+				if scriptVars["WallTimer"]<1.0	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase Five Room Limiter Warning", positionInCurrentRoom(myEntityId, [21.0,4.5,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Five Room Limiter Warning", positionInCurrentRoom(myEntityId, [21.0,37.5,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Five Room Limiter Two Warning", positionInCurrentRoom(myEntityId, [4.5,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Five Room Limiter Two Warning", positionInCurrentRoom(myEntityId, [37.5,21.0,0.0]))
+					setCollisionLayer(scriptVars["towerOne"], CollisionLayerMonster)
+					setCollisionLayer(scriptVars["towerTwo"], CollisionLayerMonster)
+					setCollisionLayer(scriptVars["towerThree"], CollisionLayerMonster)
+					setCollisionLayer(scriptVars["towerFour"], CollisionLayerMonster)
+					dispelAuraOnEntity(scriptVars["towerOne"], "Invulnerability Indicator")
+					dispelAuraOnEntity(scriptVars["towerTwo"], "Invulnerability Indicator")
+					dispelAuraOnEntity(scriptVars["towerThree"], "Invulnerability Indicator")
+					dispelAuraOnEntity(scriptVars["towerFour"], "Invulnerability Indicator")
+					changeAttackBehaviour(myEntityId, "Ignore Targets")
+				scriptVars["WallTimer"]=5.0
+				}
+				if scriptVars["WallTimer"]>15.0	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase Five Room Limiter", positionInCurrentRoom(myEntityId, [21.0,4.5,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Five Room Limiter", positionInCurrentRoom(myEntityId, [21.0,37.5,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Five Room Limiter Two", positionInCurrentRoom(myEntityId, [4.5,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Five Room Limiter Two", positionInCurrentRoom(myEntityId, [37.5,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Get Out Of Spawn", positionInCurrentRoom(myEntityId, [42.0,35.0,0.0]))
+				scriptVars["WallTimer"]=5.0
+				}
+
+				scriptVars["BombTimer"]+=delta
+				if scriptVars["BombTimer"]>3.5	{
+					for i:=0; i < 40; i++   {
+						useAbilityAtPosition(myEntityId, "Idrae Phase Five Bomb Small", randomPositionInCurrentRoom(myEntityId, 6.0))
+					}
+				scriptVars["BombTimer"]=0.0
+				}
+
+
+//phase 6 setup
+				if isEntityDead(scriptVars["towerOne"]) == true && isEntityDead(scriptVars["towerTwo"]) == true && isEntityDead(scriptVars["towerThree"]) == true && isEntityDead(scriptVars["towerFour"]) == true && scriptVars["allyIDsReady"] == 1 {
+					clearBulletsForEntity(myEntityId)
+					clearBulletsForEntity(scriptVars["towerOne"])
+					clearBulletsForEntity(scriptVars["towerTwo"])
+					clearBulletsForEntity(scriptVars["towerThree"])
+					clearBulletsForEntity(scriptVars["towerFour"])
+					scriptVars["PhaseTransitionCount"]=10
+					scriptVars["PhaseTransitionDelay"]=0.0
+					scriptVars["allyIDsReady"]=2
+					dispelAuraOnEntity(myEntityId, "Idrae Phase Five Speed")
+
+					addAuraToEntity(myEntityId, "Idrae Phase Six Speed", 0, myEntityId)
+					scriptVars["BombTimer"]=3.5
+					scriptVars["RandomLineTimer"]=0.0
+					scriptVars["BossAttackTimer"]=0.0
+					scriptVars["WallTimer"]=0.0
+					scriptVars["RandomBulletTimer"]=0.0
+					scriptVars["SubAttackTimer"]=0
+					scriptVars["RandomLineCounter"]=0
+					setPosition(myEntityId, positionInCurrentRoom(myEntityId, [21.0,21.0,0.0]))
+					pathTo(myEntityId, positionInCurrentRoom(myEntityId, [21.0,7.0,0.0]))
+					scriptVars["explosionPosition"]=37
+					scriptVars["explosionDirection"]=0
+				}
+
+
+			
+		}
+
+//final phase setup
+if hp < 0.19 * pthp && scriptVars["PhaseTransitionCount"] == 11  {
+				log("final phase")
+				clearBulletsForEntity(myEntityId)
+				scriptVars["PhaseTransitionDelay"] = 0.0
+				scriptVars["PhaseTransitionCount"]+=1
+				dispelAuraOnEntity(myEntityId, "Idrae Phase Six Speed")
+
+				scriptVars["SubAttackTimerTwo"]=20.0
+				scriptVars["SubAttackTimer"]=0.0
+				scriptVars["WallTimer"]=0.0
+				scriptVars["BossAttackTimer"]=0.0
+				scriptVars["SpiralTimer"]=0.0
+				scriptVars["SubAttackCounterTwo"]=0
+				scriptVars["IdraeFinalPhaseProgressionTimer"]=0.0
+				scriptVars["IdraeFinalPhaseProgression"]=0
+				scriptVars["direction"]=positionInCurrentRoom(myEntityId, [15.0,15.0,0.0])
+				scriptVars["directionCounter"]=0
+				pathTo(myEntityId, scriptVars["direction"])
+
+				setPosition(myEntityId, positionInCurrentRoom(myEntityId, [21.0,21.0,0.0]))
+
+					scriptVars["spiralPosition"]=27
+					scriptVars["spiralPosition2"]=15
+					scriptVars["spiralDirection"]=0
+
+				}
+
+//Phase 6
+if scriptVars["PhaseTransitionCount"] == 11 {
+				scriptVars["PhaseTransitionDelay"] = 0.0
+
+				scriptVars["RandomLineTimer"]+=delta
+				if scriptVars["RandomLineTimer"]>1.5	&& scriptVars["RandomLineCounter"] == 0 {
+						scriptVars["rnd"] = import("rand")
+						z := scriptVars["rnd"]
+						prevside := z.intn(7) + 18
+						randompos := float(prevside)
+					useAbilityAtPosition(myEntityId, "Idrae Phase Six Random Line", positionInCurrentRoom(myEntityId, [randompos,2.0,0.0]))
+				scriptVars["RandomLineCounter"]=1
+				}
+				if scriptVars["RandomLineTimer"]>3.0	&& scriptVars["RandomLineCounter"] == 1 {
+						scriptVars["rnd"] = import("rand")
+						z := scriptVars["rnd"]
+						prevside := z.intn(7) + 18
+						randompos := float(prevside)
+					useAbilityAtPosition(myEntityId, "Idrae Phase Six Random Line", positionInCurrentRoom(myEntityId, [randompos,40.0,0.0]))
+				scriptVars["RandomLineCounter"]=0
+				scriptVars["RandomLineTimer"]=0.0
+				}
+
+				scriptVars["RandomBulletTimer"]+=delta
+				if scriptVars["RandomBulletTimer"]>4.0	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase Six Random Bullets One", positionInCurrentRoom(myEntityId, [40.0,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Six Random Bullets Two", positionInCurrentRoom(myEntityId, [2.0,21.0,0.0]))
+				scriptVars["RandomBulletTimer"]=0.0
+				}
+
+				scriptVars["BossAttackTimer"]+=delta
+				if scriptVars["BossAttackTimer"]>1.0	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase Six Boss Shotgun", entityPosition(myEntityId), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+				scriptVars["BossAttackTimer"]=0.0
+				}
+
+				scriptVars["SubAttackTimer"]+=delta
+				if scriptVars["SubAttackTimer"]>3.5	{
+					scriptVars["placeholderEntityPos"] = entityPosition(myEntityId)
+					scriptVars["placeholderEntityPos1"] = scriptVars["placeholderEntityPos"][0] 
+					scriptVars["placeholderEntityPos2"] = scriptVars["placeholderEntityPos"][1] 
+					useAbilityAtPosition(myEntityId, "Idrae Phase Six Shotgun", [scriptVars["placeholderEntityPos1"] - 3 ,scriptVars["placeholderEntityPos2"] - 3 ,0.0])
+					useAbilityAtPosition(myEntityId, "Idrae Phase Six Shotgun", [scriptVars["placeholderEntityPos1"] + 3 ,scriptVars["placeholderEntityPos2"] - 3 ,0.0])
+					useAbilityAtPosition(myEntityId, "Idrae Phase Six Shotgun", [scriptVars["placeholderEntityPos1"] - 3 ,scriptVars["placeholderEntityPos2"] + 3 ,0.0])
+					useAbilityAtPosition(myEntityId, "Idrae Phase Six Shotgun", [scriptVars["placeholderEntityPos1"] + 3 ,scriptVars["placeholderEntityPos2"] + 3 ,0.0])
+				scriptVars["SubAttackTimer"]=0.0
+				}
+
+
+				scriptVars["WallTimer"]+=delta
+				if scriptVars["WallTimer"]<1.0	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase Six Room Limiter Warning", positionInCurrentRoom(myEntityId, [21.0,4.5,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Six Room Limiter Warning", positionInCurrentRoom(myEntityId, [21.0,37.5,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Six Room Limiter Two Warning", positionInCurrentRoom(myEntityId, [9.5,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Six Room Limiter Two Warning", positionInCurrentRoom(myEntityId, [32.5,21.0,0.0]))
+					changeAttackBehaviour(myEntityId, "Ignore Targets")
+					setCollisionLayer(myEntityId, CollisionLayerMonster)
+					dispelAuraOnEntity(myEntityId, "Invulnerability Indicator")
+					pathTo(myEntityId, positionInCurrentRoom(myEntityId, [21.0,7.0,0.0]))
+				scriptVars["WallTimer"]=5.0
+				}
+				if scriptVars["WallTimer"]>15.0	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [21.0,4.5,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Six Room Limiter", positionInCurrentRoom(myEntityId, [21.0,37.5,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Six Room Limiter Two", positionInCurrentRoom(myEntityId, [9.5,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Six Room Limiter Two", positionInCurrentRoom(myEntityId, [32.5,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Get Out Of Spawn", positionInCurrentRoom(myEntityId, [42.0,35.0,0.0]))
+				scriptVars["WallTimer"]=5.0
+				}
+
+//explosion changes directions once it has hit a certain point
+					if scriptVars["explosionPosition"] == 25 && scriptVars["explosionDirection"] == 1 {
+						pathTo(myEntityId, positionInCurrentRoom(myEntityId, [21.0,7.0,0.0]))
+						scriptVars["explosionPosition"]=37
+						scriptVars["explosionDirection"]=0
+						scriptVars["BombTimer"]=0.0
+					}
+					if scriptVars["explosionPosition"] == 17 && scriptVars["explosionDirection"] == 0 {
+						pathTo(myEntityId, positionInCurrentRoom(myEntityId, [21.0,35.0,0.0]))
+						scriptVars["explosionPosition"]=5
+						scriptVars["explosionDirection"]=1
+						scriptVars["BombTimer"]=0.0
+					}
+
+				scriptVars["BombTimer"]+=delta
+				if scriptVars["BombTimer"]>5.5 {
+					if scriptVars["explosionDirection"] == 0 {
+						scriptVars["explosionPosition"] -= 4
+						explosionpos := float(scriptVars["explosionPosition"])
+						useAbilityAtPosition(myEntityId, "Idrae Phase Six Long Bomb", positionInCurrentRoom(myEntityId, [21.0,explosionpos,0.0]))
+						scriptVars["BombTimer"]=3.5
+					}
+					if scriptVars["explosionDirection"] == 1 {
+						scriptVars["explosionPosition"] += 4
+						explosionpos := float(scriptVars["explosionPosition"])
+						useAbilityAtPosition(myEntityId, "Idrae Phase Six Long Bomb", positionInCurrentRoom(myEntityId, [21.0,explosionpos,0.0]))
+						scriptVars["BombTimer"]=3.5
+					}
+
+
+				}
+
+
+		}
+
+if scriptVars["PhaseTransitionCount"] == 13 {
+				Sicken ()
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 2.0	&&	scriptVars["directionCounter"] == 0	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [27.0,15.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=1
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 2.0	&&	scriptVars["directionCounter"] == 1	{ 
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [27.0,27.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=2
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 2.0	&&	scriptVars["directionCounter"] == 2	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [15.0,27.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=3
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 2.0	&&	scriptVars["directionCounter"] == 3	{	
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [15.0,15.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=0
+				}
+	
+				scriptVars["IdraeFinalPhaseProgressionTimer"]+=delta
+				if scriptVars["IdraeFinalPhaseProgressionTimer"] < 60.0 && scriptVars["IdraeFinalPhaseProgression"] == 0 {
+
+
+					scriptVars["SubAttackTimerTwo"]+=delta
+					if scriptVars["SubAttackTimerTwo"]>23.0	&& scriptVars["SubAttackCounterTwo"] == 0 {
+						useAbilityAtPosition(myEntityId, "Idrae Phase Final Boss Stationary Shotgun", entityPosition(myEntityId), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [21.0,21.0,0.0])))
+					scriptVars["SubAttackCounterTwo"]=1
+					}
+					if scriptVars["SubAttackTimerTwo"]>30.0	&& scriptVars["SubAttackCounterTwo"] == 1 {
+						useAbilityAtPosition(myEntityId, "Idrae Phase Final Boss Stationary Shotgun", entityPosition(myEntityId), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [21.0,21.0,0.0])))
+	
+					scriptVars["SubAttackCounterTwo"]=0
+					scriptVars["SubAttackTimerTwo"]=0.0
+					}
+	
+					scriptVars["BossAttackTimer"]+=delta
+					if scriptVars["BossAttackTimer"]>1.0	{
+						useAbilityAtPosition(myEntityId, "Idrae Phase Final Boss Shotgun", entityPosition(myEntityId), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+					scriptVars["BossAttackTimer"]=0.0
+					}
+	
+					scriptVars["SubAttackTimer"]+=delta
+					if scriptVars["SubAttackTimer"]>7.5	{
+						scriptVars["rnd"] = import("rand")
+						z := scriptVars["rnd"]
+						prevside := z.intn(4)
+						scriptVars["linePos"] = prevside
+	
+						if scriptVars["linePos"] == 0 {
+							useAbilityAtPosition(myEntityId, "Idrae Phase Final Line", positionInCurrentRoom(myEntityId, [24.0,15.0,0.0]), addBoundingCenter(myEntityId, positionInCurrentRoom(myEntityId, [24.0,21.0,0.0])))
+							useAbilityAtPosition(myEntityId, "Idrae Phase Final Line", positionInCurrentRoom(myEntityId, [22.0,15.0,0.0]), addBoundingCenter(myEntityId, positionInCurrentRoom(myEntityId, [22.0,21.0,0.0])))
+							useAbilityAtPosition(myEntityId, "Idrae Phase Final Line", positionInCurrentRoom(myEntityId, [20.0,15.0,0.0]), addBoundingCenter(myEntityId, positionInCurrentRoom(myEntityId, [20.0,21.0,0.0])))
+							useAbilityAtPosition(myEntityId, "Idrae Phase Final Line", positionInCurrentRoom(myEntityId, [18.0,15.0,0.0]), addBoundingCenter(myEntityId, positionInCurrentRoom(myEntityId, [18.0,21.0,0.0])))
+						}
+						if scriptVars["linePos"] == 1 {
+							useAbilityAtPosition(myEntityId, "Idrae Phase Final Line", positionInCurrentRoom(myEntityId, [24.0,27.0,0.0]), addBoundingCenter(myEntityId, positionInCurrentRoom(myEntityId, [24.0,21.0,0.0])))
+							useAbilityAtPosition(myEntityId, "Idrae Phase Final Line", positionInCurrentRoom(myEntityId, [22.0,27.0,0.0]), addBoundingCenter(myEntityId, positionInCurrentRoom(myEntityId, [22.0,21.0,0.0])))
+							useAbilityAtPosition(myEntityId, "Idrae Phase Final Line", positionInCurrentRoom(myEntityId, [20.0,27.0,0.0]), addBoundingCenter(myEntityId, positionInCurrentRoom(myEntityId, [20.0,21.0,0.0])))
+							useAbilityAtPosition(myEntityId, "Idrae Phase Final Line", positionInCurrentRoom(myEntityId, [18.0,27.0,0.0]), addBoundingCenter(myEntityId, positionInCurrentRoom(myEntityId, [18.0,21.0,0.0])))
+						}
+						if scriptVars["linePos"] == 2 {
+							useAbilityAtPosition(myEntityId, "Idrae Phase Final Bullet wall", positionInCurrentRoom(myEntityId, [15.0,21.0,0.0]))
+						}
+						if scriptVars["linePos"] == 3 {
+							useAbilityAtPosition(myEntityId, "Idrae Phase Final Bullet wall", positionInCurrentRoom(myEntityId, [27.0,21.0,0.0]))
+						}
+					scriptVars["SubAttackTimer"]=0.0
+					}
+
+						if scriptVars["spiralPosition"] == 17 && scriptVars["spiralDirection"] == 1 {
+							scriptVars["spiralPosition"]=27
+							scriptVars["spiralPosition2"]=15
+							scriptVars["spiralDirection"]=0
+						}
+						if scriptVars["spiralPosition"] == 17 && scriptVars["spiralDirection"] == 0 {
+							scriptVars["spiralPosition"]=27
+							scriptVars["spiralPosition2"]=15
+							scriptVars["spiralDirection"]=1
+						}
+					scriptVars["SpiralTimer"]+=delta
+					if scriptVars["SpiralTimer"]>1.5 {
+						if scriptVars["spiralDirection"] == 0 {
+							scriptVars["spiralPosition"] -= 2
+							posy := float(scriptVars["spiralPosition"])
+							useAbilityAtPosition(myEntityId, "Idrae Phase Final Spiral", positionInCurrentRoom(myEntityId, [27.0,posy,0.0]), addBoundingCenter(myEntityId, positionInCurrentRoom(myEntityId, [21.0,21.0,0.0])))
+							scriptVars["spiralPosition2"] += 2
+							posytwo := float(scriptVars["spiralPosition2"])
+							useAbilityAtPosition(myEntityId, "Idrae Phase Final Spiral", positionInCurrentRoom(myEntityId, [15.0,posytwo,0.0]), addBoundingCenter(myEntityId, positionInCurrentRoom(myEntityId, [21.0,21.0,0.0])))
+							scriptVars["SpiralTimer"]=0.0
+						}
+						if scriptVars["spiralDirection"] == 1 {
+							scriptVars["spiralPosition"] -= 2
+							posx := float(scriptVars["spiralPosition"])
+							useAbilityAtPosition(myEntityId, "Idrae Phase Final Spiral", positionInCurrentRoom(myEntityId, [posx,15.0,0.0]), addBoundingCenter(myEntityId, positionInCurrentRoom(myEntityId, [21.0,21.0,0.0])))
+							scriptVars["spiralPosition2"] += 2
+							posxtwo := float(scriptVars["spiralPosition2"])
+							useAbilityAtPosition(myEntityId, "Idrae Phase Final Spiral", positionInCurrentRoom(myEntityId, [posxtwo,27.0,0.0]), addBoundingCenter(myEntityId, positionInCurrentRoom(myEntityId, [21.0,21.0,0.0])))
+							scriptVars["SpiralTimer"]=0.0
+						}
+	
+	
+					}
+	
+
+
+				}
+//Phase Transition
+
+				if scriptVars["IdraeFinalPhaseProgressionTimer"] > 60.0 && scriptVars["IdraeFinalPhaseProgression"] == 0 {
+					clearBulletsForEntity(myEntityId)
+					useAbilityAtPosition(myEntityId, "Idrae Phase Final Room Limiter", positionInCurrentRoom(myEntityId, [21.0,9.5,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Final Room Limiter", positionInCurrentRoom(myEntityId, [21.0,32.5,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Final Room Limiter Two", positionInCurrentRoom(myEntityId, [9.5,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Final Room Limiter Two", positionInCurrentRoom(myEntityId, [32.5,21.0,0.0]))
+					scriptVars["SubAttackTimer"]=0.0
+					scriptVars["IdraeFinalPhaseProgression"]=1
+					scriptVars["IdraeFinalPhaseProgressionTimer"]=0.0
+					scriptVars["SpiralTimer"]=0.0
+					scriptVars["BossAttackTimer"]=0.0
+					scriptVars["spiralPosition"]=29
+					scriptVars["spiralPosition2"]=13
+				}
+
+//Part Two of the phase
+
+
+
+
+				if scriptVars["IdraeFinalPhaseProgressionTimer"] < 60.0 && scriptVars["IdraeFinalPhaseProgression"] == 1 {
+
+					scriptVars["BossAttackTimer"]+=delta
+					if scriptVars["BossAttackTimer"]>3.0	{
+						useAbilityAtPosition(myEntityId, "Idrae Phase Final Boomerang", entityPosition(myEntityId), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+					scriptVars["BossAttackTimer"]=0.0
+					}
+
+					scriptVars["SubAttackTimer"]+=delta
+					if scriptVars["SubAttackTimer"]>2.0	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase Final Bullet Wall Two", positionInCurrentRoom(myEntityId, [17.0,27.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Final Bullet Wall Three", positionInCurrentRoom(myEntityId, [27.0,25.0,0.0]))
+					scriptVars["SubAttackTimer"]=0.0
+					}
+
+						if scriptVars["spiralPosition"] == 17 && scriptVars["spiralDirection"] == 1 {
+							scriptVars["spiralPosition"]=29
+							scriptVars["spiralPosition2"]=13
+							scriptVars["spiralDirection"]=0
+						}
+						if scriptVars["spiralPosition"] == 17 && scriptVars["spiralDirection"] == 0 {
+							scriptVars["spiralPosition"]=29
+							scriptVars["spiralPosition2"]=13
+							scriptVars["spiralDirection"]=1
+						}
+					scriptVars["SpiralTimer"]+=delta
+					if scriptVars["SpiralTimer"]>1.5 {
+						if scriptVars["spiralDirection"] == 0 {
+							scriptVars["spiralPosition"] -= 4
+							posy := float(scriptVars["spiralPosition"])
+							useAbilityAtPosition(myEntityId, "Idrae Phase Final Spiral Two", positionInCurrentRoom(myEntityId, [27.0,posy,0.0]), addBoundingCenter(myEntityId, positionInCurrentRoom(myEntityId, [21.0,21.0,0.0])))
+							scriptVars["spiralPosition2"] += 4
+							posytwo := float(scriptVars["spiralPosition2"])
+							useAbilityAtPosition(myEntityId, "Idrae Phase Final Spiral Two", positionInCurrentRoom(myEntityId, [15.0,posytwo,0.0]), addBoundingCenter(myEntityId, positionInCurrentRoom(myEntityId, [21.0,21.0,0.0])))
+							scriptVars["SpiralTimer"]=0.0
+						}
+						if scriptVars["spiralDirection"] == 1 {
+							scriptVars["spiralPosition"] -= 4
+							posx := float(scriptVars["spiralPosition"])
+							useAbilityAtPosition(myEntityId, "Idrae Phase Final Spiral Two", positionInCurrentRoom(myEntityId, [posx,15.0,0.0]), addBoundingCenter(myEntityId, positionInCurrentRoom(myEntityId, [21.0,21.0,0.0])))
+							scriptVars["spiralPosition2"] += 4
+							posxtwo := float(scriptVars["spiralPosition2"])
+							useAbilityAtPosition(myEntityId, "Idrae Phase Final Spiral Two", positionInCurrentRoom(myEntityId, [posxtwo,27.0,0.0]), addBoundingCenter(myEntityId, positionInCurrentRoom(myEntityId, [21.0,21.0,0.0])))
+							scriptVars["SpiralTimer"]=0.0
+						}
+					}
+
+
+				}
+
+
+				scriptVars["WallTimer"]+=delta
+				if scriptVars["WallTimer"]<1.0	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase Final Room Limiter Warning", positionInCurrentRoom(myEntityId, [21.0,9.5,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Final Room Limiter Warning", positionInCurrentRoom(myEntityId, [21.0,32.5,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Final Room Limiter Two Warning", positionInCurrentRoom(myEntityId, [9.5,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Final Room Limiter Two Warning", positionInCurrentRoom(myEntityId, [32.5,21.0,0.0]))
+					changeAttackBehaviour(myEntityId, "Ignore Targets")
+				scriptVars["WallTimer"]=5.0
+				}
+				if scriptVars["WallTimer"]>15.0	{
+					useAbilityAtPosition(myEntityId, "Idrae Phase Final Room Limiter", positionInCurrentRoom(myEntityId, [21.0,9.5,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Final Room Limiter", positionInCurrentRoom(myEntityId, [21.0,32.5,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Final Room Limiter Two", positionInCurrentRoom(myEntityId, [9.5,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Phase Final Room Limiter Two", positionInCurrentRoom(myEntityId, [32.5,21.0,0.0]))
+					useAbilityAtPosition(myEntityId, "Idrae Get Out Of Spawn", positionInCurrentRoom(myEntityId, [42.0,35.0,0.0]))
+				scriptVars["WallTimer"]=5.0
+				}
+
+
+				if scriptVars["IdraeFinalPhaseProgressionTimer"] > 60.0 && scriptVars["IdraeFinalPhaseProgression"] == 1 {
+
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [21.0,21.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					addAuraToEntity(myEntityId, "Idrae Death Speed", 0, myEntityId)
+
+				
+					if distToPoint(myEntityId, scriptVars["direction"]) < 1.0 && scriptVars["IdraeFinalPhaseProgressionTimer"] > 70.0 {
+						killEntity(myEntityId)
+						unSicken ()
+					}
+
+
+				}
+
+		}
+}
+
+
+
+---mob_BlasterTwo---
+Prefab :: blastertwo
+Range Behavior :: Stationary
+Bounding Box :: 0.0 0.3 1.0 1.0
+Type :: Elite
+
+---ability_Invincibility Tower Attack---
+Bullet Definition :: [[invulntowerattack]]
+
+
+---bulletdef_invulntowerattack---
+sprite Custom10
+color 6
+radial bullets:12 speed:1.5 directionType:relative
+	lifetime 150
+wait 20
+radial bullets:12 speed:1.5 directionType:relative angle:15
+	lifetime 150
+
+---aura_Invuln Tower Hp---
+Type :: Buff
+Duration :: -1
+Max stacks :: 1 
+Time Per Tick :: 1.0
+Definitions :: [[AuraAffectStat/Invuln Tower Hp]]
+
+---auraaffectstat_Invuln Tower Hp---
+Stat :: Vitality
+Boost :: 25.0
+
+
+---aura_Invulnerability Indicator---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1 
+Time Per Tick :: 1.0
+Icon :: statusicons_3
+
+
+
+---script_blastertwo_Monster---
+
+if !isDead&&targetEntityId!=0 {
+	if is_undefined(scriptVars["attackTimer"]){
+		addAuraToEntity(myEntityId, "Invuln Tower Hp", 0, myEntityId)
+		addAuraToEntity(myEntityId, "Invulnerability Indicator", 0, myEntityId)
+		setCollisionLayer(myEntityId, CollisionLayerDynamic)
+		addHitPoints(myEntityId, 500000)
+		scriptVars["attackTimer"]=0.0
+	}
+				scriptVars["attackTimer"]+=delta
+				if scriptVars["attackTimer"]>2.5	{
+				useAbilityAtPosition(myEntityId, "Invincibility Tower Attack", entityPosition(myEntityId), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+				scriptVars["attackTimer"]=0.0
+				}
+}
+
+
+
+
+
+
+---mobdefinition_Cultist---
+Prefab :: assassin
+ID :: cultist
+Range Behavior :: Ignore Targets
+Bounding Box :: 0.0 0.6 1.0 1.2
+Type :: Elite
+Options :: manualpathing
+Speed :: 500
+
+---ability_Cultist Anticorner---
+Bullet Definition :: [[cultistanticorner]]
+
+---bulletdef_cultistanticorner---
+sprite Basic 0.8
+nway bullets:8 speed:3 spread:60 directionType:relative
+	lifetime 30
+
+---ability_Cultist Attack---
+Bullet Definition :: [[cultistattack]]
+
+---bulletdef_cultistattack---
+color 2
+radial bullets:12 speed:1.5 directionType:relative
+	lifetime 1000
+
+
+---ability_Cultist Attack Two---
+Bullet Definition :: [[cultistattacktwo]]
+
+---bulletdef_cultistattacktwo---
+color 2
+nway bullets:6 spread:75 speed:1.5 directionType:relative
+	lifetime 150
+sprite Custom7
+repeat bullets:4 delay:3 speed:4 directionType:relative
+	lifetime 1000
+
+
+---ability_Cultist Attack Three---
+Bullet Definition :: [[cultistattackthree]]
+
+---bulletdef_cultistattackthree---
+color 7
+sprite Custom12
+nway bullets:6 spread:85 speed:1.5 directionType:relative
+	lifetime 175
+
+
+---ability_Cultist Attack Four---
+Bullet Definition :: [[cultistattackfour]]
+
+---bulletdef_cultistattackfour---
+sprite Custom11
+radial bullets:1 speed:1 directionType:relative
+	lifetime 40
+radial bullets:1 speed:1 angle:180 directionType:relative
+	lifetime 1000
+
+
+
+
+---aura_Cultist Hp---
+Type :: Buff
+Duration :: -1
+Max stacks :: 1 
+Time Per Tick :: 1.0
+Definitions :: [[AuraAffectStat/Cultist Hp]]
+
+---auraaffectstat_Cultist Hp---
+Stat :: Vitality
+Boost :: 30.0
+
+---aura_Invulnerability Indicator---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1 
+Time Per Tick :: 1.0
+Icon :: statusicons_3
+
+
+
+
+---script_cultist_Monster---
+
+if !isDead	&&	targetEntityId!=0	{
+	if is_undefined(scriptVars["attackTimer"]){
+		setCollisionLayer(myEntityId, CollisionLayerDynamic)
+		addAuraToEntity(myEntityId, "Invulnerability Indicator", 0, myEntityId)
+		addAuraToEntity(myEntityId, "Cultist Hp", 0, myEntityId)
+		addHitPoints(myEntityId, 500000)
+		scriptVars["attackTimer"]=0.0
+		scriptVars["radialTimer"]=0.0
+		scriptVars["directionCounter"]=0
+		scriptVars["PhaseCount"]=3
+		scriptVars["IDtimer"]=0.0
+	}
+
+		scriptVars["IDtimer"]+=delta
+		if scriptVars["IDtimer"]>2.0	&& scriptVars["IDtimer"]<3.0 {
+		scriptVars["allyIDs"]=getAlliesSortedByHealth(myEntityId)
+		scriptVars["Boss"]=scriptVars["allyIDs"][0]["id"]
+		scriptVars["IDtimer"]=10.0
+		}
+		if scriptVars["IDtimer"]>3.0 {
+			hp := getPoints(scriptVars["Boss"], "hp", "current")
+			pthp := getPoints(scriptVars["Boss"], "hp", "max")
+
+
+
+
+
+		if distToPoint(myEntityId, positionInCurrentRoom(myEntityId, [35.0,7.0,0.0])) < 1.0 && is_undefined(scriptVars["position"]) {
+			scriptVars["position"]=1
+			scriptVars["direction"]=positionInCurrentRoom(myEntityId, [35.0,7.0,0.0])
+		}
+		if distToPoint(myEntityId, positionInCurrentRoom(myEntityId, [35.0,35.0,0.0])) < 1.0 && is_undefined(scriptVars["position"]) {
+			scriptVars["position"]=2
+			scriptVars["direction"]=positionInCurrentRoom(myEntityId, [35.0,35.0,0.0])
+		}
+		if distToPoint(myEntityId, positionInCurrentRoom(myEntityId, [7.0,35.0,0.0])) < 1.0 && is_undefined(scriptVars["position"]) {
+			scriptVars["position"]=3
+			scriptVars["direction"]=positionInCurrentRoom(myEntityId, [7.0,35.0,0.0])
+		}
+		if distToPoint(myEntityId, positionInCurrentRoom(myEntityId, [7.0,7.0,0.0])) < 1.0 && is_undefined(scriptVars["position"]) {
+			scriptVars["position"]=4
+			scriptVars["direction"]=positionInCurrentRoom(myEntityId, [7.0,7.0,0.0])
+		}
+
+
+//Phase 3
+		if hp < 0.62 * pthp	&& scriptVars["PhaseCount"] == 3 {
+			if scriptVars["position"] == 1 {
+
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 0	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [35.0,35.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=1
+					useAbilityAtPosition(myEntityId, "Cultist Anticorner", entityPosition(myEntityId), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [35.0,7.0,0.0])))
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 1	{ 
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [7.0,35.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=2
+					useAbilityAtPosition(myEntityId, "Cultist Anticorner", entityPosition(myEntityId), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [35.0,35.0,0.0])))
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 2	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [7.0,7.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=3
+					useAbilityAtPosition(myEntityId, "Cultist Anticorner", entityPosition(myEntityId), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [7.0,35.0,0.0])))
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 3	{	
+
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [35.0,7.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=0
+					useAbilityAtPosition(myEntityId, "Cultist Anticorner", entityPosition(myEntityId), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [7.0,7.0,0.0])))
+				}
+
+				scriptVars["attackTimer"]+=delta
+				if scriptVars["attackTimer"]>3.0	{
+					useAbilityAtPosition(myEntityId, "Cultist Attack Two", entityPosition(myEntityId), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [21.0,21.0,0.0])))
+				scriptVars["attackTimer"]=0.0
+				}
+
+
+			}
+
+
+
+			if scriptVars["position"] == 2 {
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 0	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [7.0,35.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=1
+					useAbilityAtPosition(myEntityId, "Cultist Anticorner", entityPosition(myEntityId), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [35.0,35.0,0.0])))
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 1	{ 
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [7.0,7.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=2
+					useAbilityAtPosition(myEntityId, "Cultist Anticorner", entityPosition(myEntityId), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [7.0,35.0,0.0])))
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 2	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [35.0,7.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=3
+					useAbilityAtPosition(myEntityId, "Cultist Anticorner", entityPosition(myEntityId), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [7.0,7.0,0.0])))
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 3	{	
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [35.0,35.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=0
+					useAbilityAtPosition(myEntityId, "Cultist Anticorner", entityPosition(myEntityId), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [35.0,7.0,0.0])))
+				}
+
+				scriptVars["attackTimer"]+=delta
+				if scriptVars["attackTimer"]>3.0	{
+					useAbilityAtPosition(myEntityId, "Cultist Attack", entityPosition(myEntityId), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+				scriptVars["attackTimer"]=0.0
+				}
+
+
+			}
+
+
+
+			if scriptVars["position"] == 3 {
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 0	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [7.0,7.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=1
+					useAbilityAtPosition(myEntityId, "Cultist Anticorner", entityPosition(myEntityId), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [7.0,35.0,0.0])))
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 1	{ 
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [35.0,7.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=2
+					useAbilityAtPosition(myEntityId, "Cultist Anticorner", entityPosition(myEntityId), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [7.0,7.0,0.0])))
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 2	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [35.0,35.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=3
+					useAbilityAtPosition(myEntityId, "Cultist Anticorner", entityPosition(myEntityId), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [35.0,7.0,0.0])))
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 3	{	
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [7.0,35.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=0
+					useAbilityAtPosition(myEntityId, "Cultist Anticorner", entityPosition(myEntityId), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [35.0,35.0,0.0])))
+				}
+
+				scriptVars["attackTimer"]+=delta
+				if scriptVars["attackTimer"]>3.0	{
+					useAbilityAtPosition(myEntityId, "Cultist Attack Two", entityPosition(myEntityId), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [21.0,21.0,0.0])))
+				scriptVars["attackTimer"]=0.0
+				}
+
+			}
+
+
+
+			if scriptVars["position"] == 4 {
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 0	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [35.0,7.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=1
+					useAbilityAtPosition(myEntityId, "Cultist Anticorner", entityPosition(myEntityId), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [7.0,7.0,0.0])))
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 1	{ 
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [35.0,35.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=2
+					useAbilityAtPosition(myEntityId, "Cultist Anticorner", entityPosition(myEntityId), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [35.0,7.0,0.0])))
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 2	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [7.0,35.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=3
+					useAbilityAtPosition(myEntityId, "Cultist Anticorner", entityPosition(myEntityId), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [35.0,35.0,0.0])))
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 3	{	
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [7.0,7.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=0
+					useAbilityAtPosition(myEntityId, "Cultist Anticorner", entityPosition(myEntityId), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [7.0,35.0,0.0])))
+				}
+
+				scriptVars["attackTimer"]+=delta
+				if scriptVars["attackTimer"]>3.0	{
+					useAbilityAtPosition(myEntityId, "Cultist Attack", entityPosition(myEntityId), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+				scriptVars["attackTimer"]=0.0
+				}
+			}
+		}
+//Phase transition
+		if hp < 0.54 * pthp && scriptVars["PhaseCount"] == 3 {
+			clearBulletsForEntity(myEntityId)
+			scriptVars["PhaseCount"]=4
+			scriptVars["directionCounter"]=0
+			if scriptVars["position"] == 1 {
+				setPosition(myEntityId, positionInCurrentRoom(myEntityId, [35.0,7.0,0.0]))
+				scriptVars["direction"]=positionInCurrentRoom(myEntityId, [35.0,7.0,0.0])
+				pathTo(myEntityId, scriptVars["direction"])
+			}
+			if scriptVars["position"] == 2 {
+				setPosition(myEntityId, positionInCurrentRoom(myEntityId, [35.0,35.0,0.0]))
+				scriptVars["direction"]=positionInCurrentRoom(myEntityId, [35.0,35.0,0.0])
+				pathTo(myEntityId, scriptVars["direction"])
+			}
+			if scriptVars["position"] == 3 {
+				setPosition(myEntityId, positionInCurrentRoom(myEntityId, [7.0,35.0,0.0]))
+				scriptVars["direction"]=positionInCurrentRoom(myEntityId, [7.0,35.0,0.0])
+				pathTo(myEntityId, scriptVars["direction"])
+			}
+			if scriptVars["position"] == 4 {
+				setPosition(myEntityId, positionInCurrentRoom(myEntityId, [7.0,7.0,0.0]))
+				scriptVars["direction"]=positionInCurrentRoom(myEntityId, [7.0,7.0,0.0])
+				pathTo(myEntityId, scriptVars["direction"])
+			}
+		}
+//Phase 4
+		if hp < 0.54 * pthp && scriptVars["PhaseCount"] == 4 {
+
+			if scriptVars["position"] == 1 {
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 0	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [35.0,35.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=1
+
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 1	{ 
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [7.0,35.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=2
+
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 2	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [7.0,7.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=3
+
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 3	{	
+
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [35.0,7.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=0
+
+				}
+
+				scriptVars["attackTimer"]+=delta
+				if scriptVars["attackTimer"]>2.0	{
+					useAbilityAtPosition(myEntityId, "Cultist Attack Three", entityPosition(myEntityId), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [21.0,21.0,0.0])))
+				scriptVars["attackTimer"]=0.0
+				}
+
+
+			}
+
+
+
+			if scriptVars["position"] == 2 {
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 0	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [7.0,35.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=1
+
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 1	{ 
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [7.0,7.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=2
+
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 2	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [35.0,7.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=3
+
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 3	{	
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [35.0,35.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=0
+
+				}
+
+				scriptVars["attackTimer"]+=delta
+				if scriptVars["attackTimer"]>2.0	{
+					useAbilityAtPosition(myEntityId, "Cultist Attack Three", entityPosition(myEntityId), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [21.0,21.0,0.0])))
+				scriptVars["attackTimer"]=0.0
+				}
+
+
+			}
+
+
+
+			if scriptVars["position"] == 3 {
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 0	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [7.0,7.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=1
+
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 1	{ 
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [35.0,7.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=2
+
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 2	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [35.0,35.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=3
+
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 3	{	
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [7.0,35.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=0
+
+
+				}
+
+				scriptVars["attackTimer"]+=delta
+				if scriptVars["attackTimer"]>2.0	{
+					useAbilityAtPosition(myEntityId, "Cultist Attack Three", entityPosition(myEntityId), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [21.0,21.0,0.0])))
+				scriptVars["attackTimer"]=0.0
+				}
+
+			}
+
+
+
+			if scriptVars["position"] == 4 {
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 0	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [35.0,7.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=1
+
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 1	{ 
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [35.0,35.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=2
+
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 2	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [7.0,35.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=3
+
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 5.0	&&	scriptVars["directionCounter"] == 3	{	
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [7.0,7.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=0
+				}
+
+				scriptVars["attackTimer"]+=delta
+				if scriptVars["attackTimer"]>2.0	{
+					useAbilityAtPosition(myEntityId, "Cultist Attack Three", entityPosition(myEntityId), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [21.0,21.0,0.0])))
+				scriptVars["attackTimer"]=0.0
+				}
+
+
+
+			}
+
+
+
+		}
+
+
+//Phase Transition
+		if hp < 0.32 * pthp && scriptVars["PhaseCount"] == 4 {
+			clearBulletsForEntity(myEntityId)
+			scriptVars["directionCounter"]=0
+			scriptVars["PhaseCount"]=5
+			if scriptVars["position"] == 1 {
+				setPosition(myEntityId, positionInCurrentRoom(myEntityId, [26.0,16.0,0.0]))
+				scriptVars["direction"]=positionInCurrentRoom(myEntityId, [26.0,16.0,0.0])
+				pathTo(myEntityId, scriptVars["direction"])
+			}
+			if scriptVars["position"] == 2 {
+				setPosition(myEntityId, positionInCurrentRoom(myEntityId, [26.0,26.0,0.0]))
+				scriptVars["direction"]=positionInCurrentRoom(myEntityId, [26.0,26.0,0.0])
+				pathTo(myEntityId, scriptVars["direction"])
+			}
+			if scriptVars["position"] == 3 {
+				setPosition(myEntityId, positionInCurrentRoom(myEntityId, [16.0,26.0,0.0]))
+				scriptVars["direction"]=positionInCurrentRoom(myEntityId, [16.0,26.0,0.0])
+				pathTo(myEntityId, scriptVars["direction"])
+			}
+			if scriptVars["position"] == 4 {
+				setPosition(myEntityId, positionInCurrentRoom(myEntityId, [16.0,16.0,0.0]))
+				scriptVars["direction"]=positionInCurrentRoom(myEntityId, [16.0,16.0,0.0])
+				pathTo(myEntityId, scriptVars["direction"])
+			}
+			
+		}
+
+//Phase 5
+		if hp < 0.32 * pthp && scriptVars["PhaseCount"] == 5 {
+			
+			if scriptVars["position"] == 1 {
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 2.0	&&	scriptVars["directionCounter"] == 0	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [26.0,26.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=1
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 2.0	&&	scriptVars["directionCounter"] == 1	{ 
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [16.0,26.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=2
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 2.0	&&	scriptVars["directionCounter"] == 2	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [16.0,16.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=3
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 2.0	&&	scriptVars["directionCounter"] == 3	{	
+
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [26.0,16.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=0
+				}
+
+				scriptVars["attackTimer"]+=delta
+				if scriptVars["attackTimer"]>0.5	{
+					useAbilityAtPosition(myEntityId, "Cultist Attack Four", entityPosition(myEntityId), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [21.0,21.0,0.0])))
+				scriptVars["attackTimer"]=0.0
+				}
+
+
+			}
+
+
+
+			if scriptVars["position"] == 2 {
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 2.0	&&	scriptVars["directionCounter"] == 0	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [16.0,26.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=1
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 2.0	&&	scriptVars["directionCounter"] == 1	{ 
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [16.0,16.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=2
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 2.0	&&	scriptVars["directionCounter"] == 2	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [26.0,16.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=3
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 2.0	&&	scriptVars["directionCounter"] == 3	{	
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [26.0,26.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=0
+				}
+
+				scriptVars["attackTimer"]+=delta
+				if scriptVars["attackTimer"]>0.5	{
+					useAbilityAtPosition(myEntityId, "Cultist Attack Four", entityPosition(myEntityId), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [21.0,21.0,0.0])))
+				scriptVars["attackTimer"]=0.0
+				}
+
+
+			}
+
+
+
+			if scriptVars["position"] == 3 {
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 2.0	&&	scriptVars["directionCounter"] == 0	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [16.0,16.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=1
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 2.0	&&	scriptVars["directionCounter"] == 1	{ 
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [26.0,16.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=2
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 2.0	&&	scriptVars["directionCounter"] == 2	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [26.0,26.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=3
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 2.0	&&	scriptVars["directionCounter"] == 3	{	
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [16.0,26.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=0
+				}
+
+				scriptVars["attackTimer"]+=delta
+				if scriptVars["attackTimer"]>0.5	{
+					useAbilityAtPosition(myEntityId, "Cultist Attack Four", entityPosition(myEntityId), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [21.0,21.0,0.0])))
+				scriptVars["attackTimer"]=0.0
+				}
+
+			}
+
+
+
+			if scriptVars["position"] == 4 {
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 2.0	&&	scriptVars["directionCounter"] == 0	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [26.0,16.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=1
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 2.0	&&	scriptVars["directionCounter"] == 1	{ 
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [26.0,26.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=2
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 2.0	&&	scriptVars["directionCounter"] == 2	{
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [16.0,26.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=3
+				}
+
+				if distToPoint(myEntityId, scriptVars["direction"]) < 2.0	&&	scriptVars["directionCounter"] == 3	{	
+					scriptVars["direction"]=positionInCurrentRoom(myEntityId, [16.0,16.0,0.0])
+					pathTo(myEntityId, scriptVars["direction"])
+					scriptVars["directionCounter"]=0
+				}
+
+				scriptVars["attackTimer"]+=delta
+				if scriptVars["attackTimer"]>0.5	{
+					useAbilityAtPosition(myEntityId, "Cultist Attack Four", entityPosition(myEntityId), addBoundingCenter(myEntityId,  positionInCurrentRoom(myEntityId, [21.0,21.0,0.0])))
+				scriptVars["attackTimer"]=0.0
+				}
+
+
+
+			}
+			
+		}
+		
+
+		}
+		
+
+
+}

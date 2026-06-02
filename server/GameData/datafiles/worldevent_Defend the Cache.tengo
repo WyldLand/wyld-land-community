@@ -1,0 +1,224 @@
+---worldevent_Defend the Cache---
+Mob :: soulcollector
+XP :: 100
+
+This is a test world event. Defend the box!
+
+---mobdefinition_Soul Collector---
+ID :: soulcollector
+Prefab :: defendcache
+Range Behavior :: [[Stationary]]
+Type :: Miniboss
+Speed :: 0
+Interaction Timer :: 0.1
+Interaction Label :: Activate
+Options :: noaggronearby
+Loot :: [[Defend the Cache]]
+
+---loottable_Defend the Cache---
+[[125 Wyld Dash]] @ 10.0
+[[703 Stamina Spa]] @ 15.0
+[[702 Speed Pulse]] @ 15.0
+[[601 Frost Pulse]] @ 15.0
+[[603 Flame Pulse]] @ 15.0
+
+---prefab_defendcache---
+
+Components :: [[DefendCacheSprite]] [[DefendCacheCollider]] [[Monster]] [[UsableObject]]
+
+---prefabcomponent_DefendCacheCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+	"position": [0.0, 0.50],
+    "size": [1.625, 0.875]
+}
+
+---prefabcomponent_DefendCacheSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "pickups/chest5",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+
+---mobdefinition_Collector Spider---
+ID :: collectorspider
+Prefab :: bombbot
+Range Behavior :: Ignore Targets
+Abilities :: [[Spider Burst Attack]] [[Spider Wave Attack]] [[Spider Bomb]]
+Bounding Box :: 0.0 0.5 1.2 1.0
+Speed :: 100
+Type :: Normal
+Options :: manualpathing nodeathsmoke
+
+---ability_Spider Burst Attack---
+Bullet Definition :: [[spiderburst]]
+Cooldown :: 5.0
+
+---bulletdef_spiderburst---
+sprite Custom10
+color 4
+potency 100
+radial bullets:12 speed:6 angle:0 directionType:absolute
+wait 5
+radial bullets:12 speed:5 angle:15 directionType:absolute
+
+---ability_Spider Wave Attack---
+Bullet Definition :: [[spiderwave]]
+Cooldown :: 3.0
+
+---bulletdef_spiderwave---
+sprite Basic
+color 2
+potency 75
+nway speed:6 bullets:5 spread:30 angle:0 directionType:relative
+wait 3
+nway speed:6 bullets:5 spread:30 angle:15 directionType:relative
+
+---aura_Cache Immunity---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:CacheImmunity]]
+
+---script_CacheImmunity_IncomingDamage---
+if damageSenderLayer == CollisionLayerPlayer {
+	//We only take damage from other monsters (i.e. our minions)
+	additionalDamage = -1 * damage
+}
+
+---script_soulcollector_Monster---
+
+rand := import("rand")
+
+endEvent := func() {
+	scriptVars["eventActive"] = false
+	scriptVars["eventComplete"] = true
+}
+
+if is_undefined(scriptVars["lastSummonTime"]) {
+	scriptVars["lastSummonTime"] = 0.0
+	scriptVars["eventActive"] = false
+	scriptVars["eventComplete"] = false
+	scriptVars["eventTimer"] = 0.0
+	scriptVars["timeSinceProgressUpdate"] = 1.0
+	addAuraToEntity(myEntityId, "Cache Immunity", 0, myEntityId)
+}
+
+if !scriptVars["eventActive"] && !scriptVars["eventComplete"] && len(usedByEntities) > 0 {
+	scriptVars["eventActive"] = true
+	triggerAnimation(myEntityId, "Activate")
+	worldEventActivated(myEntityId)
+}
+
+if !isDead && scriptVars["eventActive"] {
+	// Boss should not move
+	setSpeed(myEntityId, 0.0)
+
+	scriptVars["lastSummonTime"] += delta
+	scriptVars["eventTimer"] += delta
+	scriptVars["timeSinceProgressUpdate"] += delta
+
+	if scriptVars["timeSinceProgressUpdate"] > 1.0 {
+		scriptVars["timeSinceProgressUpdate"] = 0.0
+		pctCompleted := scriptVars["eventTimer"] / 120.0
+		worldEventProgress(myEntityId, pctCompleted)
+	}
+
+	if scriptVars["eventTimer"] > 120 {
+		log("PASSED EVENT")
+		worldEventPassed(myEntityId)
+		endEvent()
+		killEntity(myEntityId)
+	}
+
+	// Summon a new wave every N seconds
+	if scriptVars["lastSummonTime"] > 6.0 {
+		for i := 0; i < 3; i++ {
+			randomDegrees := rand.float() * 180 + 90.0
+			myPos := entityPosition(myEntityId)
+			spawnPos := farthestAllowedPointForEntity(myEntityId, positionAddDegreesDistance(entityPosition(myEntityId), randomDegrees, 30.0))
+			newSpiderId := summonEntity("collectorspider", spawnPos, monsterLevel(myEntityId))
+			addAIFollower(newSpiderId, myEntityId)
+			aggroMyTargets(myEntityId, newSpiderId)
+			killEntityIfEntityDies(newSpiderId, myEntityId)
+			addAuraToEntity(myEntityId, "Event Credit", 0, newSpiderId)
+		}
+		scriptVars["lastSummonTime"] = 0.0
+	}
+} else if isDead && scriptVars["eventActive"] {
+	worldEventFailed(myEntityId)
+	endEvent()
+}
+
+---script_collectorspider_Monster---
+
+if is_undefined(scriptVars["didDie"]) {
+	scriptVars["didDie"] = false
+}
+
+
+if isDead {
+	if scriptVars["didDie"] == false {
+		useAbilityAtPosition(myEntityId, "Spider Bomb", entityPosition(myEntityId))
+		scriptVars["didDie"] = true
+	}
+} else if !scriptVars["didDie"] {
+	// Check distance to the boss
+	nearby := getNearbyEntities(myEntityId)
+	
+	for i := 0; i < len(nearby); i++ {
+		if nearby[i].mobid == "soulcollector" && distToEntity(myEntityId, nearby[i].id) < 1.75 {
+			// Explode!
+			useAbilityAtPosition(myEntityId, "Spider Bomb", entityPosition(myEntityId))
+			scriptVars["didDie"] = true
+			killEntity(myEntityId)
+		}
+	}
+}
+
+---ability_Spider Bomb---
+Bullet Definition :: [[spiderbomb]]
+Lock Time :: 1.0
+VFX Cast :: trigger:Dig*
+
+---bulletdef_spiderbomb---
+sprite CirclePool 2
+potency 500
+fire 0 relative 0
+	aoeexplosion
+	damageFriendly
+	radius 2
+	timedFill 3
+	damageEvery 3
+	wait 1
+	vfx BombExplosion 5
+	wait 1
+	vfx ShakeLarge 5
+	vanish
+sprite Invisible
+potency 150
+fire 0 relative 0
+	aoeexplosion
+	radius 2
+	damageEvery 3
+	wait 3
+	vanish

@@ -1,0 +1,33 @@
+---item_52 Particle Accelerator---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Particle Accelerator]]
+Rarity :: Rare
+
+I'm going to CHARGE straight into your face!
+
+---gundef_Particle Accelerator---
+Fire Speed :: 0.4
+Charge Time :: 0.4
+Bullets In Chamber :: 14
+Reload Speed :: 1.3
+Sprite :: weapons_51
+Fire Event :: fusionrifleb
+Reload Event :: fusionriflereload
+Charge Event :: chargeshort
+Bullet Definition :: [[particleacc]]
+Archetype :: Shotgun
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: FullAuto
+Bullet Lifetime :: 0.45
+
+---bulletdef_particleacc---
+sprite Lance14
+color 2
+potency 46
+fire 45 relative -0.5 0.5
+	piercing 2
+wait 1
+fire 45 relative -0.5 0.5
+	piercing 2
+

@@ -1,0 +1,474 @@
+---mobdefinition_Inferno Juggernaut---
+Prefab :: flamelord
+Range Behavior :: Short Ranged
+Abilities :: [[Molten Core]] [[Shrapnel Burst]] [[Seismic Slam]] [[Eruption Field]] [[Flame Vortex]] [[Phase Transition]]
+Speed :: 175
+Type :: Boss
+Loot :: [[InfernoJuggernaut]]
+
+---prefab_flamelord---
+
+Components :: [[FlameLordSprite]] [[FlameLordCollider]] [[Monster]] [[Nameplate]] [[BGMFlamelord]]
+
+---prefabcomponent_FlameLordCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+	"position": [0.0, 1.25],
+    "size": [2.5, 2.2]
+}
+
+---prefabcomponent_FlameLordSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.227,
+    "pivotY": 1.0,
+    "sprite": "flamelord/flamelord",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_sfxflamelordAttack---
+
+Components :: [[SFXFlamelordAttack]]
+
+---prefabcomponent_SFXFlamelordAttack---
+
+Component :: Sound
+
+{
+    "sources": ["flamelord/flamelordAttack.wav"],
+	"spatial": true
+}
+
+---prefab_sfxflamelordBuff---
+
+Components :: [[SFXFlamelordBuff]]
+
+---prefabcomponent_SFXFlamelordBuff---
+
+Component :: Sound
+
+{
+    "sources": ["flamelord/flamelordBuff.wav"],
+	"spatial": true
+}
+
+---prefab_sfxflamelordBurst---
+
+Components :: [[SFXFlamelordBurst]]
+
+---prefabcomponent_SFXFlamelordBurst---
+
+Component :: Sound
+
+{
+    "sources": ["flamelord/flamelordBurst.wav"],
+	"spatial": true
+}
+
+---prefabcomponent_BGMFlamelord---
+
+Component :: Sound
+{
+	"sources": ["flamelord/bgm1.wav", "flamelord/bgm2.wav", "flamelord/bgm3.wav", "flamelord/bgm4.wav"],
+	"channel": "bgm",
+	"loop": true,
+	"select": "random",
+	"priority": 2,
+	"combatOnly": true
+}
+
+---ability_Molten Core---
+Bullet Definition :: [[moltencore]]
+VFX Cast :: trigger:Buff*
+Lock Time :: 1.5
+Max Range :: 100.0
+
+---bulletdef_moltencore---
+sprite CirclePool 3
+potency 250
+fire 0 relative 0
+	radius 3
+	timedFill 30
+	damageEvery 30
+	wait 30
+	vfx BombExplosion 3
+	wait 1
+	fire moltencorewave
+	vanish
+
+---bulletdef_moltencorewave---
+sprite Basic
+potency 100
+radial bullets:16 directionType:absolute angle:0 speed:8
+	lifetime 120
+	wait 10
+	speed 3.0
+	direction relative 20
+	wait 1
+	repeat
+wait 10
+radial bullets:16 directionType:absolute angle:10 speed:8
+	lifetime 120
+	wait 10
+	speed 3.0
+	direction relative 20
+	wait 1
+	repeat
+wait 10
+radial bullets:16 directionType:absolute angle:20 speed:8
+	lifetime 120
+	wait 10
+	speed 3.0
+	direction relative 20
+	wait 1
+	repeat
+
+---bulletdef_randomexplosion---
+sprite CirclePool 2
+potency 150
+fire 0 relative 0
+	aoeexplosion
+	radius 2
+	timedFill 5
+	damageEvery 5
+	wait 5
+	vfx SmallBombExplosion 2
+	wait 1
+	vanish
+
+---ability_Shrapnel Burst---
+Bullet Definition :: [[shrapnelburst]]
+VFX Cast :: trigger:Burst*
+Lock Time :: 1.0
+Max Range :: 100.0
+
+---bulletdef_shrapnelburst---
+sprite OrangePool 2
+potency 150
+fire 0 relative 0
+	aoeexplosion
+	radius 2
+	timedFill 8
+	damageEvery 8
+	wait 8
+	vfx SmallBombExplosion 2
+	wait 1
+	fire shrapnelwave
+	vanish
+
+---bulletdef_shrapnelwave---
+sprite Custom10
+color 1
+potency 75
+repeat bullets:24 speed:8 angle:0 maxAngle:360 delay:1 directionType:relative
+
+
+---ability_Seismic Slam---
+Bullet Definition :: [[seismicslam]]
+VFX Cast :: trigger:Attack*
+Lock Time :: 2.0
+Max Range :: 100.0
+
+---bulletdef_seismicslam---
+sprite BluePool 7
+potency 200
+fire 0 relative 0
+	aoeexplosion
+	radius 7
+	timedFill 40
+	damageEvery 40
+	wait 40
+	vfx BombExplosion 3
+	wait 1
+	fire seismicshockwave
+	vanish
+
+---bulletdef_seismicshockwave---
+sprite Basic
+color 3
+potency 100
+repeat bullets:8 angleChange:45 angle:0 directionType:relative speed:5
+	wait 10
+	fire shockwaveburst
+	vanish
+
+---bulletdef_shockwaveburst---
+sprite Basic
+color 3
+potency 100
+nway speed:10 bullets:6 spread:30 angle:0 directionType:relative
+	wait 45
+	fire randomexplosion
+	wait 45
+	vanish
+
+---ability_Eruption Field---
+Bullet Definition :: [[randomeruption]]
+VFX Cast :: trigger:Burst*
+Lock Time :: 2.0
+Max Range :: 100.0
+
+---bulletdef_randomeruption---
+sprite CirclePool 2.5
+potency 250
+fire 0 relative 0
+	aoeexplosion
+	radius 2.5
+	timedFill 30
+	damageEvery 30
+	wait 30
+	vfx BombExplosion 2.5
+	wait 1
+	vanish
+
+---ability_Flame Vortex---
+Bullet Definition :: [[flamevortex]]
+VFX Cast :: trigger:Laser
+Lock Time :: 2.5
+Max Range :: 100.0
+
+---bulletdef_flamevortex---
+sprite CirclePool 4
+potency 200
+fire 0 relative 0
+	aoedot
+	radius 4
+	damageEvery 10
+	timedFill 60
+	vanish
+
+---bulletdef_flamevortexburst---
+sprite Basic
+potency 100
+radial bullets:32 speed:8 angle:0 directionType:absolute
+	wait 60
+	vanish
+wait 5
+radial bullets:32 speed:7 angle:5.625 directionType:absolute
+	wait 60
+	vanish
+
+---ability_Phase Transition---
+Bullet Definition :: [[phasetransition]]
+Max Range :: 100.0
+VFX Cast :: trigger:Buff*
+Lock Time :: 3.0
+
+---bulletdef_phasetransition---
+sprite Basic
+color 3
+potency 100
+radial bullets:48 speed:8
+wait 3
+radial bullets:48 speed:7 angle:3.75 directionType:absolute
+
+---loottable_InfernoJuggernaut---
+[[188 Juggernaut's Ember]] @ 67.0
+[[31 Rampage]] @ 2.0
+[[39 Risky Business]] @ 10.0
+[[603 Flame Pulse]] @ 15.0
+
+---aura_Phase Transition Immunity---
+Type :: Buff
+Duration :: 5.0
+Icon :: statusicons_36
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:PhaseTransitionImmunity]]
+
+---script_PhaseTransitionImmunity_IncomingDamage---
+// Negate all damage during phase transition
+additionalDamage = -1 * damage
+
+---script_flamelord_Monster---
+resetVars := func() {
+	scriptVars["phase"] = 1
+	scriptVars["timeSinceMoltenCore"] = 0.0
+	scriptVars["timeSinceShrapnelBurst"] = 0.0
+	scriptVars["timeSinceSeismicSlam"] = 0.0
+	scriptVars["timeSinceEruptionField"] = 0.0
+	scriptVars["timeSinceFlameVortex"] = 0.0
+	scriptVars["timeSinceInfernoRain"] = 0.0
+	scriptVars["saidDeathPhrase"] = false
+	scriptVars["saidIntroPhrase"] = false
+	scriptVars["didPhase2Transition"] = false
+	scriptVars["didPhase3Transition"] = false
+	scriptVars["inTransition"] = false
+	scriptVars["transitionTimer"] = 0.0
+}
+
+if !isDead {
+	if is_undefined(scriptVars["phase"]) {
+		resetVars()
+	}
+
+	if targetEntityId > 0 {
+		// Say intro phrase when first encountering a player
+		if !scriptVars["saidIntroPhrase"] {
+			say(myEntityId, "A challenger has finally made it here. Time for a little fun.")
+			scriptVars["saidIntroPhrase"] = true
+		}
+		
+		currentHealth := float(getPoints(myEntityId, "hp", "current"))
+		maxHealth := float(getPoints(myEntityId, "hp", "max"))
+		
+		// Phase 1 to Phase 2 transition at 70% health
+		if currentHealth < maxHealth * 0.7 && scriptVars["phase"] == 1 {
+			if !scriptVars["inTransition"] && !scriptVars["didPhase2Transition"] {
+				// Start phase transition and add invulnerability
+				say(myEntityId, "Haha, young one. You may just be worthy of my true magic.")
+				addAuraToEntity(myEntityId, "Phase Transition Immunity", 0, myEntityId)
+				scriptVars["inTransition"] = true
+				scriptVars["transitionTimer"] = 0.0
+				clearBulletsForEntity(myEntityId)
+				useAbilityAtPosition(myEntityId, "Phase Transition", entityPosition(myEntityId))
+				
+				// Visual effect to indicate invulnerability
+				showVfxAtPosition(myEntityId, "Shield", entityPosition(myEntityId))
+			}
+		}
+		
+		// Phase 2 to Phase 3 transition at 40% health
+		if currentHealth < maxHealth * 0.4 && scriptVars["phase"] == 2 {
+			if !scriptVars["inTransition"] && !scriptVars["didPhase3Transition"] {
+				// Start phase transition and add invulnerability
+				say(myEntityId, "You're beginning to test my patience.")
+				addAuraToEntity(myEntityId, "Phase Transition Immunity", 0, myEntityId)
+				scriptVars["inTransition"] = true
+				scriptVars["transitionTimer"] = 0.0
+				clearBulletsForEntity(myEntityId)
+				useAbilityAtPosition(myEntityId, "Phase Transition", entityPosition(myEntityId))
+				
+				// Visual effect to indicate invulnerability
+				showVfxAtPosition(myEntityId, "Shield", entityPosition(myEntityId))
+			}
+		}
+		
+		// Handle phase transition
+		if scriptVars["inTransition"] {
+			scriptVars["transitionTimer"] += delta
+			
+			// After 5 seconds, complete the transition
+			if scriptVars["transitionTimer"] >= 2.0 {
+				scriptVars["inTransition"] = false
+				
+				if !scriptVars["didPhase2Transition"] {
+					scriptVars["didPhase2Transition"] = true
+					scriptVars["phase"] = 2
+				} else if !scriptVars["didPhase3Transition"] {
+					scriptVars["didPhase3Transition"] = true
+					scriptVars["phase"] = 3
+				}
+				
+				// Reset all timers after phase transition
+				scriptVars["timeSinceMoltenCore"] = 0.0
+				scriptVars["timeSinceShrapnelBurst"] = 0.0
+				scriptVars["timeSinceSeismicSlam"] = 0.0
+				scriptVars["timeSinceEruptionField"] = 0.0
+				scriptVars["timeSinceFlameVortex"] = 0.0
+				scriptVars["timeSinceInfernoRain"] = 0.0
+				
+			}
+			
+			// Don't perform any other actions while in transition
+			// Skip the rest of the function execution
+		} else {
+		
+		// Update all timers
+		scriptVars["timeSinceMoltenCore"] += delta
+		scriptVars["timeSinceShrapnelBurst"] += delta
+		scriptVars["timeSinceSeismicSlam"] += delta
+		scriptVars["timeSinceEruptionField"] += delta
+		scriptVars["timeSinceFlameVortex"] += delta
+		scriptVars["timeSinceInfernoRain"] += delta
+
+		if castingAction == 0 {
+			if scriptVars["phase"] == 1 {
+				// Phase 1: Basic attacks
+				if scriptVars["timeSinceMoltenCore"] > 3.5 {
+					useAbilityAtPosition(myEntityId, "Molten Core", entityPosition(targetEntityId))
+					scriptVars["timeSinceMoltenCore"] = 0.0
+				} else if scriptVars["timeSinceShrapnelBurst"] > 3.0 {
+					useAbilityAtTarget(myEntityId, "Shrapnel Burst", targetEntityId, 1.0)
+					scriptVars["timeSinceShrapnelBurst"] = 0.0
+				} 
+			} else if scriptVars["phase"] == 2 {
+				// Phase 2: Adds Seismic Slam
+				if scriptVars["timeSinceMoltenCore"] > 3.0 {
+					useAbilityAtPosition(myEntityId, "Molten Core", entityPosition(targetEntityId))
+					scriptVars["timeSinceMoltenCore"] = 0.0
+				} else if scriptVars["timeSinceShrapnelBurst"] > 2.5 {
+					useAbilityAtTarget(myEntityId, "Shrapnel Burst", targetEntityId, 1.0)
+					scriptVars["timeSinceShrapnelBurst"] = 0.0
+				} else if scriptVars["timeSinceSeismicSlam"] > 3.0 {
+					useAbilityAtPosition(myEntityId, "Seismic Slam", entityPosition(myEntityId))
+					scriptVars["timeSinceSeismicSlam"] = 0.0
+				}
+			} else {
+				// Phase 3: Much more aggressive with attack combinations and reduced cooldowns
+				
+				// Allow multiple attacks to trigger on the same frame for more overwhelming patterns
+				
+				// Molten Core - more frequent and target multiple players if possible
+				if scriptVars["timeSinceMoltenCore"] > 3.5 {
+					useAbilityAtPosition(myEntityId, "Molten Core", entityPosition(targetEntityId))
+					
+					// Try to target another player if one exists
+					randomTarget := randomTargetEntityId(myEntityId, 100.0)
+					if randomTarget != targetEntityId && randomTarget != 0 {
+						useAbilityAtPosition(myEntityId, "Molten Core", entityPosition(randomTarget))
+					}
+					scriptVars["timeSinceMoltenCore"] = 0.0
+				}
+				
+				
+				// Seismic Slam - still big cooldown but more powerful
+				if scriptVars["timeSinceSeismicSlam"] > 5.0 {
+					useAbilityAtPosition(myEntityId, "Seismic Slam", entityPosition(myEntityId))
+					// Follow up with additional explosions
+					useAbilityAtPosition(myEntityId, "Eruption Field", randomPositionInCurrentRoom(myEntityId, 4.0))
+					useAbilityAtPosition(myEntityId, "Eruption Field", randomPositionInCurrentRoom(myEntityId, 2.0))
+					useAbilityAtPosition(myEntityId, "Eruption Field", randomPositionInCurrentRoom(myEntityId, 2.0))
+					useAbilityAtPosition(myEntityId, "Eruption Field", randomPositionInCurrentRoom(myEntityId, 2.0))
+					scriptVars["timeSinceSeismicSlam"] = 0.0
+				}
+				
+				// Flame Vortex - now places multiple vortexes
+				if scriptVars["timeSinceFlameVortex"] > 4.5 {
+					// Add flame vortex at player position and two random positions
+					useAbilityAtPosition(myEntityId, "Flame Vortex", randomPositionInCurrentRoom(myEntityId, 3.0))
+					scriptVars["timeSinceFlameVortex"] = 0.0
+				}
+				
+				// Eruption Field - multi-wave with reduced cooldown
+				if scriptVars["timeSinceEruptionField"] > 5.0 {
+					// Fire multiple eruption fields in sequence
+					useAbilityAtPosition(myEntityId, "Eruption Field", randomPositionInCurrentRoom(myEntityId, 3.0))
+					useAbilityAtPosition(myEntityId, "Eruption Field", randomPositionInCurrentRoom(myEntityId, 2.0))
+					scriptVars["timeSinceEruptionField"] = 0.0
+				}
+			}
+		}
+		}
+	}
+}
+
+if isDead && !scriptVars["saidDeathPhrase"] {
+	say(myEntityId, "The flames... extinguished...")
+	scriptVars["saidDeathPhrase"] = true
+}

@@ -1,0 +1,94 @@
+---aura_Thermal Overcharge---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:ThermalOvercharge]]
+
+---spike_Thermal Overcharge---
+Slot :: Gun
+Auras :: [[Thermal Overcharge]]
+Rarity :: Legendary
+Archetypes :: [[Automatic]]
+
+After 20 continuous shots, automatically fires a mini-rocket with increased damage.
+
+---ability_Thermal Rocket---
+Bullet Definition :: [[thermalrocket]]
+Max Range :: 100.0
+Cooldown :: 0.0
+
+---bulletdef_thermalrocket---
+sprite Custom7
+color 1
+potency 100
+fire 20 relative 0
+	wait 10
+	fire thermalexplosion
+	wait 1
+	vanish
+
+---bulletdef_thermalexplosion---
+sprite CirclePool 2
+potency 150
+fire 0 relative 0
+	aoeexplosion
+	radius 2
+	timedFill 5
+	damageEvery 5
+	wait 5
+	vfx BombExplosion 3
+	wait 1
+	vanish
+
+---script_ThermalOvercharge_FireWeapon---
+if abilityId == auraAbilityId {
+	if is_undefined(scriptVars["continuousShots"]) {
+		scriptVars["continuousShots"] = 0
+		scriptVars["lastShotTick"] = 0
+	}
+	
+	// Check if this is a continuous shot (within 15 ticks of last shot)
+	if globalTick - scriptVars["lastShotTick"] <= 15 {
+		scriptVars["continuousShots"] += 1
+	} else {
+		// Reset counter if shooting stopped
+		scriptVars["continuousShots"] = 1
+	}
+	
+	scriptVars["lastShotTick"] = globalTick
+	
+	// After 20 continuous shots, fire the mini-rocket
+	if scriptVars["continuousShots"] >= 20 {
+		// Find nearest enemy using the proper function
+		nearestEnemy := closestEnemyEntityId(myEntityId)
+		
+		if nearestEnemy > 0 {
+			// Fire rocket towards nearest enemy
+			targetPos := entityPosition(nearestEnemy)
+			useAbilityAtPosition(myEntityId, "Thermal Rocket", [0.0,0.0,0.0], targetPos)
+		} else {
+			// No enemies found, fire in aiming direction
+			targetPos := positionAddDegreesDistance(entityPosition(myEntityId, true), aimingAngle, 0.0)
+			useAbilityAtPosition(myEntityId, "Thermal Rocket", [0.0,0.0,0.0], targetPos)
+		}
+		
+		// Show visual effect
+		showVfxAtPosition(myEntityId, "PowerSpike", entityPosition(myEntityId))
+		
+		// Reset counter
+		scriptVars["continuousShots"] = 0
+		
+		// Apply 2-second cooldown by preventing shots for a moment
+		addAuraToEntity(myEntityId, "Slow", auraAbilityId, myEntityId)
+	}
+}
+
+---script_ThermalOvercharge_Tick---
+// Reset continuous shot counter if player hasn't fired recently
+if !is_undefined(scriptVars["lastShotTick"]) {
+	if globalTick - scriptVars["lastShotTick"] > 30 {
+		scriptVars["continuousShots"] = 0
+	}
+}

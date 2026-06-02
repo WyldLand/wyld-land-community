@@ -1,0 +1,100 @@
+---mob_Summoner---
+Prefab :: summoner
+Range Behavior :: Long Ranged
+Abilities :: [[Summon Ghoul]] [[Summoner Attack]]
+Type :: Elite
+
+---prefab_summoner---
+
+Components :: [[SummonerSprite]] [[SummonerCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_SummonerCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+    "position": [0.0, 1.0],
+    "size": [2.18, 2.0]
+}
+
+---prefabcomponent_SummonerSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.37,
+    "pivotY": 1.0,
+    "sprite": "darkforest3/skeletonsummoner",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_sfxsummonerSummon---
+
+Components :: [[SFXSummonerSummon]]
+
+---prefabcomponent_SFXSummonerSummon---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest3/summonerSummon.wav"],
+	"spatial": true
+}
+
+---prefab_sfxsummonerAttack---
+
+Components :: [[SFXSummonerAttack]]
+
+---prefabcomponent_SFXSummonerAttack---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest3/summonerAttack.wav"],
+	"spatial": true
+}
+
+---ability_Summon Ghoul---
+Cooldown :: 6.0
+VFX Charging :: trigger:Summon*
+Cast Time :: 0.5
+Script :: SummonGhoul
+
+---script_SummonGhoul_Cast---
+
+if frameNum == 6 || frameNum == 8 || frameNum == 10 {
+	newEntId := summonEntity("ghoul", randomPositionNearby(myEntityId, 2.0, 4.0), monsterLevel(myEntityId))
+	aggroMyTargets(myEntityId, newEntId)
+	killEntityIfEntityDies(newEntId, myEntityId)
+}
+
+---ability_Summoner Attack---
+Bullet Definition :: [[summonerattack]]
+Cooldown :: 3.5
+VFX Charging :: trigger:Attack*
+Lock Time :: 0.75
+Cast Time :: 0.25
+
+---bulletdef_summonerattack---
+potency 100
+color 3
+sprite Custom10
+radial bullets:36 speed:6 angle:10 directionType:absolute
+repeat bullets:12 speed:4 angle:0 angleChange:14 delay:1 directionType:relative
+	wait 10
+	speed 0
+	wait 20
+	speed 12
+	wait 30
+	vanish

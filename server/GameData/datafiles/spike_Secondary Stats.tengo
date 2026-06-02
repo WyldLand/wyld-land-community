@@ -1,0 +1,341 @@
+---spike_Minor Crit Damage---
+Slot :: Any
+Rarity :: Common
+Auras :: [[Minor Crit Damage]]
+
+Increases damage from critical strikes by 3%.
+
+---aura_Minor Crit Damage---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 5
+Time Per Tick :: 1.0
+Definitions :: [[Minor Crit Damage]]
+
+---auraaffectstat_Minor Crit Damage---
+Stat :: CritDamage
+Add :: 30
+
+---spike_Major Crit Damage---
+Slot :: Any
+Rarity :: Rare
+Auras :: [[Major Crit Damage]]
+
+Increases damage from critical strikes by 6%.
+
+---aura_Major Crit Damage---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 5
+Time Per Tick :: 1.0
+Definitions :: [[Major Crit Damage]]
+
+---auraaffectstat_Major Crit Damage---
+Stat :: CritDamage
+Add :: 60
+
+---spike_Minor Crit Chance---
+Slot :: Any
+Rarity :: Common
+Auras :: [[Minor Crit Chance]]
+
+Increases chance of a critical strike by 3%.
+
+---aura_Minor Crit Chance---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 5
+Time Per Tick :: 1.0
+Definitions :: [[Minor Crit Chance]]
+
+---auraaffectstat_Minor Crit Chance---
+Stat :: CritChance
+Add :: 30
+
+---spike_Major Crit Chance---
+Slot :: Any
+Rarity :: Rare
+Auras :: [[Major Crit Chance]]
+
+Increases chance of a critical strike by 6%.
+
+---aura_Major Crit Chance---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 5
+Time Per Tick :: 1.0
+Definitions :: [[Major Crit Chance]]
+
+---auraaffectstat_Major Crit Chance---
+Stat :: CritChance
+Add :: 60
+
+---spike_Minor Luck---
+Slot :: Any
+Rarity :: Common
+Auras :: [[Minor Luck]]
+
+Increases luck by 5%.
+
+---aura_Minor Luck---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 5
+Time Per Tick :: 1.0
+Definitions :: [[Minor Luck]]
+
+---auraaffectstat_Minor Luck---
+Stat :: Luck
+Add :: 50
+
+---spike_Major Luck---
+Slot :: Any
+Rarity :: Rare
+Auras :: [[Major Luck]]
+
+Increases luck by 10%.
+
+---aura_Major Luck---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 5
+Time Per Tick :: 1.0
+Definitions :: [[Major Luck]]
+
+---auraaffectstat_Major Luck---
+Stat :: Luck
+Add :: 100
+
+---spike_Minor Reload---
+Slot :: Any
+Rarity :: Common
+Auras :: [[Minor Reload Speed]]
+
+Increases reload speed by 5%.
+
+---aura_Minor Reload Speed---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 5
+Time Per Tick :: 1.0
+Definitions :: [[Minor Reload Speed]]
+
+---auraaffectstat_Minor Reload Speed---
+Stat :: ReloadSpeed
+Add :: 50
+
+---spike_Major Reload---
+Slot :: Any
+Rarity :: Rare
+Auras :: [[Major Reload Speed]]
+
+Increases reload speed by 10%.
+
+---aura_Major Reload Speed---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 5
+Time Per Tick :: 1.0
+Definitions :: [[Major Reload Speed]]
+
+---auraaffectstat_Major Reload Speed---
+Stat :: ReloadSpeed
+Add :: 100
+
+---spike_Minor Curse Damage---
+Slot :: Any
+Rarity :: Common
+Auras :: [[Minor Curse Damage Boost]]
+
+Increases damage dealt to cursed enemies by 5%.
+
+---aura_Minor Curse Damage Boost---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 5
+Time Per Tick :: 1.0
+Definitions :: [[Minor Curse Damage Boost]]
+
+---auraaffectstat_Minor Curse Damage Boost---
+Stat :: CurseDamageBoost
+Add :: 30
+
+---spike_Major Curse Damage---
+Slot :: Any
+Rarity :: Rare
+Auras :: [[Major Curse Damage Boost]]
+
+Increases damage dealt to cursed enemies by 10%.
+
+---aura_Major Curse Damage Boost---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 5
+Time Per Tick :: 1.0
+Definitions :: [[Major Curse Damage Boost]]
+
+---auraaffectstat_Major Curse Damage Boost---
+Stat :: CurseDamageBoost
+Add :: 60
+
+---spike_Minor Leech Damage---
+Slot :: Any
+Rarity :: Common
+Auras :: [[Minor Leech Damage]]
+
+Chance to spawn a ground leech on hit. The leech wil explode after a short time, damaging all nearby enemies.
+
+---aura_Minor Leech Damage---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 5
+Time Per Tick :: 1.0
+Definitions :: [[Minor Leech Damage]]
+
+---auraaffectstat_Minor Leech Damage---
+Stat :: LeechDamage
+Add :: 40
+
+---spike_Major Leech Damage---
+Slot :: Any
+Rarity :: Rare
+Auras :: [[Major Leech Damage]]
+
+Higher chance to spawn a ground leech on hit. The leech wil explode after a short time, damaging all nearby enemies.
+
+---aura_Major Leech Damage---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 5
+Time Per Tick :: 1.0
+Definitions :: [[Major Leech Damage]]
+
+---auraaffectstat_Major Leech Damage---
+Stat :: LeechDamage
+Add :: 80
+
+---spike_Minor Burn---
+Slot :: Any
+Rarity :: Common
+Auras :: [[Minor Chance to Burn]]
+
+Chance to apply a burn effect on hit.
+
+---aura_Minor Chance to Burn---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 5
+Time Per Tick :: 1.0
+Definitions :: [[Minor Chance to Burn]]
+
+---auraaffectstat_Minor Chance to Burn---
+Stat :: ChanceToBurn
+Add :: 50
+
+---spike_Major Burn---
+Slot :: Any
+Rarity :: Rare
+Auras :: [[Major Chance to Burn]]
+
+Higher chance to apply a burn effect on hit.
+
+---aura_Major Chance to Burn---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 5
+Time Per Tick :: 1.0
+Definitions :: [[Major Chance to Burn]]
+
+---auraaffectstat_Major Chance to Burn---
+Stat :: ChanceToBurn
+Add :: 100
+
+---spike_Minor Slow---
+Slot :: Any
+Rarity :: Common
+Auras :: [[Minor Chance to Slow]]
+
+Chance to apply a slow effect on hit.
+
+---aura_Minor Chance to Slow---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 5
+Time Per Tick :: 1.0
+Definitions :: [[Minor Chance to Slow]]
+
+---auraaffectstat_Minor Chance to Slow---
+Stat :: ChanceToSlow
+Add :: 50
+
+---spike_Major Slow---
+Slot :: Any
+Rarity :: Rare
+Auras :: [[Major Chance to Slow]]
+
+Higher chance to apply a slow effect on hit.
+
+---aura_Major Chance to Slow---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 5
+Time Per Tick :: 1.0
+Definitions :: [[Major Chance to Slow]]
+
+---auraaffectstat_Major Chance to Slow---
+Stat :: ChanceToSlow
+Add :: 100
+
+---spike_Minor Leech Affinity---
+Slot :: Any
+Rarity :: Common
+Auras :: [[Minor Leech Affinity]]
+
+Decreases cooldowns of active item when dealing damage.
+
+---aura_Minor Leech Affinity---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 5
+Time Per Tick :: 1.0
+Definitions :: [[Minor Leech Affinity]]
+
+---auraaffectstat_Minor Leech Affinity---
+Stat :: LeechAffinity
+Add :: 50
+
+---spike_Major Leech Affinity---
+Slot :: Any
+Rarity :: Rare
+Auras :: [[Major Leech Affinity]]
+
+Greatly decreases cooldowns of active item when dealing damage.
+
+---aura_Major Leech Affinity---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 5
+Time Per Tick :: 1.0
+Definitions :: [[Major Leech Affinity]]
+
+---auraaffectstat_Major Leech Affinity---
+Stat :: LeechAffinity
+Add :: 100

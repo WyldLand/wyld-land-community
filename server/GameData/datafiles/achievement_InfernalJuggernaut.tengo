@@ -1,0 +1,14 @@
+---achievement_Infernal Victory---
+Kill :: [[Mobs/Inferno Juggernaut|Inferno Juggernaut]]@1
+XP :: 50
+
+Defeat the Inferno Juggernaut and extinguish its eternal flames.
+
+---achievement_Ice Cold---
+Kill :: [[Mobs/Inferno Juggernaut|Inferno Juggernaut]]@1
+Tags :: NoDamage
+Title :: Flame Quencher
+XP :: 50
+ResetOnDeath :: False
+
+Take out the Inferno Juggernaut without taking any damage.

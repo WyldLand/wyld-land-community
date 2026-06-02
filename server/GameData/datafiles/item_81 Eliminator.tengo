@@ -1,0 +1,36 @@
+---item_81 Eliminator---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Eliminator]]
+Rarity :: Legendary
+
+Take one part piercing bullets, one part twin helix, blend until smooth... then unleash the storm.
+
+---gundef_Eliminator---
+Fire Speed :: 0.08
+Bullets In Chamber :: 55
+Reload Speed :: 1.6
+Sprite :: weapons_107
+Fire Event :: smgc
+Reload Event :: smgreload
+Bullet Definition :: [[eliminator]]
+Archetype :: Automatic
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: FullAuto
+Bullet Lifetime :: 1.0
+
+---bulletdef_eliminator---
+sprite Custom10
+color 3
+potency 18
+fire 20 relative -5
+	piercing 3
+	wait 8
+	direction relative 10
+	repeat
+fire 20 relative 5
+	piercing 3
+	wait 8
+	direction relative -10
+	repeat
+wait 50

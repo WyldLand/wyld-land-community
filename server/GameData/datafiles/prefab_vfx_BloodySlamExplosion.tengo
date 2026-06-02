@@ -1,0 +1,23 @@
+---prefab_BloodySlamExplosion---
+
+Components :: [[BloodySlamExplosionSprite]] [[BloodySlamSFX]]
+
+---prefabcomponent_BloodySlamExplosionSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "vfx/BloodySlamExplosion",
+    "play": "default"
+}
+
+---prefabcomponent_BloodySlamSFX---
+
+Component :: Sound
+
+{
+    "sources": ["redking/redkingExplosion.wav"],
+    "channel": "sfx"
+}

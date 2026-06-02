@@ -1,0 +1,152 @@
+---mob_Glitch Samurai---
+Prefab :: glitchsamurai
+Range Behavior :: Long Ranged
+Abilities :: [[Glitch Radial]] [[Glitch Teleport]]
+Type :: Elite
+Options :: alwaysattack
+
+---prefab_glitchsamurai---
+
+Components :: [[GlitchSamuraiSprite]] [[GlitchSamuraiCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_GlitchSamuraiCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+    "position": [0.0, 0.75],
+    "size": [1.25, 1.5]
+}
+
+---prefabcomponent_GlitchSamuraiSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.45,
+    "pivotY": 1.0,
+    "sprite": "darkforest3/glitchsamurai",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ],
+	"transitions": [
+		{
+			"from": "Vanish",
+			"to": "*",
+			"animation": "_hide"
+		},
+		{
+			"from": "*",
+			"to": "Appear",
+			"animation": "_show"
+		}
+	]
+}
+
+---prefab_sfxglitchsamuraiAppear---
+
+Components :: [[SFXGlitchSamuraiAppear]]
+
+---prefabcomponent_SFXGlitchSamuraiAppear---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest3/glitchsamuraiAppear1.wav", "darkforest3/glitchsamuraiAppear2.wav", "darkforest3/glitchsamuraiAppear3.wav", "darkforest3/glitchsamuraiAppear4.wav"],
+    "select": "all",
+    "delay": [0.0, 0.40, 0.50, 0.60],
+	"spatial": true
+}
+
+---prefab_sfxglitchsamuraiAttack---
+
+Components :: [[SFXGlitchSamuraiAttack]]
+
+---prefabcomponent_SFXGlitchSamuraiAttack---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest3/glitchsamuraiAttack1.wav", "darkforest3/glitchsamuraiAttack2.wav"],
+    "select": "all",
+    "delay": [0.0, 0.45],
+	"spatial": true
+}
+
+---prefab_sfxglitchsamuraiVanish---
+
+Components :: [[SFXGlitchSamuraiVanish]]
+
+---prefabcomponent_SFXGlitchSamuraiVanish---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest3/glitchsamuraiVanish.wav"],
+	"spatial": true
+}
+
+---ability_Glitch Radial---
+Bullet Definition :: [[glitchradial]]
+Cooldown :: 2.0
+VFX Charging :: trigger:Attack*
+Cast Time :: 0.3
+Lock Time :: 0.50
+
+---bulletdef_glitchradial---
+potency 150
+nway speed:10 bullets:8 spread:15 directionType:relative angle:-5 maxAngle:5 bulletShift:5
+wait 3
+nway speed:10 bullets:8 spread:15 directionType:relative angle:-10 maxAngle:10 bulletShift:5
+wait 3
+nway speed:6 bullets:16 spread:45 directionType:relative
+
+---ability_Glitch Teleport---
+Bullet Definition :: [[glitchappear]]
+Cooldown :: 6.0
+VFX Charging :: trigger:Vanish*
+VFX Cast :: trigger:Appear*
+Lock Time :: 1.0
+Cast Time :: 3.0
+Script :: GlitchTeleport
+
+---bulletdef_glitchappear---
+sprite CirclePool 4
+potency 250
+fire 0 relative 0
+	aoeexplosion
+	radius 4
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vfx ColossusExplosion 5
+	wait 1
+	vanish
+wait 5
+sprite Basic
+potency 100
+nway speed:9 bullets:14 spread:20 directionType:relative angle:-5 maxAngle:5
+nway speed:9 bullets:14 spread:20 directionType:relative angle:175 maxAngle:185
+
+---script_GlitchTeleport_Cast---
+
+setSpeed(myEntityId, 0.0) //so we don't move while we're casing this
+
+if frameNum == 10 {
+	setCollisionLayer(myEntityId, CollisionLayerDynamic)
+}
+
+if frameNum == 30 {
+	setPosition(myEntityId, randomPositionNearby(myEntityId, 10.0, 3.0))
+	setCollisionLayer(myEntityId, CollisionLayerMonster)
+}
+

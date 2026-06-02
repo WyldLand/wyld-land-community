@@ -1,0 +1,63 @@
+---item_999 Quantum Sniper---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Quantum Sniper]]
+Rarity :: Exotic
+Durability :: 5
+
+Shots have a chance to split into multiple projectiles on impact, firing in random directions
+
+Reality fractures unpredictably with each shot.
+
+---gundef_Quantum Sniper---
+Fire Speed :: 1.2
+Bullets In Chamber :: 5
+Reload Speed :: 2.0
+Sprite :: weapons_4
+Color :: Violet
+Fire Event :: riflec
+Reload Event :: riflereload
+Bullet Definition :: [[quantumsniper]]
+Archetype :: LongRangeRifle
+Muzzle VFX :: Muzzle 0.60
+Fire Type :: SemiAuto
+Bullet Lifetime :: 1.5
+Innate Spikes :: [[Quantum Split]]
+
+---bulletdef_quantumsniper---
+sprite Rifle14
+color 5
+potency 250
+fire 50 relative 0
+
+---bulletdef_quantumsplit---
+sprite Rifle14
+color 5
+potency 125
+nway speed:50 bullets:3 spread:15 angle:0 directionType:relative
+
+---ability_Quantum Sniper---
+Bullet Definition :: [[quantumsplit]]
+Max Range :: 100.0
+Cooldown :: 0.0
+
+---spike_Quantum Split---
+Auras :: [[Quantum Split]]
+
+Bullets have a 50% chance to split into multiple projectiles upon impact, firing in random directions.
+
+---aura_Quantum Split---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:QuantumSplit]]
+
+---script_QuantumSplit_BulletHit---
+rand := import("rand")
+
+if auraAbilityId == abilityId && rand.float() < 0.5 {
+    randomAimPosition := randomPositionInCurrentRoom(myEntityId, 2.0)
+    useAbilityAtPosition(myEntityId, "Quantum Sniper", hitPosition, randomAimPosition)
+}

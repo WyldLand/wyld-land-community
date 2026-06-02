@@ -1,0 +1,113 @@
+---prefab_sfxplayerhit---
+
+Components :: [[SFXPlayerHit]]
+
+---prefabcomponent_SFXPlayerHit---
+
+Component :: Sound
+
+{
+    "sources": ["player/playerhit1.wav", "player/playerhit2.wav", "player/playerhit3.wav", "player/playerhit4.wav"],
+    "select": "random",
+    "cooldown": 0.2
+}
+
+---prefab_sfxplayerhealed---
+
+Components :: [[SFXPlayerHealed]]
+
+---prefabcomponent_SFXPlayerHealed---
+
+Component :: Sound
+
+{
+    "sources": ["player/playerhealed.wav"],
+    "cooldown": 0.2
+}
+
+---prefab_sfxbulletwall---
+
+Components :: [[SFXBulletWall]]
+
+---prefabcomponent_SFXBulletWall---
+
+Component :: Sound
+
+{
+    
+    "sources": ["player/bulletwall1.wav", "player/bulletwall2.wav", "player/bulletwall3.wav", "player/bulletwall4.wav"],
+    "select": "random",
+    "volume": 0.25,
+	"spatial": true,
+    "channel": "gfx",
+    "cooldown": 0.2
+}
+
+---prefab_sfxdamagedenemy---
+
+Components :: [[SFXDamagedEnemy]]
+
+---prefabcomponent_SFXDamagedEnemy---
+
+Component :: Sound
+
+{
+    
+    "sources": ["player/damagedenemy1.wav", "player/damagedenemy2.wav", "player/damagedenemy3.wav", "player/damagedenemy4.wav"],
+    "select": "random",
+    "volume": 0.30,
+	"spatial": true,
+    "channel": "gfx",
+    "cooldown": 0.2
+}
+
+---prefab_sfxGainXP---
+
+Components :: [[SFXGainXP]]
+
+---prefabcomponent_SFXGainXP---
+
+Component :: Sound
+
+{
+    "sources": ["player/gainxp.wav"]
+}
+
+---prefab_sfxPlayerDeath---
+
+Components :: [[SFXPlayerDeath]]
+
+---prefabcomponent_SFXPlayerDeath---
+
+Component :: Sound
+
+{
+    "sources": ["player/playerdeath.wav"]
+}
+
+---prefab_sfxSpeak---
+
+Components :: [[SFXSpeak]]
+
+---prefabcomponent_SFXSpeak---
+
+Component :: Sound
+
+{
+    "sources": ["player/speak.wav"],
+    "randomPitch": 0.25
+}
+
+---prefab_sfxwavespawn---
+
+Components :: [[SFXWaveSpawn]]
+
+---prefabcomponent_SFXWaveSpawn---
+
+Component :: Sound
+
+{
+    "sources": ["player/wavespawn.wav"],
+    "randomPitch": 0.10,
+	"spatial": true
+}

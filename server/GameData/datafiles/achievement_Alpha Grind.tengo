@@ -1,0 +1,12 @@
+---achievement_Alpha Grind---
+Kill :: [[Mobs/Assassin|Assassin]]@500 [[Mobs/Bomb Bot|Bomb Bot]]@100 [[Mobs/Caged Shocker|Caged Shocker]]@100 [[Mobs/Heavy Slicer|Heavy Slicer]]@100 [[Mobs/Shock Sweeper|Shock Sweeper]]@50 [[Mobs/Glitch Samurai|Glitch Samurai]]@50
+Title :: Alpha Defender
+XP :: 250
+ResetOnDeath :: False
+Rewards :: [[29 Corrupted Wyld Luck]]@1
+Disabled :: True
+
+Kill Assassins, Bomb Bots, Caged Shockers, Heavy Slicers, Shock Sweepers, and Glitch Samurai throughout Wyld Land during the Alpha Test.
+
+In recognition for your efforts, we bestow upon you this title. Wear it proudly.
+

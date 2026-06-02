@@ -1,0 +1,16 @@
+---prefab_PlayerRunning---
+
+Components :: [[PlayerRunningSprite]]
+
+---prefabcomponent_PlayerRunningSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "vfx/PlayerRunning",
+    "play": "default",
+    "allowBatch": true
+     
+}

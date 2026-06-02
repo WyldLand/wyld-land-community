@@ -1,0 +1,72 @@
+---item_26 Frenemies---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Frenemies]]
+Rarity :: Exotic
+Durability :: 6
+
+On reload, grant health to nearby allies and increase your damage
+
+Because sometimes your friends and your enemies just sort of blend together.
+
+---gundef_Frenemies---
+Fire Speed :: 1
+Bullets In Chamber :: 6
+Reload Speed :: 1.2
+Sprite :: weapons_104
+Fire Event :: shotgunc
+Reload Event :: pistolreload
+Bullet Definition :: [[frenemies]]
+Archetype :: Shotgun
+Innate Spikes :: [[Reload Addict]] [[Frenemies]]
+Muzzle VFX :: Muzzle 0.90
+Bullet Lifetime :: 0.8
+
+---bulletdef_frenemies---
+potency 57
+sprite Lance10
+color 5
+nway speed:16 bullets:5 spread:60 directionType:relative angle:0
+
+---spike_Frenemies---
+Auras :: [[Frenemies]]
+Icon ::
+
+---aura_Frenemies---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:Frenemies]]
+
+---ability_Frenemies Reload---
+Bullet Definition :: [[frenemiesreload]]
+Max Range :: 1.0
+
+---bulletdef_frenemiesreload---
+sprite Invisible
+potency -100
+fire 0 relative 0
+	aoeexplosion
+	damageFriendly
+	radius 2
+	damageEvery 2
+	wait 1
+	vanish
+
+---script_Frenemies_FireWeapon---
+scriptVars["FiredSinceLastReload"] = true
+
+---script_Frenemies_ReloadWeapon---
+
+if auraAbilityId == abilityId {
+    // Only trigger healing if reloading from empty
+	if !is_undefined(scriptVars["FiredSinceLastReload"]) && scriptVars["FiredSinceLastReload"] == true {
+		if gunState["BulletsFired"] == 6 {
+			useAbilityAtPosition(myEntityId, "Frenemies Reload", entityPosition(myEntityId))
+			showVfxAtPosition(myEntityId, "EnergyBurst", entityPosition(myEntityId))
+		}
+		scriptVars["FiredSinceLastReload"] = false
+	}
+}

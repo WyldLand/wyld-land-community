@@ -1,0 +1,31 @@
+---achievement_Speedy---
+Title :: Speedy
+Quest Flag :: qf_speedy
+XP :: 0
+ResetOnDeath :: False
+
+Participated in the Beta 2 Speedrun Challenge.
+
+---achievement_Speedy Champion---
+Title :: Speedy Champion
+Quest Flag :: qf_speedychampion
+XP :: 0
+ResetOnDeath :: False
+
+Won 3rd place in the Beta 2 Speedrun Challenge.
+
+---achievement_Speedier Champion---
+Title :: Speedier Champion
+Quest Flag :: qf_speedierchampion
+XP :: 0
+ResetOnDeath :: False
+
+Won 2nd place in the Beta 2 Speedrun Challenge.
+
+---achievement_Speediest Champion---
+Title :: Speediest Champion
+Quest Flag :: qf_speediestchampion
+XP :: 0
+ResetOnDeath :: False
+
+Won 1st place in the Beta 2 Speedrun Challenge.

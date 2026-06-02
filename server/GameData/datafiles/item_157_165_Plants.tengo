@@ -1,0 +1,35 @@
+---item_157 Glimmerfern Sprout---
+Icon :: items_695
+Type :: Ingredient
+Slot :: Item
+Rarity :: Uncommon
+Max Stacks :: 99
+
+A fern that shimmers with a faint, magical light.
+
+---item_158 Umbral Morel---
+Icon :: items_693
+Type :: Ingredient
+Slot :: Item
+Rarity :: Rare
+Max Stacks :: 99
+
+A dark mushroom that thrives in shadowy places.
+
+---item_159 Sunpetal Bloom---
+Icon :: items_694
+Type :: Ingredient
+Slot :: Item
+Rarity :: Legendary
+Max Stacks :: 99
+
+A flower whose petals seem to radiate warmth.
+
+---item_160 Ironwood Sapling---
+Icon :: items_692
+Type :: Ingredient
+Slot :: Item
+Rarity :: Rare
+Max Stacks :: 99
+
+A young tree with surprisingly dense and heavy wood.

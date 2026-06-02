@@ -1,0 +1,39 @@
+---mob_Kade "Ghost" Mercer---
+Prefab :: maskmerchant
+Range Behavior :: Stationary
+Type :: Friendly
+
+---prefab_maskmerchant---
+
+Components :: [[MaskMerchantSprite]] [[MaskMerchantCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_MaskMerchantCollider---
+
+Component :: Collider
+
+{
+    "layer": "Friendly",
+    "position": [0, 0.75],
+    "size": [5.0625, 1.5]
+}
+
+---prefabcomponent_MaskMerchantSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "haven/maskmerchant",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}

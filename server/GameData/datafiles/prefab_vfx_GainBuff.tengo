@@ -1,0 +1,15 @@
+---prefab_GainBuff---
+
+Components :: [[GainBuffSprite]]
+
+---prefabcomponent_GainBuffSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "vfx/RiskyBusiness",
+    "play": "default"
+    
+}

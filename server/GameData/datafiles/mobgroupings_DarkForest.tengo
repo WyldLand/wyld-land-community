@@ -1,0 +1,319 @@
+---mobgrouping_Easy1---
+Mobs :: [[Shielder]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Easy2---
+Mobs :: [[Heavy Slicer]] [[Assassin]] [[Assassin]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Easy3---
+Mobs :: [[Heavy Slicer]] [[Assassin]] [[Mushroom Dagger]] [[Mushroom Dagger]]
+Difficulty :: 1
+
+---mobgrouping_Easy4---
+Mobs :: [[Heavy Slicer]] [[Assassin]] [[Assassin]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Easy5---
+Mobs :: [[Shielder]] [[Dual Slicer]] [[Stormhead]] [[Anklebiter]]
+Difficulty :: 1
+
+---mobgrouping_Easy6---
+Mobs :: [[Heavy Slicer]] [[Assassin]] [[Archer]] [[Bomb Bot]]
+Difficulty :: 1
+
+---mobgrouping_Easy7---
+Mobs :: [[Shielder]] [[Archer]] [[Archer]] [[Stormhead]]
+Difficulty :: 1
+
+---mobgrouping_Easy8---
+Mobs :: [[Shielder]] [[Bomb Bot]] [[Anklebiter]] [[Stormhead]]
+Difficulty :: 1
+
+---mobgrouping_Easy9---
+Mobs :: [[Heavy Slicer]] [[Archer]] [[Stormhead]] [[Anklebiter]]
+Difficulty :: 1
+
+---mobgrouping_Easy10---
+Mobs :: [[Shielder]] [[Dual Slicer]] [[Dual Slicer]] [[Bomb Bot]]
+Difficulty :: 1
+
+---mobgrouping_Medium1---
+Mobs :: [[Heavy Slicer]] [[Dual Slicer]] [[Shock Sweeper]] [[Caged Shocker]]
+Difficulty :: 2
+
+---mobgrouping_Medium2---
+Mobs :: [[Heavy Slicer]] [[Caged Shocker]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 2
+
+---mobgrouping_Medium3---
+Mobs :: [[Shielder]] [[Stormhead]] [[Stormhead]] [[Mushroom Dagger]] [[Mushroom Dagger]]
+Difficulty :: 2
+
+---mobgrouping_Medium4---
+Mobs :: [[Lumbering Hulk]] [[Dual Slicer]] [[Dual Slicer]] [[Anklebiter]]
+Difficulty :: 2
+
+---mobgrouping_Medium5---
+Mobs :: [[Turtle]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Lil Sword]] [[Lil Sword]]
+Difficulty :: 2
+
+---mobgrouping_Medium6---
+Mobs :: [[Heavy Slicer]] [[Shadow of Storms]] [[Anklebiter]] [[Stormhead]]
+Difficulty :: 2
+
+---mobgrouping_Medium7---
+Mobs :: [[Shielder]] [[Bomb Bot]] [[Bomb Bot]] [[Shadow of Storms]]
+Difficulty :: 2
+
+---mobgrouping_Medium8---
+Mobs :: [[Lumbering Hulk]] [[Dual Slicer]] [[Stormhead]] [[Anklebiter]]
+Difficulty :: 2
+
+---mobgrouping_Medium9---
+Mobs :: [[Caged Shocker]] [[Mushroom Dagger]] [[Bomb Bot]] [[Stormhead]]
+Difficulty :: 2
+
+---mobgrouping_Medium10---
+Mobs :: [[Turtle]] [[Shadow of Storms]] [[Lil Sword]] [[Bomb Bot]] [[Anklebiter]]
+Difficulty :: 2
+
+---mobgrouping_Hard1---
+Mobs :: [[Shielder]] [[Shock Sweeper]] [[Shock Sweeper]] [[Lil Sword]] [[Mushroom Dagger]]
+Difficulty :: 3
+
+---mobgrouping_Hard2---
+Mobs :: [[Summoner]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Dual Slicer]] [[Dual Slicer]]
+Difficulty :: 3
+
+---mobgrouping_Hard3---
+Mobs :: [[Shock Sweeper]] [[Shock Sweeper]] [[Caged Shocker]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 3
+
+---mobgrouping_Hard4---
+Mobs :: [[Glitch Samurai]] [[Shielder]] [[Shadow of Storms]] [[Lil Sword]] [[Lil Sword]]
+Difficulty :: 3
+
+---mobgrouping_Hard5---
+Mobs :: [[Wraith]] [[Shadow of Storms]] [[Shock Sweeper]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 3
+
+---mobgrouping_Hard6---
+Mobs :: [[Blaster]] [[Caged Shocker]] [[Shock Sweeper]] [[Mushroom Dagger]] [[Mushroom Dagger]]
+Difficulty :: 3
+
+---mobgrouping_Hard7---
+Mobs :: [[Wraith]] [[Lumbering Hulk]] [[Shadow of Storms]] [[Dual Slicer]] [[Dual Slicer]]
+Difficulty :: 3
+
+---mobgrouping_Hard8---
+Mobs :: [[Glitch Samurai]] [[Turtle]] [[Shock Sweeper]] [[Lil Sword]] [[Shadow of Storms]]
+Difficulty :: 3
+
+---mobgrouping_Hard9---
+Mobs :: [[Blaster]] [[Anklebiter]] [[Shock Sweeper]] [[Shock Sweeper]] [[Stormhead]]
+Difficulty :: 3
+
+---mobgrouping_Hard10---
+Mobs :: [[Wraith]] [[Caged Shocker]] [[Shadow of Storms]] [[Mushroom Dagger]] [[Lil Sword]]
+Difficulty :: 3
+
+---mobgrouping_Expert1---
+Mobs :: [[Blaster]] [[Glitch Samurai]] [[Shock Sweeper]] [[Shadow of Storms]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Expert2---
+Mobs :: [[Wraith]] [[Shadow of Storms]] [[Shock Sweeper]] [[Shock Sweeper]]
+Difficulty :: 4
+
+---mobgrouping_Expert3---
+Mobs :: [[Blaster]] [[Heavy Slicer]] [[Shadow of Storms]] [[Shock Sweeper]] [[Lil Sword]]
+Difficulty :: 4
+
+---mobgrouping_Expert4---
+Mobs :: [[Glitch Samurai]] [[Wraith]] [[Shadow of Storms]] [[Mushroom Dagger]] [[Mushroom Dagger]]
+Difficulty :: 4
+
+---mobgrouping_Expert5---
+Mobs :: [[Blaster]] [[Shock Sweeper]] [[Shock Sweeper]] [[Shadow of Storms]]
+Difficulty :: 4
+
+---mobgrouping_Expert6---
+Mobs :: [[Wraith]] [[Glitch Samurai]] [[Shadow of Storms]] [[Lil Sword]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Expert7---
+Mobs :: [[Caged Shocker]] [[Shock Sweeper]] [[Shadow of Storms]] [[Mushroom Dagger]]
+Difficulty :: 4
+
+---mobgrouping_Expert8---
+Mobs :: [[Glitch Samurai]] [[Blaster]] [[Shock Sweeper]] [[Shock Sweeper]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Expert9---
+Mobs :: [[Wraith]] [[Caged Shocker]] [[Shadow of Storms]] [[Shock Sweeper]] [[Lil Sword]]
+Difficulty :: 4
+
+---mobgrouping_Expert10---
+Mobs :: [[Anklebiter]] [[Glitch Samurai]] [[Shock Sweeper]] [[Shadow of Storms]] [[Mushroom Dagger]]
+Difficulty :: 4
+
+---mobgrouping_EasyXL1---
+Mobs :: [[Shielder]] [[Elite Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_EasyXL2---
+Mobs :: [[Elite Heavy Slicer]] [[Elite Assassin]] [[Elite Assassin]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_EasyXL3---
+Mobs :: [[Elite Heavy Slicer]] [[Elite Assassin]] [[Mushroom Dagger]] [[Mushroom Dagger]]
+Difficulty :: 1
+
+---mobgrouping_EasyXL4---
+Mobs :: [[Elite Heavy Slicer]] [[Elite Assassin]] [[Elite Assassin]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_EasyXL5---
+Mobs :: [[Shielder]] [[Elite Dual Slicer]] [[Stormhead]] [[Anklebiter]]
+Difficulty :: 1
+
+---mobgrouping_EasyXL6---
+Mobs :: [[Elite Heavy Slicer]] [[Elite Assassin]] [[Archer]] [[Elite Bomb Bot]]
+Difficulty :: 1
+
+---mobgrouping_EasyXL7---
+Mobs :: [[Shielder]] [[Archer]] [[Archer]] [[Stormhead]]
+Difficulty :: 1
+
+---mobgrouping_EasyXL8---
+Mobs :: [[Shielder]] [[Elite Bomb Bot]] [[Anklebiter]] [[Stormhead]]
+Difficulty :: 1
+
+---mobgrouping_EasyXL9---
+Mobs :: [[Elite Heavy Slicer]] [[Archer]] [[Stormhead]] [[Anklebiter]]
+Difficulty :: 1
+
+---mobgrouping_EasyXL10---
+Mobs :: [[Shielder]] [[Elite Dual Slicer]] [[Elite Dual Slicer]] [[Elite Bomb Bot]]
+Difficulty :: 1
+
+---mobgrouping_MediumXL1---
+Mobs :: [[Elite Heavy Slicer]] [[Elite Dual Slicer]] [[Shock Sweeper]] [[Caged Shocker]]
+Difficulty :: 2
+
+---mobgrouping_MediumXL2---
+Mobs :: [[Elite Heavy Slicer]] [[Caged Shocker]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 2
+
+---mobgrouping_MediumXL3---
+Mobs :: [[Shielder]] [[Stormhead]] [[Stormhead]] [[Mushroom Dagger]] [[Mushroom Dagger]]
+Difficulty :: 2
+
+---mobgrouping_MediumXL4---
+Mobs :: [[Elite Lumbering Hulk]] [[Elite Dual Slicer]] [[Elite Dual Slicer]] [[Anklebiter]]
+Difficulty :: 2
+
+---mobgrouping_MediumXL5---
+Mobs :: [[Elite Turtle]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Lil Sword]] [[Lil Sword]]
+Difficulty :: 2
+
+---mobgrouping_MediumXL6---
+Mobs :: [[Elite Heavy Slicer]] [[Shadow of Storms]] [[Anklebiter]] [[Stormhead]]
+Difficulty :: 2
+
+---mobgrouping_MediumXL7---
+Mobs :: [[Shielder]] [[Elite Bomb Bot]] [[Elite Bomb Bot]] [[Shadow of Storms]]
+Difficulty :: 2
+
+---mobgrouping_MediumXL8---
+Mobs :: [[Elite Lumbering Hulk]] [[Elite Dual Slicer]] [[Stormhead]] [[Anklebiter]]
+Difficulty :: 2
+
+---mobgrouping_MediumXL9---
+Mobs :: [[Caged Shocker]] [[Mushroom Dagger]] [[Elite Bomb Bot]] [[Stormhead]]
+Difficulty :: 2
+
+---mobgrouping_MediumXL10---
+Mobs :: [[Elite Turtle]] [[Shadow of Storms]] [[Lil Sword]] [[Elite Bomb Bot]] [[Anklebiter]]
+Difficulty :: 2
+
+---mobgrouping_HardXL1---
+Mobs :: [[Shielder]] [[Shock Sweeper]] [[Shock Sweeper]] [[Lil Sword]] [[Mushroom Dagger]]
+Difficulty :: 3
+
+---mobgrouping_HardXL2---
+Mobs :: [[Summoner]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Elite Dual Slicer]] [[Elite Dual Slicer]]
+Difficulty :: 3
+
+---mobgrouping_HardXL3---
+Mobs :: [[Shock Sweeper]] [[Shock Sweeper]] [[Caged Shocker]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 3
+
+---mobgrouping_HardXL4---
+Mobs :: [[Glitch Samurai]] [[Shielder]] [[Shadow of Storms]] [[Lil Sword]] [[Lil Sword]]
+Difficulty :: 3
+
+---mobgrouping_HardXL5---
+Mobs :: [[Wraith]] [[Shadow of Storms]] [[Shock Sweeper]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 3
+
+---mobgrouping_HardXL6---
+Mobs :: [[Blaster]] [[Caged Shocker]] [[Shock Sweeper]] [[Mushroom Dagger]] [[Mushroom Dagger]]
+Difficulty :: 3
+
+---mobgrouping_HardXL7---
+Mobs :: [[Wraith]] [[Elite Lumbering Hulk]] [[Shadow of Storms]] [[Elite Dual Slicer]] [[Elite Dual Slicer]]
+Difficulty :: 3
+
+---mobgrouping_HardXL8---
+Mobs :: [[Glitch Samurai]] [[Elite Turtle]] [[Shock Sweeper]] [[Lil Sword]] [[Shadow of Storms]]
+Difficulty :: 3
+
+---mobgrouping_HardXL9---
+Mobs :: [[Blaster]] [[Anklebiter]] [[Shock Sweeper]] [[Shock Sweeper]] [[Stormhead]]
+Difficulty :: 3
+
+---mobgrouping_HardXL10---
+Mobs :: [[Wraith]] [[Caged Shocker]] [[Shadow of Storms]] [[Mushroom Dagger]] [[Lil Sword]]
+Difficulty :: 3
+
+---mobgrouping_ExpertXL1---
+Mobs :: [[Blaster]] [[Glitch Samurai]] [[Shock Sweeper]] [[Shadow of Storms]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_ExpertXL2---
+Mobs :: [[Wraith]] [[Shadow of Storms]] [[Shock Sweeper]] [[Shock Sweeper]]
+Difficulty :: 4
+
+---mobgrouping_ExpertXL3---
+Mobs :: [[Blaster]] [[Elite Heavy Slicer]] [[Shadow of Storms]] [[Shock Sweeper]] [[Lil Sword]]
+Difficulty :: 4
+
+---mobgrouping_ExpertXL4---
+Mobs :: [[Glitch Samurai]] [[Wraith]] [[Shadow of Storms]] [[Mushroom Dagger]] [[Mushroom Dagger]]
+Difficulty :: 4
+
+---mobgrouping_ExpertXL5---
+Mobs :: [[Blaster]] [[Shock Sweeper]] [[Shock Sweeper]] [[Shadow of Storms]]
+Difficulty :: 4
+
+---mobgrouping_ExpertXL6---
+Mobs :: [[Wraith]] [[Glitch Samurai]] [[Shadow of Storms]] [[Lil Sword]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_ExpertXL7---
+Mobs :: [[Caged Shocker]] [[Shock Sweeper]] [[Shadow of Storms]] [[Mushroom Dagger]]
+Difficulty :: 4
+
+---mobgrouping_ExpertXL8---
+Mobs :: [[Glitch Samurai]] [[Blaster]] [[Shock Sweeper]] [[Shock Sweeper]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_ExpertXL9---
+Mobs :: [[Wraith]] [[Caged Shocker]] [[Shadow of Storms]] [[Shock Sweeper]] [[Lil Sword]]
+Difficulty :: 4
+
+---mobgrouping_ExpertXL10---
+Mobs :: [[Anklebiter]] [[Glitch Samurai]] [[Shock Sweeper]] [[Shadow of Storms]] [[Mushroom Dagger]]
+Difficulty :: 4

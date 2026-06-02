@@ -1,0 +1,73 @@
+---prefab_sfxlasercannona---
+
+Components :: [[SFXLaserCannonA]]
+
+---prefabcomponent_SFXLaserCannonA---
+
+Component :: Sound
+
+{
+    "sources": ["sfxlasercannon/lasercannona1.wav", "sfxlasercannon/lasercannona2.wav", "sfxlasercannon/lasercannona3.wav"],
+    "select": "random",
+    "randomPitch": 0.15,
+    "channel": "gfx"
+}
+
+---prefab_sfxlasercannonb---
+
+Components :: [[SFXLaserCannonB]]
+
+---prefabcomponent_SFXLaserCannonB---
+
+Component :: Sound
+
+{
+    "sources": ["sfxlasercannon/lasercannonb1.wav", "sfxlasercannon/lasercannonb2.wav", "sfxlasercannon/lasercannonb3.wav"],
+    "select": "random",
+    "randomPitch": 0.15,
+    "channel": "gfx"
+}
+
+---prefab_sfxlasercannonc---
+
+Components :: [[SFXLaserCannonC]]
+
+---prefabcomponent_SFXLaserCannonC---
+
+Component :: Sound
+
+{
+    "sources": ["sfxlasercannon/lasercannonc1.wav", "sfxlasercannon/lasercannonc2.wav"],
+    "select": "all",
+    "randomPitch": 0.15,
+    "delay": [0.0, 0.35],
+    "channel": "gfx"
+}
+
+---prefab_sfxlasercannond---
+
+Components :: [[SFXLaserCannonD]]
+
+---prefabcomponent_SFXLaserCannonD---
+
+Component :: Sound
+
+{
+    "sources": ["sfxlasercannon/lasercannond1.wav", "sfxlasercannon/lasercannond2.wav", "sfxlasercannon/lasercannond3.wav"],
+    "select": "random",
+    "randomPitch": 0.15,
+    "channel": "gfx"
+}
+
+---prefab_sfxlasercannonreload---
+
+Components :: [[SFXLaserCannonReload]]
+
+---prefabcomponent_SFXLaserCannonReload---
+
+Component :: Sound
+
+{
+    "sources": ["sfxlasercannon/lasercannonreload.wav"],
+    "channel": "gfx"
+}

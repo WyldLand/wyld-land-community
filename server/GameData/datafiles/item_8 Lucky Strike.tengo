@@ -1,0 +1,31 @@
+---item_8 Lucky Strike---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Lucky Strike]]
+Rarity :: Exotic
+Durability :: 4
+
+Higher damage on first & last bullet in magazine
+Reloads have a chance to be much faster
+
+Inspired by an entirely fictional cigarette company.
+
+---gundef_Lucky Strike---
+Fire Speed :: 0.25
+Bullets In Chamber :: 8
+Reload Speed :: 2.2
+Sprite :: weapons_39
+Fire Event :: revolver
+Reload Event :: revolverreload
+Bullet Definition :: [[luckystrike]]
+Archetype :: Handgun
+Innate Spikes :: [[First Strike]] [[Last Strike]] [[Lucky Reload]]
+Muzzle VFX :: Muzzle 0.60
+
+---bulletdef_luckystrike---
+sprite PlayerBullet
+spriteclip 1 Custom8
+spriteclip 8 Custom8
+potency 82
+fire 16 relative -1 1
+

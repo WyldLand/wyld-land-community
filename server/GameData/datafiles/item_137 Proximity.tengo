@@ -1,0 +1,85 @@
+---item_137 Proximity---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Proximity]]
+Rarity :: Exotic
+Durability :: 5
+
+Projectiles deal significantly more damage the closer you are to your target. Maximum damage at point blank range.
+
+Distance makes the heart grow fonder, but proximity makes this gun stronger.
+
+---gundef_Proximity---
+Fire Speed :: 0.5
+Bullets In Chamber :: 10
+Reload Speed :: 1.8
+Sprite :: weapons_89
+Fire Event :: revolver
+Reload Event :: revolverreload
+Bullet Definition :: [[proximity]]
+Archetype :: Handgun
+Innate Spikes :: [[Proximity Damage]]
+Muzzle VFX :: Muzzle 0.60
+
+---bulletdef_proximity---
+sprite Lance14
+color 5
+potency 75
+fire 16 relative -0 0
+
+---spike_Proximity Damage---
+Auras :: [[Proximity Damage]]
+
+Projectiles deal significantly more damage the closer you are to your target.
+
+---aura_Proximity Damage---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:ProximityDamage]]
+
+---script_ProximityDamage_DamageDealt---
+
+// Check if this damage is from our gun
+if abilityId == auraAbilityId {
+    
+    
+    // Get distance to target
+    targetDistance := distToEntity(myEntityId, damageSenderId)
+    
+    
+    // Very simplified approach with dramatic damage scaling
+    extraDamage := 0
+    
+    // Very close (0-3 units): +300% damage
+    if targetDistance < 6.0 {
+        extraDamage = damage * 3
+        log("Point blank range! Adding ", extraDamage, " extra damage")
+        showVfxAtPosition(damageSenderId, "MediumHit", damagePosition)
+    } 
+    
+    // Medium range (3-8 units): +100% damage
+    if targetDistance >= 6.0 && targetDistance < 11.0 {
+        extraDamage = damage
+        log("Medium range! Adding ", extraDamage, " extra damage")
+        showVfxAtPosition(damageSenderId, "SmallHit", damagePosition)
+    }
+    
+    // Longer range: no bonus
+    if targetDistance >= 11.0 {
+        log("Long range - no damage bonus")
+    }
+    
+    // Apply extra damage directly
+    additionalDamage = extraDamage
+    
+    // Always attack the entity directly as a backup method
+    if extraDamage > 0 {
+        attackEntity(myEntityId, damageSenderId, extraDamage, -99)
+        log("Also directly attacking entity with ", extraDamage, " damage")
+    }
+    
+    log("Total damage should be: ", damage + extraDamage)
+}

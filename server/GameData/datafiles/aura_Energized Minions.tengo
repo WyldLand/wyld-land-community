@@ -1,0 +1,10 @@
+---aura_Energized Minions---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[AuraAffectStat/Energized Minions]]
+
+---auraaffectstat_Energized Minions---
+Stat :: Affinity
+Add :: 200

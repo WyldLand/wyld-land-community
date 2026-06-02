@@ -1,0 +1,25 @@
+---aura_Frost Armor---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:FrostArmor]]
+
+---aura_Frost Armor Slow---
+Type :: Debuff
+Icon :: statusicons_4
+Duration :: 3.0
+Max Stacks :: 3
+Time Per Tick :: 1.0
+Definitions :: [[Frost]]
+
+---auraaffectstat_Frost---
+Stat :: Speed
+Boost :: -10.0
+
+---script_FrostArmor_IncomingDamage---
+rand := import("rand")
+
+if damage > 0 && rand.float() < 0.10 && abilityId <= 6 {  // 25% chance to trigger
+	addAuraToEntity(damageSenderId, "Frost Armor Slow", auraAbilityId, damageSenderId)
+}

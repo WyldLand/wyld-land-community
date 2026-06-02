@@ -1,0 +1,25 @@
+---prefab_sfxchargelong---
+
+Components :: [[SFXChargeLong]]
+
+---prefabcomponent_SFXChargeLong---
+
+Component :: Sound
+
+{
+    "sources": ["sfxcharge/chargelong.wav"],
+    "channel": "gfx"
+}
+
+---prefab_sfxchargeshort---
+
+Components :: [[SFXChargeShort]]
+
+---prefabcomponent_SFXChargeShort---
+
+Component :: Sound
+
+{
+    "sources": ["sfxcharge/chargeshort.wav"],
+    "channel": "gfx"
+}

@@ -1,0 +1,10 @@
+---aura_Recovering Minions---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[AuraAffectStat/Recovering Minions]]
+
+---auraaffectstat_Recovering Minions---
+Stat :: Recovery
+Add :: 75

@@ -1,0 +1,130 @@
+---mob_Shock Sweeper---
+Prefab :: shocksweeper
+Range Behavior :: Medium Ranged
+Abilities :: [[Sweeper Slash]] [[Sweeper Teleport]]
+Type :: Normal
+Options :: alwaysattack
+
+---prefab_shocksweeper---
+
+Components :: [[ShockSweeperSprite]] [[ShockSweeperCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_ShockSweeperCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+    "position": [0.0, 0.58],
+    "size": [0.9, 1.25]
+}
+
+---prefabcomponent_ShockSweeperSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.3,
+    "pivotY": 0.95,
+    "sprite": "darkforest4/shocksweeper",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_sfxshocksweeperAttack---
+
+Components :: [[SFXShockSweeperAttack]]
+
+---prefabcomponent_SFXShockSweeperAttack---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest4/shocksweeperAttack1.wav", "darkforest4/shocksweeperAttack2.wav"],
+    "select": "all",
+    "delay": [0.45, 1.05],
+	"spatial": true
+}
+
+---prefab_sfxshocksweeperAppear---
+
+Components :: [[SFXShockSweeperAppear]]
+
+---prefabcomponent_SFXShockSweeperAppear---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest4/shocksweeperAppear.wav"],
+	"spatial": true
+}
+
+---prefab_sfxshocksweeperDisappear---
+
+Components :: [[SFXShockSweeperDisappear]]
+
+---prefabcomponent_SFXShockSweeperDisappear---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest4/shocksweeperDisappear.wav"],
+	"spatial": true
+}
+
+---ability_Sweeper Slash---
+Bullet Definition :: [[sweeperslash]]
+Cooldown :: 2.0
+VFX Cast :: trigger:Attack*
+Lock Time :: 1.5
+
+---bulletdef_sweeperslash---
+potency 120
+wait 5
+nway speed:5 bullets:3 spread:15 angle:0 directionType:relative
+wait 10
+nway speed:8 bullets:8 spread:60 angle:0 directionType:relative
+
+---ability_Sweeper Teleport---
+Bullet Definition :: [[sweeperappear]] [[sweeperradial]]
+Cooldown :: 6.5
+VFX Cast :: trigger:Appear*
+Lock Time :: 1.0
+Cast Time :: 0.2
+Script :: SweeperTeleport
+
+---bulletdef_sweeperappear---
+sprite CirclePool 2
+potency 250
+fire 0 relative 0
+	aoeexplosion
+	radius 2
+	timedFill 15
+	damageEvery 15
+	wait 15
+	vfx BloodySlamExplosion 5
+	wait 1
+	vanish
+
+---bulletdef_sweeperradial---
+potency 120
+wait 15
+radial bullets:24 speed:7
+
+---script_SweeperTeleport_Cast---
+
+setSpeed(myEntityId, 0.0) //so we don't move while we're casing this
+
+if frameNum == 2 {
+	setPosition(myEntityId, entityPosition(randomTargetEntityId(myEntityId, 100.0)))
+}
+

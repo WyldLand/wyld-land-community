@@ -1,0 +1,588 @@
+---item_701 Damage Pulse---
+Type :: Equippable
+Slot :: Active 
+Icon :: items_620
+Gun Definition :: [[Damage Pulse]]
+Rarity :: Legendary
+Durability :: 4
+
+On use, creates a small sized damage pool around the player that increases damage for all players within its radius for 2 seconds. If the player has Buff Synergy from the echo nodes from the Support class unlocked the reach and duration of the damage effect will increase.
+
+I get stronger with a little help from my friends.
+
+---gundef_Damage Pulse---
+Fire Speed :: 30.0
+Bullets In Chamber :: -1
+Reload Speed :: 1.0
+Sprite :: items_620
+Fire Event :: crystalcast
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Damage Pulse]]
+
+---spike_Damage Pulse---
+Auras :: [[Damage Pulse]]
+
+---aura_Damage Pulse---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:DamagePulse]]
+
+---aura_Support I Damage---
+Type :: Buff
+Duration :: 2.0
+Icon :: statusicons_18
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[DamagePulse]]
+
+---aura_Support II Damage---
+Type :: Buff
+Duration :: 4.0
+Icon :: statusicons_18
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[DamagePulse]]
+
+---aura_Support III Damage---
+Type :: Buff
+Duration :: 6.0
+Icon :: statusicons_18
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[DamagePulse]]
+
+---aura_Support IV Damage---
+Type :: Buff
+Duration :: 8.0
+Icon :: statusicons_18
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[DamagePulse]]
+
+---auraaffectstat_DamagePulse---
+Stat :: Damage
+Boost :: 20.0
+
+---ability_Damage Pool I---
+Bullet Definition :: [[damagepoolI]]
+Max Range :: 100.0
+Auras :: [[Support I Damage]][[Damage Buff Resistance]]
+Blocked By Auras :: [[Damage Buff Resistance]]
+
+---bulletdef_damagepoolI---
+sprite BluePool 2
+potency 0
+fire 0 relative 0
+	aoedot
+	damageFriendly
+	radius 2
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+
+---ability_Damage Pool Support I---
+Bullet Definition :: [[damagepoolsupportI]]
+Max Range :: 100.0
+Auras :: [[Support II Damage]][[Damage Buff Resistance]]
+Blocked By Auras :: [[Damage Buff Resistance]]
+
+---bulletdef_damagepoolsupportI---
+sprite BluePool 4
+potency 0
+fire 0 relative 0
+	aoedot
+	damageFriendly
+	radius 4
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+
+---ability_Damage Pool Support II---
+Bullet Definition :: [[damagepoolsupportII]]
+Max Range :: 100.0
+Auras :: [[Support III Damage]][[Damage Buff Resistance]]
+Blocked By Auras :: [[Damage Buff Resistance]]
+
+---bulletdef_damagepoolsupportII---
+sprite BluePool 6
+potency 0
+fire 0 relative 0
+	aoedot
+	damageFriendly
+	radius 6
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+
+---ability_Damage Pool Support III---
+Bullet Definition :: [[damagepoolsupportIII]]
+Max Range :: 100.0
+Auras :: [[Support IV Damage]][[Damage Buff Resistance]]
+Blocked By Auras :: [[Damage Buff Resistance]]
+
+---bulletdef_damagepoolsupportIII---
+sprite BluePool 8
+potency 0
+fire 0 relative 0
+	aoedot
+	damageFriendly
+	radius 8
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+
+---script_DamagePulse_FireWeapon---
+if abilityId == auraAbilityId {
+	// Get all nearby entities and filter for enemies
+	allNearby := getNearbyEntities(myEntityId)
+
+	// Check for synergy enhancement
+	if is_undefined(scriptVars["hasBuffSynergyI"]) {
+		scriptVars["hasBuffSynergyI"] = false
+		scriptVars["hasBuffSynergyII"] = false
+		scriptVars["hasBuffSynergyIII"] = false
+	}
+
+	auras := getAurasOnEntity(myEntityId)
+	for j := 0; j < len(auras); j++ {
+	   if (auras[j]["name"] == "Buff Synergy I") {
+		scriptVars["hasBuffSynergyI"] = true
+	   } 
+
+	   if (auras[j]["name"] == "Buff Synergy II") {
+		scriptVars["hasBuffSynergyII"] = true
+	   } 
+
+		if (auras[j]["name"] == "Buff Synergy III") {
+		scriptVars["hasBuffSynergyIII"] = true
+	   } 
+	}
+
+	if (scriptVars["hasBuffSynergyIII"]) {
+		useAbilityAtPosition(myEntityId, "Damage Pool Support III", entityPosition(myEntityId))
+	} else if (scriptVars["hasBuffSynergyII"]) {
+		useAbilityAtPosition(myEntityId, "Damage Pool Support II", entityPosition(myEntityId))
+	} else if (scriptVars["hasBuffSynergyI"]) {
+		useAbilityAtPosition(myEntityId, "Damage Pool Support I", entityPosition(myEntityId))
+	} else {
+		useAbilityAtPosition(myEntityId, "Damage Pool I", entityPosition(myEntityId))
+	}
+	
+}
+
+---aura_Damage Buff Resistance---
+Type :: Buff
+Duration :: 60.0
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Icon :: 
+Existing :: DontApply
+Definitions :: [[Custom:DamageBuffResistance]]
+
+---item_702 Speed Pulse---
+Type :: Equippable
+Slot :: Active 
+Icon :: items_621
+Gun Definition :: [[Speed Pulse]]
+Rarity :: Legendary
+Durability :: 4
+
+On use, creates a small sized speed pool around the player that increases movement speed for all players within its radius for 8 seconds. If the player has Buff Synergy from the echo nodes from the Support class unlocked the reach and duration of the speed effect will increase.
+
+Sometimes you need to move fast to stay alive.
+
+---gundef_Speed Pulse---
+Fire Speed :: 30.0
+Bullets In Chamber :: -1
+Reload Speed :: 45.0
+Sprite :: items_621
+Fire Event :: crystalcast
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Speed Pulse]]
+
+---spike_Speed Pulse---
+Auras :: [[Speed Pulse]]
+
+---aura_Speed Pulse---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:SpeedPulse]]
+
+---aura_Support I Speed---
+Type :: Buff
+Duration :: 2.0
+Icon :: statusicons_35
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[SpeedPulse]]
+
+---aura_Support II Speed---
+Type :: Buff
+Duration :: 4.0
+Icon :: statusicons_35
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[SpeedPulse]]
+
+---aura_Support III Speed---
+Type :: Buff
+Duration :: 6.0
+Icon :: statusicons_35
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[SpeedPulse]]
+
+---aura_Support IV Speed---
+Type :: Buff
+Duration :: 8.0
+Icon :: statusicons_35
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[SpeedPulse]]
+
+---auraaffectstat_SpeedPulse---
+Stat :: Speed
+Boost :: 20.0
+
+---ability_Speed Pool I---
+Bullet Definition :: [[speedpoolI]]
+Max Range :: 100.0
+Auras :: [[Support I Speed]] [[Speed Buff Resistance]]
+Blocked By Auras :: [[Speed Buff Resistance]]
+
+---bulletdef_speedpoolI---
+sprite GreenPool 2
+potency 0
+fire 0 relative 0
+	aoedot
+	damageFriendly
+	radius 2
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+
+---ability_Speed Pool Support I---
+Bullet Definition :: [[speedpoolsupportI]]
+Max Range :: 100.0
+Auras :: [[Support II Speed]] [[Speed Buff Resistance]]
+Blocked By Auras :: [[Speed Buff Resistance]]
+
+---bulletdef_speedpoolsupportI---
+sprite GreenPool 4
+potency 0
+fire 0 relative 0
+	aoedot
+	damageFriendly
+	radius 4
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+
+---ability_Speed Pool Support II---
+Bullet Definition :: [[speedpoolsupportII]]
+Max Range :: 100.0
+Auras :: [[Support III Speed]] [[Speed Buff Resistance]]
+Blocked By Auras :: [[Speed Buff Resistance]]
+
+---bulletdef_speedpoolsupportII---
+sprite GreenPool 6
+potency 0
+fire 0 relative 0
+	aoedot
+	damageFriendly
+	radius 6
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+
+---ability_Speed Pool Support III---
+Bullet Definition :: [[speedpoolsupportIII]]
+Max Range :: 100.0
+Auras :: [[Support IV Speed]] [[Speed Buff Resistance]]
+Blocked By Auras :: [[Speed Buff Resistance]]
+
+---bulletdef_speedpoolsupportIII---
+sprite GreenPool 8
+potency 0
+fire 0 relative 0
+	aoedot
+	damageFriendly
+	radius 8
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+
+---script_SpeedPulse_FireWeapon---
+if abilityId == auraAbilityId {
+	// Get all nearby entities and filter for enemies
+	allNearby := getNearbyEntities(myEntityId)
+
+	// Check for synergy enhancement
+	if is_undefined(scriptVars["hasBuffSynergyI"]) {
+		scriptVars["hasBuffSynergyI"] = false
+		scriptVars["hasBuffSynergyII"] = false
+		scriptVars["hasBuffSynergyIII"] = false
+	}
+
+	auras := getAurasOnEntity(myEntityId)
+	for j := 0; j < len(auras); j++ {
+	   if (auras[j]["name"] == "Buff Synergy I") {
+		scriptVars["hasBuffSynergyI"] = true
+	   } 
+
+	   if (auras[j]["name"] == "Buff Synergy II") {
+		scriptVars["hasBuffSynergyII"] = true
+	   } 
+
+		if (auras[j]["name"] == "Buff Synergy III") {
+		scriptVars["hasBuffSynergyIII"] = true
+	   } 
+	}
+
+	if (scriptVars["hasBuffSynergyIII"]) {
+		useAbilityAtPosition(myEntityId, "Speed Pool Support III", entityPosition(myEntityId))
+	} else if (scriptVars["hasBuffSynergyII"]) {
+		useAbilityAtPosition(myEntityId, "Speed Pool Support II", entityPosition(myEntityId))
+	} else if (scriptVars["hasBuffSynergyI"]) {
+		useAbilityAtPosition(myEntityId, "Speed Pool Support I", entityPosition(myEntityId))
+	} else {
+		useAbilityAtPosition(myEntityId, "Speed Pool I", entityPosition(myEntityId))
+	}
+	
+}
+
+---aura_Speed Buff Resistance---
+Type :: Buff
+Duration :: 60.0
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Icon :: 
+Existing :: DontApply
+Definitions :: [[Custom:SpeedBuffResistance]]
+
+---item_703 Stamina Spa---
+Type :: Equippable
+Slot :: Active
+Icon :: items_143
+Gun Definition :: [[Stamina Spa]]
+Rarity :: Legendary
+
+On use, place an energizing field on the ground that restores your allies stamina for 8 seconds. Recovery area and effect duration are increased by Buff Synergy levels.
+
+When you need to keep moving, this energizing oasis will keep you and your team going.
+
+---gundef_Stamina Spa---
+Fire Speed :: 45.0
+Bullets In Chamber :: -1
+Reload Speed :: 0.0
+Sprite :: items_143
+Fire Event :: staminaspa
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Stamina Spa]]
+
+---spike_Stamina Spa---
+Auras :: [[Stamina Spa]]
+Abilities :: [[Stamina Spa Pool I]]
+
+---aura_Stamina Spa---
+Type :: Debuff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:StaminaSpa]]
+
+---ability_Stamina Spa Basic---
+Bullet Definition :: [[staminaspabasic]]
+Max Range :: 100.0
+Auras :: [[Stamina Restore I]] [[Stamina Buff Resistance]]
+Blocked By Auras :: [[Stamina Buff Resistance]]
+
+---bulletdef_staminaspabasic---
+sprite BluePool 2
+potency 0
+fire 0 relative 0
+	aoedot
+	damageFriendly
+	radius 2
+	timedFill 40
+	damageEvery 40
+	wait 40
+	vanish
+
+---ability_Stamina Spa Pool I---
+Bullet Definition :: [[staminaspaI]]
+Max Range :: 100.0
+Auras :: [[Stamina Restore II]] [[Stamina Buff Resistance]]
+Blocked By Auras :: [[Stamina Buff Resistance]]
+
+---bulletdef_staminaspaI---
+sprite BluePool 4
+potency 0
+fire 0 relative 0
+	aoedot
+	damageFriendly
+	radius 4
+	timedFill 40
+	damageEvery 40
+	wait 40
+	vanish
+
+---ability_Stamina Spa Pool II---
+Bullet Definition :: [[staminaspaII]]
+Max Range :: 100.0
+Auras :: [[Stamina Restore III]] [[Stamina Buff Resistance]]
+Blocked By Auras :: [[Stamina Buff Resistance]]
+
+---bulletdef_staminaspaII---
+sprite BluePool 6
+potency 0
+fire 0 relative 0
+	aoedot
+	damageFriendly
+	radius 6
+	timedFill 40
+	damageEvery 40
+	wait 40
+	vanish
+
+---ability_Stamina Spa Pool III---
+Bullet Definition :: [[staminaspaIII]]
+Max Range :: 100.0
+Auras :: [[Stamina Restore IV]] [[Stamina Buff Resistance]]
+Blocked By Auras :: [[Stamina Buff Resistance]]
+
+---bulletdef_staminaspaIII---
+sprite BluePool 8
+potency 0
+fire 0 relative 0
+	aoedot
+	damageFriendly
+	radius 8
+	timedFill 40
+	damageEvery 40
+	wait 40
+	vanish
+
+---auraaffectstat_Stamina Restore---
+Stat :: StaminaRecharge
+Boost :: 20.0
+
+---aura_Stamina Restore I---
+Type :: Buff
+Icon :: statusicons_37
+Duration :: 8.0
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Stamina Restore]]
+
+---aura_Stamina Restore II---
+Type :: Buff
+Icon :: statusicons_37
+Duration :: 9.0
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Stamina Restore]]
+
+---aura_Stamina Restore III---
+Type :: Buff
+Icon :: statusicons_37
+Duration :: 10.0
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Stamina Restore]]
+
+---aura_Stamina Restore IV---
+Type :: Buff
+Icon :: statusicons_37
+Duration :: 11.0
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Stamina Restore]]
+
+---script_StaminaSpa_FireWeapon---
+if abilityId == auraAbilityId {
+	// Get all nearby entities and filter for allies
+	allNearby := getNearbyEntities(myEntityId)
+	alliesEnergized := 0
+
+	// Check for synergy enhancement
+	if is_undefined(scriptVars["hasBuffSynergyI"]) {
+		scriptVars["hasBuffSynergyI"] = false
+		scriptVars["hasBuffSynergyII"] = false
+		scriptVars["hasBuffSynergyIII"] = false
+		scriptVars["hasBuffSynergyIV"] = false
+	}
+
+	auras := getAurasOnEntity(myEntityId)
+	for j := 0; j < len(auras); j++ {
+	   if (auras[j]["name"] == "Restoration Synergy I") {
+		log("Has Buff Synergy I unlocked!")
+		scriptVars["hasBuffSynergyI"] = true
+	   } 
+
+	   if (auras[j]["name"] == "Restoration Synergy II") {
+		log("Has Buff Synergy II unlocked!")
+		scriptVars["hasBuffSynergyII"] = true
+	   } 
+
+		if (auras[j]["name"] == "Restoration Synergy III") {
+		log("Has Buff Synergy III unlocked!")
+		scriptVars["hasBuffSynergyIII"] = true
+	   } 
+
+		if (auras[j]["name"] == "Restoration Synergy IV") {
+		log("Has Buff Synergy IV unlocked!")
+		scriptVars["hasBuffSynergyIV"] = true
+	   } 
+	}
+
+	if (scriptVars["hasBuffSynergyIII"]) {
+		useAbilityAtPosition(myEntityId, "Stamina Spa Pool III", entityPosition(myEntityId))
+	} else if (scriptVars["hasBuffSynergyII"]) {
+		useAbilityAtPosition(myEntityId, "Stamina Spa Pool II", entityPosition(myEntityId))
+	} else if (scriptVars["hasBuffSynergyI"]) {
+		useAbilityAtPosition(myEntityId, "Stamina Spa Pool I", entityPosition(myEntityId))
+	} else {
+		// Create the basic stamina spa at player position (original smaller version)
+		useAbilityAtPosition(myEntityId, "Stamina Spa Basic", entityPosition(myEntityId))
+	}
+}
+
+---aura_Stamina Buff Resistance---
+Type :: Buff
+Duration :: 60.0
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Icon :: 
+Existing :: DontApply
+Definitions :: [[Custom:StaminaBuffResistance]]

@@ -1,0 +1,26 @@
+---item_41 Magnetron---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Magnetron]]
+Rarity :: Uncommon
+
+Accelerated bullet technology for a faster kill.
+
+---gundef_Magnetron---
+Fire Speed :: 0.1
+Bullets In Chamber :: 40
+Reload Speed :: 0.8
+Sprite :: weapons_42
+Fire Event :: assaultrifleb
+Reload Event :: assaultriflereload
+Bullet Definition :: [[magnetron]]
+Archetype :: Automatic
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: FullAuto
+Bullet Lifetime :: 1.1
+
+---bulletdef_magnetron---
+sprite Custom12
+potency 21
+fire 15 relative -4 4
+

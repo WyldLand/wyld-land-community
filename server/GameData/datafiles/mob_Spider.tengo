@@ -1,0 +1,60 @@
+---mob_Spider---
+Prefab :: spider
+Range Behavior :: Short Ranged
+Abilities :: [[Spider]]
+
+---prefab_spider---
+
+Components :: [[SpiderSprite]] [[SpiderCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_SpiderCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+    "position": [0.0, 0.5],
+    "size": [1.2, 1.0]
+}
+
+---prefabcomponent_SpiderSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "widow/spider",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_sfxspiderAttack---
+
+Components :: [[SFXSpiderAttack]]
+
+---prefabcomponent_SFXSpiderAttack---
+
+Component :: Sound
+
+{
+    "sources": ["widow/spiderAttack.wav"],
+	"spatial": true
+}
+
+---ability_Spider---
+Bullet Definition :: [[basic]]
+Cooldown :: 0.75
+VFX Charging :: trigger:Attack*
+Cast Time :: 0.50
+Lock Time :: 0.30
+

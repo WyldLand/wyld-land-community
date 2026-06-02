@@ -1,0 +1,70 @@
+---prefab_sfxrevolvera---
+
+Components :: [[SFXRevolverA]]
+
+---prefabcomponent_SFXRevolverA---
+
+Component :: Sound
+
+{
+    "sources": ["sfxrevolver/revolvera1.wav", "sfxrevolver/revolvera2.wav", "sfxrevolver/revolvera3.wav"],
+    "select": "random",
+    "randomPitch": 0.15,
+    "channel": "gfx"
+}
+
+---prefab_sfxrevolverb---
+
+Components :: [[SFXRevolverB]]
+
+---prefabcomponent_SFXRevolverB---
+
+Component :: Sound
+
+{
+    "sources": ["sfxrevolver/revolverb1.wav", "sfxrevolver/revolverb2.wav", "sfxrevolver/revolverb3.wav"],
+    "select": "random",
+    "randomPitch": 0.15,
+    "channel": "gfx"
+}
+
+---prefab_sfxrevolverc---
+
+Components :: [[SFXRevolverC]]
+
+---prefabcomponent_SFXRevolverC---
+
+Component :: Sound
+
+{
+    "sources": ["sfxrevolver/revolverc1.wav"],
+    "randomPitch": 0.15,
+    "channel": "gfx"
+}
+
+---prefab_sfxrevolver---
+
+Components :: [[SFXRevolver]]
+
+---prefabcomponent_SFXRevolver---
+
+Component :: Sound
+
+{
+    "sources": ["sfxrevolver/revolver.wav"],
+    "randomPitch": 0.15,
+    "channel": "gfx"
+}
+
+---prefab_sfxrevolverreload---
+
+Components :: [[SFXRevolverReload]]
+
+---prefabcomponent_SFXRevolverReload---
+
+Component :: Sound
+
+{
+    "sources": ["sfxrevolver/revolverreload.wav"],
+    "channel": "gfx"
+}

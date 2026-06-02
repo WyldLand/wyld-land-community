@@ -1,0 +1,56 @@
+---item_72 Devastator---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Devastator]]
+Rarity :: Legendary
+
+The mother of all bombs that shoots out projectiles on explosion.
+
+---gundef_Devastator---
+Fire Speed :: 0.1
+Bullets In Chamber :: 1
+Reload Speed :: 15
+Passive Reload :: true
+Sprite :: weapons_94
+Color :: Sangria
+Fire Event :: rocketa
+Reload Event :: rocketreload
+Bullet Definition :: [[devastator]]
+Archetype :: ExplosiveLauncher
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: SemiAuto
+Bullet Lifetime :: 2
+
+---bulletdef_devastator---
+potency 0
+sprite Custom7
+color 1
+fire 8 relative 0
+	hitfire devastatorexplosion
+
+---bulletdef_devastatorexplosion---
+sprite Invisible
+potency 480
+fire 0 relative 0
+	aoeexplosion
+	radius 2.5
+	damageEvery 2
+	vfx BombExplosion 5
+	wait 1
+	vfx ShakeLarge 5
+	wait 1
+	fire devastatorshrapnel
+	vanish
+
+---bulletdef_devastatorshrapnel---
+sprite Custom10
+color 1
+potency 20
+radial bullets:24 speed:12 angle:0 directionType:absolute
+	lifetime 80
+wait 3
+radial bullets:24 speed:10 angle:7.5 directionType:absolute
+	lifetime 80
+wait 3
+radial bullets:16 speed:8 angle:11.25 directionType:absolute
+	lifetime 60

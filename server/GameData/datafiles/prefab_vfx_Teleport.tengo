@@ -1,0 +1,27 @@
+---prefab_Teleport---
+
+Components :: [[TeleportSprite]] [[TeleportSound]]
+
+---prefabcomponent_TeleportSprite---
+
+Component :: Sprite
+
+{
+	"pivotX": 0.5,
+	"pivotY": 0.90,
+	"sprite": "vfx/teleport",
+	"play": "default"
+	 
+}
+
+---prefabcomponent_TeleportSound---
+
+Component :: Sound
+
+{
+	
+	"sources": ["player/teleport.wav", "player/teleport2.wav"],
+	"select": "all",
+	"spatial": true,
+	"volume": 0.50
+}

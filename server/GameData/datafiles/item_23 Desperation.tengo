@@ -1,0 +1,70 @@
+---item_23 Desperation---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Desperation]]
+Rarity :: Exotic
+
+Increased damage as clip empties
+Last bullet in clip Burns
+
+They said it was most dangerous when backed into a corner
+
+---gundef_Desperation---
+Fire Speed :: 0.3
+Bullets In Chamber :: 12
+Reload Speed :: 1
+Sprite :: weapons_33
+Fire Event :: pistol
+Reload Event :: pistolreload
+Bullet Definition :: [[desperation]]
+Archetype :: Handgun
+Innate Spikes :: [[Desperation]]
+Muzzle VFX :: Muzzle 0.50
+
+---bulletdef_desperation---
+sprite Lance14
+color 5
+potency 66
+fire 16 relative -2 2
+
+---spike_Desperation---
+Auras :: [[Desperation]]
+
+---aura_Desperation---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:Desperation]]
+
+---script_Desperation_DamageDealt---
+
+
+if auraAbilityId == abilityId && !is_undefined(scriptVars["desperationIsLastShot"]) && scriptVars["desperationIsLastShot"] == true {
+	addAuraToEntity(myEntityId, "Burn", auraAbilityId, damageSenderId)
+	scriptVars["desperationIsLastShot"] = false
+}
+
+---script_Desperation_FireWeapon---
+
+if is_undefined(scriptVars["desperationNextShotEffect"]) {
+	scriptVars["desperationNextShotEffect"] = 99
+	scriptVars["desperationIsLastShot"] = false
+}
+
+if auraAbilityId == abilityId {
+	scriptVars["desperationNextShotEffect"] =  gunState["BulletsFired"]
+	if gunState["BulletsFired"] == 11 {
+		scriptVars["desperationIsLastShot"] = true
+	}
+}
+
+---script_Desperation_OutgoingDamage---
+
+if abilityId == auraAbilityId && !is_undefined(scriptVars["desperationNextShotEffect"]) {
+	bulletBoost := 0.05 * scriptVars["desperationNextShotEffect"]
+	additionalDamage = damage * bulletBoost
+	scriptVars["desperationNextShotEffect"] = 0
+}
+

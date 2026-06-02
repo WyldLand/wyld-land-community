@@ -1,0 +1,205 @@
+---aura_Reckless Speed---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 99
+Time Per Tick :: 10.0
+Definitions :: [[AuraAffectStat/Reckless Speed Boost]] [[AuraAffectStat/Reckless Speed Penalty]]
+
+---auraaffectstat_Reckless Speed Boost---
+Stat :: Speed
+Boost :: 1.0
+
+---auraaffectstat_Reckless Speed Penalty---
+Stat :: Vitality
+Boost :: -1.0
+
+---aura_Buff Synergy I---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+
+---aura_Buff Synergy II---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+
+---aura_Buff Synergy III---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+
+---aura_Restoration Synergy I---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+
+---aura_Restoration Synergy II---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+
+---aura_Restoration Synergy III---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+
+---echonode_Support Class Unlock---
+Auras :: 
+Cost :: 1000
+ID :: supportclassunlock
+Icon :: ability0_60
+Requires Activation :: true
+Class :: true
+
+Unlock the Support class upgrades.
+
+---echonode_Buff Synergy I---
+Auras :: [[Buff Synergy I]]
+Cost :: 1000
+ID :: buffsynergy1
+Icon :: ability0_40
+Prev Node :: fleetsupport3
+
+Unlock Support class buff synergy and increase the range and duration of your buff Support items.
+
+---echonode_Buff Synergy II---
+Auras :: [[Buff Synergy II]]
+Cost :: 2000
+ID :: buffsynergy2
+Icon :: ability0_40
+Prev Node :: fleetsupport6
+
+Unlock Support class buff synergy 2 and increase the range and duration of your buff Support items.
+
+---echonode_Buff Synergy III---
+Auras :: [[Buff Synergy III]]
+Cost :: 5000
+ID :: buffsynergy3
+Icon :: ability0_40
+Prev Node :: fleetsupport10
+
+Unlock Support class buff synergy 3 and increase the range and duration of your buff Support items.
+
+---echonode_Restoration Synergy I---
+Auras :: [[Restoration Synergy I]]
+Cost :: 1000
+ID :: restorationsynergy1
+Icon :: ability0_40
+Prev Node :: fleetsupport3
+
+Unlock Support class restoration synergy and increase the range and duration of your restoration Support items.
+
+---echonode_Restoration Synergy II---
+Auras :: [[Restoration Synergy II]]
+Cost :: 2000
+ID :: restorationsynergy2
+Icon :: ability0_40
+Prev Node :: fleetsupport6
+
+Unlock Support class restoration synergy 2 and increase the range and duration of your restoration Support items.
+
+---echonode_Restoration Synergy III---
+Auras :: [[Restoration Synergy III]]
+Cost :: 5000
+ID :: restorationsynergy3
+Icon :: ability0_40
+Prev Node :: fleetsupport10
+
+Unlock Support class restoration synergy 3 and increase the range and duration of your restoration Support items.
+
+---echonode_Fleet Support I---
+Auras :: [[Enhanced Velocity]] [[Reduced Vitality]]
+Cost :: 150
+ID :: fleetsupport1
+Icon :: ability0_68
+Prev Node :: supportclassunlock
+
+Sacrifice physical resilience to reach allies faster. Gain 1% Speed but lose 1% Vitality.
+
+---echonode_Fleet Support II---
+Auras :: [[Enhanced Velocity]] [[Reduced Vitality]]
+Cost :: 300
+ID :: fleetsupport2
+Icon :: ability0_68
+Prev Node :: fleetsupport1
+
+Sacrifice physical resilience to reach allies faster. Gain 1% Speed but lose 1% Vitality.
+
+---echonode_Fleet Support III---
+Auras :: [[Enhanced Velocity]] [[Reduced Vitality]]
+Cost :: 450
+ID :: fleetsupport3
+Icon :: ability0_68
+Prev Node :: fleetsupport2
+
+Sacrifice physical resilience to reach allies faster. Gain 1% Speed but lose 1% Vitality.
+
+---echonode_Fleet Support IV---
+Auras :: [[Enhanced Velocity]] [[Reduced Vitality]]
+Cost :: 600
+ID :: fleetsupport4
+Icon :: ability0_68
+Prev Node :: fleetsupport3
+
+Sacrifice physical resilience to reach allies faster. Gain 1% Speed but lose 1% Vitality.
+
+---echonode_Fleet Support V---
+Auras :: [[Enhanced Velocity]] [[Reduced Vitality]]
+Cost :: 750
+ID :: fleetsupport5
+Icon :: ability0_68
+Prev Node :: fleetsupport4
+
+Sacrifice physical resilience to reach allies faster. Gain 1% Speed but lose 1% Vitality.
+
+---echonode_Fleet Support VI---
+Auras :: [[Enhanced Velocity]] [[Reduced Vitality]]
+Cost :: 900
+ID :: fleetsupport6
+Icon :: ability0_68
+Prev Node :: fleetsupport5
+
+Sacrifice physical resilience to reach allies faster. Gain 1% Speed but lose 1% Vitality.
+
+---echonode_Fleet Support VII---
+Auras :: [[Enhanced Velocity]] [[Reduced Vitality]]
+Cost :: 1050
+ID :: fleetsupport7
+Icon :: ability0_68
+Prev Node :: fleetsupport6
+
+Sacrifice physical resilience to reach allies faster. Gain 1% Speed but lose 1% Vitality.
+
+---echonode_Fleet Support VIII---
+Auras :: [[Enhanced Velocity]] [[Reduced Vitality]]
+Cost :: 1200
+ID :: fleetsupport8
+Icon :: ability0_68
+Prev Node :: fleetsupport7
+
+Sacrifice physical resilience to reach allies faster. Gain 1% Speed but lose 1% Vitality.
+
+---echonode_Fleet Support IX---
+Auras :: [[Enhanced Velocity]] [[Reduced Vitality]]
+Cost :: 1350
+ID :: fleetsupport9
+Icon :: ability0_68
+Prev Node :: fleetsupport8
+
+Sacrifice physical resilience to reach allies faster. Gain 1% Speed but lose 1% Vitality.
+
+---echonode_Fleet Support X---
+Auras :: [[Enhanced Velocity]] [[Reduced Vitality]]
+Cost :: 1500
+ID :: fleetsupport10
+Icon :: ability0_68
+Prev Node :: fleetsupport9
+
+Sacrifice physical resilience to reach allies faster. Gain 1% Speed but lose 1% Vitality.
+

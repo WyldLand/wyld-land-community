@@ -1,0 +1,46 @@
+---item_54 Scrap Built Beam Cannon---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Scrap Built Beam Cannon]]
+Rarity :: Uncommon
+
+We don't know who first invented the laser cannon. But if we did, we'd thank 'em.
+
+---gundef_Scrap Built Beam Cannon---
+Fire Speed :: 0.5
+Charge Time :: 0.5
+Charge Slow :: 1.0
+Lock Time :: 0.5
+Bullets In Chamber :: 8
+Reload Speed :: 2
+Sprite :: weapons_53
+Fire Event :: lasercannona
+Reload Event :: lasercannonreload
+Charge Event :: chargelong
+Bullet Definition :: [[scrapcannon]]
+Archetype :: Laser
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: SemiAuto
+Bullet Lifetime :: 1
+
+---bulletdef_scrapcannon---
+sprite Laser14
+color 4
+potency 0
+fire 230 relative 0
+	piercing 100
+sprite Invisible
+potency 76
+wait 1
+fire 230 relative 0
+	radius 0.6
+	piercing 100
+wait 4
+fire 230 relative 0
+	radius 0.6
+	piercing 100
+wait 4
+fire 230 relative 0
+	radius 0.6
+	piercing 100
+

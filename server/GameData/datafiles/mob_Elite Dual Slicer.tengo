@@ -1,0 +1,138 @@
+---mob_Elite Dual Slicer---
+Prefab :: elitedualslicer
+Range Behavior :: Medium Ranged
+Abilities :: [[Elite Dual Gun]] [[Elite Blade Storm]] [[Elite Shadow Strike]] 
+Speed :: 550
+Type :: Normal
+Options :: alwaysattack
+
+---prefab_elitedualslicer---
+
+Components :: [[EliteDualSlicerSprite]] [[EliteDualSlicerCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_EliteDualSlicerCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+    "position": [0.0, 0.7],
+    "size": [1.2, 1.6]
+}
+
+---prefabcomponent_EliteDualSlicerSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.38,
+    "pivotY": 1.0,
+    "sprite": "darkforest3/elitedualslicer",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_sfxelitedualslicerAttack---
+
+Components :: [[SFXAssassinAttack]]
+
+---ability_Elite Dual Gun---
+Bullet Definition :: [[elitedualgun]]
+Cooldown :: 2.5
+VFX Charging :: trigger:Attack*
+Cast Time :: 0.25
+
+---bulletdef_elitedualgun---
+potency 130
+color 2
+nway speed:8 bullets:10 spread:30 directionType:relative angle:-10 maxAngle:10
+wait 2
+nway speed:6 bullets:6 spread:20 directionType:relative angle:-5 maxAngle:5	
+
+---ability_Elite Blade Storm---
+Bullet Definition :: [[elitebladestorm]]
+Cooldown :: 4.5
+VFX Charging :: trigger:Attack*
+Cast Time :: 0.60
+Lock Time :: 0.40
+Auras :: [[Suppression]]
+
+---bulletdef_elitebladestorm---
+potency 140
+line speed:8 bullets:10 delay:1 angle:0 directionType:relative
+wait 3
+line speed:6 bullets:8 delay:1 angle:15 directionType:relative
+wait 3
+line speed:4 bullets:8 delay:1 angle:-15 directionType:relative
+	wait 40
+	vanish
+
+---ability_Elite Shadow Strike---
+Bullet Definition :: [[eliteshadowstrike]]
+Cooldown :: 8.0
+VFX Charging :: trigger:Attack*
+Cast Time :: 1.5
+Lock Time :: 1.0
+
+---bulletdef_eliteshadowstrike---
+sprite CirclePool 3
+potency 200
+fire 0 relative 0
+	aoeexplosion
+	radius 3
+	timedFill 25
+	damageEvery 25
+	wait 25
+	vfx BloodySlamExplosion 5
+	wait 1
+	vanish
+wait 26
+sprite Custom10
+color 2
+potency 120
+radial bullets:24 speed:7 angle:0 directionType:absolute
+	wait 60
+	vanish
+
+---script_elitedualslicer_Monster---
+if is_undefined(scriptVars["timeSinceGun"]) {
+	scriptVars["timeSinceGun"] = 0.0
+	scriptVars["timeSinceBlade"] = 0.0
+	scriptVars["timeSinceShadow"] = 3.0
+	scriptVars["timeSinceWhirlwind"] = 0.0
+	scriptVars["attackPattern"] = 0
+}
+
+if !isDead && targetEntityId > 0 && castingAction == 0 {
+	scriptVars["timeSinceGun"] += delta
+	scriptVars["timeSinceBlade"] += delta
+	scriptVars["timeSinceShadow"] += delta
+	scriptVars["timeSinceWhirlwind"] += delta
+	
+	// Shadow Strike has highest priority
+	if scriptVars["timeSinceShadow"] > 11.0 {
+		useAbilityAtTarget(myEntityId, "Elite Shadow Strike", targetEntityId, 1.0)
+		scriptVars["timeSinceShadow"] = 0.0
+		scriptVars["attackPattern"] = 0
+	} 
+	
+	if scriptVars["timeSinceBlade"] > 7.5 {
+		useAbilityAtTarget(myEntityId, "Elite Blade Storm", targetEntityId, 1.0)
+		scriptVars["timeSinceBlade"] = 0.0
+		scriptVars["attackPattern"] = 1
+	} 
+	
+	if scriptVars["timeSinceGun"] > 3.0 {
+		useAbilityAtTarget(myEntityId, "Elite Dual Gun", targetEntityId, 1.0)
+		scriptVars["timeSinceGun"] = 0.0
+	}
+}

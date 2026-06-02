@@ -1,0 +1,426 @@
+---prefab_Basic---
+
+Components :: [[BasicSprite]] [[Bullet]]
+
+---prefabcomponent_BasicSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "bullets/projectiles",
+    "frame": 9,
+    "allowBatch": true,
+    "blendMode": "Add"
+}
+
+---prefabcomponent_Bullet---
+
+Component :: Bullet
+
+---prefab_CirclePool---
+
+Components :: [[CirclePoolSprite]] [[Bullet]]
+
+---prefabcomponent_CirclePoolSprite---
+
+Component :: Graphic
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "shape": "circle",
+    "size": [1.0,1.0],
+    "color": "#ff0000",
+    "blendMode": "Add"
+}
+
+---prefab_OrangePool---
+
+Components :: [[OrangePoolSprite]] [[Bullet]]
+
+---prefabcomponent_OrangePoolSprite---
+
+Component :: Graphic
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "shape": "circle",
+    "size": [1.0,1.0],
+    "color": "#ff8800",
+    "blendMode": "Add"
+}
+
+---prefab_WhitePool---
+
+Components :: [[WhitePoolSprite]] [[Bullet]]
+
+---prefabcomponent_WhitePoolSprite---
+
+Component :: Graphic
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "shape": "circle",
+    "size": [1.0,1.0],
+    "color": "#ffffff",
+    "blendMode": "Add"
+}
+
+---prefab_PurplePool---
+
+Components :: [[PurplePoolSprite]] [[Bullet]]
+
+---prefabcomponent_PurplePoolSprite---
+
+Component :: Graphic
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "shape": "circle",
+    "size": [1.0,1.0],
+    "color": "#c237cc",
+    "blendMode": "Add"
+}
+
+---prefab_GreenPool---
+
+Components :: [[GreenPoolSprite]] [[Bullet]]
+
+---prefabcomponent_GreenPoolSprite---
+
+Component :: Graphic
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "shape": "circle",
+    "size": [1.0,1.0],
+    "color": "#00ff00",
+    "blendMode": "Add"
+}
+
+---prefab_BluePool---
+
+Components :: [[BluePoolSprite]] [[Bullet]]
+
+---prefabcomponent_BluePoolSprite---
+
+Component :: Graphic
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "shape": "circle",
+    "size": [1.0,1.0],
+    "color": "#0000ff",
+    "blendMode": "Add"
+}
+
+---prefab_RectPool---
+
+Components :: [[RectPoolSprite]] [[Bullet]]
+
+---prefabcomponent_RectPoolSprite---
+
+Component :: Graphic
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "shape": "rect",
+    "size": [1.0,1.0],
+    "color": "#ff0000",
+    "blendMode": "Add"
+}
+
+---prefab_Invisible---
+
+Components :: [[Bullet]]
+
+---prefab_Lance14---
+
+Components :: [[Lance14Sprite]] [[LanceTrail]] [[Bullet]]
+
+---prefabcomponent_Lance14Sprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "bullets/projectiles",
+    "frame": 14,
+    "blendMode": "Add"
+}
+
+---prefabcomponent_LanceTrail---
+
+Component :: SpriteTrail
+
+{
+    "everyDistance": 0.8,
+    "lifetime": 0.2,
+    "scale": [1.7, 0.8],
+    "shrink": true
+}
+
+---prefab_Lance10---
+
+Components :: [[Lance10Sprite]] [[LanceTrail]] [[Bullet]]
+
+---prefabcomponent_Lance10Sprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "bullets/projectiles",
+    "frame": 10,
+    "blendMode": "Add"
+}
+
+---prefab_Lance13---
+
+Components :: [[Lance13Sprite]] [[LanceTrail]] [[Bullet]]
+
+---prefabcomponent_Lance13Sprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "bullets/projectiles",
+    "frame": 13,
+    "blendMode": "Add"
+}
+
+---prefab_Laser14---
+
+Components :: [[Laser14Sprite]] [[LaserTrail]] [[Bullet]]
+
+---prefabcomponent_Laser14Sprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "bullets/projectiles",
+    "frame": 14,
+    "blendMode": "Add"
+}
+
+---prefabcomponent_LaserTrail---
+
+Component :: SpriteTrail
+
+{
+    "everyDistance": 0.6,
+    "lifetime": 0.5,
+    "scale": [2.0, 1.3],
+    "shrink": false,
+    "blendMode": "Add"
+}
+
+---prefab_Laser10---
+
+Components :: [[Laser10Sprite]] [[LaserTrail]] [[Bullet]]
+
+---prefabcomponent_Laser10Sprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "bullets/projectiles",
+    "frame": 10,
+    "blendMode": "Add"
+}
+
+---prefab_Rifle14---
+
+Components :: [[Rifle14Sprite]] [[RifleTrail]] [[Bullet]]
+
+---prefabcomponent_Rifle14Sprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "bullets/projectiles",
+    "frame": 14,
+    "blendMode": "Add"
+}
+
+---prefabcomponent_RifleTrail---
+
+Component :: SpriteTrail
+
+{
+    "everyDistance": 0.6,
+    "lifetime": 1.0,
+    "scale": [1.7, 0.8],
+    "shrink": true
+}
+
+---prefab_PlayerBullet---
+
+Components :: [[PlayerBulletSprite]] [[Bullet]]
+
+---prefabcomponent_PlayerBulletSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "bullets/projectiles",
+    "frame": 12,
+    "allowBatch": true,
+    "blendMode": "Add"
+}
+
+---prefab_PlayerBullet10---
+
+Components :: [[PlayerBullet10Sprite]] [[Bullet]]
+
+---prefabcomponent_PlayerBullet10Sprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "bullets/projectiles",
+    "frame": 10,
+    "allowBatch": true,
+    "blendMode": "Add"
+}
+
+---prefab_Custom2---
+
+Components :: [[Custom2Sprite]] [[Bullet]]
+
+---prefabcomponent_Custom2Sprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "bullets/projectiles",
+    "frame": 2,
+    "allowBatch": true,
+    "blendMode": "Add"
+}
+
+---prefab_Custom12---
+
+Components :: [[Custom12Sprite]] [[Bullet]]
+
+---prefabcomponent_Custom12Sprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "bullets/projectiles",
+    "frame": 12,
+    "allowBatch": true,
+    "blendMode": "Add"
+}
+
+---prefab_Custom7---
+
+Components :: [[Custom7Sprite]] [[Bullet]]
+
+---prefabcomponent_Custom7Sprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "bullets/projectiles",
+    "frame": 7,
+    "allowBatch": true,
+    "blendMode": "Add"
+}
+
+---prefab_Custom8---
+
+Components :: [[Custom8Sprite]] [[Bullet]]
+
+---prefabcomponent_Custom8Sprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "bullets/projectiles",
+    "frame": 8,
+    "allowBatch": true,
+    "blendMode": "Add"
+}
+
+---prefab_Custom10---
+
+Components :: [[Custom10Sprite]] [[Bullet]]
+
+---prefabcomponent_Custom10Sprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "bullets/projectiles",
+    "frame": 10,
+    "allowBatch": true,
+    "blendMode": "Add"
+}
+
+---prefab_Custom9---
+
+Components :: [[Custom9Sprite]] [[Bullet]]
+
+---prefabcomponent_Custom9Sprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "bullets/projectiles",
+    "frame": 9,
+    "allowBatch": true,
+    "blendMode": "Add"
+}
+
+---prefab_Custom11---
+
+Components :: [[Custom11Sprite]] [[Bullet]]
+
+---prefabcomponent_Custom11Sprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "bullets/projectiles",
+    "frame": 11,
+    "allowBatch": true,
+    "blendMode": "Add"
+}

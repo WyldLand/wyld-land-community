@@ -1,0 +1,42 @@
+---item_55 Salvaged Laser---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Salvaged Laser]]
+Rarity :: Rare
+
+When you just don't have time for a full blast.
+
+---gundef_Salvaged Laser---
+Fire Speed :: 0.4
+Charge Time :: 0.4
+Charge Slow :: 1.0
+Lock Time :: 0.4
+Bullets In Chamber :: 10
+Reload Speed :: 1.5
+Sprite :: weapons_54
+Fire Event :: lasercannonb
+Reload Event :: lasercannonreload
+Charge Event :: chargeshort
+Bullet Definition :: [[salvagedlaser]]
+Archetype :: Laser
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: SemiAuto
+Bullet Lifetime :: 0.9
+
+---bulletdef_salvagedlaser---
+sprite Laser14
+color 3
+potency 0
+fire 230 relative 0
+	piercing 100
+sprite Invisible
+potency 91
+wait 1
+fire 230 relative 0
+	radius 0.6
+	piercing 100
+wait 6
+fire 230 relative 0
+	radius 0.6
+	piercing 100
+

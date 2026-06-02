@@ -1,0 +1,467 @@
+---mobgrouping_Dungeon001-Boss---
+Mobs :: [[Destructor]]
+Difficulty :: 99
+
+---mobgrouping_Dungeon001-Boss-Corrupted---
+Mobs :: [[Evolving Colossus]]
+Difficulty :: 99
+
+---mobgrouping_Dungeon001-DungMd1-1---
+Mobs :: [[Heavy Slicer]] [[Archer]] [[Archer]] [[Assassin]] [[Assassin]] [[Stormhead]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd1-2---
+Mobs :: [[Shielder]] [[Assassin]] [[Assassin]] [[Bomb Bot]] [[Archer]] [[Stormhead]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd1-3---
+Mobs :: [[Heavy Slicer]] [[Dual Slicer]] [[Assassin]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd1-4---
+Mobs :: [[Shielder]] [[Stormhead]] [[Stormhead]] [[Assassin]] [[Assassin]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd1-5---
+Mobs :: [[Heavy Slicer]] [[Bomb Bot]] [[Bomb Bot]] [[Archer]] [[Archer]] [[Assassin]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd2-1---
+Mobs :: [[Shielder]] [[Dual Slicer]] [[Dual Slicer]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd2-2---
+Mobs :: [[Heavy Slicer]] [[Stormhead]] [[Stormhead]] [[Bomb Bot]] [[Assassin]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd2-3---
+Mobs :: [[Shielder]] [[Bomb Bot]] [[Bomb Bot]] [[Archer]] [[Archer]] [[Stormhead]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd2-4---
+Mobs :: [[Heavy Slicer]] [[Dual Slicer]] [[Assassin]] [[Assassin]] [[Bomb Bot]] [[Bomb Bot]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd2-5---
+Mobs :: [[Shielder]] [[Archer]] [[Archer]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd3-1---
+Mobs :: [[Heavy Slicer]] [[Dual Slicer]] [[Dual Slicer]] [[Archer]] [[Archer]] [[Stormhead]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd3-2---
+Mobs :: [[Shielder]] [[Bomb Bot]] [[Bomb Bot]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd3-3---
+Mobs :: [[Heavy Slicer]] [[Stormhead]] [[Stormhead]] [[Assassin]] [[Archer]] [[Dual Slicer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd3-4---
+Mobs :: [[Shielder]] [[Dual Slicer]] [[Assassin]] [[Assassin]] [[Archer]] [[Bomb Bot]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd3-5---
+Mobs :: [[Heavy Slicer]] [[Archer]] [[Archer]] [[Stormhead]] [[Bomb Bot]] [[Bomb Bot]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd4-1---
+Mobs :: [[Shielder]] [[Stormhead]] [[Stormhead]] [[Archer]] [[Archer]] [[Dual Slicer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd4-2---
+Mobs :: [[Heavy Slicer]] [[Assassin]] [[Assassin]] [[Bomb Bot]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd4-3---
+Mobs :: [[Shielder]] [[Dual Slicer]] [[Dual Slicer]] [[Archer]] [[Stormhead]] [[Bomb Bot]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd4-4---
+Mobs :: [[Heavy Slicer]] [[Archer]] [[Archer]] [[Stormhead]] [[Assassin]] [[Assassin]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd4-5---
+Mobs :: [[Shielder]] [[Bomb Bot]] [[Bomb Bot]] [[Dual Slicer]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd5-1---
+Mobs :: [[Heavy Slicer]] [[Stormhead]] [[Stormhead]] [[Archer]] [[Archer]] [[Dual Slicer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd5-2---
+Mobs :: [[Shielder]] [[Assassin]] [[Assassin]] [[Bomb Bot]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd5-3---
+Mobs :: [[Heavy Slicer]] [[Dual Slicer]] [[Dual Slicer]] [[Archer]] [[Stormhead]] [[Bomb Bot]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd5-4---
+Mobs :: [[Shielder]] [[Archer]] [[Archer]] [[Stormhead]] [[Assassin]] [[Assassin]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd5-5---
+Mobs :: [[Heavy Slicer]] [[Bomb Bot]] [[Bomb Bot]] [[Dual Slicer]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd6-1---
+Mobs :: [[Shielder]] [[Stormhead]] [[Stormhead]] [[Archer]] [[Assassin]] [[Dual Slicer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd6-2---
+Mobs :: [[Heavy Slicer]] [[Assassin]] [[Assassin]] [[Bomb Bot]] [[Archer]] [[Stormhead]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd6-3---
+Mobs :: [[Shielder]] [[Dual Slicer]] [[Archer]] [[Archer]] [[Stormhead]] [[Bomb Bot]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd6-4---
+Mobs :: [[Heavy Slicer]] [[Archer]] [[Archer]] [[Stormhead]] [[Assassin]] [[Dual Slicer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd6-5---
+Mobs :: [[Shielder]] [[Bomb Bot]] [[Bomb Bot]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd7-1---
+Mobs :: [[Heavy Slicer]] [[Stormhead]] [[Stormhead]] [[Archer]] [[Archer]] [[Dual Slicer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd7-2---
+Mobs :: [[Shielder]] [[Assassin]] [[Assassin]] [[Bomb Bot]] [[Archer]] [[Stormhead]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd7-3---
+Mobs :: [[Heavy Slicer]] [[Dual Slicer]] [[Archer]] [[Archer]] [[Stormhead]] [[Bomb Bot]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd7-4---
+Mobs :: [[Shielder]] [[Archer]] [[Archer]] [[Stormhead]] [[Assassin]] [[Dual Slicer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd7-5---
+Mobs :: [[Heavy Slicer]] [[Bomb Bot]] [[Bomb Bot]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd8-1---
+Mobs :: [[Shielder]] [[Stormhead]] [[Archer]] [[Archer]] [[Assassin]] [[Dual Slicer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd8-2---
+Mobs :: [[Heavy Slicer]] [[Assassin]] [[Assassin]] [[Bomb Bot]] [[Archer]] [[Stormhead]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd8-3---
+Mobs :: [[Shielder]] [[Dual Slicer]] [[Archer]] [[Archer]] [[Stormhead]] [[Bomb Bot]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd8-4---
+Mobs :: [[Heavy Slicer]] [[Archer]] [[Archer]] [[Stormhead]] [[Assassin]] [[Dual Slicer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd8-5---
+Mobs :: [[Shielder]] [[Bomb Bot]] [[Bomb Bot]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd9-1---
+Mobs :: [[Heavy Slicer]] [[Stormhead]] [[Stormhead]] [[Archer]] [[Assassin]] [[Dual Slicer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd9-2---
+Mobs :: [[Shielder]] [[Assassin]] [[Assassin]] [[Bomb Bot]] [[Archer]] [[Stormhead]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd9-3---
+Mobs :: [[Heavy Slicer]] [[Dual Slicer]] [[Archer]] [[Archer]] [[Stormhead]] [[Bomb Bot]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd9-4---
+Mobs :: [[Shielder]] [[Archer]] [[Archer]] [[Stormhead]] [[Assassin]] [[Dual Slicer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd9-5---
+Mobs :: [[Heavy Slicer]] [[Bomb Bot]] [[Bomb Bot]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd10-1---
+Mobs :: [[Shielder]] [[Stormhead]] [[Stormhead]] [[Archer]] [[Assassin]] [[Dual Slicer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd10-2---
+Mobs :: [[Heavy Slicer]] [[Assassin]] [[Assassin]] [[Bomb Bot]] [[Archer]] [[Stormhead]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd10-3---
+Mobs :: [[Shielder]] [[Dual Slicer]] [[Archer]] [[Archer]] [[Stormhead]] [[Bomb Bot]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd10-4---
+Mobs :: [[Heavy Slicer]] [[Archer]] [[Archer]] [[Stormhead]] [[Assassin]] [[Dual Slicer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungMd10-5---
+Mobs :: [[Shielder]] [[Bomb Bot]] [[Bomb Bot]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm1-1---
+Mobs :: [[Heavy Slicer]] [[Assassin]] [[Assassin]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm1-2---
+Mobs :: [[Shielder]] [[Dual Slicer]] [[Assassin]] [[Assassin]] [[Bomb Bot]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm1-3---
+Mobs :: [[Heavy Slicer]] [[Stormhead]] [[Assassin]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm1-4---
+Mobs :: [[Shielder]] [[Bomb Bot]] [[Bomb Bot]] [[Assassin]] [[Assassin]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm1-5---
+Mobs :: [[Heavy Slicer]] [[Dual Slicer]] [[Dual Slicer]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm2-1---
+Mobs :: [[Shielder]] [[Assassin]] [[Assassin]] [[Bomb Bot]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm2-2---
+Mobs :: [[Heavy Slicer]] [[Dual Slicer]] [[Assassin]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm2-3---
+Mobs :: [[Shielder]] [[Bomb Bot]] [[Bomb Bot]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm2-4---
+Mobs :: [[Heavy Slicer]] [[Stormhead]] [[Assassin]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm2-5---
+Mobs :: [[Shielder]] [[Dual Slicer]] [[Dual Slicer]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm3-1---
+Mobs :: [[Heavy Slicer]] [[Assassin]] [[Assassin]] [[Bomb Bot]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm3-2---
+Mobs :: [[Shielder]] [[Dual Slicer]] [[Assassin]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm3-3---
+Mobs :: [[Heavy Slicer]] [[Stormhead]] [[Bomb Bot]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm3-4---
+Mobs :: [[Shielder]] [[Dual Slicer]] [[Dual Slicer]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm3-5---
+Mobs :: [[Heavy Slicer]] [[Assassin]] [[Assassin]] [[Bomb Bot]] [[Bomb Bot]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm4-1---
+Mobs :: [[Shielder]] [[Stormhead]] [[Assassin]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm4-2---
+Mobs :: [[Heavy Slicer]] [[Dual Slicer]] [[Assassin]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm4-3---
+Mobs :: [[Shielder]] [[Bomb Bot]] [[Bomb Bot]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm4-4---
+Mobs :: [[Heavy Slicer]] [[Stormhead]] [[Stormhead]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm4-5---
+Mobs :: [[Shielder]] [[Dual Slicer]] [[Dual Slicer]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm5-1---
+Mobs :: [[Heavy Slicer]] [[Assassin]] [[Assassin]] [[Bomb Bot]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm5-2---
+Mobs :: [[Shielder]] [[Dual Slicer]] [[Assassin]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm5-3---
+Mobs :: [[Heavy Slicer]] [[Stormhead]] [[Bomb Bot]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm5-4---
+Mobs :: [[Shielder]] [[Dual Slicer]] [[Dual Slicer]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm5-5---
+Mobs :: [[Heavy Slicer]] [[Assassin]] [[Assassin]] [[Bomb Bot]] [[Bomb Bot]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm6-1---
+Mobs :: [[Shielder]] [[Stormhead]] [[Assassin]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm6-2---
+Mobs :: [[Heavy Slicer]] [[Dual Slicer]] [[Assassin]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm6-3---
+Mobs :: [[Shielder]] [[Bomb Bot]] [[Bomb Bot]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm6-4---
+Mobs :: [[Heavy Slicer]] [[Stormhead]] [[Stormhead]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm6-5---
+Mobs :: [[Shielder]] [[Dual Slicer]] [[Dual Slicer]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm7-1---
+Mobs :: [[Heavy Slicer]] [[Assassin]] [[Assassin]] [[Bomb Bot]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm7-2---
+Mobs :: [[Shielder]] [[Dual Slicer]] [[Assassin]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm7-3---
+Mobs :: [[Heavy Slicer]] [[Stormhead]] [[Bomb Bot]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm7-4---
+Mobs :: [[Shielder]] [[Dual Slicer]] [[Dual Slicer]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm7-5---
+Mobs :: [[Heavy Slicer]] [[Assassin]] [[Assassin]] [[Bomb Bot]] [[Bomb Bot]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm8-1---
+Mobs :: [[Shielder]] [[Stormhead]] [[Assassin]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm8-2---
+Mobs :: [[Heavy Slicer]] [[Dual Slicer]] [[Assassin]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm8-3---
+Mobs :: [[Shielder]] [[Bomb Bot]] [[Bomb Bot]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm8-4---
+Mobs :: [[Heavy Slicer]] [[Stormhead]] [[Stormhead]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungSm8-5---
+Mobs :: [[Shielder]] [[Dual Slicer]] [[Dual Slicer]] [[Assassin]] [[Archer]] [[Archer]]
+Difficulty :: 1
+
+---mobgrouping_Dungeon001-DungLg1-1---
+Mobs :: [[Heavy Slicer]] [[Shielder]] [[Archer]] [[Archer]] [[Archer]] [[Stormhead]] [[Stormhead]] [[Assassin]]
+Difficulty :: 2
+
+---mobgrouping_Dungeon001-DungLg1-2---
+Mobs :: [[Heavy Slicer]] [[Shielder]] [[Dual Slicer]] [[Dual Slicer]] [[Archer]] [[Archer]] [[Bomb Bot]] [[Bomb Bot]]
+Difficulty :: 2
+
+---mobgrouping_Dungeon001-DungLg1-3---
+Mobs :: [[Shielder]] [[Heavy Slicer]] [[Stormhead]] [[Stormhead]] [[Archer]] [[Archer]] [[Archer]] [[Assassin]]
+Difficulty :: 2
+
+---mobgrouping_Dungeon001-DungLg1-4---
+Mobs :: [[Heavy Slicer]] [[Shielder]] [[Bomb Bot]] [[Bomb Bot]] [[Archer]] [[Archer]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 2
+
+---mobgrouping_Dungeon001-DungLg1-5---
+Mobs :: [[Shielder]] [[Heavy Slicer]] [[Dual Slicer]] [[Assassin]] [[Assassin]] [[Archer]] [[Archer]] [[Archer]]
+Difficulty :: 2
+
+---mobgrouping_Dungeon001-DungLg2-1---
+Mobs :: [[Heavy Slicer]] [[Shielder]] [[Archer]] [[Archer]] [[Archer]] [[Bomb Bot]] [[Stormhead]] [[Assassin]]
+Difficulty :: 2
+
+---mobgrouping_Dungeon001-DungLg2-2---
+Mobs :: [[Shielder]] [[Heavy Slicer]] [[Dual Slicer]] [[Assassin]] [[Archer]] [[Archer]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 2
+
+---mobgrouping_Dungeon001-DungLg2-3---
+Mobs :: [[Heavy Slicer]] [[Shielder]] [[Archer]] [[Archer]] [[Archer]] [[Bomb Bot]] [[Bomb Bot]] [[Dual Slicer]]
+Difficulty :: 2
+
+---mobgrouping_Dungeon001-DungLg2-4---
+Mobs :: [[Shielder]] [[Heavy Slicer]] [[Stormhead]] [[Stormhead]] [[Archer]] [[Archer]] [[Dual Slicer]] [[Assassin]]
+Difficulty :: 2
+
+---mobgrouping_Dungeon001-DungLg2-5---
+Mobs :: [[Heavy Slicer]] [[Shielder]] [[Archer]] [[Archer]] [[Archer]] [[Bomb Bot]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 2
+
+---mobgrouping_Dungeon001-DungLg3-1---
+Mobs :: [[Shielder]] [[Heavy Slicer]] [[Dual Slicer]] [[Dual Slicer]] [[Archer]] [[Archer]] [[Stormhead]] [[Assassin]]
+Difficulty :: 2
+
+---mobgrouping_Dungeon001-DungLg3-2---
+Mobs :: [[Heavy Slicer]] [[Shielder]] [[Archer]] [[Archer]] [[Archer]] [[Bomb Bot]] [[Bomb Bot]] [[Stormhead]]
+Difficulty :: 2
+
+---mobgrouping_Dungeon001-DungLg3-3---
+Mobs :: [[Shielder]] [[Heavy Slicer]] [[Stormhead]] [[Stormhead]] [[Archer]] [[Archer]] [[Dual Slicer]] [[Assassin]]
+Difficulty :: 2
+
+---mobgrouping_Dungeon001-DungLg3-4---
+Mobs :: [[Heavy Slicer]] [[Shielder]] [[Archer]] [[Archer]] [[Archer]] [[Bomb Bot]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 2
+
+---mobgrouping_Dungeon001-DungLg3-5---
+Mobs :: [[Shielder]] [[Heavy Slicer]] [[Assassin]] [[Assassin]] [[Archer]] [[Archer]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 2
+
+---mobgrouping_Dungeon001-DungLg4-1---
+Mobs :: [[Heavy Slicer]] [[Shielder]] [[Archer]] [[Archer]] [[Archer]] [[Dual Slicer]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 2
+
+---mobgrouping_Dungeon001-DungLg4-2---
+Mobs :: [[Shielder]] [[Heavy Slicer]] [[Bomb Bot]] [[Bomb Bot]] [[Archer]] [[Archer]] [[Assassin]] [[Stormhead]]
+Difficulty :: 2
+
+---mobgrouping_Dungeon001-DungLg4-3---
+Mobs :: [[Heavy Slicer]] [[Shielder]] [[Dual Slicer]] [[Dual Slicer]] [[Archer]] [[Archer]] [[Archer]] [[Assassin]]
+Difficulty :: 2
+
+---mobgrouping_Dungeon001-DungLg4-4---
+Mobs :: [[Shielder]] [[Heavy Slicer]] [[Stormhead]] [[Stormhead]] [[Archer]] [[Archer]] [[Bomb Bot]] [[Bomb Bot]]
+Difficulty :: 2
+
+---mobgrouping_Dungeon001-DungLg4-5---
+Mobs :: [[Heavy Slicer]] [[Shielder]] [[Archer]] [[Archer]] [[Archer]] [[Dual Slicer]] [[Assassin]] [[Stormhead]]
+Difficulty :: 2
+
+---mobgrouping_Dungeon001-DungLg5-1---
+Mobs :: [[Shielder]] [[Heavy Slicer]] [[Stormhead]] [[Stormhead]] [[Archer]] [[Archer]] [[Archer]] [[Dual Slicer]]
+Difficulty :: 2
+
+---mobgrouping_Dungeon001-DungLg5-2---
+Mobs :: [[Heavy Slicer]] [[Shielder]] [[Bomb Bot]] [[Bomb Bot]] [[Archer]] [[Archer]] [[Assassin]] [[Assassin]]
+Difficulty :: 2
+
+---mobgrouping_Dungeon001-DungLg5-3---
+Mobs :: [[Shielder]] [[Heavy Slicer]] [[Dual Slicer]] [[Dual Slicer]] [[Archer]] [[Archer]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 2
+
+---mobgrouping_Dungeon001-DungLg5-4---
+Mobs :: [[Heavy Slicer]] [[Shielder]] [[Archer]] [[Archer]] [[Archer]] [[Bomb Bot]] [[Stormhead]] [[Assassin]]
+Difficulty :: 2
+
+---mobgrouping_Dungeon001-DungLg5-5---
+Mobs :: [[Shielder]] [[Heavy Slicer]] [[Dual Slicer]] [[Assassin]] [[Archer]] [[Archer]] [[Stormhead]] [[Bomb Bot]]
+Difficulty :: 2

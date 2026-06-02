@@ -1,0 +1,77 @@
+---item_135 Sedator---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Sedator]]
+Rarity :: Legendary
+Durability :: 5
+
+Generates a cryogenic field that slows all enemies caught in the blast.
+
+When you need to control the battlefield, sometimes a gentle touch is more effective than brute force.
+
+---gundef_Sedator---
+Fire Speed :: 0.3
+Bullets In Chamber :: 3
+Reload Speed :: 12
+Passive Reload :: true
+Sprite :: weapons_99
+Fire Event :: rocketa
+Reload Event :: rocketreload
+Bullet Definition :: [[sedator]]
+Archetype :: ExplosiveLauncher
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: SemiAuto
+Bullet Lifetime :: 2.0
+Innate Spikes :: [[Cryo Field]]
+
+---bulletdef_sedator---
+potency 0
+sprite Custom7
+color 4
+fire 8 relative 0
+	hitfire sedatorexplosion
+
+---bulletdef_sedatorexplosion---
+sprite CirclePool 3
+color 4
+potency 124
+fire 0 relative 0
+	aoeexplosion
+	radius 3
+	timedFill 20
+	damageEvery 20
+	wait 10
+	vfx FrostExplosion 5
+	wait 50
+	vanish
+
+---ability_Sedator Slow---
+Bullet Definition :: [[sedatorslow]]
+Max Range :: 100.0
+Auras :: [[Slow]]
+
+---bulletdef_sedatorslow---
+sprite Invisible
+potency 0
+fire 0 relative 0
+	aoedot
+	radius 3
+	damageEvery 20
+	wait 20
+	vanish
+
+---spike_Cryo Field---
+Auras :: [[Cryo Field]]
+
+---aura_Cryo Field---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:CryoField]]
+
+---script_CryoField_BulletHit---
+if abilityId == auraAbilityId {
+	useAbilityAtPosition(myEntityId, "Sedator Slow", hitPosition)
+}

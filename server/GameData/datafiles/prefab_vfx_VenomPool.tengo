@@ -1,0 +1,15 @@
+---prefab_VenomPool---
+
+Components :: [[VenomPoolSprite]]
+
+---prefabcomponent_VenomPoolSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "vfx/BloodPool",
+    "play": "default"
+     
+}

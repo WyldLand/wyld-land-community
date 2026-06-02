@@ -1,0 +1,25 @@
+---prefab_BombExplosion---
+
+Components :: [[BombExplosionSprite]] [[BombExplosionSound]]
+
+---prefabcomponent_BombExplosionSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "vfx/BombExplosion",
+    "play": "default"
+     
+}
+
+---prefabcomponent_BombExplosionSound---
+
+Component :: Sound
+
+{
+    
+    "sources": ["sfxexplosion/largeexplosion.wav"],
+	"spatial": true
+}

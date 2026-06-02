@@ -1,0 +1,107 @@
+---aura_Zen Focus---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 0.1
+Definitions :: [[Custom:ZenFocus]]
+
+---spike_Zen Focus---
+Auras :: [[Zen Focus]]
+Slot :: Gun
+Rarity :: Exotic
+Archetypes :: [[Handgun]] [[LongRangedRifle]]
+
+Every 2 seconds of not firing grants a Focus stack (max 5). Next shot consumes all stacks for 100% damage per stack.
+
+---script_ZenFocus_Tick---
+if is_undefined(scriptVars["lastFireTime"]) {
+	scriptVars["lastFireTime"] = globalTick
+	scriptVars["focusStacks"] = 0
+	scriptVars["lastStackTime"] = globalTick
+	scriptVars["currentVisualStacks"] = 0
+}
+
+timeSinceLastFire := float(globalTick - scriptVars["lastFireTime"]) / 60.0
+
+// Gain a stack every 2 seconds, max 5 stacks
+if timeSinceLastFire >= 2.0 {
+	stacksEarned := int(timeSinceLastFire / 2.0)
+	if stacksEarned > 5 {
+		stacksEarned = 5
+	}
+	
+	// Update visual stacks if we gained new ones
+	currentStacks := scriptVars["focusStacks"]
+	if stacksEarned > currentStacks {
+		// Add the difference in stacks as auras
+		for i := currentStacks; i < stacksEarned; i++ {
+			addAuraToEntity(myEntityId, "Zen Focus Stack", auraAbilityId, myEntityId)
+			showVfxAtPosition(myEntityId, "GainBuff", entityPosition(myEntityId))
+		}
+		scriptVars["currentVisualStacks"] = stacksEarned
+	}
+	
+	scriptVars["focusStacks"] = stacksEarned
+}
+
+---script_ZenFocus_FireWeapon---
+if abilityId == auraAbilityId {
+	// Initialize if needed
+	if is_undefined(scriptVars["focusStacks"]) {
+		scriptVars["focusStacks"] = 0
+		scriptVars["currentVisualStacks"] = 0
+	}
+	
+	// Prepare damage bonus from stacks
+	if scriptVars["focusStacks"] > 0 {
+		scriptVars["nextShotMultiplier"] = float(scriptVars["focusStacks"])
+		// Epic VFX for multi-stack shot
+		showVfxAtPosition(myEntityId, "EnergyBurst", entityPosition(myEntityId))
+		
+		// Remove all visual stack auras
+		for i := 0; i < scriptVars["currentVisualStacks"]; i++ {
+			dispelAuraOnEntity(myEntityId, "Zen Focus Stack")
+		}
+		scriptVars["currentVisualStacks"] = 0
+	} else {
+		scriptVars["nextShotMultiplier"] = 0.0
+	}
+	
+	// Reset everything
+	scriptVars["lastFireTime"] = globalTick
+	scriptVars["focusStacks"] = 0
+}
+
+---script_ZenFocus_OutgoingDamage---
+if abilityId == auraAbilityId {
+	if !is_undefined(scriptVars["nextShotMultiplier"]) && scriptVars["nextShotMultiplier"] > 0.0 {
+		additionalDamage = int(float(damage) * scriptVars["nextShotMultiplier"])
+		scriptVars["nextShotMultiplier"] = 0.0
+	}
+}
+
+---script_ZenFocus_ReloadWeapon---
+// Remove all stacks on reload
+if abilityId == auraAbilityId {
+	if !is_undefined(scriptVars["currentVisualStacks"]) {
+		for i := 0; i < scriptVars["currentVisualStacks"]; i++ {
+			dispelAuraOnEntity(myEntityId, "Zen Focus Stack")
+		}
+		scriptVars["currentVisualStacks"] = 0
+	}
+	scriptVars["lastFireTime"] = globalTick
+	scriptVars["focusStacks"] = 0
+}
+
+---aura_Zen Focus Stack---
+Type :: Buff
+Duration :: -1
+Icon :: statusicons_2
+Max Stacks :: 5
+Time Per Tick :: 1.0
+Definitions :: [[Zen Focus Stack]]
+
+---auraaffectstat_Zen Focus Stack---
+Stat :: Damage
+Boost :: 100.0

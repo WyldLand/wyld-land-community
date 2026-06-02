@@ -1,0 +1,74 @@
+---item_102 Mortality Driver---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Mortality Driver]]
+Rarity :: Exotic
+Durability :: 5
+
+Damage increases the lower your health gets. Will damage you when firing above 50% health.
+
+Dancing with death is an art few master.
+
+---gundef_Mortality Driver---
+Fire Speed :: 0.40
+Charge Time :: 0.4
+Bullets In Chamber :: 12
+Reload Speed :: 1.5
+Sprite :: weapons_82
+Fire Event :: fusionriflea
+Reload Event :: fusionriflereload
+Charge Event :: chargeshort
+Bullet Definition :: [[mortalitydriver]]
+Archetype :: Shotgun
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: FullAuto
+Bullet Lifetime :: 0.4
+Innate Spikes :: [[Mortality Driver]]
+
+---bulletdef_mortalitydriver---
+sprite Lance14
+color 5
+potency 20
+fire 40 relative -1 1
+fire 40 relative -1 1
+wait 1
+fire 40 relative -1 1
+fire 40 relative -1 1
+
+---spike_Mortality Driver---
+Auras :: [[Mortality Driver]]
+
+---aura_Mortality Driver---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:MortalityDriver]]
+
+---script_MortalityDriver_FireWeapon---
+if abilityId == auraAbilityId {
+	currentHealth := float(getPoints(myEntityId, "hp", "current"))
+	maxHealth := float(getPoints(myEntityId, "hp", "max"))
+	healthPercent := currentHealth / maxHealth
+	
+	if healthPercent > 0.5 {
+		// Deal 5% of max health as damage when firing above 50%
+		damageAmount := int(maxHealth * 0.05)
+		attackEntity(myEntityId, myEntityId, damageAmount, auraAbilityId)
+	}
+}
+
+---script_MortalityDriver_OutgoingDamage---
+if abilityId == auraAbilityId {
+	currentHealth := float(getPoints(myEntityId, "hp", "current"))
+	maxHealth := float(getPoints(myEntityId, "hp", "max"))
+	healthPercent := currentHealth / maxHealth
+	
+	// Scale damage up as health gets lower
+	// At 100% health: no bonus
+	// At 50% health: 50% bonus
+	// At 1% health: ~100% bonus
+	bonusPercent := (1.0 - healthPercent) * 1.0
+	additionalDamage = int(float(damage) * bonusPercent)
+}

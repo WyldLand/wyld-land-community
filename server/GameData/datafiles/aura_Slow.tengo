@@ -1,0 +1,45 @@
+---aura_Slow---
+Type :: Debuff
+Icon :: statusicons_4
+Duration :: 3.0
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Slow]]
+
+---aura_Disruptor I Slow---
+Type :: Debuff
+Icon :: statusicons_25
+Duration :: 2.0
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Slow]]
+
+---aura_Disruptor II Slow---
+Type :: Debuff
+Icon :: statusicons_25
+Duration :: 4.0
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Slow]]
+
+---aura_Disruptor III Slow---
+Type :: Debuff
+Icon :: statusicons_25
+Duration :: 6.0
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Slow]]
+
+---aura_Disruptor IV Slow---
+Type :: Debuff
+Icon :: statusicons_25
+Duration :: 8.0
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Slow]]
+

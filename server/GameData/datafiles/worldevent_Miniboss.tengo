@@ -1,0 +1,495 @@
+---worldevent_Miniboss---
+Mob :: minibossforge
+XP :: 100
+
+A threatening Ethos remnant is nearby. Defeat it and claim your reward!
+
+---mobdefinition_Miniboss Forge---
+ID :: minibossforge
+Prefab :: minibossforge
+Range Behavior :: [[Stationary]]
+Type :: Miniboss
+Speed :: 0
+Interaction Timer :: 0.1
+Interaction Label :: Activate
+Options :: noaggronearby
+Loot :: [[Miniboss]]
+
+---loottable_Miniboss---
+[[701 Damage Pulse]] @ 15.0
+[[651 Tanky Pulse]] @ 15.0
+[[604 Suppression Pulse]] @ 15.0
+[[602 Shock Pulse]] @ 15.0
+
+---prefab_minibossforge---
+
+Components :: [[MinibossForgeSprite]] [[MinibossForgeCollider]] [[Monster]] [[UsableObject]]
+
+---prefabcomponent_MinibossForgeCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+	"position": [0.0, 0.50],
+    "size": [1.625, 0.875]
+}
+
+---prefabcomponent_MinibossForgeSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "darkforest4/minibossforge",
+    "animations": [
+        {
+            "name": "idle"
+        }
+    ]
+}
+
+---prefab_sfxminibossAttack---
+
+Components :: [[SFXMinibossAttack]]
+
+---prefabcomponent_SFXMinibossAttack---
+
+Component :: Sound
+
+{
+    
+    "sources": ["darkforest2/minibossAttack.wav"],
+	"spatial": true
+}
+
+---prefab_sfxminibossAttack2---
+
+Components :: [[SFXMinibossAttack2]]
+
+---prefabcomponent_SFXMinibossAttack2---
+
+Component :: Sound
+
+{
+    
+    "sources": ["darkforest2/minibossAttack2.wav"],
+	"spatial": true
+}
+
+---script_minibossforge_Monster---
+
+if is_undefined(scriptVars["eventActive"]) {
+    scriptVars["eventActive"] = false
+    scriptVars["timeSinceActivated"] = 0.0
+	addAuraToEntity(myEntityId, "Permanent Immunity", 0, myEntityId)
+}
+
+if !scriptVars["eventActive"] && len(usedByEntities) > 0 {
+	scriptVars["eventActive"] = true
+	triggerAnimation(myEntityId, "Activate")
+	summonEntity("miniboss", entityPosition(myEntityId), monsterLevel(myEntityId))
+}
+
+if scriptVars["eventActive"] {
+    scriptVars["timeSinceActivated"] += delta
+    if scriptVars["timeSinceActivated"] > 1.5 {
+        setCollisionLayer(myEntityId, CollisionLayerDynamic)
+    }
+}
+
+---mob_Miniboss---
+ID :: miniboss
+Prefab :: miniboss
+Range Behavior :: [[Stationary]]
+Type :: Miniboss
+Speed :: 100
+Options :: manualpathing
+
+---prefab_miniboss---
+
+Components :: [[MinibossSprite]] [[MinibossCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_MinibossCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+	"position": [0, 0.85],
+    "size": [1.25, 1.7]
+}
+
+---prefabcomponent_MinibossSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.41,
+    "pivotY": 1.0,
+    "sprite": "darkforest2/miniboss",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---ability_Miniboss Phase One Jump Shotgun---
+Bullet Definition :: [[minibossponejumpshotgun]]
+Lock Time :: 7
+VFX Cast :: trigger:Attack2*
+
+---bulletdef_minibossponejumpshotgun---
+wait 5
+color 3
+potency 120
+radial bullets:36 speed:5 directionType:relative
+	lifetime 1000
+	wait 50
+	speed -10
+wait 18
+color 2
+radial bullets:20 speed:3 directionType:relative
+	lifetime 1000
+wait 6
+radial bullets:20 speed:3 angle:9 directionType:relative
+	lifetime 1000
+wait 6
+radial bullets:20 speed:3 directionType:relative
+	lifetime 1000
+wait 6
+radial bullets:20 speed:3 angle:9 directionType:relative
+	lifetime 1000
+wait 6
+radial bullets:20 speed:3 directionType:relative
+	lifetime 1000
+wait 6
+radial bullets:20 speed:3 angle:9 directionType:relative
+	lifetime 1000
+wait 6
+radial bullets:20 speed:3 directionType:relative
+	lifetime 1000
+wait 6
+radial bullets:20 speed:3 angle:9 directionType:relative
+	lifetime 1000
+wait 6
+radial bullets:20 speed:3 directionType:relative
+	lifetime 1000
+wait 6
+radial bullets:20 speed:3 angle:9 directionType:relative
+	lifetime 1000
+wait 10
+color 3
+radial bullets:36 speed:5 directionType:relative angle:5
+	lifetime 1000
+	wait 50
+	speed -10
+
+
+---ability_Miniboss Phase Two Explosion---
+Bullet Definition :: [[minibossptwoexplosion]]
+Max Range :: 100.0
+VFX Cast :: trigger:Attack*
+
+---bulletdef_minibossptwoexplosion---
+sprite CirclePool 5
+potency 250
+radial bullets:1
+	lifetime 1000
+	radius 5
+	timedFill 160
+	damageEvery 160
+	wait 160
+	vanish
+wait 160
+sprite Basic
+radial bullets:24 speed:3 directionType:relative
+	lifetime 1000
+wait 5
+radial bullets:24 speed:3 angle:6 directionType:relative
+	lifetime 1000
+
+
+
+---ability_Miniboss Phase Two Shotgun---
+Bullet Definition :: [[minibossptwoshotgun]]
+VFX Cast :: trigger:Attack2*
+
+---bulletdef_minibossptwoshotgun---
+color 3
+potency 115
+nway bullets:7 speed:4 spread:80 directionType:relative
+	lifetime 1000
+nway bullets:7 speed:4 spread:80 angle:90 directionType:relative
+	lifetime 1000
+nway bullets:7 speed:4 spread:80 angle:-90 directionType:relative
+	lifetime 1000
+nway bullets:2 speed:4 spread:90 directionType:relative
+	lifetime 1000
+wait 5
+nway bullets:2 speed:4 spread:90 directionType:relative
+	lifetime 1000
+wait 5
+nway bullets:2 speed:4 spread:90 directionType:relative
+	lifetime 1000
+
+
+
+---ability_Miniboss Phase Two Random Shots---
+Bullet Definition :: [[minibossptworandomshots]]
+
+
+---bulletdef_minibossptworandomshots---
+repeat bullets:30 delay:1 speed:5 angle:0 maxAngle:360
+	lifetime 1000
+
+---ability_Miniboss Phase Three Attack---
+Bullet Definition :: [[minibosspthreeattack]]
+Max Range :: 100.0
+VFX Cast :: trigger:Attack*
+
+
+---bulletdef_minibosspthreeattack---
+radial bullets:20 speed:4 directionType:relative
+	lifetime 1000
+nway bullets:9 speed:5 spread:45 directionType:relative
+	lifetime 1000
+
+
+---aura_Miniboss Hp---
+Type :: Buff
+Duration :: -1
+Max stacks :: 1 
+Time Per Tick :: 1.0
+Definitions :: [[AuraAffectStat/Miniboss Hp]]
+
+---auraaffectstat_Miniboss Hp---
+Stat :: Vitality
+Boost :: -50.0
+
+
+
+---aura_Miniboss Phase One Speed---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1 
+Time Per Tick :: 1.0
+Definitions :: [[Miniboss Phase One Speed]]
+
+---auraaffectstat_Miniboss Phase One Speed---
+Stat :: Speed
+Boost :: 4900.0
+
+---aura_Miniboss Phase Two Speed---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1 
+Time Per Tick :: 1.0
+Definitions :: [[Miniboss Phase Two Speed]]
+
+---auraaffectstat_Miniboss Phase Two Speed---
+Stat :: Speed
+Boost :: 3400.0
+
+
+---aura_Miniboss Phase Three Speed---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1 
+Time Per Tick :: 1.0
+Definitions :: [[Miniboss Phase Three Speed]]
+
+---auraaffectstat_Miniboss Phase Three Speed---
+Stat :: Speed
+Boost :: 400.0
+
+---script_miniboss_Monster---
+if is_undefined(scriptVars["eventActivated"]) {
+	scriptVars["eventActivated"] = false
+	scriptVars["eventCompleted"] = false
+	scriptVars["eventTimer"] = 0.0
+	addAuraToEntity(myEntityId, "Event Credit", 0, myEntityId)
+}
+
+if isDead && !scriptVars["eventCompleted"] {
+	scriptVars["eventCompleted"] = true
+	worldEventPassed(myEntityId)
+}
+
+if scriptVars["eventActivated"] {
+	scriptVars["eventTimer"] += delta
+	if scriptVars["eventTimer"] > 120.0 {
+		scriptVars["eventCompleted"] = true
+		worldEventFailed(myEntityId)
+	}
+}
+
+if !isDead && targetEntityId != 0 {
+
+	if !scriptVars["eventActivated"] {
+		worldEventActivated(myEntityId)
+		scriptVars["eventActivated"] = true
+	}
+
+	//hp
+	hp := getPoints(myEntityId, "hp", "current")
+	pthp := getPoints(myEntityId, "hp", "max")
+
+	pctCompleted := float(hp) / float(pthp)
+	worldEventProgress(myEntityId, 1.0 - pctCompleted)
+
+	//wait
+	if scriptVars["minibossphase"] == 2 || scriptVars["minibossphase"] == 4 {
+		scriptVars["minibosswait"] += delta
+		changeAttackBehaviour(myEntityId, "Stationary")
+		setCollisionLayer(myEntityId, CollisionLayerDynamic)
+		if scriptVars["minibosswait"] > 5.0 {
+			setCollisionLayer(myEntityId, CollisionLayerMonster)
+			scriptVars["minibossphase"] += 1
+		}
+	}
+
+	if is_undefined(scriptVars["minibossphase"]) {
+		//Phase Transition stuff
+		scriptVars["minibossphase"] = 1
+		scriptVars["minibosswait"] = 0.0
+		//Phase 1 stuff
+		scriptVars["minibossponetimer"] = 7.0
+		addAuraToEntity(myEntityId, "Miniboss Phase One Speed", 0, myEntityId)
+
+		//Phase 2 stuff
+		scriptVars["minibossptwotimer"] = 0.0
+		scriptVars["minibossptwoexplosiontimer"] = 4.0
+		scriptVars["minibossptwocounter"] = 0
+		scriptVars["miniPTwoAtk"] = 0
+		scriptVars["behaviorChange"] = 0
+
+		//Phase 3 stuff
+		scriptVars["minibossPthreeMinionTimer"] = 10.0
+		scriptVars["minibossPthreeAtkTimer"] = 0.0
+	}
+	scriptVars["jumpingShotgun"] = distToEntity(myEntityId, targetEntityId)
+
+
+
+
+	//phase 1
+
+	if hp < 0.60 * pthp && scriptVars["minibossphase"] == 1 {
+		log("phase 2")
+		scriptVars["minibosswait"] = 0.0
+		dispelAuraOnEntity(myEntityId, "Miniboss Phase One Speed")
+		addAuraToEntity(myEntityId, "Miniboss Phase Two Speed", 0, myEntityId)
+		scriptVars["minibossphase"] += 1
+	}
+	if scriptVars["minibossphase"] == 1 {
+		if !isDead {
+			scriptVars["minibosswait"] = 0.0
+			changeAttackBehaviour(myEntityId, "Close Ranged")
+			scriptVars["minibossponetimer"] += delta
+			if scriptVars["minibossponetimer"] > 8.0 && scriptVars["jumpingShotgun"] < 3.0 {
+				useAbilityAtPosition(myEntityId, "Miniboss Phase One Jump Shotgun", positionInCurrentRoom(myEntityId, [29.0, 19.0, 0.0]))
+				scriptVars["minibossponetimer"] = 0.0
+			}
+
+		}
+	}
+
+	//phase 2
+
+	if hp < 0.20 * pthp && scriptVars["minibossphase"] == 3 {
+		log("phase 3")
+		scriptVars["minibosswait"] = 0.0
+		dispelAuraOnEntity(myEntityId, "Miniboss Phase Two Speed")
+		addAuraToEntity(myEntityId, "Miniboss Phase Three Speed", 0, myEntityId)
+		scriptVars["minibossphase"] += 1
+	}
+	if scriptVars["minibossphase"] == 3 {
+
+
+		if !isDead {
+			scriptVars["minibosswait"] = 0.0
+
+			if scriptVars["behaviorChange"] == 0 {
+				changeAttackBehaviour(myEntityId, "Close Ranged")
+				scriptVars["behaviorChange"] = 1
+			}
+
+			if scriptVars["jumpingShotgun"] < 4.0 {
+				scriptVars["miniPTwoAtk"] = 1
+			}
+
+			if scriptVars["miniPTwoAtk"] == 1 {
+
+				scriptVars["minibossptwotimer"] += delta
+				if scriptVars["minibossptwotimer"] > 0.0 && scriptVars["minibossptwocounter"] == 0 {
+					changeAttackBehaviour(myEntityId, "Stationary")
+					scriptVars["minibossptwocounter"] += 1
+				}
+
+				scriptVars["minibossptwotimer"] += delta
+				if scriptVars["minibossptwotimer"] > 0.1 && scriptVars["minibossptwocounter"] == 1 {
+					useAbilityAtPosition(myEntityId, "Miniboss Phase Two Random Shots", entityPosition(myEntityId), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+					useAbilityAtPosition(myEntityId, "Miniboss Phase Two Shotgun", entityPosition(myEntityId), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+					scriptVars["minibossptwocounter"] += 1
+				}
+
+				if scriptVars["minibossptwotimer"] > 2.5 && scriptVars["minibossptwocounter"] == 2 {
+					useAbilityAtPosition(myEntityId, "Miniboss Phase Two Shotgun", entityPosition(myEntityId), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+					scriptVars["minibossptwocounter"] += 1
+				}
+
+				if scriptVars["minibossptwotimer"] > 4.5 && scriptVars["minibossptwocounter"] == 3 {
+					changeAttackBehaviour(myEntityId, "Close Ranged")
+					scriptVars["minibossptwocounter"] = 0
+					scriptVars["minibossptwotimer"] = 0.0
+					scriptVars["miniPTwoAtk"] = 0
+				}
+
+			}
+
+			scriptVars["minibossptwoexplosiontimer"] += delta
+			if scriptVars["minibossptwoexplosiontimer"] > 9.0 {
+				useAbilityAtPosition(myEntityId, "Miniboss Phase Two Explosion", randomPositionInCurrentRoom(myEntityId, 2.0))
+				useAbilityAtPosition(myEntityId, "Miniboss Phase Two Explosion", randomPositionInCurrentRoom(myEntityId, 2.0))
+				scriptVars["minibossptwoexplosiontimer"] = 0.0
+			}
+
+		}
+	}
+
+
+	//phase 3
+
+	if scriptVars["minibossphase"] == 5 {
+
+		if !isDead && targetEntityId != 0 {
+
+			changeAttackBehaviour(myEntityId, "Close Ranged")
+
+			scriptVars["minibossPthreeMinionTimer"] += delta
+			if scriptVars["minibossPthreeMinionTimer"] > 12.0 {
+				summonEntity("smallfastmob", randomPositionNearby(myEntityId, 12.0), monsterLevel(myEntityId))
+				summonEntity("smallfastmob", randomPositionNearby(myEntityId, 2.0), monsterLevel(myEntityId))
+				summonEntity("smallfastmob", randomPositionNearby(myEntityId, 20.0), monsterLevel(myEntityId))
+				scriptVars["minibossPthreeMinionTimer"] = 0.0
+			}
+
+			scriptVars["minibossPthreeAtkTimer"] += delta
+			if scriptVars["minibossPthreeAtkTimer"] > 2.0 {
+				useAbilityAtPosition(myEntityId, "Miniboss Phase Three Attack", entityPosition(myEntityId), addBoundingCenter(targetEntityId, entityPosition(targetEntityId)))
+				scriptVars["minibossPthreeAtkTimer"] = 0.0
+			}
+
+
+		}
+	}
+}

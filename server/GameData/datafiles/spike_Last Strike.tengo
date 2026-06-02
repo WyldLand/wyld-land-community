@@ -1,0 +1,31 @@
+---aura_Last Strike---
+Type :: Buff
+Duration :: -1
+Icon ::
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:LastStrike]]
+
+---spike_Last Strike---
+Slot :: Gun
+Auras :: [[Last Strike]]
+Rarity :: Rare
+
+The last bullet in every clip deals extra damage.
+
+---script_LastStrike_FireWeapon---
+if is_undefined(scriptVars["lastShotPlusDmg"]) {
+    scriptVars["lastShotPlusDmg"] = 0
+}
+
+if auraAbilityId == abilityId && gunState["BulletsFired"] == gunState["BulletsInChamber"]-1 && scriptVars["lastShotPlusDmg"] == 0 {
+    scriptVars["lastShotPlusDmg"] = globalTick+1
+}
+
+---script_LastStrike_OutgoingDamage---
+if abilityId == auraAbilityId && !is_undefined(scriptVars["lastShotPlusDmg"]) && globalTick - scriptVars["lastShotPlusDmg"] < 0 {
+    additionalDamage = int(float(damage * 0.50))
+}
+
+---script_LastStrike_ReloadWeapon---
+scriptVars["lastShotPlusDmg"] = 0

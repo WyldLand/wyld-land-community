@@ -1,0 +1,51 @@
+---item_19 Rage Machine---
+Type :: Equippable
+Slot :: Active
+Icon :: items_722
+Gun Definition :: [[Rage Machine]]
+Rarity :: Uncommon
+
+On use, gain Rage: increased damage and speed.
+
+I won't do what they tell me. Rinse, repeat.
+
+---gundef_Rage Machine---
+Fire Speed :: 15.0
+Bullets In Chamber :: -1
+Reload Speed :: 0.0
+Sprite :: items_722
+Fire Event :: tripmine
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Rage Machine]]
+
+---prefab_sfxtripmine---
+
+Components :: [[SFXTripMine]]
+
+---prefabcomponent_SFXTripMine---
+
+Component :: Sound
+
+{
+    "sources": ["misc/tripmine.wav"],
+    "channel": "gfx"
+}
+
+---spike_Rage Machine---
+Auras :: [[Rage Machine]]
+
+---aura_Rage Machine---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:RageMachine]]
+
+---script_RageMachine_FireWeapon---
+
+if auraAbilityId == abilityId {
+	addAuraToEntity(myEntityId, "Rage", auraAbilityId, myEntityId)
+}
+

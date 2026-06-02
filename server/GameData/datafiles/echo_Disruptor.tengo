@@ -1,0 +1,223 @@
+---aura_Enhanced Velocity---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 99
+Time Per Tick :: 10.0
+Definitions :: [[AuraAffectStat/Enhanced Velocity]]
+
+---auraaffectstat_Enhanced Velocity---
+Stat :: Speed
+Boost :: 1.0
+
+---aura_Reduced Vitality---
+Type :: Debuff
+Duration :: -1
+Max Stacks :: 99
+Time Per Tick :: 10.0
+Definitions :: [[AuraAffectStat/Reduced Vitality]]
+
+---auraaffectstat_Reduced Vitality---
+Stat :: Vitality
+Boost :: -1.0
+
+---aura_Status Ailment Synergy I---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+
+---aura_Status Ailment Synergy II---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+
+---aura_Status Ailment Synergy III---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+
+---aura_Status Ailment Synergy IV---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+
+---aura_Debuff Synergy I---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+
+---aura_Debuff Synergy II---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+
+---aura_Debuff Synergy III---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+
+---aura_Debuff Synergy IV---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+
+---echonode_Disruptor Class Unlock---
+Auras :: 
+Cost :: 1000
+ID :: disruptorclassunlock
+Icon :: ability0_46
+Requires Activation :: true
+Class :: true
+
+Unlock the Disruptor class upgrades.
+
+---echonode_Debuff Synergy I---
+Auras :: [[Debuff Synergy I]]
+Cost :: 1000
+ID :: debuffsynergy1
+Icon :: ability0_98
+Prev Node :: enhancedvelocity2
+
+Unlock Disruptor class debuff synergy and increase the range and duration of your debuff Disruptor items.
+
+---echonode_Debuff Synergy II---
+Auras :: [[Debuff Synergy II]]
+Cost :: 2000
+ID :: debuffsynergy2
+Icon :: ability0_98
+Prev Node :: enhancedvelocity4
+
+Unlock Disruptor class debuff synergy 2 and increase the range and duration of your debuff Disruptor items.
+
+---echonode_Debuff Synergy III---
+Auras :: [[Debuff Synergy III]]
+Cost :: 5000
+ID :: debuffsynergy3
+Icon :: ability0_98
+Prev Node :: enhancedvelocity6
+
+Unlock Disruptor class debuff synergy 3 and increase the range and duration of your debuff Disruptor items.
+
+---echonode_Status Ailment Synergy I---
+Auras :: [[Status Ailment Synergy I]]
+Cost :: 1000
+ID :: statusailmentsynergy1
+Icon :: ability0_98
+Prev Node :: enhancedvelocity3
+
+Unlock Disruptor class status ailment synergy and increase the range and duration of your status ailment Disruptor items.
+
+---echonode_Status Ailment Synergy II---
+Auras :: [[Status Ailment Synergy II]]
+Cost :: 2000
+ID :: statusailmentsynergy2
+Icon :: ability0_98
+Prev Node :: enhancedvelocity6
+
+Unlock Disruptor class status ailment synergy class synergy 2 and increase the range and duration of your status ailment Disruptor items.
+
+---echonode_Status Ailment Synergy III---
+Auras :: [[Status Ailment Synergy III]]
+Cost :: 5000
+ID :: statusailmentsynergy3
+Icon :: ability0_98
+Prev Node :: enhancedvelocity10
+
+Unlock Disruptor class status ailment synergy class synergy 3 and increase the range and duration of your status ailment Disruptor items.
+
+---echonode_Enhanced Velocity I---
+Auras :: [[Enhanced Velocity]] [[Reduced Vitality]]
+Cost :: 100
+ID :: enhancedvelocity1
+Icon :: ability0_68
+Prev Node :: disruptorclassunlock
+
+Gain an additional 1% boost to your Speed stat, but lose 1% Vitality.
+
+---echonode_Enhanced Velocity II---
+Auras :: [[Enhanced Velocity]] [[Reduced Vitality]]
+Cost :: 200
+ID :: enhancedvelocity2
+Icon :: ability0_68
+Prev Node :: enhancedvelocity1
+
+Gain an additional 1% boost to your Speed stat, but lose 1% Vitality.
+
+---echonode_Enhanced Velocity III---
+Auras :: [[Enhanced Velocity]] [[Reduced Vitality]]
+Cost :: 400
+ID :: enhancedvelocity3
+Icon :: ability0_68
+Prev Node :: enhancedvelocity2
+
+Gain an additional 1% boost to your Speed stat, but lose 1% Vitality.
+
+---echonode_Enhanced Velocity IV---
+Auras :: [[Enhanced Velocity]] [[Reduced Vitality]]
+Cost :: 800
+ID :: enhancedvelocity4
+Icon :: ability0_68
+Prev Node :: enhancedvelocity3
+
+Gain an additional 1% boost to your Speed stat, but lose 1% Vitality.
+
+---echonode_Enhanced Velocity V---
+Auras :: [[Enhanced Velocity]] [[Reduced Vitality]]
+Cost :: 1000
+ID :: enhancedvelocity5
+Icon :: ability0_68
+Prev Node :: enhancedvelocity4
+
+Gain an additional 1% boost to your Speed stat, but lose 1% Vitality.
+
+---echonode_Enhanced Velocity VI---
+Auras :: [[Enhanced Velocity]] [[Reduced Vitality]]
+Cost :: 1500
+ID :: enhancedvelocity6
+Icon :: ability0_68
+Prev Node :: enhancedvelocity5
+
+Gain an additional 1% boost to your Speed stat, but lose 1% Vitality.
+
+---echonode_Enhanced Velocity VII---
+Auras :: [[Enhanced Velocity]] [[Reduced Vitality]]
+Cost :: 1500
+ID :: enhancedvelocity7
+Icon :: ability0_68
+Prev Node :: enhancedvelocity6
+
+Gain an additional 1% boost to your Speed stat, but lose 1% Vitality.
+
+---echonode_Enhanced Velocity VIII---
+Auras :: [[Enhanced Velocity]] [[Reduced Vitality]]
+Cost :: 1500
+ID :: enhancedvelocity8
+Icon :: ability0_68
+Prev Node :: enhancedvelocity7
+
+Gain an additional 1% boost to your Speed stat, but lose 1% Vitality.
+
+---echonode_Enhanced Velocity IX---
+Auras :: [[Enhanced Velocity]] [[Reduced Vitality]]
+Cost :: 1500
+ID :: enhancedvelocity9
+Icon :: ability0_68
+Prev Node :: enhancedvelocity8
+
+Gain an additional 1% boost to your Speed stat, but lose 1% Vitality.
+
+---echonode_Enhanced Velocity X---
+Auras :: [[Enhanced Velocity]] [[Reduced Vitality]]
+Cost :: 1500
+ID :: enhancedvelocity10
+Icon :: ability0_68
+Prev Node :: enhancedvelocity9
+
+Gain an additional 1% boost to your Speed stat, but lose 1% Vitality.

@@ -1,0 +1,11 @@
+---achievement_Assassinator---
+Kill :: [[Mobs/Assassin|Assassin]]@5
+Tags :: TeamSize1
+Title :: Assassinator
+XP :: 10
+ResetOnDeath :: False
+
+Solo kill assassins around Haven to help protect the settlement.
+
+Protecting the common good is the duty of us all.
+

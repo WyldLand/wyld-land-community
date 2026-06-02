@@ -1,0 +1,57 @@
+---prefab_sfxpistola---
+
+Components :: [[SFXPistolA]]
+
+---prefabcomponent_SFXPistolA---
+
+Component :: Sound
+
+{
+    "sources": ["sfxpistol/pistola1.wav", "sfxpistol/pistola2.wav", "sfxpistol/pistola3.wav"],
+    "select": "random",
+    "randomPitch": 0.15,
+    "channel": "gfx"
+}
+
+---prefab_sfxpistolb---
+
+Components :: [[SFXPistolB]]
+
+---prefabcomponent_SFXPistolB---
+
+Component :: Sound
+
+{
+    "sources": ["sfxpistol/pistolb1.wav", "sfxpistol/pistolb2.wav", "sfxpistol/pistolb3.wav"],
+    "select": "random",
+    "randomPitch": 0.15,
+    "channel": "gfx"
+}
+
+---prefab_sfxpistolc---
+
+Components :: [[SFXPistolC]]
+
+---prefabcomponent_SFXPistolC---
+
+Component :: Sound
+
+{
+    "sources": ["sfxpistol/pistolc1.wav", "sfxpistol/pistolc2.wav", "sfxpistol/pistolc3.wav"],
+    "select": "random",
+    "randomPitch": 0.15,
+    "channel": "gfx"
+}
+
+---prefab_sfxpistolreload---
+
+Components :: [[SFXPistolReload]]
+
+---prefabcomponent_SFXPistolReload---
+
+Component :: Sound
+
+{
+    "sources": ["sfxpistol/pistolreload.wav"],
+    "channel": "gfx"
+}

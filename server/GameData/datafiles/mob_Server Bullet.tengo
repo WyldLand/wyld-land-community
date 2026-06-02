@@ -1,0 +1,31 @@
+---mob_Server Bullet---
+Prefab :: serverbullet
+Range Behavior :: Stationary
+Speed :: 500
+Type :: Friendly
+
+---prefab_serverbullet---
+
+Components :: [[ServerBulletSprite]] [[Monster]]
+
+---prefabcomponent_ServerBulletSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "serverbullet",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+

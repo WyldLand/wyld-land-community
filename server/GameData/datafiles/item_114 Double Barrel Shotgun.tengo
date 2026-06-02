@@ -1,0 +1,55 @@
+---item_114 Double Barrel Shotgun---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Double Barrel]]
+Rarity :: Exotic
+
+Each shot applies Burn. Deal 50% more damage to Burned targets.
+
+When hunting your prey, sometimes the best approach is to keep the pressure on.
+
+---gundef_Double Barrel---
+Fire Speed :: 0.3
+Bullets In Chamber :: 2
+Reload Speed :: 1.8
+Sprite :: weapons_96
+Fire Event :: shotgunc
+Reload Event :: shotgunreload
+Bullet Definition :: [[doublebarrel]]
+Archetype :: Shotgun
+Muzzle VFX :: Muzzle 0.90
+Fire Type :: SemiAuto
+Bullet Lifetime :: 0.7
+Innate Spikes :: [[Infernal Double Barrel]]
+
+---bulletdef_doublebarrel---
+sprite Custom10
+color 2
+potency 24
+nway speed:14 bullets:5 spread:30 directionType:relative angle:0
+wait 1
+nway speed:14 bullets:4 spread:30 directionType:relative angle:0
+
+---spike_Infernal Double Barrel---
+Auras :: [[Infernal Double Barrel]]
+
+---aura_Infernal Double Barrel---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:InfernalDoubleBarrel]]
+
+---script_InfernalDoubleBarrel_DamageDealt---
+if abilityId == auraAbilityId {
+    currentAuras := getAurasOnEntity(damageSenderId)
+    for i := 0; i < len(currentAuras); i++ {
+        if currentAuras[i]["name"] == "Burn" {
+            attackEntity(myEntityId, damageSenderId, int(float(damage) * 0.50), -99)
+            break
+        }
+    }
+    // Apply Burn on hit
+    addAuraToEntity(myEntityId, "Burn", -99, damageSenderId)
+}

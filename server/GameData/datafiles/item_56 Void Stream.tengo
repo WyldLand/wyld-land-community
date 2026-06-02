@@ -1,0 +1,28 @@
+---item_56 Void Stream---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Void Stream]]
+Rarity :: Legendary
+
+Some crazy person took a laser canon and married it with an auto-rifle. This should be fun.
+
+---gundef_Void Stream---
+Fire Speed :: 0.15
+Bullets In Chamber :: 10
+Reload Speed :: 1.2
+Sprite :: weapons_55
+Fire Event :: lasercannond
+Reload Event :: lasercannonreload
+Bullet Definition :: [[voidstream]]
+Archetype :: Laser
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: FullAuto
+Bullet Lifetime :: 1
+
+---bulletdef_voidstream---
+sprite Laser10
+potency 48
+fire 230 relative 0
+	radius 0.3
+	piercing 100
+

@@ -1,0 +1,167 @@
+---achievement_Ancient Victory---
+Kill :: [[Mobs/Ancient Guardian|Ancient Guardian]]@1
+XP :: 50
+
+Defeat the Ancient Guardian and its army of automated defenses.
+
+---achievement_Perfect Guardian---
+Kill :: [[Mobs/Ancient Guardian|Ancient Guardian]]@1
+Tags :: NoDamage
+Title :: Guardian Slayer
+XP :: 50
+ResetOnDeath :: False
+
+Take out the Ancient Guardian without taking any damage.
+
+---achievement_Web of Victory---
+Kill :: [[Mobs/Widow|Widow]]@1
+XP :: 50
+
+Defeat the Widow in her twisted web of chaos.
+
+---achievement_Spider Hunter---
+Kill :: [[Mobs/Widow|Widow]]@1
+Tags :: NoDamage
+Title :: Web Walker
+XP :: 50
+ResetOnDeath :: False
+
+Take out the Widow without taking any damage.
+
+---achievement_Servitor Down---
+Kill :: [[Mobs/Servitor|Servitor]]@1
+XP :: 50
+
+Defeat the Servitor and its array of deadly weaponry.
+
+---achievement_Perfect Service---
+Kill :: [[Mobs/Servitor|Servitor]]@1
+Tags :: NoDamage
+Title :: Machine Master
+XP :: 50
+ResetOnDeath :: False
+
+Take out the Servitor without taking any damage.
+
+---achievement_Infernal Victory---
+Kill :: [[Mobs/Flameclaw|Flameclaw]]@1
+XP :: 50
+
+Defeat the Flameclaw and extinguish its eternal flames.
+
+---achievement_Cold Blooded---
+Kill :: [[Mobs/Flameclaw|Flameclaw]]@1
+Tags :: NoDamage
+Title :: Flame Tamer
+XP :: 50
+ResetOnDeath :: False
+
+Take out the Flameclaw without taking any damage.
+
+---achievement_Tough Prey---
+Kill :: [[Mobs/Dark Hunter|Dark Hunter]]@1
+XP :: 100
+Title :: Tough Prey
+Rewards :: [[114 Double Barreled Shotgun]]@10
+ResetOnDeath :: False
+
+Defeat the Dark Hunter and prove that you're tough prey.
+
+---achievement_Become the Hunter---
+Kill :: [[Mobs/Corrupted Dark Hunter|Corrupted Dark Hunter]]@1
+XP :: 100
+Title :: The Hunter
+ResetOnDeath :: False
+
+Defeat the Corrupted Dark Hunter. You're the Hunter now.
+
+
+---achievement_Young Victory---
+Kill :: [[Mobs/Young Hunter|Young Hunter]]@1
+XP :: 50
+
+Defeat the Young Hunter and prove your worth as a warrior.
+
+---achievement_Perfect Youth---
+Kill :: [[Mobs/Young Hunter|Young Hunter]]@1
+Tags :: NoDamage
+Title :: Youth Mentor
+XP :: 50
+ResetOnDeath :: False
+
+Take out the Young Hunter without taking any damage.
+
+---achievement_Mind Victory---
+Kill :: [[Mobs/Mind Flayer|Mind Flayer]]@1
+XP :: 50
+
+Defeat the Mind Flayer and resist its psychic dominance.
+
+---achievement_Mental Master---
+Kill :: [[Mobs/Mind Flayer|Mind Flayer]]@1
+Tags :: NoDamage
+Title :: Mind Breaker
+XP :: 50
+ResetOnDeath :: False
+
+Take out the Mind Flayer without taking any damage.
+
+---achievement_Beta Boss Master---
+Kill :: [[Mobs/Destructor|Destructor]]@10 [[Mobs/Red King|Red King]]@10 [[Mobs/Heart Hoarder|Heart Hoarder]]@10 [[Mobs/Great Wyrm|Great Wyrm]]@10 [[Mobs/Inferno Juggernaut|Inferno Juggernaut]]@10 [[Mobs/Ancient Guardian|Ancient Guardian]]@10 [[Mobs/Widow|Widow]]@10 [[Mobs/Mind Flayer|Mind Flayer]]@10 [[Mobs/Servitor|Servitor]]@10 [[Mobs/Architect|Architect]]@10 [[Mobs/Voltage Vanguard|Voltage Vanguard]]@10 [[Mobs/Shadow Hunter|Shadow Hunter]]@10 [[Mobs/Young Hunter|Young Hunter]]@10 [[Mobs/Flameclaw|Flameclaw]]@10
+Title :: Beta Conqueror
+XP :: 250
+ResetOnDeath :: False
+Rewards :: [[30 Refined Wyld Luck]]@1
+
+Defeat all fourteen bosses available in the Wyld Land Beta. Only the most skilled Runners can claim this prestigious title.
+
+The ancient powers that control the Wyld have acknowledged your prowess. Few have proven themselves so worthy.
+
+---achievement_Hunter Killer---
+Kill :: [[Mobs/Young Hunter|Young Hunter]]@1 [[Mobs/Dark Hunter|Dark Hunter]]@1 
+Title :: Hunter Killer
+XP :: 150
+ResetOnDeath :: False
+
+Defeat all the bosses in the Hunter Line and get access to the ability to raid!
+
+---achievement_Echoblight Sovereign Killer---
+Kill :: [[Mobs/Echoblight Sovereign|Echoblight Sovereign]]@1
+Title :: Sovereign Conqueror
+XP :: 150
+ResetOnDeath :: False
+
+Defeat the raid boss Echoblight Sovereign!
+
+---achievement_Echodeath Victor Killer---
+Kill :: [[Mobs/Echodeath Victor|Echodeath Victor]]@1
+Title :: Ultimate Victor
+XP :: 150
+ResetOnDeath :: False
+
+Defeat the raid boss Echodeath Victor!
+
+---achievement_Head Meet Wall---
+Kill :: [[Mobs/Echoblight Sovereign|Echoblight Sovereign]]@1
+Title :: Masochist
+XP :: 0
+ResetOnDeath :: False
+Disabled :: True
+
+Defeat the raid boss Echoblight Sovereign before it was tuned correctly.
+
+---achievement_Idrae Killer---
+Kill :: [[Mobs/Idrae|Idrae]]@1
+Title :: King of Bosses
+XP :: 200
+ResetOnDeath :: False
+
+Defeat Idrae, one of the hardest bosses in the game!
+
+---achievement_Harbinger Killer---
+Kill :: [[Mobs/Harbinger of Storms|Harbinger of Storms]]@1
+Title :: Storm Weatherer
+XP :: 100
+ResetOnDeath :: False
+
+Defeat Harbinger of Storms, one of the hardest bosses in the game!

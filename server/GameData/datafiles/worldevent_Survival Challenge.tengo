@@ -1,0 +1,360 @@
+---worldevent_Survival Challenge---
+Mob :: survivalchallenge
+XP :: 150
+
+Survive the waves of enemies for 3 minutes to claim your reward!
+
+---mobdefinition_Survival Challenge---
+ID :: survivalchallenge
+Prefab :: survivalchallenge
+Range Behavior :: [[Stationary]]
+Type :: Friendly
+Speed :: 0
+Interaction Timer :: 0.1
+Interaction Label :: Begin Challenge
+Options :: noaggronearby usableobject
+Loot :: [[SurvivalChallenge]]
+
+---loottable_SurvivalChallenge---
+[[104 Pain Converter]] @ 5.0
+[[28 Neverending Story]] @ 5.0
+
+---prefab_survivalchallenge---
+
+Components :: [[SurvivalChallengeSprite]] [[SurvivalChallengeCollider]] [[Monster]] [[Nameplate]] [[UsableObject]]
+
+---prefabcomponent_SurvivalChallengeCollider---
+
+Component :: Collider
+
+{
+    "layer": "Friendly",
+    "position": [0.0, 1.0],
+    "size": [3.0, 2.0]
+}
+
+---prefabcomponent_SurvivalChallengeSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "haven/travelshrine",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "activate",
+            "trigger": "Activate"
+        }
+    ]
+}
+
+---aura_Challenge Immunity---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:ChallengeImmunity]]
+
+---script_ChallengeImmunity_IncomingDamage---
+// Negate all damage to the controller
+additionalDamage = -1 * damage
+
+---script_survivalchallenge_Monster---
+
+rand := import("rand")
+
+spawnEnemy := func(enemyType) {
+	// Determine where to spawn the enemy - at room edges
+	roomCenter := positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0])
+	roomWidth := 32.0
+	roomHeight := 32.0
+	
+	// Pick a random edge
+	edge := rand.intn(4) // 0=top, 1=right, 2=bottom, 3=left
+	spawnPos := [0.0, 0.0, 0.0]
+	
+	if edge == 0 {
+		// Top edge
+		spawnPos[0] = roomCenter[0] - roomWidth/2 + rand.float()*roomWidth
+		spawnPos[1] = roomCenter[1] - roomHeight/2 + 2.0
+		spawnPos[2] = 0.0
+	} else if edge == 1 {
+		// Right edge
+		spawnPos[0] = roomCenter[0] + roomWidth/2 - 2.0
+		spawnPos[1] = roomCenter[1] - roomHeight/2 + rand.float()*roomHeight
+		spawnPos[2] = 0.0
+	} else if edge == 2 {
+		// Bottom edge
+		spawnPos[0] = roomCenter[0] - roomWidth/2 + rand.float()*roomWidth
+		spawnPos[1] = roomCenter[1] + roomHeight/2 - 2.0
+		spawnPos[2] = 0.0
+	} else {
+		// Left edge
+		spawnPos[0] = roomCenter[0] - roomWidth/2 + 2.0
+		spawnPos[1] = roomCenter[1] - roomHeight/2 + rand.float()*roomHeight
+		spawnPos[2] = 0.0
+	}
+	
+	// Spawn the enemy
+	newEnemyId := summonEntity(enemyType, spawnPos, monsterLevel(myEntityId))
+	
+	// Add visual effect for spawn
+	showVfxAtPosition(newEnemyId, "SpawnEnemy", spawnPos)
+	
+	// Add the event credit aura so we know this entity is part of the event
+	addAuraToEntity(myEntityId, "Event Credit", 0, newEnemyId)
+	
+	// Link entity to the event so it disappears if the event ends
+	killEntityIfEntityDies(newEnemyId, myEntityId)
+	
+	// Make sure the new entity attacks players
+	nearby := getNearbyEntities(myEntityId)
+	for i := 0; i < len(nearby); i++ {
+		if isEnemyOfEntity(myEntityId, nearby[i].id) {
+			aggroMyTargets(nearby[i].id, newEnemyId)
+		}
+	}
+	
+	return newEnemyId
+}
+
+announceWave := func(waveNumber) {
+	messages := [
+		"Wave 1 incoming! Prepare yourself!",
+		"Wave 2 approaches! Stay alert!",
+		"Wave 3 begins! They're getting stronger!",
+		"Wave 4 is here! Hold your ground!",
+		"Final wave! Survive just a bit longer!"
+	]
+	
+	if waveNumber <= len(messages) {
+		say(myEntityId, messages[waveNumber-1])
+	} else {
+		say(myEntityId, "Another wave approaches!")
+	}
+}
+
+if is_undefined(scriptVars["eventActive"]) {
+	scriptVars["eventActive"] = false
+	scriptVars["eventComplete"] = false
+	scriptVars["eventTimer"] = 0.0
+	scriptVars["timeSinceProgressUpdate"] = 0.0
+	scriptVars["lastNormalSpawnTime"] = 0.0
+	scriptVars["lastEliteSpawnTime"] = 0.0
+	scriptVars["currentWave"] = 0
+	scriptVars["nextWaveTime"] = 0.0
+	scriptVars["waveSpawned"] = false
+	scriptVars["challengeDuration"] = 180.0  // 3 minutes
+	scriptVars["nameplateSet"] = false
+	
+	addAuraToEntity(myEntityId, "Challenge Immunity", 0, myEntityId)
+}
+
+// Set the nameplate once (removed as setNameplate function doesn't exist)
+if !scriptVars["nameplateSet"] {
+	// The nameplate is now set through the Nameplate component in the prefab
+	scriptVars["nameplateSet"] = true
+}
+
+if !scriptVars["eventActive"] && !scriptVars["eventComplete"] && len(usedByEntities) > 0 {
+	scriptVars["eventActive"] = true
+	triggerAnimation(myEntityId, "Activate")
+	worldEventActivated(myEntityId)
+	
+	// Initial message
+	say(myEntityId, "The challenge begins! Survive for 3 minutes!")
+	showVfxAtPosition(myEntityId, "LevelUp", entityPosition(myEntityId))
+	
+	// Animation/effect for the challenge start
+	showVfxAtPosition(myEntityId, "EnergyBurst", entityPosition(myEntityId))
+}
+
+if !isDead && scriptVars["eventActive"] && !scriptVars["eventComplete"] {
+	// Summoner shouldn't move
+	setSpeed(myEntityId, 0.0)
+	
+	// Update the timer
+	scriptVars["eventTimer"] += delta
+	scriptVars["timeSinceProgressUpdate"] += delta
+	scriptVars["lastNormalSpawnTime"] += delta
+	scriptVars["lastEliteSpawnTime"] += delta
+	scriptVars["nextWaveTime"] -= delta
+	
+	// Check if time's up 
+	if scriptVars["eventTimer"] >= scriptVars["challengeDuration"] {
+		// Success! Challenge completed
+		worldEventPassed(myEntityId)
+		scriptVars["eventComplete"] = true
+		
+		// Clean up all remaining enemies
+		nearby := getNearbyEntities(myEntityId)
+		for i := 0; i < len(nearby); i++ {
+			// We need to check if this is an enemy entity (not a player or the event controller)
+			// In this game's context, enemies are NOT enemies of the controller
+			// and players ARE enemies of the controller (counterintuitive, I know)
+			if isEnemyOfEntity(myEntityId, nearby[i].id) {
+				// This is likely an enemy entity spawned by our event
+				showVfxAtPosition(nearby[i].id, "DeathSmoke", entityPosition(nearby[i].id))
+				killEntity(nearby[i].id)
+			}
+		}
+		
+		// Show victory effect
+		showVfxAtPosition(myEntityId, "LevelUp", entityPosition(myEntityId))
+		say(myEntityId, "Challenge complete! You have survived!")
+	}
+	
+	// Update progress periodically
+	if scriptVars["timeSinceProgressUpdate"] > 0.5 {
+		progress := scriptVars["eventTimer"] / scriptVars["challengeDuration"]
+		worldEventProgress(myEntityId, progress)
+		scriptVars["timeSinceProgressUpdate"] = 0.0
+	}
+	
+	// Wave-based spawning
+	secondsElapsed := scriptVars["eventTimer"]
+	
+	// Determine which wave we should be on
+	targetWave := 1
+	if secondsElapsed > 30.0 {
+		targetWave = 2
+	}
+	if secondsElapsed > 60.0 {
+		targetWave = 3
+	}
+	if secondsElapsed > 90.0 {
+		targetWave = 4
+	}
+	if secondsElapsed > 120.0 {
+		targetWave = 5
+	}
+	
+	// Check if we need to advance to a new wave
+	if targetWave > scriptVars["currentWave"] {
+		scriptVars["currentWave"] = targetWave
+		scriptVars["waveSpawned"] = false
+		scriptVars["nextWaveTime"] = 2.0  // Wait 2 seconds before spawning the new wave
+		
+		// Announce the new wave
+		announceWave(targetWave)
+	}
+	
+	// Spawn a new wave if needed
+	if !scriptVars["waveSpawned"] && scriptVars["nextWaveTime"] <= 0.0 {
+		// Get wave configuration based on current wave
+		normalCount := 3 + scriptVars["currentWave"]
+		eliteCount := (scriptVars["currentWave"] - 1) / 2  // 0, 0, 1, 1, 2
+		if eliteCount < 0 {
+			eliteCount = 0
+		}
+		
+		// Choose from different enemy types
+		normalTypes := ["assassin", "dualslicer", "bombbot", "stormhead", "mushroomdagger"]
+		eliteTypes := ["heavyslicer", "laserthumper", "summoner", "lumberinghulk"]
+		
+		// Spawn normal enemies
+		for i := 0; i < normalCount; i++ {
+			enemyIndex := rand.intn(len(normalTypes))
+			spawnEnemy(normalTypes[enemyIndex])
+		}
+		
+		// Spawn elite enemies
+		for i := 0; i < eliteCount; i++ {
+			enemyIndex := rand.intn(len(eliteTypes))
+			spawnEnemy(eliteTypes[enemyIndex])
+		}
+		
+		// If it's wave 5 (final wave), spawn a special mini-boss
+		if scriptVars["currentWave"] == 5 {
+			miniBoss := spawnEnemy("voidweaver")
+			
+			// Announce the mini-boss
+			say(myEntityId, "A powerful champion has joined the fray!")
+			
+			// Special effect for the mini-boss
+			showVfxAtPosition(miniBoss, "LevelUp", entityPosition(miniBoss))
+		}
+		
+		scriptVars["waveSpawned"] = true
+	}
+	
+	// Periodic spawns between waves
+	if scriptVars["lastNormalSpawnTime"] > 8.0 {
+		// Spawn 1-2 normal enemies
+		spawnCount := rand.intn(2) + 1
+		
+		// Choose from different enemy types
+		enemyTypes := ["assassin", "dualslicer", "bombbot", "stormhead", "mushroomdagger"]
+		
+		for i := 0; i < spawnCount; i++ {
+			enemyIndex := rand.intn(len(enemyTypes))
+			spawnEnemy(enemyTypes[enemyIndex])
+		}
+		
+		scriptVars["lastNormalSpawnTime"] = 0.0
+	}
+	
+	// Spawn elite enemies less frequently
+	if scriptVars["lastEliteSpawnTime"] > 30.0 && scriptVars["currentWave"] >= 2 {
+		// Spawn 1 elite enemy
+		eliteTypes := ["wraith", "heavyslicer", "laserthumper", "turtle"]
+		enemyIndex := rand.intn(len(eliteTypes))
+		spawnEnemy(eliteTypes[enemyIndex])
+		
+		// Announce the elite spawn
+		say(myEntityId, "A powerful foe approaches!")
+		
+		scriptVars["lastEliteSpawnTime"] = 0.0
+	}
+}
+
+// Check periodically for player failure, but only after giving enemies a chance to spawn
+if !scriptVars["eventComplete"] && scriptVars["eventActive"] && scriptVars["eventTimer"] > 5.0 {
+    // Only check failure every few seconds, not every frame
+    if is_undefined(scriptVars["failureCheckTimer"]) {
+        scriptVars["failureCheckTimer"] = 0.0
+    }
+    
+    scriptVars["failureCheckTimer"] += delta
+    
+    // Check for failure every 2 seconds
+    if scriptVars["failureCheckTimer"] >= 2.0 {
+        scriptVars["failureCheckTimer"] = 0.0
+        
+        // Check for nearby players within a larger radius
+        nearby := getNearbyEntities(myEntityId)
+        playerFound := false
+        
+        for i := 0; i < len(nearby); i++ {
+            if isEnemyOfEntity(myEntityId, nearby[i].id) {
+                playerFound = true
+                break
+            }
+        }
+        
+        if !playerFound {
+            say(myEntityId, "Challenge failed! Better luck next time.")
+            
+            // Clean up all remaining enemies
+            nearby := getNearbyEntities(myEntityId)
+            for i := 0; i < len(nearby); i++ {
+                // We need to check if this is an enemy entity (not a player or the event controller)
+                // In this game's context, enemies are NOT enemies of the controller
+                // and players ARE enemies of the controller (counterintuitive, I know)
+                if nearby[i].id != myEntityId && !isEnemyOfEntity(myEntityId, nearby[i].id) {
+                    // This is likely an enemy entity spawned by our event
+                    showVfxAtPosition(nearby[i].id, "DeathSmoke", entityPosition(nearby[i].id))
+                    killEntity(nearby[i].id)
+                }
+            }
+            
+            worldEventFailed(myEntityId)
+            scriptVars["eventComplete"] = true
+            scriptVars["eventActive"] = false
+        }
+    }
+}

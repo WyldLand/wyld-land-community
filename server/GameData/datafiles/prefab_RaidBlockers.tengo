@@ -1,0 +1,18 @@
+---mob_RaidBlocker---
+Prefab :: raidblocker
+Range Behavior :: Stationary
+Type :: Friendly
+
+---prefab_raidblocker---
+
+Components :: [[DungeonBlockerSouthSprite]] [[RaidBlockerCollider]] [[Monster]]
+
+---prefabcomponent_RaidBlockerCollider---
+
+Component :: Collider
+
+{
+    "layer": "Static",
+    "position": [0.39, -1.0],
+    "size": [3.0, 3.0]
+}

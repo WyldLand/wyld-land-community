@@ -1,0 +1,9 @@
+---item_82 Basic Headband---
+Type :: Equippable
+Slot :: Head
+Icon :: items_416
+Equip Index :: 0
+Meta :: player/head3
+Rarity :: Uncommon
+
+A simple headband that offers basic protection.

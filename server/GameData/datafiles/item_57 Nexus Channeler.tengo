@@ -1,0 +1,62 @@
+---item_57 Nexus Channeler---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Nexus Channeler]]
+Rarity :: Rare
+
+Awww, it's like the mama laser gave birth to a baby laser.
+
+---gundef_Nexus Channeler---
+Fire Speed :: 0.5
+Charge Time :: 0.5
+Lock Time :: 0.5
+Charge Slow :: 1.0
+Bullets In Chamber :: 8
+Reload Speed :: 1.5
+Sprite :: weapons_56
+Fire Event :: lasercannonc
+Reload Event :: lasercannonreload
+Charge Event :: chargelong
+Bullet Definition :: [[channeler]]
+Archetype :: Laser
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: SemiAuto
+Bullet Lifetime :: 1
+
+---bulletdef_channeler---
+sprite Invisible
+fire 0 relative 0
+	fire channelernarrow
+sprite Laser14
+color 4
+potency 0
+wait 5
+fire 230 relative 0
+	piercing 100
+sprite Invisible
+potency 60
+wait 1
+fire 230 relative 0
+	radius 0.6
+	piercing 100
+wait 6
+fire 230 relative 0
+	radius 0.6
+	piercing 100
+
+---bulletdef_channelernarrow---
+sprite Laser14 0.5
+color 5
+potency 0
+fire 230 relative 0
+	piercing 100
+sprite Invisible
+potency 57
+wait 1
+fire 230 relative 0
+	radius 0.3
+	piercing 100
+wait 6
+fire 230 relative 0
+	radius 0.3
+	piercing 100

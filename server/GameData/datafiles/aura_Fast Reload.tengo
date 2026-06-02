@@ -1,0 +1,12 @@
+---aura_Fast Reload---
+Type :: Buff
+Duration :: 4
+Icon ::
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:FastReload]]
+
+---script_FastReload_ReloadWeapon---
+if auraAbilityId == abilityId {
+    reloadTime = reloadTime * 0.5
+}

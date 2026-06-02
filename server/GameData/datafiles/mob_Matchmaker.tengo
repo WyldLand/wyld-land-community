@@ -1,0 +1,6 @@
+---mob_Matchmaker---
+Prefab :: matchmaker
+Range Behavior :: Stationary
+Bounding Box :: 0 0.5 1.0 1.0
+Type :: Friendly
+

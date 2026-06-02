@@ -1,0 +1,29 @@
+---aura_Deadly Accuracy---
+Type :: Buff
+Duration :: -1
+Icon ::
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:DeadlyAccuracy]]
+
+---spike_Deadly Accuracy---
+Slot :: Gun
+Auras :: [[Deadly Accuracy]]
+Rarity :: Rare
+Archetypes :: [[Pistol]] [[Revolver]] [[AssaultRifle]] [[LongRangeRifle]] [[Blaster]] [[SubmachineGun]]
+
+When you hit an opponent, sometimes you'll get the bullet returned to your gun instantly.
+
+---script_DeadlyAccuracy_DamageDealt---
+rand := import("rand")
+
+if is_undefined(scriptVars["lastFrameRefundedBullet"]) {
+    scriptVars["lastFrameRefundedBullet"] = 0
+}
+
+    //Check to make sure that the gun for this perk is actually the one that
+    //fired the bullet by verifying the ability IDs match.
+if auraAbilityId == abilityId && globalTick - scriptVars["lastFrameRefundedBullet"] > 15 && rand.float() < 0.1 {
+    addAmmoToClip(myEntityId, auraAbilityId, 1)
+    scriptVars["lastFrameRefundedBullet"] = globalTick
+}

@@ -1,0 +1,91 @@
+---mob_Lumbering Hulk---
+Prefab :: lumberinghulk
+Range Behavior :: Close Ranged
+Abilities :: [[Hulk Cleave]] [[Ground Pound]]
+Speed :: 150
+Type :: Elite
+
+---prefab_lumberinghulk---
+
+Components :: [[LumberingHulkSprite]] [[LumberingHulkCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_LumberingHulkCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+    "position": [0, 1.0],
+    "size": [1.5, 2.0]
+}
+
+---prefabcomponent_LumberingHulkSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.266,
+    "pivotY": 1.0,
+    "sprite": "darkforest2/lumberinghulk",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_sfxlumberinghulkAttack---
+
+Components :: [[SFXLumberingHulkAttack]]
+
+---prefabcomponent_SFXLumberingHulkAttack---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest2/lumberinghulkAttack.wav"],
+	"spatial": true
+}
+
+---ability_Hulk Cleave---
+Bullet Definition :: [[hulkcleave]]
+Cooldown :: 1.8
+VFX Cast :: trigger:Attack*
+Lock Time :: 0.75
+
+---bulletdef_hulkcleave---
+sprite Custom11
+color 2
+potency 150 
+nway speed:8 bullets:5 spread:60 angle:0 directionType:relative
+wait 5
+nway speed:6 bullets:3 spread:30 angle:0 directionType:relative bulletShift:2
+
+---ability_Ground Pound---
+Bullet Definition :: [[groundpound]]
+Cooldown :: 3.2
+Max Range :: 5.0
+
+---bulletdef_groundpound---
+sprite CirclePool 3
+potency 200
+fire 0 relative 0
+	aoeexplosion
+	radius 3
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vfx BombExplosion 5
+	wait 1
+	vfx ShakeSmall 5
+	vanish
+wait 5
+sprite Basic
+potency 75
+radial bullets:16 speed:6

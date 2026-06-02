@@ -1,0 +1,64 @@
+---item_999 Void Piercer---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Void Piercer]]
+Rarity :: Exotic
+Durability :: 5
+
+Charged shots create temporary weak points on enemies, increasing your damage against them
+
+Pierce the fabric of reality and exploit the vulnerabilities you create.
+
+---gundef_Void Piercer---
+Fire Speed :: 1.2
+Bullets In Chamber :: 6
+Reload Speed :: 2.5
+Sprite :: weapons_4
+Color :: Sangria
+Fire Event :: riflee
+Reload Event :: riflereload
+Bullet Definition :: [[voidpiercer]]
+Archetype :: LongRangeRifle
+Muzzle VFX :: Muzzle 0.65
+Fire Type :: SemiAuto
+Bullet Lifetime :: 1.5
+Innate Spikes :: [[Void Weakness]]
+
+---bulletdef_voidpiercer---
+sprite Rifle14
+color 5
+potency 200
+fire 55 relative -1 1
+	piercing 2
+
+---spike_Void Weakness---
+Auras :: [[Void Weakness]]
+
+Fully charged shots mark enemies with a void weak point, increasing your damage against them for a short duration.
+
+---aura_Void Weakness---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:VoidWeakness]]
+
+---script_VoidWeakness_DamageDealt---
+if abilityId == auraAbilityId {
+    addAuraToEntity(damageSenderId, "Void Weak Point", auraAbilityId, myEntityId)
+}
+
+---aura_Void Weak Point---
+Type :: Debuff
+Icon :: statusicons_28
+Duration :: 5.0
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:VoidWeakPoint]]
+
+---script_VoidWeakPoint_IncomingDamage---
+if damageSenderId == sourceEntityId {
+	log("ADDING DAMAGE FOR WEAK POINT")
+    additionalDamage = int(0.5 * float(damage))
+}

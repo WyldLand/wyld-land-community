@@ -1,0 +1,101 @@
+---aura_Pack Rat---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 99
+Time Per Tick :: 10.0
+Definitions :: [[AuraAffectStat/Pack Rat]]
+
+---auraaffectstat_Pack Rat---
+Stat :: InventorySlots
+Add :: 5
+
+---aura_Bank Rat---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 99
+Time Per Tick :: 10.0
+Definitions :: [[AuraAffectStat/Bank Rat]]
+
+---auraaffectstat_Bank Rat---
+Stat :: BankSlots
+Add :: 5
+
+---echonode_Pack Rat I---
+Auras :: [[Pack Rat]]
+Cost :: 100
+ID :: packrat1
+Icon :: ability0_74
+
+Gain an additional 5 Inventory Slots
+
+---echonode_Bank Rat I---
+Auras :: [[Bank Rat]]
+Cost :: 200
+ID :: bankrat1
+Icon :: ability0_31
+Prev Node :: packrat1
+
+Gain an additional 5 Bank Chest Slots
+
+---echonode_Pack Rat II---
+Auras :: [[Pack Rat]]
+Cost :: 400
+ID :: packrat2
+Icon :: ability0_74
+Prev Node :: bankrat1
+
+Gain an additional 5 Inventory Slots
+
+---echonode_Bank Rat II---
+Auras :: [[Bank Rat]]
+Cost :: 800
+ID :: bankrat2
+Icon :: ability0_31
+Prev Node :: packrat2
+
+Gain an additional 5 Bank Chest Slots
+
+---echonode_Pack Rat III---
+Auras :: [[Pack Rat]]
+Cost :: 1000
+ID :: packrat3
+Icon :: ability0_74
+Prev Node :: bankrat2
+
+Gain an additional 5 Inventory Slots
+
+---echonode_Bank Rat III---
+Auras :: [[Bank Rat]]
+Cost :: 1500
+ID :: bankrat3
+Icon :: ability0_31
+Prev Node :: packrat3
+
+Gain an additional 5 Bank Chest Slots
+
+---echonode_Soul Stash---
+Cost :: 2000
+ID :: soulstash
+Icon :: ability0_14
+Prev Node :: bankrat3
+Requires Activation :: true
+
+When you die, one random item from your inventory will be spared.
+
+---echonode_Pack Rat IV---
+Auras :: [[Pack Rat]]
+Cost :: 1500
+ID :: packrat4
+Icon :: ability0_74
+Prev Node :: bankrat3
+
+Gain an additional 5 Inventory Slots
+
+---echonode_Bank Rat IV---
+Auras :: [[Bank Rat]]
+Cost :: 1500
+ID :: bankrat4
+Icon :: ability0_31
+Prev Node :: packrat4
+
+Gain an additional 5 Bank Chest Slots

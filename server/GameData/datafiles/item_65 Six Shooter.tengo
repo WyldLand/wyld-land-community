@@ -1,0 +1,26 @@
+---item_65 Six Shooter---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Six Shooter]]
+Rarity :: Uncommon
+
+Six shots, rapid-fire. But takes a while to reload.
+
+---gundef_Six Shooter---
+Fire Speed :: 0.18
+Bullets In Chamber :: 6
+Reload Speed :: 2
+Sprite :: weapons_64
+Fire Event :: revolvera
+Reload Event :: revolverreload
+Bullet Definition :: [[sixshooter]]
+Archetype :: Handgun
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: SemiAuto
+Bullet Lifetime :: 1.0
+
+---bulletdef_sixshooter---
+sprite PlayerBullet
+potency 72
+fire 16 relative -0 0
+

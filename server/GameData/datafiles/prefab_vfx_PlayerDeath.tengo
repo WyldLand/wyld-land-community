@@ -1,0 +1,23 @@
+---prefab_PlayerDeath---
+
+Components :: [[PlayerDeathSprite]] [[PlayerDeathSound]]
+
+---prefabcomponent_PlayerDeathSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "vfx/PlayerDeath",
+    "play": "default"
+     
+}
+
+---prefabcomponent_PlayerDeathSound---
+
+Component :: Sound
+
+{
+    "sources": ["player/death.wav"]
+}

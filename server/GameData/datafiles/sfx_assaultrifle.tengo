@@ -1,0 +1,80 @@
+---prefab_sfxassaultriflea---
+
+Components :: [[SFXAssaultRifleA]]
+
+---prefabcomponent_SFXAssaultRifleA---
+
+Component :: Sound
+
+{
+    "sources": ["sfxassaultrifle/assaultriflea1.wav", "sfxassaultrifle/assaultriflea2.wav", "sfxassaultrifle/assaultriflea3.wav", "sfxassaultrifle/assaultriflea4.wav", "sfxassaultrifle/assaultriflea5.wav"],
+    "select": "random",
+    "randomPitch": 0.15,
+    "channel": "gfx"
+}
+
+---prefab_sfxassaultrifleb---
+
+Components :: [[SFXAssaultRifleB]]
+
+---prefabcomponent_SFXAssaultRifleB---
+
+Component :: Sound
+
+{
+    "sources": ["sfxassaultrifle/assaultrifleb1.wav", "sfxassaultrifle/assaultrifleb2.wav", "sfxassaultrifle/assaultrifleb3.wav"],
+    "select": "random",
+    "randomPitch": 0.15,
+    "channel": "gfx"
+}
+
+---prefab_sfxassaultriflec---
+
+Components :: [[SFXAssaultRifleC]]
+
+---prefabcomponent_SFXAssaultRifleC---
+
+Component :: Sound
+
+{
+    "sources": ["sfxassaultrifle/assaultriflec1.wav", "sfxassaultrifle/assaultriflec2.wav", "sfxassaultrifle/assaultriflec3.wav", "sfxassaultrifle/assaultriflec4.wav"],
+    "select": "random",
+    "randomPitch": 0.15,
+    "channel": "gfx"
+}
+
+---prefabcomponent_SFXAssaultRifleD---
+
+Component :: Sound
+
+{
+    "sources": ["sfxassaultrifle/assaultrifled1.wav", "sfxassaultrifle/assaultrifled2.wav", "sfxassaultrifle/assaultrifled3.wav", "sfxassaultrifle/assaultrifled4.wav"],
+    "select": "random",
+    "randomPitch": 0.15,
+    "channel": "gfx"
+}
+
+---prefabcomponent_SFXAssaultRifleE---
+
+Component :: Sound
+
+{
+    "sources": ["sfxassaultrifle/assaultriflee1.wav", "sfxassaultrifle/assaultriflee2.wav", "sfxassaultrifle/assaultriflee3.wav"],
+    "select": "all",
+    "delay": [0.0, 0.12, 0.25],
+    "randomPitch": 0.15,
+    "channel": "gfx"
+}
+
+---prefab_sfxassaultriflereload---
+
+Components :: [[SFXAssaultRifleReload]]
+
+---prefabcomponent_SFXAssaultRifleReload---
+
+Component :: Sound
+
+{
+    "sources": ["sfxassaultrifle/assaultriflereload.wav"],
+    "channel": "gfx"
+}

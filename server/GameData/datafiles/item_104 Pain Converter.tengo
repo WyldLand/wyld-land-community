@@ -1,0 +1,90 @@
+---item_104 Pain Converter---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Pain Converter]]
+Rarity :: Exotic
+Durability :: 5
+
+Absorbs 35% of damage taken. Last shot in clip unleashes stored pain.
+
+Your suffering becomes their doom.
+
+---gundef_Pain Converter---
+Fire Speed :: 0.3
+Bullets In Chamber :: 8
+Reload Speed :: 1.6
+Sprite :: weapons_97
+Fire Event :: shotguna
+Reload Event :: shotgunreload
+Bullet Definition :: [[painconverter]]
+Archetype :: Shotgun
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: SemiAuto
+Bullet Lifetime :: 0.8
+Innate Spikes :: [[Pain Converter]]
+
+---bulletdef_painconverter---
+sprite Lance10 0.7
+color 4
+potency 22
+nway speed:14 bullets:3 spread:10 directionType:relative angle:0 bulletShift:1
+wait 1
+nway speed:14 bullets:3 spread:10 directionType:relative angle:0 bulletShift:1
+
+---spike_Pain Converter---
+Auras :: [[Pain Converter]]
+
+---aura_Pain Converter---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:PainConverter]]
+
+---script_PainConverter_IncomingDamage---
+if is_undefined(scriptVars["storedDamage"]) {
+    scriptVars["storedDamage"] = 0
+}
+
+maxHealth := float(getPoints(myEntityId, "hp", "max"))
+maxStoredDamage := int(maxHealth * 2.0)
+
+// Only absorb if we haven't hit the cap
+if scriptVars["storedDamage"] < maxStoredDamage {
+    // Calculate how much we can still store
+    remainingStorage := maxStoredDamage - scriptVars["storedDamage"]
+    
+    // Absorb 35% of incoming damage, but don't exceed cap
+    absorbAmount := int(float(damage) * 0.35)
+    if absorbAmount > remainingStorage {
+        absorbAmount = remainingStorage
+    }
+    additionalDamage = -1 * absorbAmount
+    scriptVars["storedDamage"] += absorbAmount
+}
+
+---script_PainConverter_FireWeapon---
+if abilityId == auraAbilityId {
+	scriptVars["lastShotBonus"] = 0
+
+    if is_undefined(scriptVars["storedDamage"]) {
+        scriptVars["storedDamage"] = 0
+    }
+    
+    // If this is the last bullet in the clip, prepare the damage bonus
+    if gunState["BulletsFired"] == gunState["BulletsInChamber"] - 1 {
+        scriptVars["lastShotBonus"] = scriptVars["storedDamage"] / 6
+        scriptVars["storedDamage"] = 0
+    }
+}
+
+---script_PainConverter_OutgoingDamage---
+if abilityId == auraAbilityId {
+    if !is_undefined(scriptVars["lastShotBonus"]) && scriptVars["lastShotBonus"] > 0 {
+        additionalDamage = scriptVars["lastShotBonus"]
+    }
+}
+
+---script_PainConverter_ReloadWeapon---
+scriptVars["storedDamage"] = 0

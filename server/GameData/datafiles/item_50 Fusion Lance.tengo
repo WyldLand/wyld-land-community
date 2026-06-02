@@ -1,0 +1,35 @@
+---item_50 Fusion Lance---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Fusion Lance]]
+Rarity :: Uncommon
+
+I'm CHARGED UP to be here!
+
+---gundef_Fusion Lance---
+Fire Speed :: 0.4
+Charge Time :: 0.4
+Bullets In Chamber :: 12
+Reload Speed :: 1.5
+Sprite :: weapons_50
+Fire Event :: fusionriflea
+Reload Event :: fusionriflereload
+Charge Event :: chargeshort
+Bullet Definition :: [[fusionlance]]
+Archetype :: Shotgun
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: FullAuto
+Bullet Lifetime :: 0.4
+
+---bulletdef_fusionlance---
+sprite Lance14
+color 4
+potency 18
+fire 40 relative -1 1
+fire 40 relative -1 1
+wait 1
+fire 40 relative -1 1
+fire 40 relative -1 1
+wait 1
+fire 40 relative -1 1
+

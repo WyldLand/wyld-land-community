@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <script type="text/javascript">
+            const params = new URLSearchParams(location.search);
+            let signInToken = params.get("authtoken");
+            const channel = new BroadcastChannel("auth");
+            channel.postMessage(signInToken);
+            setTimeout(function() {
+                window.close();
+            }, 100);
+            setInterval(function() {
+                channel.postMessage(signInToken);
+            }, 1000);
+        </script>
+    </head>
+    <body>
+        Please close this window to continue.
+    </body>
+</html>

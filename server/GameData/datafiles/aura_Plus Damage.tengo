@@ -1,0 +1,7 @@
+---aura_Plus Damage---
+Type :: Buff
+Duration :: 4
+Icon :: statusicons_2
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Plus Minor Damage]]

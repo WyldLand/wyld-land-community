@@ -1,0 +1,58 @@
+---item_28 Neverending Story---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Neverending Story]]
+Rarity :: Exotic
+Durability :: 3
+
+Bullets pierce targets
+Targets hit spawn additional bullets
+
+It just keeps going and going...
+
+---gundef_Neverending Story---
+Fire Speed :: 0.08
+Bullets In Chamber :: 30
+Reload Speed :: 1.5
+Sprite :: weapons_98
+Fire Event :: smgd
+Reload Event :: assaultriflereload
+Bullet Definition :: [[neverendingstory]]
+Archetype :: Automatic
+Fire Type :: FullAuto
+Innate Spikes :: [[Neverending Story]]
+Muzzle VFX :: Muzzle 0.45
+
+---bulletdef_neverendingstory---
+sprite Custom9
+color 4
+potency 24
+fire 16 relative -4 4
+	piercing 2
+
+---spike_Neverending Story---
+Auras :: [[Neverending Story]]
+Icon ::
+
+---aura_Neverending Story---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:NeverendingStory]]
+
+---ability_Neverending Story Secondfire---
+Bullet Definition :: [[neverendingstory]]
+Cast Time :: 0.0
+Lock Time :: 0.0
+Max Range :: 100.0
+
+---script_NeverendingStory_DamageDealt---
+
+
+if abilityId == auraAbilityId {
+	bulletDirection := randomPositionInCurrentRoom(myEntityId, 2.0)
+	useAbilityAtPosition(myEntityId, "Neverending Story Secondfire", entityPosition(damageSenderId), bulletDirection)
+}
+

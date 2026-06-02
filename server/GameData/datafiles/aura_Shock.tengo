@@ -1,0 +1,44 @@
+---aura_Shock---
+Type :: Debuff
+Icon :: statusicons_6
+Duration :: 5.0
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Shock]]
+
+---aura_Disruptor I Shock---
+Type :: Debuff
+Icon :: statusicons_29
+Duration :: 2.0
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Shock]]
+
+---aura_Disruptor II Shock---
+Type :: Debuff
+Icon :: statusicons_29
+Duration :: 4.0
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Shock]]
+
+---aura_Disruptor III Shock---
+Type :: Debuff
+Icon :: statusicons_29
+Duration :: 6.0
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Shock]]
+
+---aura_Disruptor IV Shock---
+Type :: Debuff
+Icon :: statusicons_29
+Duration :: 8.0
+Max Stacks :: 1
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Shock]]
+

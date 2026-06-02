@@ -1,0 +1,26 @@
+---item_58 Marksman Rifle---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Marksman Rifle]]
+Rarity :: Uncommon
+
+Some people think you're a coward for standing at the back. I think you're just smart.
+
+---gundef_Marksman Rifle---
+Fire Speed :: 1
+Bullets In Chamber :: 6
+Reload Speed :: 1.6
+Sprite :: weapons_57
+Fire Event :: riflea
+Reload Event :: riflereload
+Bullet Definition :: [[marksman]]
+Archetype :: LongRangeRifle
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: SemiAuto
+Bullet Lifetime :: 1
+
+---bulletdef_marksman---
+sprite Rifle14
+potency 220
+fire 40 relative -0 0
+

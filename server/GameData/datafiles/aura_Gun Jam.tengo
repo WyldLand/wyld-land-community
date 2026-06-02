@@ -1,0 +1,6 @@
+---aura_Gun Jam---
+Type :: Debuff
+Duration :: 1.0
+Icon :: statusicons_11
+Max Stacks :: 1
+Time Per Tick :: 1.0

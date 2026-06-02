@@ -1,0 +1,15 @@
+---prefabcomponent_Monster---
+
+Component :: Monster
+
+---prefabcomponent_PlayerAvatar---
+
+Component :: PlayerAvatar
+
+---prefabcomponent_Nameplate---
+
+Component :: Nameplate
+
+---prefabcomponent_Indicator---
+
+Component :: Indicator

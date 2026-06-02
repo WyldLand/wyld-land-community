@@ -1,0 +1,6 @@
+---mob_Masked Man---
+Prefab :: maskedman
+Range Behavior :: Stationary
+Bounding Box :: 0.0 0.375 0.75 0.75
+Type :: Friendly
+

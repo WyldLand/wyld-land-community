@@ -1,0 +1,28 @@
+---item_75 Boomstick---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Boomstick]]
+Rarity :: Uncommon
+
+Boom!
+
+---gundef_Boomstick---
+Fire Speed :: 0.5
+Bullets In Chamber :: 8
+Reload Speed :: 2
+Sprite :: weapons_73
+Fire Event :: shotgunc
+Reload Event :: shotgunreload
+Bullet Definition :: [[boomstick]]
+Archetype :: Shotgun
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: SemiAuto
+Bullet Lifetime :: 0.8
+
+---bulletdef_boomstick---
+sprite Custom10
+potency 36
+nway speed:14 bullets:2 spread:5 directionType:relative angle:0 bulletShift:1
+wait 1
+nway speed:14 bullets:2 spread:5 directionType:relative angle:0 bulletShift:1
+

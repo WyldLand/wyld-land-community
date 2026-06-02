@@ -1,0 +1,36 @@
+---aura_Exploding Enemies---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:ExplodingEnemies]]
+
+---ability_Exploding Enemies---
+Bullet Definition :: [[explodingdeath]]
+Max Range :: 100.0
+
+---bulletdef_explodingdeath---
+sprite CirclePool 5
+potency 150
+fire 0 relative 0
+	aoeexplosion
+	radius 5
+	timedFill 20
+	damageEvery 20
+	vfx BombExplosion 5
+	wait 1
+	vanish
+
+---script_ExplodingEnemies_IncomingDamage---
+rand := import("rand")
+
+if is_undefined(scriptVars["didExplode"]) {
+	scriptVars["didExplode"] = false
+}
+
+if getPoints(myEntityId, "hp", "current") - damage <= 0 && !scriptVars["didExplode"] {
+	if rand.float() < 0.50 {
+		scriptVars["didExplode"] = true
+		useAbilityAtPosition(myEntityId, "Exploding Enemies", entityPosition(myEntityId))
+	}
+}

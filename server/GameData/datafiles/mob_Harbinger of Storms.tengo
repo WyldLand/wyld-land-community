@@ -1,0 +1,2303 @@
+---mobdefinition_Harbinger of Storms---
+ID :: stormharbinger
+Prefab :: stormharbinger
+Range Behavior :: [[Ignore Targets]]
+Abilities :: [[Harbinger Thunderstorm I]] [[Harbinger Stormdash I]] [[Harbinger Stormspark]] [[Harbinger Stormspiral I]] [[Harbinger Stormroar I]] [[Harbinger Stormrage Top]] [[Harbinger Stormrage Left]] [[Harbinger Stormrage Right]] [[Harbinger Stormrage Bot]] [[Harbinger Thunderstorm II]] [[Harbinger Stormslash]] [[Harbinger Stormmight Top Left]] [[Harbinger Stormmight Top Right]]  [[Harbinger Stormmight Bottom Right]]  [[Harbinger Stormmight Bottom Left]] [[Harbinger Stormspiral II]] [[Harbinger Thunderstorm III]]
+Bounding Box :: 0.0 1.5 2.0 3.0
+Type :: Boss
+Options :: manualpathing
+Speed :: 5000
+Loot :: [[Harbinger]]
+
+---prefab_stormharbinger---
+
+Components :: [[HarbingerSprite]] [[HarbingerCollider]] [[Monster]] [[Nameplate]] [[BGMHarbinger]]
+
+---prefabcomponent_HarbingerCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+	"position": [0.0, 0.0],
+    "size": [1.0, 3.5]
+}
+
+---prefabcomponent_HarbingerSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.75,
+    "sprite": "stormharbinger/stormharbinger",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---loottable_Harbinger---
+[[103 Gravity Collapse]] @ 2.0
+[[31 Rampage]] @ 2.0
+[[328 Mini Harbinger]] @ 15.0
+
+---prefabcomponent_BGMHarbinger---
+
+Component :: Sound
+{
+	"sources": ["hunter/bgm1.wav"],
+	"channel": "bgm",
+	"loop": true,
+	"select": "random",
+	"priority": 2,
+	"combatOnly": true,
+	"notification": "Designed by AntHoneyRose"
+}
+
+---ability_Harbinger Thunderstorm I---
+Bullet Definition :: [[harbingerthunderstormi]]
+Cast Time :: 0.25
+VFX Cast :: trigger:slash*
+VFX Charging :: trigger:Appear*
+
+---bulletdef_harbingerthunderstormi---
+sprite CirclePool 3
+fire 0 relative 0
+	aoeexplosion
+	radius 0
+	timedFill 10
+	damageEvery 11
+	wait 10
+	fire harbingerthunderstormipool
+	vanish	
+sprite CirclePool
+radial bullets:6 spread:90 speed:4 angle:0 directionType:absolute
+	aoeexplosion
+	radius 0
+	timedFill 30
+	damageEvery 31
+	wait 30
+	fire harbingerthunderstormibullets
+	vanish
+wait 15
+radial bullets:6 spread:90 speed:4 angle:30 directionType:absolute
+	aoeexplosion
+	radius 0
+	timedFill 30
+	damageEvery 31
+	wait 30
+	fire harbingerthunderstormibullets
+	vanish
+wait 15
+radial bullets:6 spread:90 speed:4 angle:60 directionType:absolute
+	aoeexplosion
+	radius 0
+	timedFill 30
+	damageEvery 31
+	wait 30
+	fire harbingerthunderstormibullets
+	vanish
+
+---bulletdef_harbingerthunderstormibullets---
+sprite CirclePool
+radial bullets:1 speed:4 angle:30 directionType:relative
+	aoeexplosion
+	radius 0
+	timedFill 30
+	damageEvery 31
+	wait 30
+	fire harbingerthunderstormibullets
+	vanish
+sprite Basic
+color 1
+radial bullets:6 spread:60 speed:2 angle:0 directionType:absolute
+	lifetime 30
+	
+---bulletdef_harbingerthunderstormipool---
+sprite CirclePool 3
+radial bullets:1 angle:0 directionType:relative
+	aoedot
+	radius 2.5
+	damageEvery 5
+	vfx ShockPool
+	wait 80
+	vanish
+
+---ability_Harbinger Stormdash I---
+Bullet Definition :: [[harbingerstormdashi]]
+VFX Charging :: trigger:slash*
+Cast Time :: 0.25
+
+---bulletdef_harbingerstormdashi---
+sprite OrangePool
+repeat bullets:3 speed:25 angle:-15 angleChange:15 directionType:relative delay:1
+	wait 10
+	speed 0
+	aoeexplosion
+	radius 0
+	timedFill 10
+	damageEvery 11
+	wait 10
+	fire harbingerstormdashipool
+	vanish
+wait 10
+sprite Lance10
+color 1
+fire 25 relative -16
+	wait 10
+	vanish
+fire 25 relative -1
+	wait 10
+	vanish
+fire 25 relative 14
+	wait 10
+	vanish
+fire 25 relative 16
+	wait 10
+	vanish
+fire 25 relative 1
+	wait 10
+	vanish
+fire 25 relative -14
+	wait 10
+	vanish
+color 0
+wait 2
+fire 25 relative -15
+	wait 9
+	vanish
+fire 25 relative 0
+	wait 9
+	vanish
+fire 25 relative 15
+	wait 9
+	vanish
+
+---bulletdef_harbingerstormdashipool---
+sprite CirclePool 2
+fire 0 relative 0
+	fire harbingerstormdashipoolbullets
+	aoedot
+	radius 2
+	damageEvery 3
+	vfx ShockPool
+	wait 20
+	vanish
+	
+---bulletdef_harbingerstormdashipoolbullets---
+color 1
+repeat bullets:8 speed:6 angle:0 angleChange:45 directionType:absolute
+	wait 1
+	direction relative -30
+	wait 1
+	direction relative -25
+	wait 1
+	direction relative -20
+	wait 1
+	direction relative -15
+
+---ability_Harbinger Stormspark---
+Bullet Definition :: [[harbingerstormspark]]
+VFX Charging :: trigger:Appear*
+VFX Cast :: trigger:strike*
+Cast Time :: 0.5
+
+---bulletdef_harbingerstormspark---
+sprite WhitePool
+radial bullets:2 speed:12 directionType:absolute
+	aoeexplosion
+	radius 0
+	wait 5
+	speed 2
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire harbingerstormsparkbulletsx
+	wait 1
+	vanish
+radial bullets:2 speed:12 angle:90 directionType:absolute
+	aoeexplosion
+	radius 0
+	wait 5
+	speed 2
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire harbingerstormsparkbullets
+	wait 1
+	vanish
+
+---bulletdef_harbingerstormsparkbullets---
+sprite WhitePool
+radial bullets:1 speed:12 angle:75 directionType:relative
+	aoeexplosion
+	radius 0
+	wait 5
+	speed 2
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire harbingerstormsparkbulletsx
+	vanish
+sprite Custom12
+color 0
+radial bullets:4 speed:4
+
+---bulletdef_harbingerstormsparkbulletsx---
+sprite WhitePool
+radial bullets:1 speed:12 angle:75 directionType:relative
+	aoeexplosion
+	radius 0
+	wait 5
+	speed 2
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire harbingerstormsparkbullets
+	vanish
+sprite Custom12
+color 0
+radial bullets:4 speed:4 angle:45 directionType:absolute
+
+---ability_Harbinger Stormspiral I---
+Bullet Definition :: [[harbingerstormspirali]]
+VFX Cast :: trigger:strike*
+
+---bulletdef_harbingerstormspirali---
+sprite OrangePool
+radial bullets:1 speed:25 angle:0 directionType:absolute
+	wait 10
+	vanish
+sprite Invisible
+potency 0
+repeat bullets:18 speed:25 angle:0 angleChange:20 directionType:absolute delay:6
+	fire harbingerstormspiralifirework
+	wait 10
+	fire harbingerstormspiralipoolwarn
+
+---bulletdef_harbingerstormspiralifirework---
+wait 10
+sprite Lance10
+color 1
+fire 25 relative -1
+	wait 10
+	vanish
+fire 25 relative 0
+	wait 10
+	vanish
+wait 1
+color 0
+fire 25 relative 1
+	wait 9
+	vanish
+
+---bulletdef_harbingerstormspiralipoolwarn---
+sprite CirclePool 2
+fire 0 relative 0
+	aoeexplosion
+	radius 0
+	timedFill 10
+	damageEvery 11
+	wait 10
+	fire harbingerstormspiralipool
+	vanish
+
+---bulletdef_harbingerstormspiralipool---
+sprite CirclePool 2
+fire 0 relative 0
+	fire harbingerstormspiralipoolbullets
+	aoedot
+	radius 2
+	damageEvery 3
+	vfx ShockPool
+	wait 20
+	vanish
+	
+---bulletdef_harbingerstormspiralipoolbullets---
+color 1
+repeat bullets:8 speed:6 angle:0 angleChange:45 directionType:absolute
+	wait 1
+	direction relative -30
+	wait 1
+	direction relative -25
+	wait 1
+	direction relative -20
+	wait 1
+	direction relative -15
+
+---ability_Harbinger Stormroar I---
+Bullet Definition :: [[harbingerstormroari]]
+VFX Cast :: trigger:storm*
+
+---bulletdef_harbingerstormroari---
+sprite Custom10
+color 1
+radial bullets:12 speed:6 angle:0 directionType:absolute
+	lifetime 200
+	wait 4
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+wait 5
+radial bullets:12 speed:6 angle:10 directionType:absolute
+	lifetime 200
+	wait 4
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+wait 5
+radial bullets:12 speed:6 angle:20 directionType:absolute
+	lifetime 200
+	wait 4
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+wait 5
+
+---ability_Harbinger Stormrage Top---
+Bullet Definition :: [[harbingerstormragetop]]
+VFX Cast :: trigger:storm*
+Cast Time :: 0.25
+
+---bulletdef_harbingerstormragetop---
+sprite Custom11
+color 0
+nway bullets:5 speed:5 spread:75 angle:180 directionType:absolute delay:1
+	lifetime 120
+nway bullets:7 speed:6 spread:90 angle:180 directionType:absolute
+	lifetime 120
+wait 2
+nway bullets:12 speed:6 spread:90 angle:180 directionType:absolute
+	lifetime 120
+
+---ability_Harbinger Stormrage Left---
+Bullet Definition :: [[harbingerstormrageleft]]
+VFX Cast :: trigger:storm*
+Cast Time :: 0.25
+
+---bulletdef_harbingerstormrageleft---
+sprite Custom11
+color 0
+nway bullets:5 speed:5 spread:75 angle:90 directionType:absolute delay:1
+	lifetime 120
+nway bullets:7 speed:6 spread:90 angle:90 directionType:absolute
+	lifetime 120
+wait 2
+nway bullets:12 speed:6 spread:90 angle:90 directionType:absolute
+	lifetime 120
+
+---ability_Harbinger Stormrage Right---
+Bullet Definition :: [[harbingerstormrageright]]
+VFX Cast :: trigger:storm*
+Cast Time :: 0.25
+
+---bulletdef_harbingerstormrageright---
+sprite Custom11
+color 0
+nway bullets:5 speed:5 spread:75 angle:270 directionType:absolute delay:1
+	lifetime 120
+nway bullets:7 speed:6 spread:90 angle:270 directionType:absolute
+	lifetime 120
+wait 2
+nway bullets:12 speed:6 spread:90 angle:270 directionType:absolute
+	lifetime 120
+
+---ability_Harbinger Stormrage Bot---
+Bullet Definition :: [[harbingerstormragebot]]
+VFX Cast :: trigger:vanish*
+Cast Time :: 0.25
+
+---bulletdef_harbingerstormragebot---
+sprite Custom11
+color 0
+nway bullets:5 speed:5 spread:75 angle:0 directionType:absolute delay:1
+	lifetime 120
+nway bullets:7 speed:6 spread:90 angle:0 directionType:absolute
+	lifetime 120
+wait 2
+nway bullets:12 speed:6 spread:90 angle:0 directionType:absolute
+	lifetime 120
+
+---ability_Harbinger Thunderstorm II---
+Bullet Definition :: [[harbingerthunderstormii]]
+VFX Cast :: trigger:Appear*
+Cast Time :: 0.25
+
+---bulletdef_harbingerthunderstormii---
+sprite CirclePool 3
+fire 0 relative 0
+	aoeexplosion
+	radius 0
+	timedFill 10
+	damageEvery 11
+	wait 10
+	fire harbingerthunderstormiipool
+	vanish	
+sprite CirclePool
+radial bullets:5 speed:2 angle:0 directionType:absolute
+	aoeexplosion
+	radius 0
+	timedFill 30
+	damageEvery 31
+	wait 30
+	fire harbingerthunderstormiibullets
+	vanish
+wait 10
+radial bullets:5 speed:2 angle:30 directionType:absolute
+	aoeexplosion
+	radius 0
+	timedFill 30
+	damageEvery 31
+	wait 30
+	fire harbingerthunderstormiibullets
+	vanish
+wait 10
+radial bullets:5 speed:2 angle:60 directionType:absolute
+	aoeexplosion
+	radius 0
+	timedFill 30
+	damageEvery 31
+	wait 30
+	fire harbingerthunderstormiibullets
+	vanish
+wait 10
+radial bullets:5 speed:2 angle:90 directionType:absolute
+	aoeexplosion
+	radius 0
+	timedFill 30
+	damageEvery 31
+	wait 30
+	fire harbingerthunderstormiibullets
+	vanish
+wait 10
+radial bullets:5 speed:2 angle:120 directionType:absolute
+	aoeexplosion
+	radius 0
+	timedFill 30
+	damageEvery 31
+	wait 30
+	fire harbingerthunderstormiibullets
+	vanish
+
+---bulletdef_harbingerthunderstormiibullets---
+sprite CirclePool
+radial bullets:1 speed:2 angle:15 directionType:relative
+	aoeexplosion
+	radius 0
+	timedFill 30
+	damageEvery 31
+	wait 30
+	fire harbingerthunderstormiibullets
+	vanish
+sprite Basic
+color 3
+radial bullets:5 speed:2 angle:0 directionType:absolute
+	lifetime 30
+
+---bulletdef_harbingerthunderstormiipool---
+sprite CirclePool 3
+radial bullets:1 angle:0 directionType:relative
+	aoedot
+	radius 2.5
+	damageEvery 5
+	vfx ShockPool
+	wait 20
+	vanish
+
+---ability_Harbinger Stormslash---
+Bullet Definition :: [[harbingerstormslash]]
+VFX Cast :: trigger:strike*
+Cast Time :: 0.25
+
+---bulletdef_harbingerstormslash---
+sprite Custom10
+color 0
+radial bullets:6 speed:6 angle:0 directionType:absolute delay:1
+	lifetime 160
+	wait 2
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+wait 3
+radial bullets:6 speed:6 angle:15 directionType:absolute delay:1
+	lifetime 160
+	wait 2
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+wait 3
+radial bullets:6 speed:6 angle:30 directionType:absolute delay:1
+	lifetime 160
+	wait 2
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+wait 3
+radial bullets:6 speed:6 angle:45 directionType:absolute delay:1
+	lifetime 160
+	wait 2
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+
+---ability_Harbinger Stormmight Top Left---
+Bullet Definition :: [[harbingerstormmighttopleft]]
+VFX Cast :: trigger:strike*
+Cast Time :: 0.25
+
+---bulletdef_harbingerstormmighttopleft---
+sprite OrangePool
+repeat bullets:2 speed:28 angle:85 angleChange:90 directionType:absolute
+	fire harbingerstormmightfireworki
+	wait 10
+	speed 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire harbingerstormmightpool
+	vanish
+repeat bullets:3 speed:21 angle:110 angleChange:90 directionType:absolute
+	fire harbingerstormmightfireworkii
+	wait 10
+	speed 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire harbingerstormmightpool
+	vanish
+repeat bullets:1 speed:36 angle:135 angleChange:90 directionType:absolute
+	fire harbingerstormmightfireworkiii
+	wait 10
+	speed 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire harbingerstormmightpool
+	vanish
+
+---bulletdef_harbingerstormmightfireworki---
+wait 20
+sprite Lance10
+color 3
+fire 28 relative -1
+	radius 0
+	wait 10
+	vanish
+fire 28 relative 1
+	radius 0
+	wait 10
+	vanish
+wait 2
+color 0
+fire 28 relative 0
+	wait 9
+	vanish
+
+---bulletdef_harbingerstormmightfireworkii---
+wait 20
+sprite Lance10
+color 3
+fire 21 relative -1
+	wait 10
+	vanish
+fire 21 relative 1
+	wait 10
+	vanish
+wait 2
+color 0
+fire 21 relative 0
+	wait 9
+	vanish
+
+---bulletdef_harbingerstormmightfireworkiii---
+wait 20
+sprite Lance10
+color 3
+fire 36 relative -1
+	wait 10
+	vanish
+fire 36 relative 1
+	wait 10
+	vanish
+wait 2
+color 0
+fire 36 relative 0
+	wait 9
+	vanish
+
+---bulletdef_harbingerstormmightpool---
+sprite CirclePool
+fire 0 relative 0
+	fire harbingerstormmightpoolbullets
+	aoedot
+	radius 2
+	damageEvery 3
+	sfx ShockPool
+	wait 20
+	vanish
+	
+---bulletdef_harbingerstormmightpoolbullets---
+color 3
+radial bullets:8 speed:2 directionType:absolute
+	lifetime 180
+	wait 1
+	direction relative -30
+	speed +1
+	wait 1
+	direction relative -25
+	speed +1
+	wait 1
+	direction relative -20
+	wait 1
+	direction relative -15
+	wait 1
+	direction relative -10
+	wait 1
+	direction relative -5
+wait 3
+radial bullets:8 speed:2 angle:30 directionType:absolute
+	lifetime 180
+	wait 1
+	direction relative -30
+	speed +1
+	wait 1
+	direction relative -25
+	speed +1
+	wait 1
+	direction relative -20
+	wait 1
+	direction relative -15
+	wait 1
+	direction relative -10
+	wait 1
+	direction relative -5
+wait 3
+radial bullets:8 speed:2 angle:60 directionType:absolute
+	lifetime 180
+	wait 1
+	direction relative -30
+	speed +1
+	wait 1
+	direction relative -25
+	speed +1
+	wait 1
+	direction relative -20
+	wait 1
+	direction relative -15
+	wait 1
+	direction relative -10
+	wait 1
+	direction relative -5
+
+---ability_Harbinger Stormmight Top Right---
+Bullet Definition :: [[harbingerstormmighttopright]]
+VFX Cast :: trigger:slash*
+Cast Time :: 0.25
+
+---bulletdef_harbingerstormmighttopright---
+sprite OrangePool
+repeat bullets:2 speed:28 angle:175 angleChange:90 directionType:absolute
+	fire harbingerstormmightfireworki
+	wait 10
+	speed 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire harbingerstormmightpool
+	vanish
+repeat bullets:3 speed:21 angle:200 angleChange:90 directionType:absolute
+	fire harbingerstormmightfireworkii
+	wait 10
+	speed 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire harbingerstormmightpool
+	vanish
+repeat bullets:1 speed:36 angle:225 angleChange:90 directionType:absolute
+	fire harbingerstormmightfireworkiii
+	wait 10
+	speed 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire harbingerstormmightpool
+	vanish
+
+---ability_Harbinger Stormmight Bottom Right---
+Bullet Definition :: [[harbingerstormmightbotright]]
+VFX Cast :: trigger:slash*
+Cast Time :: 0.25
+
+---bulletdef_harbingerstormmightbotright---
+sprite OrangePool
+repeat bullets:2 speed:28 angle:265 angleChange:90 directionType:absolute
+	fire harbingerstormmightfireworki
+	wait 10
+	speed 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire harbingerstormmightpool
+	vanish
+repeat bullets:3 speed:21 angle:290 angleChange:90 directionType:absolute
+	fire harbingerstormmightfireworkii
+	wait 10
+	speed 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire harbingerstormmightpool
+	vanish
+repeat bullets:1 speed:36 angle:315 angleChange:90 directionType:absolute
+	fire harbingerstormmightfireworkiii
+	wait 10
+	speed 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire harbingerstormmightpool
+	vanish
+
+---ability_Harbinger Stormmight Bottom Left---
+Bullet Definition :: [[harbingerstormmightbotleft]]
+VFX Cast :: trigger:slash*
+Cast Time :: 0.25
+
+---bulletdef_harbingerstormmightbotleft---
+sprite OrangePool
+repeat bullets:2 speed:28 angle:355 angleChange:90 directionType:absolute
+	fire harbingerstormmightfireworki
+	wait 10
+	speed 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire harbingerstormmightpool
+	vanish
+repeat bullets:3 speed:21 angle:20 angleChange:90 directionType:absolute
+	fire harbingerstormmightfireworkii
+	wait 10
+	speed 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire harbingerstormmightpool
+	vanish
+repeat bullets:1 speed:36 angle:45 angleChange:90 directionType:absolute
+	fire harbingerstormmightfireworkiii
+	wait 10
+	speed 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire harbingerstormmightpool
+	vanish
+
+---ability_Harbinger Stormflee---
+Bullet Definition :: [[harbingerstormflee]]
+Max Range :: 100.0
+
+---bulletdef_harbingerstormflee---
+sprite RectPool 5.15 5.15
+radial bullets:1
+	aoeexplosion
+	radius 0
+	timedFill 40
+	damageEvery 41
+	wait 40
+	fire harbingerstormfleepool
+	vanish
+
+---bulletdef_harbingerstormfleepool---
+sprite RectPool 5.15 5.15
+radial bullets:1
+	lifetime 180
+	aoedot
+	radius 5.0 5.0
+	damageEvery 5
+	vfx ShockPool
+
+---ability_Harbinger Stormspiral II---
+Bullet Definition :: [[harbingerstormspiralii]]
+
+---bulletdef_harbingerstormspiralii---
+sprite OrangePool
+radial bullets:2 speed:20 angle:0 directionType:absolute
+	wait 10
+	vanish
+sprite Invisible
+potency 0
+repeat bullets:36 speed:20 angle:0 angleChange:-10 directionType:absolute delay:6
+	fire harbingerstormspiraliifirework
+	wait 10
+	fire harbingerstormspiraliipoolwarn
+	vanish
+
+---bulletdef_harbingerstormspiraliifirework---
+wait 10
+sprite Lance10
+color 1
+fire 20 relative -1
+	wait 10
+	vanish
+fire 20 relative 0
+	wait 10
+	vanish
+wait 2
+color 0
+fire 20 relative 1
+	wait 9
+	vanish
+
+---bulletdef_harbingerstormspiraliipoolwarn---
+sprite CirclePool 2
+fire 0 relative 0
+	aoeexplosion
+	radius 0
+	timedFill 10
+	damageEvery 11
+	wait 10
+	fire harbingerstormspiraliipool
+	vanish
+
+---bulletdef_harbingerstormspiraliipool---
+sprite CirclePool 2
+fire 0 relative 0
+	fire harbingerstormspiraliipoolbullets
+	aoedot
+	radius 2
+	damageEvery 3
+	vfx ShockPool
+	wait 20
+	vanish
+	
+---bulletdef_harbingerstormspiraliipoolbullets---
+color 3
+repeat bullets:8 speed:5 angle:0 angleChange:45 directionType:absolute
+	wait 1
+	direction relative -30
+	wait 1
+	direction relative -25
+	wait 1
+	direction relative -20
+	wait 1
+	direction relative -15
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 100
+	vanish
+
+---ability_Harbinger Stormspiral II Double---
+Bullet Definition :: [[harbingerstormspiraliidouble]]
+
+---bulletdef_harbingerstormspiraliidouble---
+sprite Invisible
+potency 0
+repeat bullets:36 speed:20 angle:180 angleChange:-10 directionType:absolute delay:6
+	fire harbingerstormspiraliifirework
+	wait 10
+	fire harbingerstormspiraliipoolwarn
+
+---ability_Harbinger Thunderstorm III---
+Bullet Definition :: [[harbingerthunderstormiii]]
+
+---bulletdef_harbingerthunderstormiii---
+sprite WhitePool
+radial bullets:4 speed:25 angle:0 directionType:absolute
+	lifetime 100
+	wait 5
+	speed 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire harbingerthunderstormiiibullets
+	vanish
+wait 60
+radial bullets:4 speed:25 angle:45 directionType:absolute
+	lifetime 100
+	wait 5
+	speed 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire harbingerthunderstormiiibullets
+	vanish
+wait 60
+radial bullets:4 speed:25 angle:30 directionType:absolute
+	lifetime 100
+	wait 5
+	speed 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire harbingerthunderstormiiibullets
+	vanish
+wait 60
+radial bullets:4 speed:25 angle:60 directionType:absolute
+	lifetime 100
+	wait 5
+	speed 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire harbingerthunderstormiiibullets
+	vanish
+wait 100
+radial bullets:6 speed:25 angle:0 directionType:absolute
+	lifetime 100
+	wait 5
+	speed 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire harbingerthunderstormiiibullets
+	vanish
+wait 100
+radial bullets:6 speed:25 angle:30 directionType:absolute
+	lifetime 100
+	wait 5
+	speed 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire harbingerthunderstormiiibullets
+	vanish
+wait 100
+radial bullets:6 speed:25 angle:60 directionType:absolute
+	lifetime 100
+	wait 5
+	speed 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire harbingerthunderstormiiibullets
+	vanish
+wait 60
+radial bullets:8 speed:25 angle:30 directionType:absolute
+	lifetime 100
+	wait 5
+	speed 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire harbingerthunderstormiiibullets
+	vanish
+wait 100
+radial bullets:8 speed:25 angle:60 directionType:absolute
+	lifetime 100
+	wait 5
+	speed 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire harbingerthunderstormiiibullets
+	vanish
+wait 100
+radial bullets:8 speed:25 angle:0 directionType:absolute
+	lifetime 100
+	wait 5
+	speed 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire harbingerthunderstormiiibullets
+	vanish
+wait 100
+repeat bullets:16 speed:25 angle:0 angleChange:20 directionType:absolute delay:5
+	lifetime 100
+	wait 5
+	speed 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire harbingerthunderstormiiibullets
+	vanish
+
+---bulletdef_harbingerthunderstormiiibullets---
+sprite Custom10
+color 1
+radial bullets:6 speed:5 angle:0 directionType:absolute
+	lifetime 60
+
+---ability_Harbinger Bolts I---
+Bullet Definition :: [[harbingerboltsi]]
+Max Range :: 250.0
+
+---bulletdef_harbingerboltsi---
+sprite OrangePool 0.5
+fire 0 relative 0
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire harbingerboltsibullet
+	vanish
+	
+---bulletdef_harbingerboltsibullet---
+sprite Lance14
+color 2
+potency 175
+fire 8 relative 0
+	lifetime 120
+	
+---ability_Harbinger Bolts II---
+Bullet Definition :: [[harbingerboltsii]]
+Max Range :: 250.0
+
+---bulletdef_harbingerboltsii---
+sprite OrangePool 0.5
+fire 0 relative 0
+	aoeexplosion
+	radius 0
+	timedFill 15
+	damageEvery 16
+	wait 15
+	fire harbingerboltsiibullet
+	vanish
+
+---bulletdef_harbingerboltsiibullet---
+sprite Lance14
+color 2
+potency 175
+fire 10 relative 0
+	lifetime 120
+
+---ability_Harbinger Bolts III---
+Bullet Definition :: [[harbingerboltsiii]]
+Max Range :: 250.0
+
+---bulletdef_harbingerboltsiii---
+sprite OrangePool 0.5
+fire 0 relative 0
+	aoeexplosion
+	radius 0
+	timedFill 10
+	damageEvery 11
+	wait 10
+	fire harbingerboltsiiibullet
+	vanish
+	
+---bulletdef_harbingerboltsiiibullet---
+sprite Lance14
+color 2
+potency 175
+fire 12 relative 0
+	lifetime 120
+
+---ability_Harbinger Room Limiter I Vertical Warning---
+Bullet Definition :: [[harbingerroomlimiteriverwarn]]
+Max Range :: 100.0
+
+---bulletdef_harbingerroomlimiteriverwarn---
+sprite RectPool 4.0 25.0
+radial bullets:1
+	aoeexplosion
+	radius 0
+	timedFill 60
+	damageEvery 61
+	wait 60
+	vanish
+	
+---ability_Harbinger Room Limiter I Horizontal Warning---
+Bullet Definition :: [[harbingerroomlimiterihorwarn]]
+Max Range :: 100.0
+
+---bulletdef_harbingerroomlimiterihorwarn---
+sprite RectPool 25.0 4.0
+radial bullets:1
+	aoeexplosion
+	radius 0
+	timedFill 60
+	damageEvery 61
+	wait 60
+	vanish
+	
+---ability_Harbinger Room Limiter I Diamond Warning---
+Bullet Definition :: [[harbingerroomlimiteridiamondwarn]]
+Max Range :: 100.0
+
+---bulletdef_harbingerroomlimiteridiamondwarn---
+sprite CirclePool 10.0
+radial bullets:1
+	aoeexplosion
+	radius 0
+	timedFill 30
+	damageEvery 31
+	wait 30
+	vanish
+
+---ability_Harbinger Room Limiter II Vertical Warning---
+Bullet Definition :: [[harbingerroomlimiteriiverwarn]]
+Max Range :: 100.0
+
+---bulletdef_harbingerroomlimiteriiverwarn---
+sprite RectPool 4.0 25.0
+radial bullets:1
+	aoeexplosion
+	radius 0
+	timedFill 30
+	damageEvery 31
+	wait 30
+	vanish
+
+---ability_Harbinger Room Limiter II Horizontal Warning---
+Bullet Definition :: [[harbingerroomlimiteriihorwarn]]
+Max Range :: 100.0
+
+---bulletdef_harbingerroomlimiteriihorwarn---
+sprite RectPool 25.0 4.0
+radial bullets:1
+	aoeexplosion
+	radius 0
+	timedFill 30
+	damageEvery 31
+	wait 30
+	vanish
+
+---ability_Harbinger Room Limiter II Diamond Warning---
+Bullet Definition :: [[harbingerroomlimiteriidiamondwarn]]
+Max Range :: 100.0
+
+---bulletdef_harbingerroomlimiteriidiamondwarn---
+sprite CirclePool 9.25
+radial bullets:1
+	aoeexplosion
+	radius 0
+	timedFill 30
+	damageEvery 31
+	wait 30
+	vanish
+
+---ability_Harbinger Room Limiter I Separator Warning---
+Bullet Definition :: [[harbingerroomlimiteriseparatorwarn]]
+Max Range :: 100.0
+
+---bulletdef_harbingerroomlimiteriseparatorwarn---
+sprite RectPool
+radial bullets:1
+	aoeexplosion
+	radius 0
+	timedFill 30
+	damageEvery 31
+	wait 30
+	fire harbingerroomlimiteriseparator
+	vanish
+
+---ability_Harbinger Room Limiter I Vertical---
+Bullet Definition :: [[harbingerroomlimiteriver]]
+Max Range :: 100.0
+
+---bulletdef_harbingerroomlimiteriver---
+sprite RectPool 4.0 25.0
+radial bullets:1
+	lifetime 220
+	aoeexplosion
+	radius 3.85 25.0
+	damageEvery 5
+	
+---ability_Harbinger Room Limiter I Horizontal---
+Bullet Definition :: [[harbingerroomlimiterihor]]
+Max Range :: 100.0
+
+---bulletdef_harbingerroomlimiterihor---
+sprite RectPool 25.0 4.0
+radial bullets:1
+	lifetime 220
+	aoeexplosion
+	radius 25.0 3.85
+	damageEvery 5
+	
+---ability_Harbinger Room Limiter I Diamond---
+Bullet Definition :: [[harbingerroomlimiteridiamond]]
+Max Range :: 100.0
+
+---bulletdef_harbingerroomlimiteridiamond---
+sprite CirclePool 10.0
+radial bullets:1
+	lifetime 220
+	aoedot
+	radius 9.85
+	damageEvery 5
+	
+---ability_Harbinger Room Limiter II Diamond---
+Bullet Definition :: [[harbingerroomlimiteriidiamond]]
+Max Range :: 100.0
+
+---bulletdef_harbingerroomlimiteriidiamond---
+sprite CirclePool 9.27
+radial bullets:1
+	lifetime 220
+	aoedot
+	radius 9.10
+	damageEvery 5
+	
+---ability_Harbinger Room Limiter I Separator---
+Bullet Definition :: [[harbingerroomlimiteriseparator]]
+Max Range :: 100.0
+
+---bulletdef_harbingerroomlimiteriseparator---
+sprite RectPool
+radial bullets:1
+	lifetime 220
+	aoedot
+	radius 0
+	timedFill 30
+	damageEvery 15
+	wait 30
+	fire harbingerroomlimiteriseparator
+	vanish
+sprite Basic 0.75
+potency 185
+radial bullets:16 speed:5
+	radius 0.007
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	direction relative 180
+	speed +1
+	wait 1
+	speed +1
+	wait 1
+	speed +1
+	wait 1
+	speed +1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	vanish
+wait 1
+radial bullets:16 speed:5
+	radius 0.007
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	direction relative 180
+	speed +1
+	wait 1
+	speed +1
+	wait 1
+	speed +1
+	wait 1
+	speed +1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	vanish
+wait 1
+radial bullets:16 speed:5
+	radius 0.007
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	direction relative 180
+	speed +1
+	wait 1
+	speed +1
+	wait 1
+	speed +1
+	wait 1
+	speed +1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	vanish
+
+---aura_Harbinger Max HP---
+Type :: Buff
+Duration :: -1
+Max stacks :: 1 
+Time Per Tick :: 1.0
+Definitions :: [[auraaffectstat/harbingermaxhp]]
+
+---auraaffectstat_harbingermaxhp---
+Stat :: Vitality
+Boost :: 75.0
+
+---aura_Invulnerability---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1 
+Time Per Tick :: 1.0
+Icon :: statusicons_36
+
+---layout_layout2---
+
+---script_stormharbinger_Monster---
+//Main variables
+resetMainVars := func() {
+	scriptVars["phase"] = 1
+	scriptVars["phaseTransition"] = true
+	scriptVars["phaseTransitionTimer"] = 0.0
+	scriptVars["phaseTransitionMaxTimer"] = 3.0
+}
+//General variables
+resetVars := func() {
+	scriptVars["phaseAttack"] = 1
+	scriptVars["attackCount"] = 1
+//Room Limiter variables
+	scriptVars["roomLimiterMaxTimer"] = 3.0
+	scriptVars["roomLimiterTimer"] = scriptVars["roomLimiterMaxTimer"]
+	scriptVars["roomLimiterWarningTimer"] = 0.0
+//Phase 1 variables
+	scriptVars["thunderstormMaxTimer"] = 3.25
+	scriptVars["thunderstormTimer"] = 0.0
+	scriptVars["stormdashMaxTimer"] = 3.25
+	scriptVars["stormdashTimer"] = 0.0
+//Phase 3 variables
+	//scriptVars["stormspark"] = 0
+	scriptVars["stormsparkMaxTimer"] = 1.0
+	scriptVars["stormsparkTimer"] = 0.0
+	scriptVars["stormspiralMaxTimer"] = 3.0
+	scriptVars["stormspiralTimer"] = 0.0
+	scriptVars["stormroarMaxTimer"] = 20.0
+	scriptVars["stormroarTimer"] = 0.0
+//Phase 4 variables
+	scriptVars["stormrageStart"] = 1
+	scriptVars["stormrageMaxTimer"] = 2.0
+	scriptVars["stormrageTimer"] = 0.0
+	//scriptVars["thunderstormMaxTimer"] = 6.0
+	//scriptVars["thunderstormTimer"] = 0.0
+//Phase 5 variables
+	scriptVars["stormslashMaxTimer"] = 2.0
+	scriptVars["stormslashTimer"] = 0.0
+	scriptVars["stormmightMaxTimer"] = 5.0
+	scriptVars["stormmightTimer"] = 0.0
+	scriptVars["stormfleeMaxTimer"] = 10.0
+	scriptVars["stormfleeTimer"] = scriptVars["stormfleeMaxTimer"]
+	scriptVars["direction"] = 1
+	scriptVars["directionMaxTimer"] = 10.0
+	scriptVars["directionTimer"] = scriptVars["directionMaxTimer"]
+//Phase 6 variables
+	//scriptVars["stormspiralMaxTimer"] = 3.0
+	//scriptVars["stormspiralTimer"] = 0.0
+	scriptVars["finalStormStart"] = false
+	scriptVars["finalStormCounter"] = 5
+	//scriptVars["thunderstormMaxTimer"] = 3.0
+	//scriptVars["thunderstormTimer"] = 0.0
+	scriptVars["survivalMaxTimer"] = 50.0
+	scriptVars["survivalTimer"] = 0.0
+//Misc variables
+	scriptVars["boltTimer"] = 0.0
+	scriptVars["boltMaxTimer"] = 3.0
+	scriptVars["focusEntityId"] = 0
+	scriptVars["dialogueTrigger"] = false
+	scriptVars["randomTargetTimer"] = 0.0
+	scriptVars["hurtBoss"] = false
+	scriptVars["childEntityId"] = 0
+}
+
+//Visible and Invisible variables
+resetInvisibleVars := func() {
+	scriptVars["vanished"] = false
+	scriptVars["vanishing"] = false
+	scriptVars["invisibleTimer"] = 0.0
+	scriptVars["invisibleMaxTimer"] = 0.5
+	scriptVars["vanishTimer"] = 0.0
+	scriptVars["vanishMaxTimer"] = 0.5
+}
+
+//Constantly launch bolts towards players
+doBolts := func() {
+	if scriptVars["phase"] < 5 {
+		useAbilityAtPosition(myEntityId, "Harbinger Bolts I", randomPositionNearby(myEntityId, [5.0, 15.0, 0.0], 2.0))
+	} else if scriptVars["phase"] == 5 {
+		currentNearby := getNearbyEntities(myEntityId)
+		for i := 0; i < len(currentNearby) && i <= 4; i++ {
+			if isEnemyOfEntity(myEntityId, currentNearby[i].id) {
+				if distToEntity(myEntityId, currentNearby[i].id) <= 9.0 {
+					log("BOLT I")
+					useAbilityAtPosition(myEntityId, "Harbinger Bolts I", randomPositionNearby(targetEntityId, [5.0, 10.0, 0.0], 2.0))
+				} else if distToEntity(myEntityId, currentNearby[i].id) > 9.0 && distToEntity(myEntityId, currentNearby[i].id) <= 17.0 {
+					log("BOLT II")
+					useAbilityAtPosition(myEntityId, "Harbinger Bolts II", randomPositionNearby(targetEntityId, [5.0, 10.0, 0.0], 2.0))
+				} else if distToEntity(myEntityId, currentNearby[i].id) > 17.0 {
+					log("BOLT III")
+					useAbilityAtPosition(myEntityId, "Harbinger Bolts III", randomPositionNearby(targetEntityId, [5.0, 10.0, 0.0], 2.0))
+				}
+			}
+		}
+	}
+}
+//Room Limiter Warning Spawner
+doWallWarnings := func() {
+	if scriptVars["phase"] == 1 {
+		useAbilityAtPosition(myEntityId, "Harbinger Room Limiter I Vertical Warning", positionInCurrentRoom(myEntityId, [5.7,21.0,0.0]))
+		useAbilityAtPosition(myEntityId, "Harbinger Room Limiter I Vertical Warning", positionInCurrentRoom(myEntityId, [36.3,21.0,0.0]))
+		useAbilityAtPosition(myEntityId, "Harbinger Room Limiter I Horizontal Warning", positionInCurrentRoom(myEntityId, [21.0,5.7,0.0]))
+		useAbilityAtPosition(myEntityId, "Harbinger Room Limiter I Horizontal Warning", positionInCurrentRoom(myEntityId, [21.0,36.3,0.0]))
+	} else {
+		useAbilityAtPosition(myEntityId, "Harbinger Room Limiter II Vertical Warning", positionInCurrentRoom(myEntityId, [5.7,21.0,0.0]))
+		useAbilityAtPosition(myEntityId, "Harbinger Room Limiter II Vertical Warning", positionInCurrentRoom(myEntityId, [36.3,21.0,0.0]))
+		useAbilityAtPosition(myEntityId, "Harbinger Room Limiter II Horizontal Warning", positionInCurrentRoom(myEntityId, [21.0,5.7,0.0]))
+		useAbilityAtPosition(myEntityId, "Harbinger Room Limiter II Horizontal Warning", positionInCurrentRoom(myEntityId, [21.0,36.3,0.0]))
+		if scriptVars["phase"] == 3 || scriptVars["phase"] == 4 || scriptVars["phase"] == 6 {
+			useAbilityAtPosition(myEntityId, "Harbinger Room Limiter I Diamond Warning", positionInCurrentRoom(myEntityId, [8.7,8.7,0.0]))
+			useAbilityAtPosition(myEntityId, "Harbinger Room Limiter I Diamond Warning", positionInCurrentRoom(myEntityId, [33.3,33.3,0.0]))
+			useAbilityAtPosition(myEntityId, "Harbinger Room Limiter I Diamond Warning", positionInCurrentRoom(myEntityId, [33.3,8.7,0.0]))
+			useAbilityAtPosition(myEntityId, "Harbinger Room Limiter I Diamond Warning", positionInCurrentRoom(myEntityId, [8.7,33.3,0.0]))
+		} else if scriptVars["phase"] == 5 {
+			useAbilityAtPosition(myEntityId, "Harbinger Room Limiter II Diamond Warning", positionInCurrentRoom(myEntityId, [21.0,21.0,0.0]))
+			useAbilityAtPosition(myEntityId, "Harbinger Room Limiter I Separator Warning", positionInCurrentRoom(myEntityId, [10.7,21.0,0.0]))
+			useAbilityAtPosition(myEntityId, "Harbinger Room Limiter I Separator Warning", positionInCurrentRoom(myEntityId, [31.3,21.0,0.0]))
+			useAbilityAtPosition(myEntityId, "Harbinger Room Limiter I Separator Warning", positionInCurrentRoom(myEntityId, [21.0,10.7,0.0]))
+			useAbilityAtPosition(myEntityId, "Harbinger Room Limiter I Separator Warning", positionInCurrentRoom(myEntityId, [21.0,31.3,0.0]))
+		}
+		scriptVars["roomLimiterMaxTimer"] = 1.5
+	}
+}
+//Room Limiter Respawn Trigger
+doWalls := func() {
+	useAbilityAtPosition(myEntityId, "Harbinger Room Limiter I Vertical", positionInCurrentRoom(myEntityId, [5.7,21.0,0.0]))
+	useAbilityAtPosition(myEntityId, "Harbinger Room Limiter I Vertical", positionInCurrentRoom(myEntityId, [36.3,21.0,0.0]))
+	useAbilityAtPosition(myEntityId, "Harbinger Room Limiter I Horizontal", positionInCurrentRoom(myEntityId, [21.0,5.7,0.0]))
+	useAbilityAtPosition(myEntityId, "Harbinger Room Limiter I Horizontal", positionInCurrentRoom(myEntityId, [21.0,36.3,0.0]))
+	if scriptVars["phase"] == 3 || scriptVars["phase"] == 4 || scriptVars["phase"] == 6 {
+		useAbilityAtPosition(myEntityId, "Harbinger Room Limiter I Diamond", positionInCurrentRoom(myEntityId, [8.7,8.7,0.0]))
+		useAbilityAtPosition(myEntityId, "Harbinger Room Limiter I Diamond", positionInCurrentRoom(myEntityId, [33.3,33.3,0.0]))
+		useAbilityAtPosition(myEntityId, "Harbinger Room Limiter I Diamond", positionInCurrentRoom(myEntityId, [33.3,8.7,0.0]))
+		useAbilityAtPosition(myEntityId, "Harbinger Room Limiter I Diamond", positionInCurrentRoom(myEntityId, [8.7,33.3,0.0]))
+	} else if scriptVars["phase"] == 5 {
+		useAbilityAtPosition(myEntityId, "Harbinger Room Limiter II Vertical", positionInCurrentRoom(myEntityId, [5.7,21.0,0.0]))
+		useAbilityAtPosition(myEntityId, "Harbinger Room Limiter II Vertical", positionInCurrentRoom(myEntityId, [36.3,21.0,0.0]))
+		useAbilityAtPosition(myEntityId, "Harbinger Room Limiter II Horizontal", positionInCurrentRoom(myEntityId, [21.0,5.7,0.0]))
+		useAbilityAtPosition(myEntityId, "Harbinger Room Limiter II Horizontal", positionInCurrentRoom(myEntityId, [21.0,36.3,0.0]))
+		useAbilityAtPosition(myEntityId, "Harbinger Room Limiter II Diamond", positionInCurrentRoom(myEntityId, [21.0,21.0,0.0]))
+	}
+	scriptVars["roomLimiterTimer"] = 0.0
+	if scriptVars["roomLimiterMaxTimer"] != 10.0 {
+		scriptVars["roomLimiterMaxTimer"] = 10.0
+	}
+}
+//Dialogue Handler
+dialoguePrompt := func()  {
+	if scriptVars["phase"] == 1 {
+		say(myEntityId, "... The storm is coming.")
+    } else if scriptVars["phase"] == 2 {
+		say(myEntityId, "Feel the presence of its strongest shadow.")
+    } else if scriptVars["phase"] == 3 {
+		say(myEntityId, "Hear its roar, be consumed by its domain.")
+    } else if scriptVars["phase"] == 4 {
+		say(myEntityId, "Learn its rage. Or it shall tear through it all.")
+	} else if scriptVars["phase"] == 5 {
+		say(myEntityId, "Fleeing is futile. Fight it with your might or you shall meet your demise.")
+	} else if scriptVars["phase"] == 6 {
+		if !isDead {
+			say(myEntityId, "Witness its eye and you shall see the sunlight.")
+		} else {
+			say(myEntityId, "The storm has come to an end. May it await for your presence once again.")
+			clearBulletsForEntity(myEntityId)
+		}
+	}
+}
+
+//Main
+if !isDead && targetEntityId != 0 {
+	
+	//Constants
+	currentHealth := getPoints(myEntityId, "hp", "current")
+	maxHealth := getPoints(myEntityId, "hp", "max")
+	targetEntityPos := entityGroundTargetPosition(targetEntityId)
+	roomCenter := positionInCurrentRoom(myEntityId, [21.0,21.0,0.0])
+	diamondTop := positionInCurrentRoom(myEntityId, [21.0,5.7,0.0])
+	diamondLeft := positionInCurrentRoom(myEntityId, [5.7,21.0,0.0])
+	diamondRight := positionInCurrentRoom(myEntityId, [36.7,21.0,0.0])
+	diamondBot := positionInCurrentRoom(myEntityId, [21.0,36.7,0.0])
+	diamondTopLeft := positionInCurrentRoom(myEntityId, [15.2,16.7,0.0])
+	diamondTopRight := positionInCurrentRoom(myEntityId, [26.8,16.7,0.0])
+	diamondBotRight := positionInCurrentRoom(myEntityId, [26.8,28.2,0.0])
+	diamondBotLeft := positionInCurrentRoom(myEntityId, [15.2,28.2,0.0])
+	
+	//Phase handler
+	if is_undefined(scriptVars["phase"]) {
+		log("INITIALIZE")
+		resetMainVars()
+		resetVars()
+		resetInvisibleVars()
+		doWallWarnings()
+		addAuraToEntity(myEntityId, "Harbinger Max HP", 0, myEntityId)
+		addHitPoints(myEntityId, 5000000000)
+		log("health:" + currentHealth + "/" + maxHealth)
+		scriptVars["dialogueTrigger"] = true
+		triggerAnimation(myEntityId, "Appear")
+	}
+	if currentHealth < maxHealth * 0.8 && scriptVars["phase"] == 1 || currentHealth < maxHealth * 0.7 && scriptVars["phase"] == 2 || currentHealth < maxHealth * 0.5 && scriptVars["phase"] == 3 || currentHealth < maxHealth * 0.3 && scriptVars["phase"] == 4 || currentHealth < maxHealth * 0.1 && scriptVars["phase"] == 5 {
+		resetVars()
+		scriptVars["dialogueTrigger"] = true
+		scriptVars["phase"] += 1
+		scriptVars["phaseTransition"] = true
+		log("health:" + currentHealth + "/" + maxHealth)
+		triggerAnimation(myEntityId, "Appear")
+	}
+	
+	//Check if entity is visible. If visible proceed to vanish after X time
+	if scriptVars["vanishing"] ==  true {
+		if scriptVars["vanishTimer"] < scriptVars["vanishMaxTimer"]{
+			scriptVars["vanishTimer"] += delta
+		} else {
+			triggerAnimation(myEntityId, "Vanish")
+			setCollisionLayer(myEntityId, CollisionLayerDynamic)
+			//log("SUCCESFUL VANISH")
+			scriptVars["vanishing"] = false
+			scriptVars["vanishTimer"] = 0.0
+			scriptVars["vanished"] = true
+		}
+	}
+	//Check if entity is invisible. If invisible proceed to appear after X time
+	if scriptVars["vanished"] == true && scriptVars["phase"] !=  2 {
+		if scriptVars["invisibleTimer"] < scriptVars["invisibleMaxTimer"] {
+			scriptVars["invisibleTimer"] += delta
+		} else {
+			triggerAnimation(myEntityId, "Appear")
+			setCollisionLayer(myEntityId, CollisionLayerMonster)
+			//log("SUCCESFUL APPEAR")
+			scriptVars["vanished"] = false
+			scriptVars["invisibleTimer"] = 0.0
+		}
+	}
+	
+	//Phase Transition Handler
+	if scriptVars["phaseTransition"] == true {
+		if scriptVars["phaseTransitionTimer"] < scriptVars["phaseTransitionMaxTimer"] {
+			if scriptVars["phase"] != 1 {
+				clearBulletsForEntity(myEntityId)
+				scriptVars["roomLimiterTimer"] = 0.0
+			} 
+			if scriptVars["phase"] != 2 {
+				clearBulletsForEntity(scriptVars["childEntityId"])
+			}
+			resetInvisibleVars()
+			//triggerAnimation(myEntityId, "Idle")
+			addAuraToEntity(myEntityId, "Invulnerability", 0, myEntityId)
+			setCollisionLayer(myEntityId, CollisionLayerDynamic)
+			scriptVars["phaseTransitionTimer"] += delta
+			changeAttackBehaviour(myEntityId, "Ignore Targets")
+			setTargetPosition(myEntityId, roomCenter)
+			if scriptVars["phase"] > 2 {
+				scriptVars["boltMaxTimer"] = 2.0
+			}
+			if scriptVars["phase"] == 4 {
+				scriptVars["thunderstormMaxTimer"] = 6.0
+			} else if scriptVars["phase"] == 6 {
+				scriptVars["stormspiralMaxTimer"] = 3.0
+				scriptVars["thunderstormMaxTimer"] = 3.0
+			}
+		} else {
+			dispelAuraOnEntity(myEntityId, "Invulnerability")
+			setCollisionLayer(myEntityId, CollisionLayerMonster)
+			scriptVars["phaseTransitionTimer"] = 0.0
+			if scriptVars["dialogueTrigger"] == true {
+				dialoguePrompt()
+				scriptVars["dialogueTrigger"] = false
+			}
+			
+			if scriptVars["phase"] != 1 {
+				doWallWarnings()
+			}
+			
+			if scriptVars["phase"] == 1 {
+				scriptVars["thunderstormTimer"] = scriptVars["thunderstormMaxTimer"]
+			} else if scriptVars["phase"] == 2 {
+				showVfxAtPosition(myEntityId, "SpawnEnemy", roomCenter)
+				scriptVars["childEntityId"] = summonEntity("championshadowstorm", roomCenter, monsterLevel(myEntityId), true, {parentEntityId: myEntityId, parentMaxHealth: maxHealth})
+				scriptVars["vanishMaxTimer"] = 0.25
+				scriptVars["vanishing"] = true
+			} else if scriptVars["phase"] == 3 {
+				scriptVars["stormsparkTimer"] = scriptVars["stormsparkMaxTimer"]
+			} else if scriptVars["phase"] == 4 {
+				scriptVars["stormrageTimer"] = scriptVars["stormrageMaxTimer"] 
+			} else if scriptVars["phase"] == 5 {
+				changeAttackBehaviour(myEntityId, "Ignore Targets")
+				setTargetPosition(myEntityId, diamondTopLeft)
+				scriptVars["stormslashTimer"] = scriptVars["stormslashMaxTimer"]
+			} else if scriptVars["phase"] == 6 {
+				scriptVars["stormspiralTimer"] = scriptVars["stormspiralMaxTimer"] 
+			}
+			log("phase:" + scriptVars["phase"])
+			scriptVars["phaseTransition"] = false
+			
+		}
+	//Phase Attack Handler
+	} else if scriptVars["phaseTransition"] == false {
+		//Room Limiter Respawn
+		scriptVars["roomLimiterTimer"] += delta
+		if scriptVars["roomLimiterTimer"] >= scriptVars["roomLimiterMaxTimer"]{
+			doWalls()
+			scriptVars["roomLimiterTimer"] = 0.0
+		}
+		if scriptVars["boltTimer"] > scriptVars["boltMaxTimer"] {
+			doBolts()
+			scriptVars["boltTimer"] = 0.0
+		}
+		
+		//Increase timers
+		scriptVars["boltTimer"] += delta
+		//Phase 1 timers
+		scriptVars["thunderstormTimer"] += delta
+		scriptVars["stormdashTimer"] += delta
+		//Phase 3 timers
+		scriptVars["stormsparkTimer"] += delta
+		scriptVars["stormspiralTimer"] += delta
+		scriptVars["stormroarTimer"] += delta
+		//Phase 4 timers
+		scriptVars["stormrageTimer"] += delta
+		//scriptVars["thunderstormTimer"] += delta
+		//Phase 5 timers
+		scriptVars["stormmightTimer"] += delta
+		scriptVars["stormslashTimer"] += delta
+		scriptVars["stormfleeTimer"] += delta
+		scriptVars["directionTimer"] += delta
+		//Phase 6 timers
+		//scriptVars["thunderstormTimer"] += delta
+		//scriptVars["stormspiralTimer"] += delta
+	
+		if scriptVars["phase"] == 1 {
+			//Thunderstorm Attack
+			if scriptVars["thunderstormTimer"] > scriptVars["thunderstormMaxTimer"] && scriptVars["phaseAttack"] == 1 {
+				//log("THUNDERSTORM")
+				setPosition(myEntityId, roomCenter)
+				changeAttackBehaviour(myEntityId, "Stationary")
+				useAbilityAtTarget(myEntityId, "Harbinger Thunderstorm I", targetEntityId, 2.0)
+				scriptVars["thunderstormTimer"] = 0.0
+				scriptVars["vanishMaxTimer"] = 2.25
+				scriptVars["vanishing"] = true
+				scriptVars["phaseAttack"] = 2
+			//Stormdash Attack
+			} else if scriptVars["stormdashTimer"] > scriptVars["stormdashMaxTimer"] && scriptVars["phaseAttack"] == 2 {
+				//log("STORMDASH")
+				if scriptVars["attackCount"] <= 3 {
+				//log("attackCount:" + scriptVars["attackCount"])
+					if distToEntity(myEntityId, closestEnemyEntityId(myEntityId)) < 5.5 {
+						setPosition(myEntityId, randomPositionInCurrentRoom(myEntityId, 12.0))
+					} else {
+						setPosition(myEntityId, targetEntityPos)
+					}
+					changeAttackBehaviour(myEntityId, "Stationary")
+					useAbilityAtTarget(myEntityId, "Harbinger Stormdash I", targetEntityId, 2.0)
+					scriptVars["stormdashMaxTimer"] = 1.5
+					scriptVars["vanishMaxTimer"] = 1.0
+					scriptVars["vanishing"] = true
+					scriptVars["attackCount"] += 1
+				} else {
+				//log("phaseAttack:" + scriptVars["phaseAttack"])
+					triggerAnimation(myEntityId, "Vanish")
+					scriptVars["phaseAttack"] = 1
+					scriptVars["attackCount"] = 1
+					scriptVars["stormdashMaxTimer"] = 3.0
+					scriptVars["vanishMaxTimer"] = 0.5
+					scriptVars["vanished"] = true
+				}
+				scriptVars["stormdashTimer"] = 0.0
+			}
+		} else if scriptVars["phase"] == 2 {
+			if isEntityDead(scriptVars["childEntityId"]) && scriptVars["hurtBoss"] == false {
+				//log("SELF DAMAGE CHECK")
+				attackEntity(myEntityId, myEntityId, maxHealth/10, 0)
+				scriptVars["hurtBoss"] = true
+			}
+		} else if scriptVars["phase"] == 3 {
+			//stormspark Attack
+			if scriptVars["phaseAttack"] == 1 {
+				if scriptVars["stormsparkTimer"] > scriptVars["stormsparkMaxTimer"] {
+				//log("STORMSPARK")
+				useAbilityAtTarget(myEntityId, "Harbinger Stormspark", targetEntityId, 2.0)
+				scriptVars["stormsparkTimer"] = 0.0
+				scriptVars["stormspiralTimer"] = 0.0
+				scriptVars["phaseAttack"] = 2
+				}
+			//stormspiral Attack
+			} else {
+				if scriptVars["stormspiralTimer"] > scriptVars["stormspiralMaxTimer"] {
+					//log("STORMSPIRAL")
+					useAbilityAtTarget(myEntityId, "Harbinger Stormspiral I", targetEntityId, 1.0)
+					scriptVars["stormspiralTimer"] = 0.0
+					scriptVars["stormspiralMaxTimer"] = 6.0
+				}
+				if scriptVars["stormroarTimer"] > scriptVars["stormroarMaxTimer"] {
+					//log("STORMROAR")
+					useAbilityAtTarget(myEntityId, "Harbinger Stormroar I", targetEntityId, 1.0)
+					scriptVars["stormroarTimer"] = 0.0
+					scriptVars["stormroarMaxTimer"] = 5.0
+				}
+			}
+		} else if scriptVars["phase"] == 4 {
+			//stormrage Attack
+			if scriptVars["stormrageTimer"] >= scriptVars["stormrageMaxTimer"] && scriptVars["phaseAttack"] == 1 {
+				//log("STORMRAGE")
+				//Top Spot
+				if scriptVars["stormrageStart"] == 1 && scriptVars["attackCount"] == 1 || scriptVars["stormrageStart"] == 2 && scriptVars["attackCount"] == 4 || scriptVars["stormrageStart"] == 3 && scriptVars["attackCount"] == 3 || scriptVars["stormrageStart"] == 4 && scriptVars["attackCount"] == 2 {
+					//log("TOP")
+					setPosition(myEntityId, diamondTop) 
+					useAbilityAtTarget(myEntityId, "Harbinger Stormrage Top", targetEntityId, 2.0)
+				//Left
+				} else if scriptVars["stormrageStart"] == 2 && scriptVars["attackCount"] == 1 || scriptVars["stormrageStart"] == 3 && scriptVars["attackCount"] == 4 || scriptVars["stormrageStart"] == 4 && scriptVars["attackCount"] == 3 || scriptVars["stormrageStart"] == 1 && scriptVars["attackCount"] == 2 {
+					//log("LEFT")
+					setPosition(myEntityId, diamondLeft) 
+					useAbilityAtTarget(myEntityId, "Harbinger Stormrage Left", targetEntityId, 2.0)
+				//Right
+				} else if scriptVars["stormrageStart"] == 3 && scriptVars["attackCount"] == 1 || scriptVars["stormrageStart"] == 4 && scriptVars["attackCount"] == 4 || scriptVars["stormrageStart"] == 1 && scriptVars["attackCount"] == 3 || scriptVars["stormrageStart"] == 2 && scriptVars["attackCount"] == 2 {
+					//log("RIGHT")
+					setPosition(myEntityId, diamondRight) 
+					useAbilityAtTarget(myEntityId, "Harbinger Stormrage Right", targetEntityId, 2.0)
+				//Bot
+				} else if scriptVars["stormrageStart"] == 4 && scriptVars["attackCount"] == 1 || scriptVars["stormrageStart"] == 1 && scriptVars["attackCount"] == 4 || scriptVars["stormrageStart"] == 2 && scriptVars["attackCount"] == 3 || scriptVars["stormrageStart"] == 3 && scriptVars["attackCount"] == 2 {
+					//log("BOT")
+					setPosition(myEntityId, diamondBot) 
+					useAbilityAtTarget(myEntityId, "Harbinger Stormrage Bot", targetEntityId, 2.0)
+				}
+				if scriptVars["attackCount"] <= 4 {
+					//log("STORMRAGE +1")
+					changeAttackBehaviour(myEntityId, "Stationary")
+					scriptVars["stormrageMaxTimer"] = 1.5
+					scriptVars["vanishMaxTimer"] = 1.0
+					scriptVars["invisibleMaxTimer"] = 0.5
+					scriptVars["vanished"] = true
+					scriptVars["vanishing"] = true
+					scriptVars["attackCount"] += 1
+					scriptVars["stormrageTimer"] = 0.0
+				} else {
+					//log("STORMRAGE END")
+					scriptVars["phaseAttack"] = 2
+					scriptVars["attackCount"] = 1
+					scriptVars["stormrageMaxTimer"] = 4.0
+					scriptVars["vanishMaxTimer"] = 0.5
+					scriptVars["vanished"] = true
+					scriptVars["stormrageTimer"] = 0.0
+					if scriptVars["stormrageStart"] < 4 {
+						scriptVars["stormrageStart"] += 1
+					} else {
+						scriptVars["stormrageStart"] = 1
+					}
+				}
+			} else {
+				if scriptVars["thunderstormTimer"] >= scriptVars["thunderstormMaxTimer"] && scriptVars["phaseAttack"] == 2 {
+					//log("THUNDERSTORM")
+					setPosition(myEntityId, roomCenter)
+					changeAttackBehaviour(myEntityId, "Stationary")
+					useAbilityAtTarget(myEntityId, "Harbinger Thunderstorm II", targetEntityId, 2.0)
+					scriptVars["thunderstormTimer"] = 0.0
+					scriptVars["vanishMaxTimer"] = 4.5
+					scriptVars["vanishing"] = true
+					scriptVars["phaseAttack"] = 1
+				}
+			}
+		} else if scriptVars["phase"] == 5 {
+			currentNearby := getNearbyEntities(myEntityId)
+			for i := 0; i < len(currentNearby) && i <= 4; i++ {
+				if scriptVars["boltTimer"] > 3.0 && distToEntity(myEntityId, currentNearby[i].id) <= 9.0 || scriptVars["boltTimer"] > 2.0 && distToEntity(myEntityId, currentNearby[i].id) > 9.0 && distToEntity(myEntityId, currentNearby[i].id) <= 17.0 || scriptVars["boltTimer"] > 1.0 && distToEntity(myEntityId, currentNearby[i].id) > 17.0  {
+					doBolts()
+					scriptVars["boltTimer"] = 0.0
+				}
+			}
+			//Pathing Handler
+			if scriptVars["directionTimer"] >= scriptVars["directionMaxTimer"] {
+				//log("CHANGE POS")
+				
+				//TopLeft Spot
+				if scriptVars["direction"] == 1 {
+					//log("TOPLEFT")
+					setTargetPosition(myEntityId, diamondTopLeft)
+					useAbilityAtPosition(myEntityId, "Harbinger Stormflee", positionInCurrentRoom(myEntityId, [27.14,14.85,0.0]))
+					
+				//TopRight
+				} else if scriptVars["direction"] == 2 {
+					//log("TOPRIGHT")
+					setTargetPosition(myEntityId, diamondTopRight)
+					useAbilityAtPosition(myEntityId, "Harbinger Stormflee", positionInCurrentRoom(myEntityId, [27.14,27.14,0.0]))
+					
+				//BotRight
+				} else if scriptVars["direction"] == 3 {
+					//log("BOTRIGHT")
+					setTargetPosition(myEntityId, diamondBotRight)
+					useAbilityAtPosition(myEntityId, "Harbinger Stormflee", positionInCurrentRoom(myEntityId, [14.85,27.14,0.0]))
+					
+				//BotLeft
+				} else if scriptVars["direction"] == 4 {
+					//log("BOTLEFT")
+					setTargetPosition(myEntityId, diamondBotLeft)
+					useAbilityAtPosition(myEntityId, "Harbinger Stormflee", positionInCurrentRoom(myEntityId, [14.85,14.85,0.0]))
+				}
+				if scriptVars["direction"] < 4 {
+					scriptVars["direction"] += 1
+				} else {
+					scriptVars["direction"] = 1
+				}
+				scriptVars["directionTimer"] = 0.0
+				scriptVars["stormmightTimer"] = 0.0
+				scriptVars["stormslashTimer"] = 0.0
+			}
+			//stormslash Attack
+			if distToPoint(myEntityId, diamondTopLeft) < 1.0 || distToPoint(myEntityId, diamondTopRight) < 1.0 || distToPoint(myEntityId, diamondBotRight) < 1.0 || distToPoint(myEntityId, diamondBotLeft) < 1.0 {
+				dispelAuraOnEntity(myEntityId, "Invulnerability")
+				setCollisionLayer(myEntityId, CollisionLayerMonster)
+				if scriptVars["stormslashTimer"] >= scriptVars["stormslashMaxTimer"] {
+					//log("STORMSLASH")
+					useAbilityAtTarget(myEntityId, "Harbinger Stormslash", targetEntityId, 1.0)
+					scriptVars["stormslashTimer"] = 0.0
+				}
+				
+				if scriptVars["stormmightTimer"] >= scriptVars["stormmightMaxTimer"] {
+					//log("STORMMIGHT")
+					//TopLeft Spot
+					if scriptVars["direction"] == 2 {
+						useAbilityAtTarget(myEntityId, "Harbinger Stormmight Top Left", targetEntityId, 2.0)
+					//TopRight
+					} else if scriptVars["direction"] == 3 {
+						useAbilityAtTarget(myEntityId, "Harbinger Stormmight Top Right", targetEntityId, 2.0)
+					//BotRight
+					} else if scriptVars["direction"] == 4 {
+						useAbilityAtTarget(myEntityId, "Harbinger Stormmight Bottom Right", targetEntityId, 2.0)
+					//BotLeft
+					} else if scriptVars["direction"] == 1 {
+						useAbilityAtTarget(myEntityId, "Harbinger Stormmight Bottom Left", targetEntityId, 2.0)
+					}
+					scriptVars["stormmightTimer"] = 0.0
+				}
+			} else {
+				addAuraToEntity(myEntityId, "Invulnerability", 0, myEntityId)
+				setCollisionLayer(myEntityId, CollisionLayerDynamic)
+			}
+		} else if scriptVars["phase"] == 6 {
+			if scriptVars["survivalTimer"] < scriptVars["survivalMaxTimer"] {
+				scriptVars["survivalTimer"] += delta
+				addAuraToEntity(myEntityId, "Invulnerability", 0, myEntityId)
+				setCollisionLayer(myEntityId, CollisionLayerDynamic)
+			} else {
+				dispelAuraOnEntity(myEntityId, "Invulnerability")
+				setCollisionLayer(myEntityId, CollisionLayerMonster)
+				scriptVars["dialogueTrigger"] == true
+			}
+			/*if scriptVars["boltTimer"] > 2.0 {
+				doBolts()
+				scriptVars["boltTimer"] = 0.0
+			}*/
+			//thunderstorm Attack
+			if scriptVars["finalStormStart"] == false && scriptVars["thunderstormTimer"] > scriptVars["thunderstormMaxTimer"] {
+				log("FINALSTORM")
+				useAbilityAtTarget(myEntityId, "Harbinger Thunderstorm III", targetEntityId, 1.0)
+				scriptVars["finalStormStart"] = true
+			}
+			//stormspiral Attack
+			if scriptVars["finalStormCounter"] > 1 && scriptVars["stormspiralTimer"] > scriptVars["stormspiralMaxTimer"] {
+				log("STORMSPIRAL")
+				//log("" + scriptVars["finalStormCounter"])
+				useAbilityAtTarget(myEntityId, "Harbinger Stormspiral II", targetEntityId, 1.0)
+				useAbilityAtTarget(myEntityId, "Harbinger Stormspiral II Double", targetEntityId, 1.0)
+				scriptVars["stormspiralTimer"] = 0.0
+				scriptVars["stormspiralMaxTimer"] = 11.7
+				scriptVars["finalStormCounter"] -= 1
+			}
+		}
+	}
+} else if isDead && scriptVars["dialogueTrigger"] == true {
+	dialoguePrompt()
+	scriptVars["dialogueTrigger"] = false
+}
+
+---mob_Champion Shadow of Storms---
+ID :: championshadowstorm
+Prefab :: shadowofstorms
+Range Behavior :: Stationary
+Abilities :: [[Champion Storm Super Spin]] [[Champion Storm Spin]] [[Champion Storm Lightning]]
+Speed :: 500
+Type :: Elite
+
+---ability_Champion Storm Super Spin---
+Bullet Definition :: [[championstormsuperspin]]
+VFX Charging :: trigger:spin*
+Lock Time :: 1.5
+Cast Time :: 0.25
+
+---bulletdef_championstormsuperspin---
+wait 1
+color 1
+radial bullets:10 speed:5 delay:1 angle:0 directionType:relative
+sprite CirclePool 2
+fire 0 relative 0
+	aoeexplosion
+	radius 0
+	timedFill 10
+	damageEvery 11
+	wait 10
+	fire championstormsuperspinpool
+	vanish
+wait 1
+sprite Basic
+nway speed:5 bullets:7 spread:70 angle:0 directionType:relative
+wait 9
+radial bullets:18 speed:2
+	wait 2
+	speed +2
+	wait 2
+	speed +2
+	wait 2
+	speed +2
+	wait 5
+	speed -2
+	wait 1
+	speed -2
+	wait 1
+	speed -2
+	wait 1
+	speed -2
+	direction relative 179
+	wait 1
+	speed +2
+	wait 1
+	speed +2
+	wait 1
+	speed +2
+	wait 1
+	speed +2
+	wait 60
+	vanish
+sprite CirclePool
+radial bullets:2 speed:12 directionType:absolute
+	aoeexplosion
+	radius 0
+	wait 5
+	speed 2
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire championstormsuperspinlightningx
+	wait 1
+	vanish
+radial bullets:2 speed:12 angle:90 directionType:absolute
+	aoeexplosion
+	radius 0
+	wait 5
+	speed 2
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire championstormsuperspinlightning
+	wait 1
+	vanish
+	
+---bulletdef_championstormsuperspinpool---
+sprite CirclePool 2
+radial bullets:1
+	aoedot
+	radius 1.5
+	damageEvery 5
+	vfx ShockPool
+	wait 30
+	vanish
+
+---bulletdef_championstormsuperspinlightning---
+sprite CirclePool
+radial bullets:1 speed:2 angle:40 directionType:relative
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire championstormsuperspinlightningx
+	vanish
+potency 125
+sprite Lance10
+color 0
+radial bullets:4 speed:6
+
+---bulletdef_championstormsuperspinlightningx---
+sprite CirclePool
+radial bullets:1 speed:2 angle:37 directionType:relative
+	aoeexplosion
+	radius 0
+	timedFill 20
+	damageEvery 21
+	wait 20
+	fire championstormsuperspinlightning
+	vanish
+potency 125
+sprite Lance10
+color 0
+radial bullets:4 speed:6 angle:45 directionType:absolute
+
+---ability_Champion Storm Spin---
+Bullet Definition :: [[championstormspin]]
+VFX Charging :: trigger:spin*
+Lock Time :: 1.5
+Cast Time :: 0.25
+
+---bulletdef_championstormspin---
+color 1
+radial bullets:10 speed:5 delay:1 angle:0 directionType:relative
+sprite CirclePool 2
+fire 0 relative 0
+	aoeexplosion
+	radius 0
+	timedFill 10
+	damageEvery 11
+	wait 10
+	fire championstormsuperspinpool
+	vanish
+wait 1
+sprite Basic
+nway speed:5 bullets:7 spread:70 angle:0 directionType:relative
+wait 9
+radial bullets:12 speed:2
+	wait 2
+	speed +2
+	wait 2
+	speed +2
+	wait 2
+	speed +2
+	wait 5
+	speed -2
+	wait 1
+	speed -2
+	wait 1
+	speed -2
+	wait 1
+	speed -2
+	direction relative 179
+	wait 1
+	speed +2
+	wait 1
+	speed +2
+	wait 1
+	speed +2
+	wait 1
+	speed +2
+	wait 60
+	vanish
+	
+---ability_Champion Storm Lightning---
+Bullet Definition :: [[championstormlightning]]
+VFX Charging :: trigger:spiral*
+Lock Time :: 2.5
+Cast Time :: 0.25
+
+---bulletdef_championstormlightning---
+sprite PlayerBullet10
+color 1
+radial bullets:10 speed:3 delay:1 angle:0 directionType:relative
+	wait 90
+	vanish
+sprite CirclePool 2
+fire 0 relative 0
+	aoeexplosion
+	radius 0
+	timedFill 10
+	damageEvery 11
+	wait 10
+	vanish
+wait 1
+sprite PlayerBullet10
+radial bullets:27 speed:5
+	wait 5
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 93
+	vanish
+wait 9
+radial bullets:36 speed:8
+	wait 5
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 1
+	speed -1
+	wait 90
+	vanish
+
+---aura_Champion Storm Max HP---
+Type :: Buff
+Duration :: -1
+Max stacks :: 1 
+Time Per Tick :: 1.0
+Definitions :: [[auraaffectstat/championstormmaxhp]]
+
+---auraaffectstat_championstormmaxhp---
+Stat :: Vitality
+Boost :: 150.0
+
+---script_championshadowstorm_Monster---
+resetVars := func() {
+	scriptVars["superSpin"] = false
+	scriptVars["phaseAttack"] = 1
+	scriptVars["didDie"] = false
+	scriptVars["spinTimer"] = 0.0
+	scriptVars["lightningTimer"] = 0.0
+	scriptVars["abilityID"] = 0.0
+}
+if !isDead && targetEntityId != 0 {
+	//Apply miniboss health boost
+	if is_undefined(scriptVars["superSpin"]) {
+		//log(scriptVars["parentEntityId"])
+		//log("SPAWN SUCCESSFUL")
+		//log("test"+ myEntityId)
+		resetVars()
+		addAuraToEntity(myEntityId, "Champion Storm Max HP", 0, myEntityId)
+		addHitPoints(myEntityId, 500000000)
+		say(myEntityId, "...")
+		scriptVars["spinTimer"] = 2.0
+	}
+	scriptVars["spinTimer"] += delta
+	scriptVars["lightningTimer"] += delta
+	
+	//Attack Handler
+	//Spin Attack
+	if scriptVars["spinTimer"] > 2.5 && scriptVars["phaseAttack"] == 1 {
+		//Do Super Spin at the start
+		if scriptVars["superSpin"] == false {
+			//log("SUPER SPIN")
+			useAbilityAtTarget(myEntityId, "Champion Storm Super Spin", targetEntityId, 2.0)
+			scriptVars["superSpin"] = true
+		} else {
+			//log("SPIN")
+			useAbilityAtTarget(myEntityId, "Champion Storm Spin", targetEntityId, 2.0)
+		}
+		scriptVars["phaseAttack"] = 2
+		scriptVars["lightningTimer"] = 0.0
+	} else if scriptVars["lightningTimer"] > 2.5 && scriptVars["phaseAttack"] == 2 {
+		useAbilityAtTarget(myEntityId, "Champion Storm Lightning", targetEntityId, 2.0)
+		scriptVars["phaseAttack"] = 1
+		scriptVars["spinTimer"] = 0.0
+	}
+} else if isDead && scriptVars["didDie"] == false {
+	clearBulletsForEntity(myEntityId)
+	scriptVars["didDie"] = true
+}

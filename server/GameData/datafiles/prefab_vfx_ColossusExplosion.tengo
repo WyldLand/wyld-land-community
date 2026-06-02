@@ -1,0 +1,25 @@
+---prefab_ColossusExplosion---
+
+Components :: [[ColossusExplosionSprite]] [[ColExplosionSound]]
+
+---prefabcomponent_ColossusExplosionSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "vfx/ColossusExplosion",
+    "play": "default"
+     
+}
+
+---prefabcomponent_ColExplosionSound---
+
+Component :: Sound
+
+{
+    
+    "sources": ["sfxcolossus/Quake.wav"],
+	"spatial": true
+}

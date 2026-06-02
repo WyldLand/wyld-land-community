@@ -1,0 +1,15 @@
+---prefab_ElectricityCharge---
+
+Components :: [[ElectricityChargeSprite]]
+
+---prefabcomponent_ElectricityChargeSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "vfx/ElectricityCharge",
+    "play": "default"
+     
+}

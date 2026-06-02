@@ -1,0 +1,136 @@
+---aura_Corruption Offense---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 99
+Time Per Tick :: 10.0
+Definitions :: [[AuraAffectStat/Corruption Offense]]
+
+---auraaffectstat_Corruption Offense---
+Stat :: CurseDamageBoost
+Add :: 10
+
+---aura_Corruption Defense---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 99
+Time Per Tick :: 10.0
+Definitions :: [[AuraAffectStat/Corruption Defense]]
+
+---auraaffectstat_Corruption Defense---
+Stat :: CurseDamageReduction
+Add :: 10
+
+---echonode_Corruption Offense I---
+Auras :: [[Corruption Offense]]
+Cost :: 100
+ID :: corruptionoffense1
+Icon :: ability0_41
+
+Deal 1% more damage to corrupted enemies.
+
+---echonode_Corruption Defense I---
+Auras :: [[Corruption Defense]]
+Cost :: 200
+ID :: corruptiondefense1
+Icon :: ability0_94
+Prev Node :: corruptionoffense1
+
+Take 1% less damage from corrupted enemies.
+
+---echonode_Corruption Offense II---
+Auras :: [[Corruption Offense]]
+Cost :: 400
+ID :: corruptionoffense2
+Icon :: ability0_41
+Prev Node :: corruptiondefense1
+
+Deal 1% more damage to corrupted enemies.
+
+---echonode_Corruption Defense II---
+Auras :: [[Corruption Defense]]
+Cost :: 800
+ID :: corruptiondefense2
+Icon :: ability0_94
+Prev Node :: corruptionoffense2
+
+Take 1% less damage from corrupted enemies.
+
+---echonode_Corruption Offense III---
+Auras :: [[Corruption Offense]]
+Cost :: 1000
+ID :: corruptionoffense3
+Icon :: ability0_41
+Prev Node :: corruptiondefense2
+
+Deal 1% more damage to corrupted enemies.
+
+---echonode_Corruption Defense III---
+Auras :: [[Corruption Defense]]
+Cost :: 1500
+ID :: corruptiondefense3
+Icon :: ability0_94
+Prev Node :: corruptionoffense3
+
+Take 1% less damage from corrupted enemies.
+
+---echonode_Corruption Offense IV---
+Auras :: [[Corruption Offense]]
+Cost :: 1500
+ID :: corruptionoffense4
+Icon :: ability0_41
+Prev Node :: corruptiondefense3
+
+Deal 1% more damage to corrupted enemies.
+
+---echonode_Corruption Armor---
+Auras :: [[Corruption Armor]]
+Cost :: 2000
+ID :: corruptionarmor
+Icon :: ability0_72
+Prev Node :: corruptionoffense4
+Requires Activation :: true
+
+The first attack in each dungeon room that would deal corrupted damage to you is negated.
+
+---aura_Corruption Armor---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:CorruptionArmor]]
+
+---script_CorruptionArmor_IncomingDamage---
+if damage > 1 && isCorrupted {
+    currentRoom := entityRoom(myEntityId)
+    if is_undefined(scriptVars["lastRoom"]) || scriptVars["lastRoom"] != currentRoom {
+        scriptVars["lastRoom"] = currentRoom
+        additionalDamage = -1 * damage
+    }
+}
+
+---echonode_Corruption Defense IV---
+Auras :: [[Corruption Defense]]
+Cost :: 1500
+ID :: corruptiondefense4
+Icon :: ability0_94
+Prev Node :: corruptionoffense4
+
+Take 1% less damage from corrupted enemies.
+
+---echonode_Corruption Offense V---
+Auras :: [[Corruption Offense]]
+Cost :: 1500
+ID :: corruptionoffense5
+Icon :: ability0_41
+Prev Node :: corruptiondefense4
+
+Deal 1% more damage to corrupted enemies.
+
+---echonode_Corruption Defense V---
+Auras :: [[Corruption Defense]]
+Cost :: 1500
+ID :: corruptiondefense5
+Icon :: ability0_94
+Prev Node :: corruptionoffense5
+
+Take 1% less damage from corrupted enemies.

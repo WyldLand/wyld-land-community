@@ -1,0 +1,13 @@
+---prefab_sfxAchivement---
+
+Components :: [[SFXAchievement]]
+
+---prefabcomponent_SFXAchievement---
+
+Component :: Sound
+
+{
+    
+    "sources": ["sfxachievement/achievement.wav"],
+    "channel": "ui"
+}

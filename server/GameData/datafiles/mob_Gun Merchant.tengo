@@ -1,0 +1,8 @@
+---mob_Gun Merchant---
+Prefab :: gunmerchant
+Range Behavior :: Stationary
+
+Bounding Box :: 0.0 1.89 3.85 3.85
+Speed :: 500
+Type :: Friendly
+

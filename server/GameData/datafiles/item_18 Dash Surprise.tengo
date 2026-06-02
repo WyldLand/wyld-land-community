@@ -1,0 +1,62 @@
+---item_18 Dash Surprise---
+Type :: Equippable
+Slot :: Passive
+Icon :: items_715
+Gun Definition :: [[Dash Flare]]
+
+Your Dash leaves behind bombs
+
+I left you a little present, hope you enjoy the surprise...
+
+---gundef_Dash Flare---
+Fire Speed :: 0
+Bullets In Chamber :: 1
+Reload Speed :: 15.0
+Sprite :: items_606
+Fire Event :: 
+Reload Event :: 
+Archetype :: EquippableItem
+Innate Spikes :: [[Dash Flare]]
+
+---spike_Dash Flare---
+Auras :: [[Dash Flare]]
+
+---aura_Dash Flare---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:DashFlare]]
+
+---ability_Dash Flare---
+Bullet Definition :: [[dashflare]]
+Cooldown :: 0
+Auras :: 
+VFX Charging :: 
+Lock Time :: 0
+Cast Time :: 0
+Max Range :: 10.0
+
+---bulletdef_dashflare---
+sprite Invisible
+potency 33
+fire 0 relative 0
+	aoeexplosion
+	radius 0.5
+	damageEvery 2
+	vfx MiniExplosion 5
+	wait 1
+	vanish
+
+---script_DashFlare_WillDash---
+
+directionTraveled := dashDirection
+
+for i := 0; i < 3; i++ {
+	thisPos := [dashStart[0] + directionTraveled[0] * 4.5 * (0.3 * i), dashStart[1] + directionTraveled[1] * 4.5 * (0.3 * i), 0.0]
+	useAbilityAtPosition(myEntityId, "Dash Flare", addBoundingCenter(myEntityId, thisPos))
+}
+
+
+

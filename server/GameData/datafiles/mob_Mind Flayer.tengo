@@ -1,0 +1,1304 @@
+---mobdefinition_Mind Flayer---
+ID :: mindflayer
+Prefab :: mindflayer
+Range Behavior :: [[Medium Ranged]]
+Abilities :: [[Mind Wave]] [[Psychic Orbs]] [[Mind Control]] [[Reality Tear]] [[Void Collapse]] [[Psychic Storm]] [[Mind Shatter]] [[Mental Prison]] [[Thought Lash]] [[Neural Surge]] [[Consciousness Drain]] [[Mind Phase Shift]] [[Psychic Barrage]] [[Mind Blast]] [[Void Pulse]] [[Reality Warp]] [[Psychic Implosion]] [[Mental Cage]] [[Void Tendrils]] [[Mind Spikes]] [[Void Echo]] [[Phase Lock]] [[Psychic Nova]] [[Psychic Tracker]] [[Mind Lance]] [[Void Eruption]] [[Thought Seeker]] [[Reality Fracture]] [[Phase Transition]]
+Speed :: 100
+Type :: Boss
+Loot :: [[MindFlayer]]
+
+---prefab_mindflayer---
+
+Components :: [[MindFlayerSprite]] [[Monster]] [[Nameplate]] [[MindFlayerCollider]] [[BGMMindFlayer]]
+
+---prefabcomponent_MindFlayerCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+    "position": [0.0, 2.5],
+    "size": [6.0, 4.875]
+}
+
+---prefabcomponent_MindFlayerSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.4967,
+    "pivotY": 1,
+    "sprite": "mindflayer/mindflayer",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        },
+        {
+            "name": "attack",
+            "trigger": "Attack"
+        }
+    ]
+}
+
+---prefab_sfxmindflayerAttack---
+
+Components :: [[SFXMindFlayerAttack]]
+
+---prefabcomponent_SFXMindFlayerAttack---
+
+Component :: Sound
+
+{
+    "sources": ["mindflayer/mindflayerAttack.wav"],
+	"spatial": true
+}
+
+---prefabcomponent_BGMMindFlayer---
+
+Component :: Sound
+{
+	"sources": ["mindflayer/bgm1.wav", "mindflayer/bgm2.wav", "mindflayer/bgm3.wav", "mindflayer/bgm4.wav"],
+	"channel": "bgm",
+	"loop": true,
+	"select": "random",
+	"priority": 2,
+	"combatOnly": true
+}
+
+---loottable_MindFlayer---
+[[189 Flayer's Psychic Nodule]] @ 67.0
+[[20 Medical Spa]] @ 15.0
+[[137 Proximity]] @ 2.0
+[[129 Mini Flayer]] @ 5.0
+[[601 Frost Pulse]] @ 15.0
+
+// Phase 1 Abilities - Mind Control & Area Denial
+---ability_Mind Wave---
+Bullet Definition :: [[mindwave]]
+Max Range :: 100.0
+
+---bulletdef_mindwave---
+sprite PurplePool 3
+potency 120
+fire 0 relative 0
+	aoeexplosion
+	radius 3
+	timedFill 30
+	damageEvery 30
+	wait 30
+	vfx VoidPool
+	wait 1
+	vanish
+wait 30
+sprite Basic
+color 4
+potency 80
+radial bullets:24 speed:3 angle:0 directionType:absolute
+	wait 120
+
+---ability_Psychic Orbs---
+Bullet Definition :: [[psychicorbs]]
+Max Range :: 100.0
+
+---bulletdef_psychicorbs---
+sprite OrangePool 2
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 2
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+wait 20
+sprite Basic
+color 2
+potency 90
+repeat bullets:4 speed:3 angle:0 angleChange:90 directionType:absolute
+	wait 1000
+wait 3
+repeat bullets:4 speed:2.5 angle:15 angleChange:90 directionType:absolute
+	wait 1000
+
+---ability_Mind Control---
+Bullet Definition :: [[mindcontrol]]
+VFX Cast :: trigger:Attack3
+
+---bulletdef_mindcontrol---
+sprite Custom11
+color 4
+potency 100
+nway speed:8 bullets:8 spread:45 angle:0 directionType:relative
+wait 8
+nway speed:5 bullets:10 spread:90 angle:0 directionType:relative
+
+// Phase 2 Abilities - Reality Manipulation
+---ability_Reality Tear---
+Bullet Definition :: [[realitytear]]
+Max Range :: 100.0
+
+---bulletdef_realitytear---
+sprite OrangePool 2
+potency 150
+fire 0 relative 0
+	aoeexplosion
+	radius 2
+	timedFill 40
+	damageEvery 40
+	wait 40
+	vfx VoidPool
+	wait 1
+	vanish
+wait 40
+sprite Basic
+color 2
+potency 80
+radial bullets:24 speed:4 angle:0 directionType:absolute
+	wait 120
+
+---ability_Void Collapse---
+Bullet Definition :: [[voidcollapse]]
+VFX Cast :: trigger:Attack2
+
+---bulletdef_voidcollapse---
+sprite OrangePool 4
+potency 175
+fire 0 relative 0
+	aoeexplosion
+	radius 4
+	timedFill 55
+	damageEvery 55
+	wait 55
+	vfx BombExplosion 4
+	wait 1
+	vanish
+wait 55
+sprite Basic
+color 2
+potency 90
+radial bullets:24 speed:4 angle:0 directionType:absolute
+	wait 120
+
+---ability_Psychic Storm---
+Bullet Definition :: [[psychicstorm]]
+Max Range :: 100.0
+
+---bulletdef_psychicstorm---
+sprite PurplePool 3
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 3
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+wait 20
+sprite Basic
+color 4
+potency 80
+repeat bullets:120 speed:3 angle:0 angleChange:12 delay:2 directionType:relative
+	wait 5
+	speed 0
+	wait 9
+	speed 10
+	wait 30
+	vanish
+
+// Phase 3 Abilities - Mental Prison
+---ability_Mind Shatter---
+Bullet Definition :: [[mindshatter]]
+VFX Cast :: trigger:Attack
+
+---bulletdef_mindshatter---
+sprite OrangePool 3
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 3
+	timedFill 25
+	damageEvery 25
+	wait 25
+	vanish
+wait 25
+sprite Custom10
+color 2
+potency 120
+nway speed:6 bullets:10 spread:90 angle:0 directionType:relative
+wait 5
+radial bullets:24 speed:4 angle:15 directionType:absolute
+
+---ability_Mental Prison---
+Bullet Definition :: [[mentalprison]]
+Max Range :: 100.0
+
+---bulletdef_mentalprison---
+sprite PurplePool 5
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 5
+	timedFill 40
+	damageEvery 40
+	wait 40
+	vanish
+wait 40
+sprite OrangePool 5
+potency 210
+fire 0 relative 0
+	aoedot
+	radius 5
+	damageEvery 30
+	vfx VoidPool
+	wait 260
+	vanish
+wait 40
+sprite Basic
+color 4
+potency 100
+repeat bullets:6 angleChange:60 angle:0 directionType:relative speed:0.5
+	wait 20
+	fire mentalprisonspike
+	wait 280
+	vanish
+
+---bulletdef_mentalprisonspike---
+sprite Basic
+color 4
+potency 130
+radial bullets:12 speed:7 angle:0 directionType:absolute
+	wait 60
+	vanish
+
+---ability_Thought Lash---
+Bullet Definition :: [[thoughtlash]]
+VFX Cast :: trigger:Attack
+
+---bulletdef_thoughtlash---
+sprite PurplePool 2
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 2
+	timedFill 15
+	damageEvery 15
+	wait 15
+	vanish
+wait 15
+sprite Lance14
+color 4
+potency 100
+line speed:10 bullets:7 delay:1 angle:0 directionType:relative
+	piercing 2
+    wait 1000
+wait 5
+line speed:10 bullets:7 delay:1 angle:10 directionType:relative
+	piercing 2
+    wait 1000
+wait 5
+line speed:10 bullets:7 delay:1 angle:-10 directionType:relative
+	piercing 2
+    wait 1000
+
+// Phase 4 Abilities - Neural Disruption
+---ability_Neural Surge---
+Bullet Definition :: [[neuralsurge]]
+Max Range :: 100.0
+
+---bulletdef_neuralsurge---
+sprite OrangePool 3
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 3
+	timedFill 25
+	damageEvery 25
+	wait 25
+	vanish
+wait 25
+sprite Custom11
+color 2
+potency 120
+radial bullets:36 speed:3 angle:0 directionType:absolute
+	wait 120
+wait 10
+radial bullets:36 speed:2.5 angle:5 directionType:absolute
+	wait 120
+
+---ability_Consciousness Drain---
+Bullet Definition :: [[consciousnessdrain]]
+VFX Cast :: trigger:Attack
+
+---bulletdef_consciousnessdrain---
+sprite PurplePool 3
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 3
+	timedFill 30
+	damageEvery 30
+	wait 30
+	vanish
+wait 30
+sprite PurplePool 3
+potency 140
+fire 0 relative 0
+	aoedot
+	radius 3
+	damageEvery 18
+	vfx VoidPool
+	wait 90
+	vanish
+wait 90
+sprite Basic
+color 4
+potency 100
+nway speed:5 bullets:15 spread:360 angle:0 directionType:absolute
+wait 5
+radial bullets:8 speed:3.5 angle:15 directionType:absolute
+	wait 60
+	vanish
+wait 120
+sprite Basic
+color 4
+potency 130
+nway speed:5.5 bullets:20 spread:360 angle:0 directionType:absolute
+wait 5
+radial bullets:10 speed:4 angle:15 directionType:absolute
+	wait 60
+	vanish
+
+---ability_Mind Phase Shift---
+Bullet Definition :: [[mindphaseshift]]
+VFX Cast :: trigger:Attack3
+
+---bulletdef_mindphaseshift---
+sprite CirclePool 8
+potency 180
+fire 0 relative 0
+	aoeexplosion
+	radius 8
+	timedFill 17
+	damageEvery 17
+	wait 17
+	vanish
+
+// Phase 5 Abilities - Psychic Barrage
+---ability_Psychic Barrage---
+Bullet Definition :: [[psychicbarrage]]
+Max Range :: 100.0
+
+---bulletdef_psychicbarrage---
+sprite OrangePool 2.5
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 2.5
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+wait 20
+sprite Basic
+color 2
+potency 135
+repeat bullets:10 speed:4.5 angle:0 angleChange:36 directionType:absolute
+	wait 60
+	direction relative 36
+	wait 60
+	repeat
+wait 15
+repeat bullets:10 speed:4 angle:18 angleChange:36 directionType:absolute
+	wait 60
+	direction relative -36
+	wait 60
+	repeat
+
+---ability_Mind Blast---
+Bullet Definition :: [[mindblast]]
+VFX Cast :: trigger:Buff
+
+---bulletdef_mindblast---
+sprite PurplePool 3
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 3
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+wait 20
+sprite Custom10
+color 4
+potency 150
+nway speed:6 bullets:12 spread:120 angle:0 directionType:relative
+wait 4
+nway speed:5 bullets:10 spread:90 angle:0 directionType:relative
+wait 4
+nway speed:5.5 bullets:8 spread:60 angle:0 directionType:relative
+
+---ability_Void Pulse---
+Bullet Definition :: [[voidpulse]]
+Max Range :: 100.0
+
+---bulletdef_voidpulse---
+sprite PurplePool 4
+potency 130
+fire 0 relative 0
+	aoeexplosion
+	radius 4
+	timedFill 27
+	damageEvery 27
+	wait 27
+	vfx VoidPool
+	wait 1
+	vanish
+wait 27
+sprite Basic
+color 4
+potency 90
+radial bullets:16 speed:4 angle:0 directionType:absolute
+	wait 60
+	vanish
+
+// Phase 6 Abilities - Reality Collapse
+---ability_Reality Warp---
+Bullet Definition :: [[realitywarp]]
+Max Range :: 100.0
+
+---bulletdef_realitywarp---
+sprite OrangePool 3
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 3
+	timedFill 30
+	damageEvery 30
+	wait 30
+	vanish
+wait 30
+sprite Basic
+color 2
+potency 160
+repeat bullets:300 speed:2.5 angle:0 angleChange:1.2 delay:1 directionType:absolute
+	wait 5
+	speed 0
+	wait 17
+	speed 9
+	wait 40
+	vanish
+
+---ability_Psychic Implosion---
+Bullet Definition :: [[psychicimplosion]]
+VFX Cast :: trigger:Attack2
+
+---bulletdef_psychicimplosion---
+sprite PurplePool 6
+potency 250
+fire 0 relative 0
+	aoeexplosion
+	radius 6
+	timedFill 55
+	damageEvery 55
+	wait 55
+	vfx BombExplosion 6
+	wait 1
+	vanish
+wait 55
+sprite Basic
+color 4
+potency 120
+radial bullets:36 speed:5.5 angle:0 directionType:absolute
+wait 4
+radial bullets:36 speed:5 angle:5 directionType:absolute
+
+---ability_Mental Cage---
+Bullet Definition :: [[mentalcage]]
+Max Range :: 100.0
+
+---bulletdef_mentalcage---
+sprite PurplePool 3
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 3
+	timedFill 30
+	damageEvery 30
+	wait 30
+	vanish
+wait 30
+sprite PurplePool 3
+potency 200
+fire 0 relative 0
+	aoedot
+	radius 3
+	damageEvery 18
+	vfx VoidPool
+	wait 150
+	vanish
+wait 15
+sprite Basic
+color 4
+potency 120
+repeat bullets:6 angle:0 angleChange:60 directionType:absolute speed:2
+	wait 40
+	fire mentalcagespike
+	wait 140
+	vanish
+
+---bulletdef_mentalcagespike---
+sprite Basic
+color 4
+potency 110
+nway speed:4.5 bullets:5 spread:80 angle:0 directionType:relative
+	wait 60
+	vanish
+
+---ability_Void Tendrils---
+Bullet Definition :: [[voidtendrils]]
+VFX Cast :: trigger:Attack
+
+---bulletdef_voidtendrils---
+sprite OrangePool 3
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 3
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vanish
+wait 20
+sprite Lance14
+color 2
+potency 130
+line speed:8 bullets:10 delay:1 angle:0 directionType:relative
+	piercing 2
+line speed:8 bullets:10 delay:1 angle:90 directionType:relative
+	piercing 2
+line speed:8 bullets:10 delay:1 angle:180 directionType:relative
+	piercing 2
+line speed:8 bullets:10 delay:1 angle:270 directionType:relative
+	piercing 2
+wait 10
+line speed:6 bullets:8 delay:1 angle:45 directionType:relative
+	piercing 2
+line speed:6 bullets:8 delay:1 angle:135 directionType:relative
+	piercing 2
+line speed:6 bullets:8 delay:1 angle:225 directionType:relative
+	piercing 2
+line speed:6 bullets:8 delay:1 angle:315 directionType:relative
+	piercing 2
+
+// Other abilities
+---ability_Mind Spikes---
+Bullet Definition :: [[mindspikes]]
+Max Range :: 100.0
+
+---bulletdef_mindspikes---
+sprite OrangePool 2
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 2
+	timedFill 40
+	damageEvery 40
+	wait 40
+	vanish
+wait 40
+sprite Custom10
+color 2
+potency 150
+repeat bullets:4 angle:0 angleChange:90 directionType:absolute
+	fire mindspikesburst
+	wait 1
+	repeat
+
+---bulletdef_mindspikesburst---
+sprite Custom10
+color 2
+potency 100
+nway speed:5 bullets:5 spread:50 angle:0 directionType:relative
+	wait 60
+	vanish
+
+---ability_Void Echo---
+Bullet Definition :: [[voidecho]]
+Max Range :: 100.0
+
+---bulletdef_voidecho---
+sprite PurplePool 3
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 3
+	timedFill 25
+	damageEvery 25
+	wait 25
+	vanish
+wait 25
+sprite Basic
+color 4
+potency 120
+radial bullets:24 speed:3 angle:0 directionType:absolute
+	wait 25
+	speed 0
+	wait 25
+	speed 5
+	wait 60
+	vanish
+wait 25
+radial bullets:24 speed:3 angle:7.5 directionType:absolute
+	wait 25
+	speed 0
+	wait 25
+	speed 5
+	wait 60
+	vanish
+
+// Phase Transition Ability
+---ability_Phase Transition---
+Bullet Definition :: [[phasetransition]]
+Max Range :: 100.0
+VFX Cast :: trigger:Buff
+Lock Time :: 3.0
+
+---bulletdef_phasetransition---
+sprite PurplePool 7
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 7
+	timedFill 30
+	damageEvery 30
+	wait 30
+	vfx VoidPool
+	wait 1
+	vanish
+wait 30
+sprite Basic
+color 4
+potency 150
+radial bullets:48 speed:7 angle:0 directionType:absolute
+	wait 60
+	vanish
+wait 5
+radial bullets:48 speed:6 angle:7.5 directionType:absolute
+	wait 60
+	vanish
+
+// Phase Transition Immunity Aura
+---aura_Phase Transition Immunity---
+Type :: Buff
+Duration :: 5.0
+Icon :: statusicons_36
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:PhaseTransitionImmunity]]
+
+---script_PhaseTransitionImmunity_IncomingDamage---
+// Negate all damage during phase transition
+additionalDamage = -1 * damage
+
+// Shared Phase Lock Ability
+---ability_Phase Lock---
+VFX Cast :: trigger:Attack3
+Lock Time :: 2.0
+Cast Time :: 5.0
+
+// Ultimate Ability
+---ability_Psychic Nova---
+Bullet Definition :: [[psychicnova]]
+VFX Cast :: trigger:Attack2
+
+---bulletdef_psychicnova---
+sprite OrangePool 8
+potency 300
+fire 0 relative 0
+	aoeexplosion
+	radius 8
+	timedFill 80
+	damageEvery 80
+	wait 80
+	vfx BombExplosion 8
+	wait 1
+	vanish
+wait 80
+sprite Basic
+color 2
+potency 160
+radial bullets:60 speed:6 angle:0 directionType:absolute
+wait 4
+radial bullets:60 speed:5.5 angle:3 directionType:absolute
+wait 4
+radial bullets:60 speed:5 angle:6 directionType:absolute
+
+// NEW ABILITIES - Player-targeting
+
+---ability_Psychic Tracker---
+Bullet Definition :: [[psychictracker]]
+Max Range :: 100.0
+
+---bulletdef_psychictracker---
+sprite PurplePool 1.5
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 1.5
+	timedFill 15
+	damageEvery 15
+	wait 15
+	vanish
+wait 15
+sprite Custom10
+color 4
+potency 120
+fire 2 relative 0
+	wait 150
+	vanish
+
+---ability_Mind Lance---
+Bullet Definition :: [[mindlance]]
+VFX Cast :: trigger:Buff
+
+---bulletdef_mindlance---
+sprite Lance14
+color 2
+potency 150
+line speed:17 bullets:8 delay:1 angle:0 directionType:relative
+	piercing 2
+    wait 1000
+
+---ability_Void Eruption---
+Bullet Definition :: [[voideruption]]
+Max Range :: 100.0
+
+---bulletdef_voideruption---
+sprite PurplePool 3
+potency 200
+fire 0 relative 0
+	aoeexplosion
+	radius 3
+	timedFill 30
+	damageEvery 30
+	wait 30
+	vfx BombExplosion 3
+	wait 1
+	vanish
+wait 30
+sprite Basic
+color 4
+potency 120
+radial bullets:12 speed:5 angle:0 directionType:absolute
+	wait 60
+	vanish
+
+---ability_Thought Seeker---
+Bullet Definition :: [[thoughtseeker]]
+Max Range :: 100.0
+
+---bulletdef_thoughtseeker---
+sprite PurplePool 1
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 1
+	timedFill 10
+	damageEvery 10
+	wait 10
+	vanish
+wait 10
+sprite Custom11
+color 4
+potency 100
+repeat bullets:4 speed:3.5 angle:0 angleChange:90 directionType:absolute
+	wait 120
+	vanish
+
+---ability_Reality Fracture---
+Bullet Definition :: [[realityfracture]]
+Max Range :: 100.0
+
+---bulletdef_realityfracture---
+sprite PurplePool 2.5
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 2.5
+	timedFill 15
+	damageEvery 15
+	wait 15
+	vanish
+wait 15
+sprite OrangePool 2.5
+potency 175
+fire 0 relative 0
+	aoedot
+	radius 2.5
+	damageEvery 12
+	vfx VoidPool
+	wait 120
+	vanish
+wait 30
+sprite Basic
+color 4
+potency 90
+radial bullets:8 speed:4 angle:0 directionType:absolute
+	wait 60
+	vanish
+
+---aura_Mind Flayer Speed---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1 
+Time Per Tick :: 1.0
+
+// Boss Script
+---script_mindflayer_Monster---
+resetVars := func() {
+    scriptVars["phase"] = 1
+    scriptVars["wait"] = 0.0
+    scriptVars["phaseTimer"] = 0.0
+    scriptVars["attackTimer"] = 0.0
+    scriptVars["specialTimer"] = 0.0
+    scriptVars["ultimateTimer"] = 0.0
+    scriptVars["prisonTimer"] = 0.0
+    scriptVars["voidEchoTimer"] = 0.0
+    scriptVars["mindSpikesTimer"] = 0.0
+    scriptVars["teleportTimer"] = 0.0
+    scriptVars["directAttackTimer"] = 0.0
+    scriptVars["thoughtSeekerTimer"] = 0.0
+    scriptVars["realityFractureTimer"] = 0.0
+    scriptVars["saidIntroPhrase"] = false  // Add this line
+    scriptVars["saidDeathPhrase"] = false
+    scriptVars["didPhase2Transition"] = false
+    scriptVars["didPhase3Transition"] = false
+    scriptVars["didPhase4Transition"] = false
+    scriptVars["didPhase5Transition"] = false
+    scriptVars["didPhase6Transition"] = false
+    scriptVars["inTransition"] = false
+    scriptVars["transitionTimer"] = 0.0
+}
+
+if isDead && !scriptVars["saidDeathPhrase"] {
+    say(myEntityId, "MY CONSCIOUSNESS... FADES... INTO THE VOID...")
+    scriptVars["saidDeathPhrase"] = true
+    clearBulletsForEntity(myEntityId)
+}
+
+if !isDead {
+    if is_undefined(scriptVars["phase"]) {
+        resetVars()
+    }
+
+    if targetEntityId > 0 {
+        // Add these lines to check if intro dialogue has been said
+        if !scriptVars["saidIntroPhrase"] {
+            say(myEntityId, "YOUR MINDS ARE OPEN BOOKS TO ME... I WILL FEAST ON YOUR THOUGHTS!")
+            scriptVars["saidIntroPhrase"] = true
+        }
+    }
+
+    if targetEntityId > 0 {
+        currentHealth := float(getPoints(myEntityId, "hp", "current"))
+        maxHealth := float(getPoints(myEntityId, "hp", "max"))
+
+        // Phase transitions
+        // Phase 1 to Phase 2 transition at 80% health
+        if currentHealth < maxHealth * 0.80 && scriptVars["phase"] == 1 {
+            if !scriptVars["inTransition"] && !scriptVars["didPhase2Transition"] {
+                // Start phase transition and add invulnerability
+                say(myEntityId, "YOUR MINDS ARE WEAK... NOW EXPERIENCE TRUE REALITY!")
+                addAuraToEntity(myEntityId, "Phase Transition Immunity", 0, myEntityId)
+                scriptVars["inTransition"] = true
+                scriptVars["transitionTimer"] = 0.0
+                clearBulletsForEntity(myEntityId)
+                useAbilityAtPosition(myEntityId, "Phase Transition", entityPosition(myEntityId))
+                
+                // Visual effect to indicate invulnerability
+                showVfxAtPosition(myEntityId, "Shield", entityPosition(myEntityId))
+            }
+        }
+        
+        // Phase 2 to Phase 3 transition at 65% health
+        if currentHealth < maxHealth * 0.65 && scriptVars["phase"] == 2 {
+            if !scriptVars["inTransition"] && !scriptVars["didPhase3Transition"] {
+                // Start phase transition and add invulnerability
+                say(myEntityId, "YOUR THOUGHTS BETRAY YOU... SUBMIT TO MY PRISON!")
+                addAuraToEntity(myEntityId, "Phase Transition Immunity", 0, myEntityId)
+                scriptVars["inTransition"] = true
+                scriptVars["transitionTimer"] = 0.0
+                clearBulletsForEntity(myEntityId)
+                useAbilityAtPosition(myEntityId, "Phase Transition", entityPosition(myEntityId))
+                
+                // Visual effect to indicate invulnerability
+                showVfxAtPosition(myEntityId, "Shield", entityPosition(myEntityId))
+            }
+        }
+        
+        // Phase 3 to Phase 4 transition at 50% health
+        if currentHealth < maxHealth * 0.50 && scriptVars["phase"] == 3 {
+            if !scriptVars["inTransition"] && !scriptVars["didPhase4Transition"] {
+                // Start phase transition and add invulnerability
+                say(myEntityId, "I WILL SHATTER YOUR NEURAL PATHWAYS!")
+                addAuraToEntity(myEntityId, "Phase Transition Immunity", 0, myEntityId)
+                scriptVars["inTransition"] = true
+                scriptVars["transitionTimer"] = 0.0
+                clearBulletsForEntity(myEntityId)
+                useAbilityAtPosition(myEntityId, "Phase Transition", entityPosition(myEntityId))
+                
+                // Visual effect to indicate invulnerability
+                showVfxAtPosition(myEntityId, "Shield", entityPosition(myEntityId))
+            }
+        }
+        
+        // Phase 4 to Phase 5 transition at 30% health
+        if currentHealth < maxHealth * 0.30 && scriptVars["phase"] == 4 {
+            if !scriptVars["inTransition"] && !scriptVars["didPhase5Transition"] {
+                // Start phase transition and add invulnerability
+                say(myEntityId, "WITNESS THE FULL POWER OF MY PSYCHIC BARRAGE!")
+                addAuraToEntity(myEntityId, "Phase Transition Immunity", 0, myEntityId)
+                scriptVars["inTransition"] = true
+                scriptVars["transitionTimer"] = 0.0
+                clearBulletsForEntity(myEntityId)
+                useAbilityAtPosition(myEntityId, "Phase Transition", entityPosition(myEntityId))
+                
+                // Visual effect to indicate invulnerability
+                showVfxAtPosition(myEntityId, "Shield", entityPosition(myEntityId))
+            }
+        }
+        
+        // Phase 5 to Phase 6 transition at 15% health
+        if currentHealth < maxHealth * 0.15 && scriptVars["phase"] == 5 {
+            if !scriptVars["inTransition"] && !scriptVars["didPhase6Transition"] {
+                // Start phase transition and add invulnerability
+                say(myEntityId, "REALITY ITSELF COLLAPSES AROUND YOU! THERE IS NO ESCAPE!")
+                addAuraToEntity(myEntityId, "Phase Transition Immunity", 0, myEntityId)
+                scriptVars["inTransition"] = true
+                scriptVars["transitionTimer"] = 0.0
+                clearBulletsForEntity(myEntityId)
+                useAbilityAtPosition(myEntityId, "Phase Transition", entityPosition(myEntityId))
+                
+                // Visual effect to indicate invulnerability
+                showVfxAtPosition(myEntityId, "Shield", entityPosition(myEntityId))
+            }
+        }
+
+        // Handle phase transition
+        if scriptVars["inTransition"] {
+            scriptVars["transitionTimer"] += delta
+            
+            // After 3 seconds, complete the transition
+            if scriptVars["transitionTimer"] >= 1.5 {
+                scriptVars["inTransition"] = false
+                
+                if !scriptVars["didPhase2Transition"] {
+                    scriptVars["didPhase2Transition"] = true
+                    scriptVars["phase"] = 2
+                } else if !scriptVars["didPhase3Transition"] {
+                    scriptVars["didPhase3Transition"] = true
+                    scriptVars["phase"] = 3
+                } else if !scriptVars["didPhase4Transition"] {
+                    scriptVars["didPhase4Transition"] = true
+                    scriptVars["phase"] = 4
+                } else if !scriptVars["didPhase5Transition"] {
+                    scriptVars["didPhase5Transition"] = true
+                    scriptVars["phase"] = 5
+                } else if !scriptVars["didPhase6Transition"] {
+                    scriptVars["didPhase6Transition"] = true
+                    scriptVars["phase"] = 6
+                }
+                
+                // Reset all timers after phase transition
+                scriptVars["phaseTimer"] = 0.0
+                scriptVars["attackTimer"] = 0.0
+                scriptVars["specialTimer"] = 0.0
+                scriptVars["ultimateTimer"] = 0.0
+                scriptVars["prisonTimer"] = 0.0
+                scriptVars["voidEchoTimer"] = 0.0
+                scriptVars["mindSpikesTimer"] = 0.0
+                scriptVars["teleportTimer"] = 0.0
+                scriptVars["directAttackTimer"] = 0.0
+                scriptVars["thoughtSeekerTimer"] = 0.0
+                scriptVars["realityFractureTimer"] = 0.0
+            }
+            
+            // Don't perform any other actions while in transition
+            // Skip the rest of the function execution
+        } else {
+            // Update all timers
+            scriptVars["phaseTimer"] += delta
+            scriptVars["attackTimer"] += delta
+            scriptVars["specialTimer"] += delta
+            scriptVars["ultimateTimer"] += delta
+            scriptVars["prisonTimer"] += delta
+            scriptVars["voidEchoTimer"] += delta
+            scriptVars["mindSpikesTimer"] += delta
+            scriptVars["teleportTimer"] += delta
+            scriptVars["directAttackTimer"] += delta
+            scriptVars["thoughtSeekerTimer"] += delta
+            scriptVars["realityFractureTimer"] += delta
+
+            // Handle teleportation across all phases (frequency increases with phase)
+            teleportFrequency := 16.0 - (scriptVars["phase"] * 1.5)
+            if teleportFrequency < 3.0 {
+                teleportFrequency = 3.0
+            }
+            
+            if scriptVars["teleportTimer"] >= teleportFrequency {
+                targetPos := randomPositionInCurrentRoom(myEntityId, 2.0)
+                setPosition(myEntityId, targetPos)
+                scriptVars["teleportTimer"] = 0.0
+            }
+            
+            // Direct player-targeting attacks across all phases
+            directAttackFrequency := 4.0 - (scriptVars["phase"] * 0.5)
+            if directAttackFrequency < 1.5 {
+                directAttackFrequency = 1.5
+            }
+            
+            if scriptVars["directAttackTimer"] >= directAttackFrequency {
+                // Choose a direct attack based on phase
+                if scriptVars["phase"] <= 2 {
+                    useAbilityAtTarget(myEntityId, "Mind Lance", targetEntityId, 1.0)
+                } else if scriptVars["phase"] <= 4 {
+                    useAbilityAtPosition(myEntityId, "Void Eruption", entityPosition(targetEntityId))
+                } else {
+                    // Alternate between lance and eruption in later phases
+                    if int(scriptVars["directAttackTimer"]) % 2 == 0 {
+                        useAbilityAtTarget(myEntityId, "Mind Lance", targetEntityId, 1.0)
+                    } 
+                }
+                scriptVars["directAttackTimer"] = 0.0
+            }
+            
+            // Thought Seekers (homing projectiles) across all phases
+            thoughtSeekerFrequency := 7.0 - (scriptVars["phase"] * 0.8)
+            if thoughtSeekerFrequency < 2.5 {
+                thoughtSeekerFrequency = 2.5
+            }
+            
+            if scriptVars["thoughtSeekerTimer"] >= thoughtSeekerFrequency {
+                if scriptVars["phase"] >= 2 {
+                    useAbilityAtTarget(myEntityId, "Thought Seeker", targetEntityId, 1.5)
+                    useAbilityAtPosition(myEntityId, "Thought Seeker", entityPosition(targetEntityId))
+                } else {
+                    useAbilityAtTarget(myEntityId, "Thought Seeker", targetEntityId, 1.5)
+                }
+                scriptVars["thoughtSeekerTimer"] = 0.0
+            }
+            
+            // Reality Fracture (dangerous zones at player's position)
+            realityFractureFrequency := 20.0 - (scriptVars["phase"] * 1.0)
+            if realityFractureFrequency < 3.0 {
+                realityFractureFrequency = 3.0
+            }
+            
+            if scriptVars["realityFractureTimer"] >= realityFractureFrequency {
+                if scriptVars["phase"] >= 3 {
+                    useAbilityAtPosition(myEntityId, "Reality Fracture", entityPosition(targetEntityId))
+                }
+                scriptVars["realityFractureTimer"] = 0.0
+            }
+
+            if castingAction == 0 {
+                // Phase 1: Mind Control & Area Denial
+                if scriptVars["phase"] == 1 {
+                    if scriptVars["attackTimer"] >= 1.8 {
+                        useAbilityAtTarget(myEntityId, "Mind Wave", targetEntityId, 1.0)
+                        scriptVars["attackTimer"] = 0.0
+                    }
+                    
+                    if scriptVars["specialTimer"] >= 3.5 {
+                        useAbilityAtPosition(myEntityId, "Psychic Orbs", randomPositionInCurrentRoom(myEntityId, 2.0))
+                        useAbilityAtTarget(myEntityId, "Mind Control", targetEntityId, 1.0)
+                        scriptVars["specialTimer"] = 0.0
+                    }
+                    
+                    if scriptVars["voidEchoTimer"] >= 6.0 {
+                        useAbilityAtPosition(myEntityId, "Void Echo", 
+                            positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+                        scriptVars["voidEchoTimer"] = 0.0
+                    }
+                    
+                    // Add a tracking projectile that follows the player
+                    if scriptVars["phaseTimer"] >= 4.0 {
+                        useAbilityAtTarget(myEntityId, "Psychic Tracker", targetEntityId, 1.0)
+                        scriptVars["phaseTimer"] = 0.0
+                    }
+                }
+
+                // Phase 2: Reality Manipulation
+                if scriptVars["phase"] == 2 {
+                    if scriptVars["attackTimer"] >= 2.0 {
+                        useAbilityAtPosition(myEntityId, "Reality Tear", randomPositionInCurrentRoom(myEntityId, 2.0))
+                        scriptVars["attackTimer"] = 0.0
+                    }
+                    
+                    if scriptVars["specialTimer"] >= 4.0 {
+                        useAbilityAtPosition(myEntityId, "Void Collapse", entityPosition(myEntityId))
+                        useAbilityAtTarget(myEntityId, "Psychic Storm", targetEntityId, 1.0)
+                        scriptVars["specialTimer"] = 0.0
+                    }
+                    
+                    if scriptVars["mindSpikesTimer"] >= 5.0 {
+                        useAbilityAtPosition(myEntityId, "Mind Spikes", 
+                            positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+                        scriptVars["mindSpikesTimer"] = 0.0
+                    }
+                    
+                    // Place tracking projectiles around player
+                    if scriptVars["phaseTimer"] >= 3.5 {
+                        for i := 0; i < 2; i++ {
+                            useAbilityAtPosition(myEntityId, "Psychic Tracker", 
+                                randomPositionNearby(targetEntityId, 3.0))
+                        }
+                        scriptVars["phaseTimer"] = 0.0
+                    }
+                }
+
+                // Phase 3: Mental Prison
+                if scriptVars["phase"] == 3 {
+                    if scriptVars["attackTimer"] >= 1.8 {
+                        useAbilityAtTarget(myEntityId, "Mind Shatter", targetEntityId, 1.0)
+                        scriptVars["attackTimer"] = 0.0
+                    }
+                    
+                    if scriptVars["specialTimer"] >= 5.0 {
+                        useAbilityAtPosition(myEntityId, "Mental Prison", positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+                        useAbilityAtTarget(myEntityId, "Thought Lash", targetEntityId, 1.0)
+                        scriptVars["specialTimer"] = 0.0
+                    }
+
+                    if scriptVars["voidEchoTimer"] >= 4.0 {
+                        useAbilityAtPosition(myEntityId, "Void Echo", 
+                            positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+                        scriptVars["voidEchoTimer"] = 0.0
+                    }
+                    
+                    // Add more tracking projectiles
+                    if scriptVars["phaseTimer"] >= 3.0 {
+                        for i := 0; i < 3; i++ {
+                            useAbilityAtTarget(myEntityId, "Psychic Tracker", targetEntityId, 1.0)
+                        }
+                        scriptVars["phaseTimer"] = 0.0
+                    }
+                }
+
+                // Phase 4: Neural Disruption
+                if scriptVars["phase"] == 4 {
+                    if scriptVars["attackTimer"] >= 2.0 {
+                        useAbilityAtTarget(myEntityId, "Neural Surge", targetEntityId, 1.0)
+                        scriptVars["attackTimer"] = 0.0
+                    }
+                    
+                    if scriptVars["specialTimer"] >= 3.5 {
+                        for i := 0; i < 3; i++ {
+                            useAbilityAtPosition(myEntityId, "Consciousness Drain", 
+                                randomPositionInCurrentRoom(myEntityId, 2.0))
+                        }
+                        scriptVars["specialTimer"] = 0.0
+                    }
+                    
+                    if scriptVars["mindSpikesTimer"] >= 5.5 {
+                        useAbilityAtPosition(myEntityId, "Mind Spikes", 
+                            positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+                        scriptVars["mindSpikesTimer"] = 0.0
+                    }
+                    
+                    // Add more tracking at player position
+                    if scriptVars["phaseTimer"] >= 2.5 {
+                        useAbilityAtPosition(myEntityId, "Psychic Tracker", entityPosition(targetEntityId))
+                        scriptVars["phaseTimer"] = 0.0
+                    }
+                }
+
+                // Phase 5: Psychic Barrage
+                if scriptVars["phase"] == 5 {
+                    if scriptVars["attackTimer"] >= 1.8 {
+                        useAbilityAtTarget(myEntityId, "Psychic Barrage", targetEntityId, 1.0)
+                        useAbilityAtTarget(myEntityId, "Mind Blast", targetEntityId, 1.0)
+                        scriptVars["attackTimer"] = 0.0
+                    }
+                    
+                    if scriptVars["specialTimer"] >= 4.0 {
+                        positions := [
+                            [16.0, 8.0], [8.0, 16.0],
+                            [24.0, 16.0], [16.0, 24.0]
+                        ]
+                        
+                        for i := 0; i < len(positions); i++ {
+                            useAbilityAtPosition(myEntityId, "Void Pulse",
+                                positionInCurrentRoom(myEntityId, [positions[i][0], positions[i][1], 0.0]))
+                        }
+                        scriptVars["specialTimer"] = 0.0
+                    }
+                    
+                    if scriptVars["voidEchoTimer"] >= 3.5 {
+                        useAbilityAtPosition(myEntityId, "Void Echo", 
+                            positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+                        scriptVars["voidEchoTimer"] = 0.0
+                    }
+                    
+                    if scriptVars["mindSpikesTimer"] >= 6.0 {
+                        useAbilityAtPosition(myEntityId, "Mind Spikes", entityPosition(targetEntityId))
+                        scriptVars["mindSpikesTimer"] = 0.0
+                    }
+                    
+                    // Intense direct player targeting
+                    if scriptVars["phaseTimer"] >= 8.25 {
+                        useAbilityAtPosition(myEntityId, "Void Eruption", entityPosition(targetEntityId))
+                        scriptVars["phaseTimer"] = 0.0
+                    }
+                }
+
+                // Phase 6: Reality Collapse (Final Phase)
+                if scriptVars["phase"] == 6 {
+                    if scriptVars["attackTimer"] >= 2.5 {
+                        useAbilityAtPosition(myEntityId, "Reality Warp", positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+                        useAbilityAtTarget(myEntityId, "Void Tendrils", targetEntityId, 1.0)
+                        scriptVars["attackTimer"] = 0.0
+                    }
+                    
+                    if scriptVars["specialTimer"] >= 3.0 {
+                        useAbilityAtPosition(myEntityId, "Mental Cage", 
+                            randomPositionInCurrentRoom(myEntityId, 2.0))
+                        scriptVars["specialTimer"] = 0.0
+                    }
+                    
+                    if scriptVars["voidEchoTimer"] >= 3.5 {
+                        useAbilityAtPosition(myEntityId, "Void Echo", 
+                            positionInCurrentRoom(myEntityId, [16.0, 16.0, 0.0]))
+                        scriptVars["voidEchoTimer"] = 0.0
+                    }
+                    
+                    if scriptVars["mindSpikesTimer"] >= 4.5 {
+                        useAbilityAtPosition(myEntityId, "Mind Spikes", entityPosition(targetEntityId))
+                        scriptVars["mindSpikesTimer"] = 0.0
+                    }
+                    
+                    // Brutal player tracking
+                    if scriptVars["phaseTimer"] >= 7.25 {
+                        useAbilityAtPosition(myEntityId, "Void Eruption", entityPosition(targetEntityId))
+                        // Multiple tracking projectiles that follow player
+                        useAbilityAtTarget(myEntityId, "Psychic Tracker", targetEntityId)
+                        scriptVars["phaseTimer"] = 0.0
+                    }
+                    
+                    // Ultimate attack in final phase, used rarely
+                    if scriptVars["ultimateTimer"] >= 20.0 {
+                        useAbilityAtPosition(myEntityId, "Psychic Nova", entityPosition(myEntityId))
+                        scriptVars["ultimateTimer"] = 0.0
+                    }
+                }
+            }
+        }
+    }
+}

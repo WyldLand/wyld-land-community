@@ -1,0 +1,26 @@
+---item_59 Runner's Longshot---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Runner's Longshot]]
+Rarity :: Rare
+
+For the discerning, on-the-go sniper.
+
+---gundef_Runner's Longshot---
+Fire Speed :: 0.8
+Bullets In Chamber :: 7
+Reload Speed :: 1.7
+Sprite :: weapons_58
+Fire Event :: rifleb
+Reload Event :: riflereload
+Bullet Definition :: [[longshot]]
+Archetype :: LongRangeRifle
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: SemiAuto
+Bullet Lifetime :: 1
+
+---bulletdef_longshot---
+sprite Rifle14
+potency 192
+fire 40 relative -1 1
+

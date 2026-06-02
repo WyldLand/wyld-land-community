@@ -1,0 +1,239 @@
+---item_139 Fishing Lure---
+Type :: Equippable
+Slot :: Active
+Icon :: items_686
+Gun Definition :: [[FishingLureGun]]
+Rarity :: Common
+
+A curious bobber enchanted to seek out nearby waters. Cast it to summon a mysterious Lure from the depths.
+
+---item_140 Advanced Lure---
+Type :: Equippable
+Slot :: Active
+Icon :: items_687
+Gun Definition :: [[FishingLureGun]]
+Rarity :: Common
+
+A curious bobber enchanted to seek out nearby waters. Cast it to summon a mysterious Lure from the depths.
+
+---item_141 Wyld Lure---
+Type :: Equippable
+Slot :: Active
+Icon :: items_688
+Gun Definition :: [[FishingLureGun]]
+Rarity :: Common
+
+A curious bobber enchanted to seek out nearby waters. Cast it to summon a mysterious Lure from the depths.
+
+---gundef_FishingLureGun---
+Fire Speed :: 1.0
+Bullets In Chamber :: -1
+Reload Speed :: 0.0
+Fire Event :: tripmine
+Archetype :: EquippableItem
+Innate Spikes :: [[Fishing Lure]]
+
+---spike_Fishing Lure---
+Auras :: [[Fishing Lure]]
+
+---aura_Fishing Lure---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:FishingLure]]
+
+---script_FishingLure_FireWeapon---
+
+if auraAbilityId == abilityId {
+
+	waterPoint := findNearestCollisionPoint(myEntityId, "water")
+
+	if waterPoint[0] == 0.0 && waterPoint[1] == 0.0 {
+		say(myEntityId, "There's no water here!", "Fishing Lure", true)
+	} else if entityHasAura(myEntityId, "Go Fish") {
+		say(myEntityId, "You're already fishing! Wait til you're done to cast your line again.", "Fishing Lure", true)
+	} else {
+		fishingLureItemId := itemDefintionForSlot(myEntityId, 6).item
+		lureLevel := 0
+		if fishingLureItemId == 139 {
+			lureLevel = 1
+		} else if fishingLureItemId == 140 {
+			lureLevel = 2
+		} else if fishingLureItemId == 141 {
+			lureLevel = 3
+		}
+		addAuraToEntity(myEntityId, "Go Fish", 999, myEntityId, {lureLevel: lureLevel, waterPoint: waterPoint})
+		removeItemFromPlayer(myEntityId, fishingLureItemId)
+	}
+}
+
+---aura_Go Fish---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 0.33
+Definitions :: [[Custom:GoFish]]
+
+---script_GoFish_Tick---
+
+rand := import("rand")
+text := import("text")
+
+// Helper function definition
+weightedRandomChoice := func(choiceMap) {
+
+	weights := []
+	choices := []
+
+	for k,v in choiceMap {
+		weights = append(weights, v)
+		choices = append(choices, k)
+	}
+
+	totalWeight := 0.0
+	for weight in weights {
+		totalWeight += weight
+	}
+	
+	randomValue := rand.float() * totalWeight
+	currentWeight := 0.0
+	
+	for i := 0; i < len(choices); i++ {
+		currentWeight += weights[i]
+		if randomValue <= currentWeight {
+			return choices[i]
+		}
+	}
+	
+	return choices[0]
+}
+
+if !scriptVars.isInitialized {
+    scriptVars.isInitialized = true
+	scriptVars.timeFishing = 0.0
+	myPos := entityPosition(myEntityId)
+	direction := normalizeVector(subVectors(scriptVars.waterPoint, myPos))
+	scriptVars.startPosition = addVectors(scriptVars.waterPoint, mulVector(direction, 0.5))
+	fishingLurePrefab := "fishinglure"
+	if scriptVars.lureLevel == 2 {
+		fishingLurePrefab = "advancedlure"
+	} else if scriptVars.lureLevel == 3 {
+		fishingLurePrefab = "wyldlure"
+	}
+	scriptVars.lureEntityId = summonEntity(fishingLurePrefab, scriptVars.startPosition, 1, false)
+	scriptVars.spawnOffset = rand.float() + 1.0
+	scriptVars.timeSinceSpawn = 0.0
+}
+
+scriptVars.timeFishing += 0.33 //based on Time Per Tick of the aura
+scriptVars.timeSinceSpawn += 0.33
+
+availableFish := {"fishcatfish": 0.5, "fishgrouper": 1.0, "fishsunfish": 0.1, "fishcarp": 0.0, "fishvolcanotrout": 0.0}
+
+currentMap := zoneMap(myEntityId)
+currentTier := zoneTier(myEntityId)
+
+if scriptVars.lureLevel == 2 {
+	availableFish.fishcatfish += 0.1
+	if currentTier > 5 {
+		availableFish.fishsunfish += 0.2
+	}
+	if currentTier > 8 {
+		availableFish.fishcarp += 0.2
+	}
+} else if scriptVars.lureLevel == 3 {
+	availableFish.fishcatfish += 0.2
+	if currentTier > 5 {
+		availableFish.fishsunfish += 0.4
+	}
+	if currentTier > 8 {
+		availableFish.fishcarp += 0.4
+	}
+	if currentTier > 5 && text.contains(currentMap, "Swamp") {
+		availableFish.fishvolcanotrout += 0.4
+	}
+}
+
+if scriptVars.timeSinceSpawn > scriptVars.spawnOffset {
+	numFish := 3 + rand.intn(3) //3-6 fish, might be based on lure later?
+	for i := 0; i < numFish; i++ {
+		fishType := weightedRandomChoice(availableFish)
+		summonEntity(fishType, scriptVars.startPosition, (currentTier * 8 + scriptVars.lureLevel * 3), false, {playerEntityId: myEntityId})
+	}
+	scriptVars.timeSinceSpawn = 0.0
+	scriptVars.spawnOffset = rand.float() + 1.0
+}
+
+if scriptVars.timeFishing > 10.0 {
+	killEntity(scriptVars.lureEntityId)
+	dispelAuraOnEntity(myEntityId, "Go Fish")
+}
+
+---mob_FishingLure---
+Prefab :: fishinglure
+Range Behavior :: Stationary
+Speed :: 600
+Type :: Friendly
+Options :: manualpathing noaggronearby
+
+---prefab_fishinglure---
+
+Components :: [[FishingLureSprite]] [[Monster]]
+
+---prefabcomponent_FishingLureSprite---
+
+Component :: Sprite
+
+{
+	"pivotX": 0.5,
+	"pivotY": 0.5,
+	"sprite": "player/items",
+	"frame": 686
+}
+
+---mob_AdvancedLure---
+Prefab :: advancedlure
+Range Behavior :: Stationary
+Speed :: 600
+Type :: Friendly
+Options :: manualpathing noaggronearby
+
+---prefab_advancedlure---
+
+Components :: [[AdvancedLureSprite]] [[Monster]]
+
+---prefabcomponent_AdvancedLureSprite---
+
+Component :: Sprite
+
+{
+	"pivotX": 0.5,
+	"pivotY": 0.5,
+	"sprite": "player/items",
+	"frame": 687
+}
+
+---mob_WyldLure---
+Prefab :: wyldlure
+Range Behavior :: Stationary
+Speed :: 600
+Type :: Friendly
+Options :: manualpathing noaggronearby
+
+---prefab_wyldlure---
+
+Components :: [[WyldLureSprite]] [[Monster]]
+
+---prefabcomponent_WyldLureSprite---
+
+Component :: Sprite
+
+{
+	"pivotX": 0.5,
+	"pivotY": 0.5,
+	"sprite": "player/items",
+	"frame": 688
+}

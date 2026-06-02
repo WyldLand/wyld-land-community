@@ -1,0 +1,463 @@
+---mobgrouping_Dungeon006-Boss---
+Mobs :: [[Ancient Guardian]]
+Difficulty :: 99
+
+---mobgrouping_Dungeon006-DungMd1-1---
+Mobs :: [[Caged Shocker]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]] [[Dual Slicer]] [[Mushroom Dagger]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd1-2---
+Mobs :: [[Blaster]] [[Archer]] [[Archer]] [[Bomb Bot]] [[Bomb Bot]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd1-3---
+Mobs :: [[Heavy Slicer]] [[Dual Slicer]] [[Dual Slicer]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd1-4---
+Mobs :: [[Shielder]] [[Archer]] [[Archer]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd1-5---
+Mobs :: [[Lumbering Hulk]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungMd2-1---
+Mobs :: [[Blaster]] [[Archer]] [[Archer]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd2-2---
+Mobs :: [[Caged Shocker]] [[Bomb Bot]] [[Bomb Bot]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd2-3---
+Mobs :: [[Heavy Slicer]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]] [[Stormhead]] [[Mushroom Dagger]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd2-4---
+Mobs :: [[Turtle]] [[Archer]] [[Archer]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd2-5---
+Mobs :: [[Lumbering Hulk]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungMd3-1---
+Mobs :: [[Caged Shocker]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]] [[Stormhead]] [[Mushroom Dagger]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd3-2---
+Mobs :: [[Blaster]] [[Archer]] [[Archer]] [[Bomb Bot]] [[Bomb Bot]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd3-3---
+Mobs :: [[Shielder]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd3-4---
+Mobs :: [[Heavy Slicer]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]] [[Dual Slicer]] [[Mushroom Dagger]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd3-5---
+Mobs :: [[Lumbering Hulk]] [[Bomb Bot]] [[Bomb Bot]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungMd4-1---
+Mobs :: [[Glitch Samurai]] [[Archer]] [[Archer]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungMd4-2---
+Mobs :: [[Caged Shocker]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd4-3---
+Mobs :: [[Heavy Slicer]] [[Bomb Bot]] [[Bomb Bot]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd4-4---
+Mobs :: [[Turtle]] [[Archer]] [[Archer]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd4-5---
+Mobs :: [[Lumbering Hulk]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]] [[Stormhead]] [[Mushroom Dagger]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungMd5-1---
+Mobs :: [[Caged Shocker]] [[Archer]] [[Archer]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd5-2---
+Mobs :: [[Blaster]] [[Bomb Bot]] [[Bomb Bot]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd5-3---
+Mobs :: [[Heavy Slicer]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]] [[Stormhead]] [[Mushroom Dagger]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd5-4---
+Mobs :: [[Shielder]] [[Archer]] [[Archer]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd5-5---
+Mobs :: [[Lumbering Hulk]] [[Stormhead]] [[Stormhead]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Dual Slicer]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungMd6-1---
+Mobs :: [[Blaster]] [[Archer]] [[Archer]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd6-2---
+Mobs :: [[Caged Shocker]] [[Bomb Bot]] [[Bomb Bot]] [[Stormhead]] [[Stormhead]] [[Mushroom Dagger]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd6-3---
+Mobs :: [[Heavy Slicer]] [[Dual Slicer]] [[Dual Slicer]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd6-4---
+Mobs :: [[Turtle]] [[Archer]] [[Archer]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd6-5---
+Mobs :: [[Lumbering Hulk]] [[Bomb Bot]] [[Bomb Bot]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungMd7-1---
+Mobs :: [[Caged Shocker]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd7-2---
+Mobs :: [[Blaster]] [[Archer]] [[Archer]] [[Bomb Bot]] [[Bomb Bot]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd7-3---
+Mobs :: [[Shielder]] [[Dual Slicer]] [[Dual Slicer]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd7-4---
+Mobs :: [[Heavy Slicer]] [[Archer]] [[Archer]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd7-5---
+Mobs :: [[Lumbering Hulk]] [[Bomb Bot]] [[Bomb Bot]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Stormhead]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungMd8-1---
+Mobs :: [[Blaster]] [[Archer]] [[Archer]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd8-2---
+Mobs :: [[Caged Shocker]] [[Dual Slicer]] [[Dual Slicer]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd8-3---
+Mobs :: [[Glitch Samurai]] [[Bomb Bot]] [[Bomb Bot]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungMd8-4---
+Mobs :: [[Turtle]] [[Archer]] [[Archer]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd8-5---
+Mobs :: [[Lumbering Hulk]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungMd9-1---
+Mobs :: [[Caged Shocker]] [[Archer]] [[Archer]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd9-2---
+Mobs :: [[Blaster]] [[Bomb Bot]] [[Bomb Bot]] [[Stormhead]] [[Stormhead]] [[Mushroom Dagger]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd9-3---
+Mobs :: [[Heavy Slicer]] [[Dual Slicer]] [[Dual Slicer]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd9-4---
+Mobs :: [[Shielder]] [[Archer]] [[Archer]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd9-5---
+Mobs :: [[Lumbering Hulk]] [[Bomb Bot]] [[Bomb Bot]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungMd10-1---
+Mobs :: [[Blaster]] [[Archer]] [[Archer]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd10-2---
+Mobs :: [[Caged Shocker]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd10-3---
+Mobs :: [[Heavy Slicer]] [[Bomb Bot]] [[Bomb Bot]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd10-4---
+Mobs :: [[Turtle]] [[Archer]] [[Archer]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungMd10-5---
+Mobs :: [[Glitch Samurai]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]] [[Stormhead]] [[Mushroom Dagger]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungSm1-1---
+Mobs :: [[Blaster]] [[Archer]] [[Archer]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm1-2---
+Mobs :: [[Caged Shocker]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm1-3---
+Mobs :: [[Heavy Slicer]] [[Bomb Bot]] [[Bomb Bot]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm1-4---
+Mobs :: [[Turtle]] [[Archer]] [[Archer]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm1-5---
+Mobs :: [[Lumbering Hulk]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]] [[Stormhead]] [[Mushroom Dagger]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungSm2-1---
+Mobs :: [[Caged Shocker]] [[Archer]] [[Archer]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm2-2---
+Mobs :: [[Blaster]] [[Bomb Bot]] [[Bomb Bot]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm2-3---
+Mobs :: [[Shielder]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]] [[Stormhead]] [[Mushroom Dagger]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm2-4---
+Mobs :: [[Heavy Slicer]] [[Archer]] [[Archer]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm2-5---
+Mobs :: [[Lumbering Hulk]] [[Bomb Bot]] [[Bomb Bot]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Stormhead]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungSm3-1---
+Mobs :: [[Blaster]] [[Archer]] [[Archer]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm3-2---
+Mobs :: [[Caged Shocker]] [[Dual Slicer]] [[Dual Slicer]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm3-3---
+Mobs :: [[Heavy Slicer]] [[Bomb Bot]] [[Bomb Bot]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm3-4---
+Mobs :: [[Turtle]] [[Archer]] [[Archer]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm3-5---
+Mobs :: [[Lumbering Hulk]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungSm4-1---
+Mobs :: [[Caged Shocker]] [[Archer]] [[Archer]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm4-2---
+Mobs :: [[Blaster]] [[Bomb Bot]] [[Bomb Bot]] [[Stormhead]] [[Stormhead]] [[Mushroom Dagger]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm4-3---
+Mobs :: [[Heavy Slicer]] [[Dual Slicer]] [[Dual Slicer]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm4-4---
+Mobs :: [[Shielder]] [[Archer]] [[Archer]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm4-5---
+Mobs :: [[Lumbering Hulk]] [[Bomb Bot]] [[Bomb Bot]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungSm5-1---
+Mobs :: [[Blaster]] [[Archer]] [[Archer]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm5-2---
+Mobs :: [[Caged Shocker]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm5-3---
+Mobs :: [[Heavy Slicer]] [[Bomb Bot]] [[Bomb Bot]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm5-4---
+Mobs :: [[Turtle]] [[Archer]] [[Archer]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm5-5---
+Mobs :: [[Lumbering Hulk]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]] [[Stormhead]] [[Mushroom Dagger]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungSm6-1---
+Mobs :: [[Caged Shocker]] [[Archer]] [[Archer]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm6-2---
+Mobs :: [[Blaster]] [[Bomb Bot]] [[Bomb Bot]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm6-3---
+Mobs :: [[Shielder]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]] [[Stormhead]] [[Mushroom Dagger]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm6-4---
+Mobs :: [[Heavy Slicer]] [[Archer]] [[Archer]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm6-5---
+Mobs :: [[Lumbering Hulk]] [[Bomb Bot]] [[Bomb Bot]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Stormhead]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungSm7-1---
+Mobs :: [[Blaster]] [[Archer]] [[Archer]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm7-2---
+Mobs :: [[Caged Shocker]] [[Dual Slicer]] [[Dual Slicer]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm7-3---
+Mobs :: [[Heavy Slicer]] [[Bomb Bot]] [[Bomb Bot]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm7-4---
+Mobs :: [[Turtle]] [[Archer]] [[Archer]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm7-5---
+Mobs :: [[Lumbering Hulk]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungSm8-1---
+Mobs :: [[Caged Shocker]] [[Archer]] [[Archer]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm8-2---
+Mobs :: [[Blaster]] [[Bomb Bot]] [[Bomb Bot]] [[Stormhead]] [[Stormhead]] [[Mushroom Dagger]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm8-3---
+Mobs :: [[Heavy Slicer]] [[Dual Slicer]] [[Dual Slicer]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Stormhead]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm8-4---
+Mobs :: [[Shielder]] [[Archer]] [[Archer]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 4
+
+---mobgrouping_Dungeon006-DungSm8-5---
+Mobs :: [[Lumbering Hulk]] [[Bomb Bot]] [[Bomb Bot]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungLg1-1---
+Mobs :: [[Glitch Samurai]] [[Blaster]] [[Archer]] [[Archer]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]] [[Dual Slicer]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungLg1-2---
+Mobs :: [[Caged Shocker]] [[Shielder]] [[Archer]] [[Archer]] [[Bomb Bot]] [[Bomb Bot]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungLg1-3---
+Mobs :: [[Heavy Slicer]] [[Lumbering Hulk]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungLg1-4---
+Mobs :: [[Blaster]] [[Turtle]] [[Archer]] [[Archer]] [[Archer]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungLg1-5---
+Mobs :: [[Glitch Samurai]] [[Caged Shocker]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 6
+
+---mobgrouping_Dungeon006-DungLg2-1---
+Mobs :: [[Blaster]] [[Heavy Slicer]] [[Archer]] [[Archer]] [[Stormhead]] [[Stormhead]] [[Dual Slicer]] [[Dual Slicer]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungLg2-2---
+Mobs :: [[Glitch Samurai]] [[Turtle]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Bomb Bot]] [[Bomb Bot]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungLg2-3---
+Mobs :: [[Caged Shocker]] [[Shielder]] [[Archer]] [[Archer]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungLg2-4---
+Mobs :: [[Heavy Slicer]] [[Lumbering Hulk]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungLg2-5---
+Mobs :: [[Glitch Samurai]] [[Blaster]] [[Archer]] [[Archer]] [[Bomb Bot]] [[Bomb Bot]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 6
+
+---mobgrouping_Dungeon006-DungLg3-1---
+Mobs :: [[Caged Shocker]] [[Turtle]] [[Archer]] [[Archer]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungLg3-2---
+Mobs :: [[Glitch Samurai]] [[Heavy Slicer]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Bomb Bot]] [[Bomb Bot]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungLg3-3---
+Mobs :: [[Blaster]] [[Shielder]] [[Archer]] [[Archer]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungLg3-4---
+Mobs :: [[Lumbering Hulk]] [[Turtle]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungLg3-5---
+Mobs :: [[Glitch Samurai]] [[Caged Shocker]] [[Archer]] [[Archer]] [[Bomb Bot]] [[Bomb Bot]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 6
+
+---mobgrouping_Dungeon006-DungLg4-1---
+Mobs :: [[Heavy Slicer]] [[Blaster]] [[Archer]] [[Archer]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungLg4-2---
+Mobs :: [[Glitch Samurai]] [[Shielder]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Bomb Bot]] [[Bomb Bot]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungLg4-3---
+Mobs :: [[Caged Shocker]] [[Turtle]] [[Archer]] [[Archer]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungLg4-4---
+Mobs :: [[Lumbering Hulk]] [[Heavy Slicer]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungLg4-5---
+Mobs :: [[Glitch Samurai]] [[Blaster]] [[Archer]] [[Archer]] [[Bomb Bot]] [[Bomb Bot]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 6
+
+---mobgrouping_Dungeon006-DungLg5-1---
+Mobs :: [[Caged Shocker]] [[Heavy Slicer]] [[Archer]] [[Archer]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungLg5-2---
+Mobs :: [[Glitch Samurai]] [[Turtle]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Bomb Bot]] [[Bomb Bot]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungLg5-3---
+Mobs :: [[Blaster]] [[Shielder]] [[Archer]] [[Archer]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungLg5-4---
+Mobs :: [[Lumbering Hulk]] [[Heavy Slicer]] [[Mushroom Dagger]] [[Mushroom Dagger]] [[Dual Slicer]] [[Dual Slicer]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 5
+
+---mobgrouping_Dungeon006-DungLg5-5---
+Mobs :: [[Glitch Samurai]] [[Caged Shocker]] [[Archer]] [[Archer]] [[Bomb Bot]] [[Bomb Bot]] [[Stormhead]] [[Stormhead]]
+Difficulty :: 6

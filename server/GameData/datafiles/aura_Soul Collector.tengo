@@ -1,0 +1,42 @@
+---aura_Soul Collector---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:SoulCollector]]
+
+---aura_Soul Collector Stack---
+Type :: Buff
+Duration :: -1
+Icon :: statusicons_28
+Max Stacks :: 5
+Time Per Tick :: 1.0
+Definitions :: [[AuraAffectStat/Soul Collector Power]]
+
+---auraaffectstat_Soul Collector Power---
+Stat :: Damage
+Boost :: 10.0
+
+---script_SoulCollector_IncomingDamage---
+if is_undefined(scriptVars["didEmpower"]) {
+	scriptVars["didEmpower"] = false
+}
+
+if getPoints(myEntityId, "hp", "current") - damage <= 0 && !scriptVars["didEmpower"] {
+	scriptVars["didEmpower"] = true
+	nearby := getNearbyEntities(myEntityId)
+	
+	for i := 0; i < len(nearby); i++ {
+		if !isEnemyOfEntity(myEntityId, nearby[i].id) {
+			if getPoints(nearby[i].id, "hp", "current") > 0 {
+				auras := getAurasOnEntity(nearby[i].id)
+				for j := 0; j < len(auras); j++ {
+					if auras[j]["name"] == "Soul Collector" {
+						addAuraToEntity(nearby[i].id, "Soul Collector Stack", auraAbilityId, nearby[i].id)
+						showVfxAtPosition(nearby[i].id, "RiskyBusiness", entityPosition(nearby[i].id))
+					}
+				}
+			}
+		}
+	}
+}

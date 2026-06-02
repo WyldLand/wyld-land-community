@@ -1,0 +1,23 @@
+---aura_Rampage---
+Type :: Buff
+Duration :: -1
+Icon ::
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:Rampage]]
+
+---spike_Rampage---
+Slot :: Gun
+Auras :: [[Rampage]]
+Rarity :: Rare
+
+If you get the killing blow on an enemy, gain fast reloads and additional damage for a short time.
+
+---script_Rampage_DamageDealt---
+if abilityId == auraAbilityId {
+    if getPoints(damageSenderId, "hp", "current") <= 0 {
+        //We killed them.
+        addAuraToEntity(myEntityId, "Fast Reload", auraAbilityId, myEntityId)
+        addAuraToEntity(myEntityId, "Plus Damage", auraAbilityId, myEntityId)
+    }
+}

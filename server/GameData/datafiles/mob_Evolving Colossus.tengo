@@ -1,0 +1,214 @@
+---mobdefinition_Evolving Colossus---
+ID :: evolvingcolossus
+Prefab :: colossus
+Range Behavior :: [[Short Ranged]]
+Abilities :: [[Phase Shift]] [[Energy Burst]] [[Radial Barrage]] [[Homing Missiles]] [[Laser Barrage]] [[Bullet Storm]]
+Bounding Box :: 0 2.73 2.5 3.0
+Type :: Boss
+Loot :: [[EvolvingColossus]]
+
+---loottable_EvolvingColossus---
+[[182 Destructor's Plating]] @ 67.0
+[[93 Elemental Gauntlets]] @ 2.0
+[[90 Quantum Striders]] @ 2.0
+[[107 Rabbit]] @ 5.0
+
+---ability_Phase Shift---
+Bullet Definition :: [[phaseshift]]
+VFX Cast :: trigger:Buff*
+Lock Time :: 2.0
+
+---bulletdef_phaseshift---
+sprite CirclePool 7
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 7
+	timedFill 60
+	damageEvery 60
+	wait 60
+	vfx BombExplosion 5
+	wait 1
+	vfx ShakeLarge 5
+	vanish
+
+---ability_Energy Burst---
+Bullet Definition :: [[energyburst]]
+VFX Cast :: trigger:RangeAttack*
+Lock Time :: 0.5
+
+---bulletdef_energyburst---
+sprite Basic
+color 3
+potency 100
+nway speed:8 bullets:8 spread:40 angle:0 directionType:relative
+wait 3
+nway speed:8 bullets:8 spread:40 angle:20 directionType:relative
+wait 3
+nway speed:8 bullets:8 spread:40 angle:-20 directionType:relative
+
+---ability_Radial Barrage---
+Bullet Definition :: [[radialbarrage]]
+VFX Cast :: trigger:SpinAttack*
+Lock Time :: 1.0
+
+---bulletdef_radialbarrage---
+sprite Custom10
+color 1
+potency 100
+radial bullets:36 speed:6
+wait 5
+radial bullets:36 speed:7 angle:5 directionType:absolute
+wait 5
+radial bullets:36 speed:8 angle:10 directionType:absolute
+
+---ability_Homing Missiles---
+Bullet Definition :: [[homingmissiles]]
+VFX Cast :: trigger:Attack*
+Lock Time :: 0.75
+
+---bulletdef_homingmissiles---
+sprite Custom7
+color 2
+potency 100
+repeat bullets:8 speed:10 angle:0 maxAngle:360 delay:3 directionType:relative
+	wait 20
+	fire explosivebolt
+	vanish
+
+---bulletdef_explosivebolt---
+sprite CirclePool 2
+potency 150
+fire 0 relative 0
+	aoeexplosion
+	radius 2
+	timedFill 15
+	damageEvery 15
+	wait 15
+	vfx ColossusExplosion 2
+	wait 1
+	vanish
+
+---ability_Laser Barrage---
+Bullet Definition :: [[laserbarrage]]
+VFX Cast :: trigger:Beam
+Lock Time :: 1.5
+
+---bulletdef_laserbarrage---
+sprite Laser14
+color 4
+potency 0
+repeat bullets:5 angleChange:72 angle:0 directionType:absolute
+	fire laserbeam
+wait 10
+repeat bullets:5 angleChange:72 angle:20 directionType:absolute
+	fire laserbeam
+wait 10
+repeat bullets:5 angleChange:72 angle:40 directionType:absolute
+	fire laserbeam
+
+---bulletdef_laserbeam---
+sprite Laser14
+color 4
+potency 0
+fire 230 relative 0
+	piercing 100
+	wait 40
+	vanish
+sprite Invisible
+potency 100
+wait 3
+fire 230 relative 0
+	radius 0.6
+	piercing 100
+wait 3
+fire 230 relative 0
+	radius 0.6
+	piercing 100
+
+---ability_Bullet Storm---
+Bullet Definition :: [[bulletstorm]]
+VFX Cast :: trigger:Buff*
+Lock Time :: 1.5
+
+---bulletdef_bulletstorm---
+sprite Basic
+color 5
+potency 75
+repeat bullets:240 speed:2 angle:0 angleChange:9 delay:1 directionType:relative
+	wait 180
+	vanish
+wait 30
+repeat bullets:240 speed:4 angle:180 angleChange:-9 delay:1 directionType:relative
+	wait 180
+	vanish
+
+---script_evolvingcolossus_Monster---
+resetVars := func() {
+	scriptVars["phase"] = 3
+	scriptVars["timeSinceEnergyBurst"] = 0.0
+	scriptVars["timeSinceRadialBarrage"] = 0.0
+	scriptVars["timeSinceHomingMissiles"] = 0.0
+	scriptVars["timeSinceLaserBarrage"] = 0.0
+	scriptVars["timeSinceBulletStorm"] = 0.0
+	scriptVars["timeSincePhaseShift"] = 0.0
+}
+
+if !isDead {
+	if is_undefined(scriptVars["phase"]) {
+		resetVars()
+	}
+
+	if targetEntityId > 0 && castingAction == 0 {
+		scriptVars["timeSinceEnergyBurst"] += delta
+		scriptVars["timeSinceRadialBarrage"] += delta
+		scriptVars["timeSinceHomingMissiles"] += delta
+		scriptVars["timeSinceLaserBarrage"] += delta
+		scriptVars["timeSinceBulletStorm"] += delta
+		scriptVars["timeSincePhaseShift"] += delta
+
+		currentHealth := getPoints(myEntityId, "hp", "current")
+		maxHealth := getPoints(myEntityId, "hp", "max")
+
+		if currentHealth < maxHealth * 0.66 && scriptVars["phase"] == 1 {
+			scriptVars["phase"] = 2
+			useAbilityAtPosition(myEntityId, "Phase Shift", entityPosition(myEntityId))
+			scriptVars["timeSincePhaseShift"] = 0.0
+		} else if currentHealth < maxHealth * 0.33 && scriptVars["phase"] == 2 {
+			scriptVars["phase"] = 3
+			useAbilityAtPosition(myEntityId, "Phase Shift", entityPosition(myEntityId))
+			scriptVars["timeSincePhaseShift"] = 0.0
+		}
+
+		if scriptVars["phase"] >= 1 {
+			if scriptVars["timeSinceEnergyBurst"] > 1.5 {
+				useAbilityAtTarget(myEntityId, "Energy Burst", targetEntityId, 1.0)
+				scriptVars["timeSinceEnergyBurst"] = 0.0
+			}
+			
+			if scriptVars["timeSinceHomingMissiles"] > 3.5 {
+				useAbilityAtTarget(myEntityId, "Homing Missiles", randomTargetEntityId(myEntityId, 100.0), 1.5)
+				scriptVars["timeSinceHomingMissiles"] = 0.0
+			}
+		}
+
+		if scriptVars["phase"] >= 2 {
+			if scriptVars["timeSinceRadialBarrage"] > 3.3 {
+				useAbilityAtPosition(myEntityId, "Radial Barrage", entityPosition(myEntityId))
+				scriptVars["timeSinceRadialBarrage"] = 0.0
+			}
+		}
+
+		if scriptVars["phase"] == 3 {
+			if scriptVars["timeSinceLaserBarrage"] > 5.0 {
+				useAbilityAtPosition(myEntityId, "Laser Barrage", entityPosition(myEntityId))
+				scriptVars["timeSinceLaserBarrage"] = 0.0
+			}
+			
+			if scriptVars["timeSinceBulletStorm"] > 4.0 {
+				useAbilityAtPosition(myEntityId, "Bullet Storm", entityPosition(myEntityId))
+				scriptVars["timeSinceBulletStorm"] = 0.0
+			}
+		}
+	}
+}

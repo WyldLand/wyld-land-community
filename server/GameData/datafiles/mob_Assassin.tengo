@@ -1,0 +1,64 @@
+---mob_Assassin---
+Prefab :: assassin
+Range Behavior :: Short Ranged
+Abilities :: [[Assassin]]
+
+---prefab_assassin---
+
+Components :: [[AssassinSprite]] [[AssassinCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_AssassinCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+    "position": [0.0, 0.6],
+    "size": [1.0, 1.2]
+}
+
+---prefabcomponent_AssassinSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.165,
+    "pivotY": 1.0,
+    "sprite": "darkforest1/assassin",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_sfxassassinAttack---
+
+Components :: [[SFXAssassinAttack]]
+
+---prefabcomponent_SFXAssassinAttack---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest1/assassinAttack1.wav", "darkforest1/assassinAttack2.wav", "darkforest1/assassinAttack3.wav"],
+    "select": "random",
+	"spatial": true
+}
+
+---ability_Assassin---
+Bullet Definition :: [[basic]]
+Cooldown :: 0.75
+VFX Charging :: trigger:Attack*
+Cast Time :: 0.50
+Lock Time :: 0.30
+
+---bulletdef_basic---
+fire 5 relative 0
+

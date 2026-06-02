@@ -1,0 +1,30 @@
+---mob_Player Dummy---
+Prefab :: playerdummy
+Range Behavior :: Stationary
+Bounding Box :: 0 0.375 0.75 0.75
+Type :: Friendly
+
+---prefab_playerdummy---
+
+Components :: [[PlayerDummySprite]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_PlayerDummySprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 1.0,
+    "sprite": "playerdummy",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}

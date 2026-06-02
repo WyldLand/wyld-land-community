@@ -1,0 +1,26 @@
+---prefab_CatchFish---
+
+Components :: [[CatchFishSprite]] [[CatchFishSound]] [[SmallCameraShake]]
+
+---prefabcomponent_CatchFishSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "fishing/CatchFish",
+    "play": "default"
+     
+}
+
+---prefabcomponent_CatchFishSound---
+
+Component :: Sound
+
+{
+    "sources": ["fishing/catchfish1.wav", "fishing/catchfish2.wav", "fishing/catchfish3.wav", "fishing/catchfish4.wav"],
+    "select": "random",
+    "randomPitch": 0.15,
+    "channel": "sfx"
+}

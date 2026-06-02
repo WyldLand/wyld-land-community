@@ -1,0 +1,50 @@
+---item_68 Steady Aim---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Steady Aim]]
+Rarity :: Legendary
+
+Shoots two bullets at once and applies Shock to enemies.
+
+Steady. Aim. Fire!
+
+---gundef_Steady Aim---
+Fire Speed :: 0.2
+Charge Time :: 0.3
+Bullets In Chamber :: 8
+Reload Speed :: 2.2
+Sprite :: weapons_67
+Fire Event :: revolverc
+Reload Event :: revolverreload
+Charge Event :: chargeshort
+Bullet Definition :: [[steadyaim]]
+Archetype :: Handgun
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: FullAuto
+Bullet Lifetime :: 0.9
+Innate Spikes :: [[Steady Aim Shock]]
+
+---bulletdef_steadyaim---
+sprite PlayerBullet
+color 1
+potency 65
+fire 20 relative 0
+wait 1
+fire 20 relative 0
+
+---spike_Steady Aim Shock---
+Auras :: [[Steady Aim Shock]]
+
+---aura_Steady Aim Shock---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:SteadyAimShock]]
+
+---script_SteadyAimShock_DamageDealt---
+
+if abilityId == auraAbilityId {
+	addAuraToEntity(myEntityId, "Shock", auraAbilityId, damageSenderId)
+}

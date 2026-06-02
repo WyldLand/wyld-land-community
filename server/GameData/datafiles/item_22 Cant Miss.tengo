@@ -1,0 +1,105 @@
+---item_22 Cant Miss---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Cant Miss]]
+Rarity :: Exotic
+
+On target hit, refund bullet to magazine.
+For every 5 bullets that hit the enemy gain a 5% damage buff for 10 seconds. Stacks 5 times (25% max). If you miss or take damage then you lose all your buffs.
+Each shot slows you down for a short time.
+
+They call me Deadeye Joe. Cause I never miss, not because my eye is dead.
+
+---gundef_Cant Miss---
+Fire Speed :: 0.5
+Bullets In Chamber :: 4
+Reload Speed :: 1
+Sprite :: weapons_109
+Fire Event :: pistol
+Reload Event :: pistolreload
+Bullet Definition :: [[cantmiss]]
+Archetype :: Handgun
+Innate Spikes :: [[Cant Miss]]
+Muzzle VFX :: Muzzle 0.50
+
+---bulletdef_cantmiss---
+sprite Lance13
+color 2
+potency 96
+fire 16 relative -2 2
+
+---spike_Cant Miss---
+Auras :: [[Cant Miss]]
+
+---aura_Cant Miss---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 10
+Time Per Tick :: 1.0
+Definitions :: [[Custom:CantMiss]]
+
+---script_CantMiss_DamageDealt---
+if abilityId == auraAbilityId {
+	if is_undefined(scriptVars["hitCounter"]) {
+		scriptVars["hitCounter"] = 0
+	}
+	
+	// Refund bullet on hit
+	addAmmoToClip(myEntityId, abilityId, 1)
+	
+	scriptVars["hitCounter"] += 1
+	
+	if scriptVars["hitCounter"] >= 4 {
+		// Create explosion at the target's position
+		targetPos := entityPosition(damageSenderId)
+		addAuraToEntity(myEntityId, "Cant Miss Plus Damage", auraAbilityId, myEntityId)
+		scriptVars["hitCounter"] = 0
+		showVfxAtPosition(myEntityId, "PowerSpike", targetPos)
+	}
+}
+
+---script_CantMiss_FireWeapon---
+// Apply slow debuff to player when firing
+if abilityId == auraAbilityId {
+	addAuraToEntity(myEntityId, "Cant Miss Slow", auraAbilityId, myEntityId)
+}
+
+---script_CantMiss_BulletHit---
+// Check if the bullet missed (hit static collision like walls, not enemies)
+if auraAbilityId == abilityId && hitLayer == CollisionLayerStatic {
+	// Reset hit counter on miss
+	if !is_undefined(scriptVars["hitCounter"]) {
+		scriptVars["hitCounter"] = 0
+	}
+
+	scriptVars["hitCounter"] = 0
+	
+
+	dispelAuraOnEntity(myEntityId, "Cant Miss Plus Damage")
+	dispelAuraOnEntity(myEntityId, "Cant Miss Plus Damage")
+	dispelAuraOnEntity(myEntityId, "Cant Miss Plus Damage")
+	dispelAuraOnEntity(myEntityId, "Cant Miss Plus Damage")
+	dispelAuraOnEntity(myEntityId, "Cant Miss Plus Damage")
+}
+
+---aura_Cant Miss Slow---
+Type :: Debuff
+Icon :: statusicons_4
+Duration :: 2.0
+Max Stacks :: 3
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Slow]]
+
+---aura_Cant Miss Plus Damage---
+Type :: Buff
+Duration :: 10
+Icon :: statusicons_2
+Max Stacks :: 5
+Time Per Tick :: 1.0
+Definitions :: [[Clip Master Plus Damage]]
+
+---auraaffectstat_Clip Master Plus Damage---
+Stat :: Damage
+Boost :: 5.0

@@ -1,0 +1,14 @@
+---achievement_Shadow Victory---
+Kill :: [[Mobs/Shadow Hunter|Shadow Hunter]]@1
+XP :: 50
+
+Defeat the Shadow Hunter and its stealthy, lethal attacks.
+
+---achievement_Shadow Master---
+Kill :: [[Mobs/Shadow Hunter|Shadow Hunter]]@1
+Tags :: NoDamage
+Title :: Shadow Walker
+XP :: 50
+ResetOnDeath :: False
+
+Take out the Shadow Hunter without taking any damage.

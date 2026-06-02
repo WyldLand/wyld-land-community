@@ -1,0 +1,32 @@
+---item_47 Nexus Disruptor---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Nexus Disruptor]]
+Rarity :: Common
+
+Charge it up to fire a single projectile.
+
+When you really want to put all of your eggs in one basket.
+
+---gundef_Nexus Disruptor---
+Fire Speed :: 0.15
+Charge Time :: 0.5
+Bullets In Chamber :: 10
+Reload Speed :: 1.15
+Sprite :: weapons_47
+Charge Event :: chargeshort
+Fire Event :: blasterc
+Reload Event :: blasterreload
+Bullet Definition :: [[disruptor]]
+Archetype :: Handgun
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: FullAuto
+Bullet Lifetime :: 1.0
+
+---bulletdef_disruptor---
+sprite Custom11
+color 2
+color 1
+potency 51
+fire 17 relative -1 1
+

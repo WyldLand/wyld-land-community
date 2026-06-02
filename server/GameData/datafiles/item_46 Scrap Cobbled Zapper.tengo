@@ -1,0 +1,31 @@
+---item_46 Scrap Cobbled Zapper---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Scrap Cobbled Zapper]]
+Rarity :: Common
+
+Have you ever seen something that fires an energy blast look so...cobbled together?
+
+---gundef_Scrap Cobbled Zapper---
+Fire Speed :: 0.25
+Bullets In Chamber :: 15
+Reload Speed :: 1
+Sprite :: weapons_46
+Fire Event :: blasterb
+Reload Event :: blasterreload
+Bullet Definition :: [[zapper]]
+Archetype :: Handgun
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: SemiAuto
+Bullet Lifetime :: 1.0
+
+---bulletdef_zapper---
+sprite Custom10
+color 3
+potency 22
+fire 16 relative -2 2
+wait 1
+fire 16 relative -2 2
+wait 1
+fire 16 relative -2 2
+

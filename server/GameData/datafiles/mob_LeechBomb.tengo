@@ -1,0 +1,71 @@
+---mob_Leech Bomb---
+Prefab :: leechbomb
+Range Behavior :: Stationary
+Abilities :: [[LeechBombExplode]]
+MobScript :: leechbomb
+Options :: nodeathsmoke
+Type :: Friendly
+
+---prefab_leechbomb---
+Components :: [[LeechBombSprite]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_LeechBombSprite---
+Component :: Sprite
+{
+	"pivotX": 0.65,
+	"pivotY": 0.6,
+	"sprite": "vfx/leechbomb",
+	"animations": [
+		{
+			"name": "idle"
+		}
+	]
+}
+
+---ability_LeechBombExplode---
+Bullet Definition :: [[leechbombexplode]]
+VFX Cast :: trigger:Explode*
+
+---prefab_sfxleechbombExplode---
+
+Components :: [[SFXLeechBombExplode]]
+
+---prefabcomponent_SFXLeechBombExplode---
+
+Component :: Sound
+
+{
+    "sources": ["vfx/leechbomb.wav"],
+	"spatial": true
+}
+
+---bulletdef_leechbombexplode---
+sprite Invisible
+potency 125
+fire 0 relative 0
+	aoeexplosion
+	radius 1.5 0.75
+	damageEvery 5
+	wait 6
+	vanish
+
+---script_leechbomb_Monster---
+if is_undefined(scriptVars["timeAlive"]) {
+	scriptVars["timeAlive"] = 0.0
+	scriptVars["exploded"] = false
+	scriptVars["killed"] = false
+}
+
+if !isDead {
+	scriptVars["timeAlive"] += delta
+
+	if scriptVars["timeAlive"] >= 1.5 && !scriptVars.exploded {
+		useAbilityAtPosition(myEntityId, "LeechBombExplode", entityPosition(myEntityId))
+		scriptVars["exploded"] = true
+	}
+
+	if scriptVars.timeAlive >= 2.0 && !scriptVars.killed {
+		killEntity(myEntityId)
+		scriptVars.killed = true
+	}
+}

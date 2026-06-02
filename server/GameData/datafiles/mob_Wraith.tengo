@@ -1,0 +1,212 @@
+---mob_Wraith---
+Prefab :: wraith
+Range Behavior :: Medium Ranged
+Abilities :: [[Empowering Shout]] [[Wraith Blink]] [[Wraith Beam]]
+Bounding Box :: 0 0.95 1.5 1.9
+Type :: Elite
+Options :: alwaysattack
+
+---prefab_wraith---
+
+Components :: [[WraithSprite]] [[WraithCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_WraithCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+	"position": [0.0, 0.95],
+    "size": [1.5, 1.9]
+}
+
+---prefabcomponent_WraithSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.226,
+    "pivotY": 1.0,
+    "sprite": "darkforest2/wraith",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ],
+	"transitions": [
+		{
+			"from": "Disappear",
+			"to": "*",
+			"animation": "_hide"
+		},
+		{
+			"from": "*",
+			"to": "Appear",
+			"animation": "_show"
+		}
+	]
+}
+
+---prefab_sfxwraithAttack---
+
+Components :: [[SFXWraithAttack]]
+
+---prefabcomponent_SFXWraithAttack---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest2/wraithAttack.wav"],
+	"spatial": true
+}
+
+---prefab_sfxwraithAppear---
+
+Components :: [[SFXWraithAppear]]
+
+---prefabcomponent_SFXWraithAppear---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest2/wraithAppear.wav"],
+	"spatial": true
+}
+
+---prefab_sfxwraithDisappear---
+
+Components :: [[SFXWraithDisappear]]
+
+---prefabcomponent_SFXWraithDisappear---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest2/wraithDisappear.wav"],
+	"spatial": true
+}
+
+---ability_Empowering Shout---
+Bullet Definition :: [[wraithshout]]
+Cooldown :: 8.0
+Script :: EmpoweringShout
+
+---bulletdef_wraithshout---
+sprite Custom10
+color 4
+potency 100
+nway speed:8 bullets:12 spread:360 angle:0 directionType:absolute
+wait 2
+nway speed:6 bullets:8 spread:360 angle:20 directionType:absolute
+wait 2
+nway speed:4 bullets:6 spread:360 angle:40 directionType:absolute
+
+---ability_Wraith Blink---
+Bullet Definition :: [[wraithblast]]
+Cooldown :: 8.0
+VFX Charging :: trigger:Disappear*
+VFX Cast :: trigger:Appear*
+Lock Time :: 0.75
+Cast Time :: 1.0
+Script :: WraithBlink
+
+---bulletdef_wraithblast---
+sprite CirclePool 2.5
+potency 250
+fire 0 relative 0
+	aoeexplosion
+	radius 2.5
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vfx BloodySlamExplosion 5
+	wait 1
+	vanish
+wait 20
+sprite Basic
+color 5
+potency 75
+radial bullets:24 speed:8
+
+---ability_Wraith Beam---
+Cooldown :: 2.0
+VFX Charging :: trigger:Attack*
+Cast Time :: 1.0
+Script :: WraithBeam
+
+---ability_Wraith Beam Fire---
+Bullet Definition :: [[wraithbeam]]
+
+---bulletdef_wraithbeam---
+//Even though we're firing multiples here, since any attack can only score one hit per player, we don't divide the damage
+potency 0
+sprite OrangePool 0.50
+fire 14 relative -1 1
+	aoedot
+	damageEvery 999
+wait 15
+sprite Lance14
+color 4
+potency 50
+fire 40 relative -1 1
+fire 40 relative -1 1
+wait 1
+fire 40 relative -1 1
+fire 40 relative -1 1
+wait 1
+fire 40 relative -1 1
+
+---script_WraithBeam_Cast---
+if frameNum == 19 {
+	targets := getNearbyEntities(myEntityId)
+	numTargets := 0
+	for i := 0; i < len(targets); i++ {
+		if isEnemyOfEntity(myEntityId, targets[i].id) && numTargets < 3 {
+			useAbilityAtTarget(myEntityId, "Wraith Beam Fire", targets[i].id, 1.0)
+			numTargets++
+		}
+	}
+}
+
+---aura_Wraith Empowerment---
+Type :: Buff
+Duration :: 4.0
+Icon :: statusicons_2
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:WraithEmpowerment]]
+
+---script_WraithEmpowerment_OutgoingDamage---
+additionalDamage = int(0.15 * float(damage))
+
+---script_WraithEmpowerment_IncomingDamage---
+additionalDamage = int(-0.25 * float(damage))
+
+---script_EmpoweringShout_Cast---
+if frameNum == 0 {
+	nearby := getNearbyEntities(myEntityId)
+	for i := 0; i < len(nearby); i++ {
+		if !isEnemyOfEntity(myEntityId, nearby[i].id) && nearby[i].id != myEntityId {
+			addAuraToEntity(myEntityId, "Wraith Empowerment", abilityId, nearby[i].id)
+		}
+	}
+}
+
+---script_WraithBlink_Cast---
+setSpeed(myEntityId, 0.0)
+
+if frameNum == 5 {
+	setCollisionLayer(myEntityId, CollisionLayerDynamic)
+}
+
+if frameNum == 8 {
+	targetPos := entityPosition(randomTargetEntityId(myEntityId, 100.0))
+	setPosition(myEntityId, targetPos)
+	setCollisionLayer(myEntityId, CollisionLayerMonster)
+}

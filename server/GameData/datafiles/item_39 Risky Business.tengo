@@ -1,0 +1,91 @@
+---item_39 Risky Business---
+Type :: Equippable
+Slot :: Active
+Icon :: items_723
+Gun Definition :: [[Risky Business]]
+Rarity :: Legendary
+
+On use, absorb 50% of incoming damage for a short period of time. Afterward, charge your next bullet with the damage.
+
+Some folks just like to live on the very edge of reason. Clearly you're one of them.
+
+---gundef_Risky Business---
+Fire Speed :: 25.0
+Bullets In Chamber :: -1
+Reload Speed :: 0.0
+Sprite :: items_723
+Archetype :: EquippableItem
+Innate Spikes :: [[Risky Business]]
+Muzzle VFX :: RiskyBusiness 0
+
+---prefab_sfxriskybusiness---
+
+Components :: [[SFXRiskyBusiness]]
+
+---prefabcomponent_SFXRiskyBusiness---
+
+Component :: Sound
+
+{
+    "sources": ["misc/riskybusiness.wav"],
+    "channel": "gfx"
+}
+
+---spike_Risky Business---
+Auras :: [[Risky Business]]
+
+---aura_Risky Business---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Existing :: Replace
+Time Per Tick :: 1.0
+Definitions :: [[Custom:RiskyBusiness]]
+
+---aura_Risky Business Active---
+Type :: Buff
+Duration :: -1
+Icon :: statusicons_8
+Max Stacks :: 1
+Existing :: Replace
+Time Per Tick :: 1.0
+Definitions :: [[Custom:RiskyBusinessActive]]
+
+---script_RiskyBusiness_FireWeapon---
+
+
+if auraAbilityId == abilityId {
+	addAuraToEntity(myEntityId, "Risky Business Active", auraAbilityId, myEntityId)
+}
+
+---script_RiskyBusinessActive_BulletHit---
+if abilityId < 4 && ticksElapsed >= 6 { //was a bullet hit with our gun
+    dispelAuraOnEntity(myEntityId, "Risky Business Active")
+}
+
+---script_RiskyBusinessActive_IncomingDamage---
+if is_undefined(scriptVars["riskyBusinessDamageAbsorbed"]) {
+    scriptVars["riskyBusinessDamageAbsorbed"] = 0
+}
+
+if ticksElapsed < 6 {
+    scriptVars["riskyBusinessDamageAbsorbed"] = scriptVars["riskyBusinessDamageAbsorbed"] + int(0.8 * float(damage))
+    additionalDamage = int(0.5 * float(damage)) * -1   
+}
+
+---script_RiskyBusinessActive_OutgoingDamage---
+if is_undefined(scriptVars["riskyBusinessDamageAbsorbed"]) {
+    scriptVars["riskyBusinessDamageAbsorbed"] = 0
+}
+
+if ticksElapsed >= 6 && abilityId < 4 {
+    additionalDamage = scriptVars["riskyBusinessDamageAbsorbed"]
+    scriptVars["riskyBusinessDamageAbsorbed"] = 0
+}
+
+---script_RiskyBusinessActive_Tick---
+if ticksElapsed >= 6 && is_undefined(scriptVars["riskyBusinessShowVfx"]) {
+    showVfxAtPosition(myEntityId, "RiskyBusiness", entityPosition(myEntityId))
+    scriptVars["riskyBusinessShowVfx"] = true
+}

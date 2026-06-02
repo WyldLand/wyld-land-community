@@ -1,0 +1,23 @@
+---mob_World Event Manager---
+Prefab :: worldeventmanager
+Range Behavior :: Stationary
+
+---prefab_worldeventmanager---
+
+Components :: [[WorldEventManager]]
+
+---prefabcomponent_WorldEventManager---
+
+Component :: WorldEventManager
+
+---aura_Event Credit---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:EventCredit]]
+
+---script_EventCredit_IncomingDamage---
+if damageSenderLayer == CollisionLayerPlayer {
+	worldEventCredit(damageSenderId, damage)
+}

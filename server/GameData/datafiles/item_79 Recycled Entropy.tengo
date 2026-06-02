@@ -1,0 +1,26 @@
+---item_79 Recycled Entropy---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Recycled Entropy]]
+Rarity :: Uncommon
+
+Recycling the randomness of the universe into a hail of bullets.
+
+---gundef_Recycled Entropy---
+Fire Speed :: 0.06
+Bullets In Chamber :: 70
+Reload Speed :: 2
+Sprite :: weapons_77
+Fire Event :: smgb
+Reload Event :: smgreload
+Bullet Definition :: [[recycledentropy]]
+Archetype :: Automatic
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: FullAuto
+Bullet Lifetime :: 1.0
+
+---bulletdef_recycledentropy---
+sprite PlayerBullet
+potency 15
+fire 16 relative -5 5
+

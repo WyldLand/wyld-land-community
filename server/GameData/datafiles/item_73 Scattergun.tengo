@@ -1,0 +1,28 @@
+---item_73 Scattergun---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Scattergun]]
+Rarity :: Uncommon
+
+It says it was manufactured in France, but I'm not quite sure where that is.
+
+---gundef_Scattergun---
+Fire Speed :: 0.3
+Bullets In Chamber :: 8
+Reload Speed :: 1.6
+Sprite :: weapons_71
+Fire Event :: shotguna
+Reload Event :: shotgunreload
+Bullet Definition :: [[scattergun]]
+Archetype :: Shotgun
+Muzzle VFX :: Muzzle 0.50
+Fire Type :: SemiAuto
+Bullet Lifetime :: 0.8
+
+---bulletdef_scattergun---
+sprite Custom10
+potency 16
+nway speed:14 bullets:3 spread:10 directionType:relative angle:0 bulletShift:1
+wait 1
+nway speed:14 bullets:3 spread:10 directionType:relative angle:0 bulletShift:1
+

@@ -1,0 +1,1885 @@
+---mobdefinition_Echodeath Victor---
+ID :: echodeathvictor
+Prefab :: echodeathvictor
+Range Behavior :: [[Medium Ranged]] 
+Abilities :: [[Room Catastrophe Circle Pool 1]]
+Type :: Boss
+Speed :: 350
+Loot :: [[Echodeath]]
+
+---loottable_Echodeath---
+[[300 Allied Detonator]] @ 5.0
+[[326 Mini Echodeath]] @ 20.0
+
+---mobdefinition_Collector Bomb One---
+ID :: collectorbombone
+Prefab :: bombbot
+Range Behavior :: Ignore Targets
+Abilities :: [[Spider Bomb Raid]] [[Pulse Bomb Burst]]
+Bounding Box :: 0.0 0.5 1.2 1.0
+Speed :: 400
+Type :: Normal
+Options :: manualpathing nodeathsmoke
+
+---mobdefinition_Echodeath Raidbomb---
+ID :: echodeathraidbomb
+Range Behavior :: [[Stationary]]
+Abilities :: [[Echoblight Doom Circle]]
+Prefab :: echodeathraidbomb
+Bounding Box :: 0.0 0.5 1.2 1.0
+Type :: Elite
+Speed :: 0
+Options :: alwaysattack
+
+---prefab_echodeathraidbomb---
+
+Components :: [[EchoDeathRaidBombSprite]] [[EchoDeathRaidBombCollider]] [[Monster]] [[Nameplate]] [[Indicator]]
+
+---prefabcomponent_EchoDeathRaidBombCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+	"position": [0.03283918, 4],
+    "size": [1.365678, 1.35]
+}
+
+---prefabcomponent_EchoDeathRaidBombSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.49,
+    "pivotY": 1.0,
+    "sprite": "echodeathraidbomb/echodeathraidbomb",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_echodeathvictor---
+
+Components :: [[EchoDeathVictorSprite]] [[EchoDeathVictorCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_EchoDeathVictorCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+	"position": [-0.04685, 2.3125],
+    "size": [3.8125, 4.875]
+}
+
+---prefabcomponent_EchoDeathVictorSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.244,
+    "pivotY": 1.0,
+    "sprite": "echodeathvictor/echodeathvictor",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_echodeathtower---
+
+Components :: [[EchoDeathTowerSprite]] [[EchoDeathTowerCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_EchoDeathTowerCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+	"position": [-0.03125, 2.34375],
+    "size": [2.3125, 4.6875]
+}
+
+---prefabcomponent_EchoDeathTowerSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.49,
+    "pivotY": 0.7569,
+    "sprite": "echodeathvictor/echodeathtowertwo",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---ability_Ethereal Convergence---
+Bullet Definition :: [[etherealconvergence]]
+VFX Cast :: trigger:Attack*
+
+---bulletdef_etherealconvergence---
+sprite Custom11
+color 5
+potency 100
+repeat bullets:72 speed:3 angle:0 angleChange:17 delay:2 directionType:absolute
+	wait 200
+	speed -6
+	wait 50
+	speed 8
+	wait 1000
+	vanish
+wait 20
+sprite Basic
+color 1
+potency 100
+repeat bullets:24 speed:2 angle:90 angleChange:31 delay:2 directionType:absolute
+	wait 250
+	speed -4
+	wait 40
+	speed 12
+	wait 1000
+	vanish
+sprite Custom7
+color 2
+potency 100
+repeat bullets:18 speed:5 angle:270 angleChange:-41 delay:2 directionType:absolute
+	wait 160
+	speed -10
+	wait 70
+	speed 15
+	wait 1000
+	vanish
+
+---ability_Spawn Bomb---
+Script :: SpawnBomb
+
+---script_SpawnBomb_Cast---
+if frameNum == 0 {
+    rand := import("rand")
+    bombSpawned := false
+    
+    // Define possible spawn positions
+    spawnPositions := [
+        positionInCurrentRoom(myEntityId, [71.0, 21.0, 0.0]),
+        positionInCurrentRoom(myEntityId, [64.0, 75.0, 0.0]),
+        positionInCurrentRoom(myEntityId, [60.0, 46.0, 0.0]),
+        positionInCurrentRoom(myEntityId, [8.0, 22.0, 0.0])
+    ]
+    
+    // Select a random position from the array
+    selectedPosition := spawnPositions[rand.intn(len(spawnPositions))]
+    
+    // Spawn the Echodeath Raidbomb at the selected position
+    if !bombSpawned {
+            log("SPAWN BOMB")
+            newEntityId := summonEntity("echodeathraidbomb", selectedPosition, monsterLevel(myEntityId))
+            killEntityIfEntityDies(newEntityId, myEntityId)
+             bombSpawned := true
+    }
+
+}
+
+---ability_Pulse Bomb Burst---
+Bullet Definition :: [[pulsebombburst]]
+Cooldown :: 2.00
+
+---bulletdef_pulsebombburst---
+sprite Basic
+color 3
+potency 100
+radial bullets:6 speed:7
+	wait 30
+	vanish
+
+---ability_Grant Bomb Buff---
+Bullet Definition :: [[grantbombbuff]]
+Auras :: [[Bomb Attacker]]
+Max Range :: 100.0
+
+---bulletdef_grantbombbuff---
+sprite GreenPool 4.0
+color 5  // Using blue/teal color which is typically used for shock effects
+potency 0
+fire 0 relative 0
+	aoeexplosion 
+	radius 4.0
+	damageEvery 45  // Player takes damage every 15 frames while standing in the pool
+	timedFill 45
+	damageEvery 45
+	wait 45  // Added 1 extra frame to ensure damage applies
+	fire circlePoolRadialBombAttackBuff
+	vanish
+
+---bulletdef_circlePoolRadialBombAttackBuff---
+sprite Basic
+color 5
+potency 0
+radial bullets:6 speed:3 angle:0 directionType:absolute
+	wait 60
+	vanish
+
+---script_grantbombbuff_BulletHit---
+// Apply the bomb buff to any player that touches this
+if hitLayer == CollisionLayerPlayer {
+    // Add the buff to the entity that was hit
+    addAuraToEntity(myEntityId, "Bomb Attacker", abilityId, hitEntityId)
+    
+    // Show a visual effect
+    showVfxAtPosition(hitEntityId, "PowerStrike", entityPosition(hitEntityId))
+}
+
+---aura_Bomb Attacker---
+Type :: Buff
+Duration :: 70.0
+Icon :: statusicons_7
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:BombAttackBuff]]
+
+---ability_Random Bomb Buff---
+Script :: RandomBombBuff
+
+---script_RandomBombBuff_Cast---
+if frameNum == 0 {
+    
+    // Get all nearby entities
+    nearby := getNearbyEntities(myEntityId)
+    
+    playerEntities := []
+    
+    for i := 0; i < len(nearby); i++ {
+        entityId := nearby[i].id
+        // Method 1: Check if entity is friendly to us (not an enemy)
+        if nearby[i].isEnemy {
+            playerEntities = append(playerEntities, entityId)
+        }
+    }
+    
+    // If we have at least one player, randomly select up to two to apply the buff
+    if len(playerEntities) > 0 {
+        rand := import("rand")
+        
+        // Determine how many players to affect (either all players if fewer than 2, or just 2)
+        numToAffect := 2
+        if len(playerEntities) < numToAffect {
+            numToAffect = len(playerEntities)
+        }
+        
+        
+        // Create a copy of the array that we can modify
+        availablePlayers := playerEntities
+        
+        // Apply the buff to the selected number of players
+        for i := 0; i < numToAffect; i++ {
+            if len(availablePlayers) > 0 {
+                // Select a random index
+                randomIndex := rand.intn(len(availablePlayers))
+                
+                // Get the player at that index
+                playerId := availablePlayers[randomIndex]
+                
+                // Apply the buff
+                addAuraToEntity(myEntityId, "Bomb Attacker", abilityId, playerId)
+                
+                // Remove this player from the available list
+                if randomIndex < len(availablePlayers)-1 {
+                    availablePlayers = append(availablePlayers[:randomIndex], availablePlayers[randomIndex+1:]...)
+                } else {
+                    availablePlayers = availablePlayers[:randomIndex]
+                }
+            }
+        }
+    } else {
+        log("Unable to find players to apply buff")
+    }
+}
+
+---ability_Astral Convergence---
+Bullet Definition :: [[astralConvergence]]
+VFX Cast :: trigger:Beam
+Lock Time :: 3.0
+Max Range :: 100.0
+
+---bulletdef_astralConvergence---
+sprite Lance14
+color 3
+potency 150
+radial bullets:20 speed:10 angle:0 directionType:absolute
+	wait 180
+wait 10
+repeat bullets:6 speed:6 angle:0 angleChange:60 directionType:absolute
+	wait 150
+	vanish
+wait 15
+repeat bullets:6 speed:7 angle:30 angleChange:60 directionType:absolute
+	wait 150
+	vanish
+
+---ability_Astral Node---
+Bullet Definition :: [[astralnode]]
+VFX Cast :: trigger:Beam
+Max Range :: 100.0
+
+---bulletdef_astralnode---
+sprite Laser14
+color 3
+potency 110
+repeat bullets:12 speed:6 angle:0 angleChange:20 delay:1 directionType:relative
+	wait 10
+	speed 2
+	wait 15
+	speed 10
+	wait 60
+	vanish
+wait 5
+sprite Custom10
+color 3
+potency 80
+repeat bullets:8 speed:7 angle:180 angleChange:-30 delay:2 directionType:relative
+	wait 8
+	speed 3
+	wait 16
+	speed 12
+	wait 60
+	vanish
+
+---ability_Fracture Wave---
+Bullet Definition :: [[fracturewave]]
+VFX Cast :: trigger:Beam
+Lock Time :: 3.0
+Max Range :: 100.0
+
+---bulletdef_fracturewave---
+sprite Custom11
+color 3
+potency 125
+nway speed:8 bullets:6 spread:90 angle:0 directionType:relative
+nway speed:8 bullets:6 spread:90 angle:90 directionType:relative
+nway speed:8 bullets:6 spread:90 angle:180 directionType:relative
+nway speed:8 bullets:6 spread:90 angle:270 directionType:relative
+	wait 80
+	vanish
+wait 5
+sprite Lance14
+color 3
+potency 100
+line speed:12 bullets:10 delay:1 angle:0 directionType:relative
+	piercing 2
+line speed:12 bullets:10 delay:1 angle:90 directionType:relative
+	piercing 2
+line speed:12 bullets:10 delay:1 angle:180 directionType:relative
+	piercing 2
+line speed:12 bullets:10 delay:1 angle:270 directionType:relative
+
+---ability_Room Catastrophe Circle Pool 1---
+Bullet Definition :: [[circlePoolOne]]
+Max Range :: 100.0
+
+---bulletdef_circlePoolOne---
+sprite CirclePool 4
+potency 100
+fire 0 relative 0
+	aoeexplosion
+	radius 4
+	timedFill 45
+	damageEvery 45
+	wait 45
+	wait 1
+	fire circlepoolradial
+	vanish
+
+---aura_Room Catastrophe Slow---
+Type :: Debuff
+Icon :: statusicons_4
+Duration :: 5.0
+Max Stacks :: 3
+Max Stacks Per Source :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Slow]]
+
+---ability_Room Catastrophe Circle Pool 2---
+Bullet Definition :: [[circlepool2]]
+Max Range :: 100.0
+Auras :: [[Room Catastrophe Slow]]
+
+---bulletdef_circlepool2---
+sprite WhitePool 4
+potency 100
+fire 0 relative 0
+	aoeexplosion
+	radius 4
+	timedFill 45
+	damageEvery 45
+	wait 45
+	wait 1
+	fire circlepoolradialtwo
+	vanish
+
+---bulletdef_circlepoolradialtwo---
+sprite Basic
+color 0
+potency 100
+radial bullets:6 speed:6 angle:0 directionType:absolute
+	wait 60
+	vanish
+
+---bulletdef_circlepoolradial---
+sprite Basic
+potency 100
+radial bullets:6 speed:6 angle:0 directionType:absolute
+	wait 60
+	vanish
+
+---ability_Room Catastrophe Circle Pool 3---
+Bullet Definition :: [[shockcirclepool]]
+Max Range :: 100.0
+Auras :: [[Room Shock Effect]]
+
+---bulletdef_shockcirclepool---
+sprite OrangePool 4.0
+color 4  // Using blue/teal color which is typically used for shock effects
+potency 200
+fire 0 relative 0
+	aoeexplosion 
+	radius 4.0
+	damageEvery 45  // Player takes damage every 15 frames while standing in the pool
+	timedFill 45
+	damageEvery 45
+	wait 45  // Added 1 extra frame to ensure damage applies
+	fire circlepoolradialshock
+	vanish
+
+---bulletdef_circlepoolradialshock---
+sprite Basic
+color 2
+potency 100
+radial bullets:6 speed:3 angle:0 directionType:absolute
+	wait 60
+	vanish
+
+---aura_Room Shock Effect---
+Type :: Debuff
+Icon :: statusicons_6
+Duration :: 3.0
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Shock]]
+
+---aura_Permanent Immunity---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:Immunity]]
+
+---script_Immunity_IncomingDamage---
+if damage > 0 {
+    additionalDamage = -1 * damage
+}
+
+
+---ability_Echoblight Doom Circle---
+Bullet Definition :: [[echoblightdoomcircle]]
+Max Range :: 10000.0
+
+---bulletdef_echoblightdoomcircle---
+sprite PurplePool 110
+potency 0
+fire 0 relative 0
+	aoeexplosion
+	radius 100
+	damageEvery 600
+	timedFill 600
+	wait 600
+	vfx BombExplosion 15
+	vfx ShakeLarge 5
+	vanish
+
+---bulletdef_doomRoomDamage---
+sprite Invisible
+potency 0
+fire 0 relative 0
+	wait 1
+	script DealRoomDamage
+	vanish
+
+---script_DealRoomDamage_BulletScript---
+// Get all entities in the current room
+currentRoom := entityRoom(myEntityId)
+nearby := getNearbyEntities(myEntityId)
+
+// Iterate through all nearby entities
+for i := 0; i < len(nearby); i++ {
+    // Check if the entity is a player and in the same room
+    if nearby[i].isPlayer && entityRoom(nearby[i].id) == currentRoom {
+        // Deal massive damage to the player
+        dealPotencyToEntity(myEntityId, nearby[i].id, 50000, bulletAbilityId)
+    }
+}
+
+---ability_Spawn Minions One---
+Script :: SpawnMinionsOne
+
+---script_SpawnMinionsOne_Cast---
+if frameNum == 0 {
+    rand := import("rand")
+    entityTypes := ["collectorbombone"]
+    selectedType := entityTypes[rand.intn(len(entityTypes))]
+    
+    spawnPositions := [
+        randomPositionNearby(myEntityId, [20.0, 25.0], 3.0)
+    ]
+    
+    for i := 0; i < len(spawnPositions); i++ {
+       newEntityId := summonEntity(selectedType, spawnPositions[i], monsterLevel(myEntityId), true, {bossId: myEntityId})
+       killEntityIfEntityDies(newEntityId, myEntityId)
+    }
+}
+
+---ability_Spawn Tower One---
+Script :: SpawnTowerOne
+
+---script_SpawnTowerOne_Cast---
+if frameNum == 0 {
+    rand := import("rand")
+    entityTypes := ["raidexplosiontowerone"]
+    selectedType := entityTypes[rand.intn(len(entityTypes))]
+    
+    spawnPositions := [
+         positionInCurrentRoom(myEntityId,[86.0, 44.0, 0.0]),
+         positionInCurrentRoom(myEntityId,[64.0, 20.0, 0.0]),
+         positionInCurrentRoom(myEntityId,[16.0, 58.0, 0.0]),
+         positionInCurrentRoom(myEntityId,[32.0, 16.0, 0.0]),
+         positionInCurrentRoom(myEntityId,[79.0, 42.0, 0.0])
+    ]
+    
+    // Randomly select one position from the array
+    randomIndex := rand.intn(len(spawnPositions))
+    randomPosition := spawnPositions[randomIndex]
+    
+    // Summon only one entity at the randomly chosen position
+    newEntityId := summonEntity(selectedType, randomPosition, monsterLevel(myEntityId))
+    killEntityIfEntityDies(newEntityId, myEntityId)
+}
+
+---script_collectorbombone_Monster---
+if is_undefined(scriptVars["bossId"]) {
+    nearby := getNearbyEntities(myEntityId)
+    for i := 0; i < len(nearby); i++ {
+        if nearby[i].mobid == "raidexplosiontowerone" {
+            scriptVars["bossId"] = nearby[i].id
+            break
+        }
+    }
+}
+
+if is_undefined(scriptVars["didDie"]) {
+    scriptVars["didDie"] = false
+}
+
+// Only proceed if we found a boss and haven't already died
+if !is_undefined(scriptVars["bossId"]) && !scriptVars["didDie"] {
+    
+    // Check if the boss is dead - if so, explode and die
+    if isEntityDead(scriptVars["bossId"]) {
+        useAbilityAtPosition(myEntityId, "Spider Bomb Raid", entityPosition(myEntityId))
+        scriptVars["didDie"] = true
+        killEntity(myEntityId)
+    } else {
+        // Boss is still alive, so move toward it
+        bossPos := entityPosition(scriptVars["bossId"])
+        pathTo(myEntityId, bossPos)
+        
+        // Explode if we get close enough to the boss
+        if distToPoint(myEntityId, bossPos) < 3.0 {
+            useAbilityAtPosition(myEntityId, "Spider Bomb Raid", entityPosition(myEntityId))
+            scriptVars["didDie"] = true
+            killEntity(myEntityId)
+        }
+    }
+}
+---mobdefinition_Raid Explosion Tower One---
+ID :: raidexplosiontowerone
+Prefab :: echodeathtower
+Range Behavior :: [[Stationary]]
+Abilities :: [[Spawn Minions One]]
+Bounding Box :: 0 2.73 2.5 3.0
+Type :: Elite
+Speed :: 0
+Options :: alwaysattack
+
+---script_raidexplosiontowerone_Monster---
+resetVars := func() {
+    scriptVars["firstFrame"] = true
+    scriptVars["timeSinceSpawn"] = 0.0
+    scriptVars["lastSummonTime"] = 0.0
+    scriptVars["hasDied"] = false
+    scriptVars["timeSinceTeleport"] = 0.0
+    scriptVars["teleportIndex"] = 0
+    scriptVars["timeSinceProgressUpdate"] = 0.0
+    
+    // Define predefined teleport locations
+    // These should be coordinates within your current room
+    scriptVars["teleportLocations"] = [
+        [64.0, 20.0, 0.0],
+        [16.0, 58.0, 0.0],
+        [32.0, 16.0, 0.0],
+        [79.0, 42.0, 0.0]
+    ]
+}
+
+doExplosion := func() {
+	currentNearby := getNearbyEntities(myEntityId)
+	for i := 0; i < len(currentNearby); i++ {
+		if isEnemyOfEntity(myEntityId, currentNearby[i].id) {
+            maxHealth := float(getPoints(currentNearby[i].id, "hp", "max"))
+            damageToDeal := int(maxHealth * 0.4)
+            attackEntity(myEntityId,  currentNearby[i].id, damageToDeal, -99)
+            log(damageToDeal)
+		}
+	}
+}
+
+if is_undefined(scriptVars["timeSinceSpawn"]) {
+    resetVars()
+}
+
+if isDead && !scriptVars["hasDied"] {
+    doExplosion()
+    say(myEntityId, "Tower Destroyed")
+    scriptVars["hasDied"] = true
+}
+
+if !isDead {
+    scriptVars["timeSinceSpawn"] += delta
+    scriptVars["lastSummonTime"] += delta
+    scriptVars["timeSinceTeleport"] += delta
+    scriptVars["timeSinceProgressUpdate"] += delta
+    
+    // Check if it's time to teleport (every 25 seconds)
+    if scriptVars["timeSinceTeleport"] >= 35.0 {
+        // Reset the timer
+        scriptVars["timeSinceTeleport"] = 0.0
+        
+        // Move to the next location in the predefined list
+        scriptVars["teleportIndex"] = (scriptVars["teleportIndex"] + 1) % len(scriptVars["teleportLocations"])
+        
+        // Get the new position
+        newPosition := positionInCurrentRoom(myEntityId, scriptVars["teleportLocations"][scriptVars["teleportIndex"]])
+        
+        // Teleport the entity to the new position
+        setPosition(myEntityId, newPosition)
+        
+    }
+
+    if scriptVars["timeSinceSpawn"] > 5.0 {
+        useAbilityAtPosition(myEntityId, "Spawn Minions One", entityPosition(myEntityId))
+        scriptVars["timeSinceSpawn"] = 0.0
+    }
+
+    if scriptVars["timeSinceProgressUpdate"] > 0.5 {
+        healthPct := float(getPoints(myEntityId, "hp", "current")) / float(getPoints(myEntityId, "hp", "max"))
+        setProgressBar(myEntityId, "towerone", "Tower One Health", healthPct)
+        scriptVars["timeSinceProgressUpdate"] = 0.0
+    }
+}
+
+
+---mobdefinition_Collector Bomb Two---
+ID :: collectorbombtwo
+Prefab :: bombbot
+Range Behavior :: Ignore Targets
+Abilities :: [[Pulse Bomb Burst]] [[Spider Bomb Raid]] 
+Bounding Box :: 0.0 0.5 1.2 1.0
+Speed :: 400
+Type :: Normal
+Options :: manualpathing nodeathsmoke
+
+---mobdefinition_Raid Explosion Tower Two---
+ID :: raidexplosiontowertwo
+Prefab :: echodeathtower
+Range Behavior :: [[Stationary]]
+Abilities :: [[Spawn Minions Two]]
+Bounding Box :: 0 2.73 2.5 3.0
+Type :: Elite
+Speed :: 0
+Options :: alwaysattack
+
+---script_raidexplosiontowertwo_Monster---
+resetVars := func() {
+    scriptVars["firstFrame"] = true
+    scriptVars["timeSinceSpawn"] = 0.0
+    scriptVars["lastSummonTime"] = 0.0
+    scriptVars["hasDied"] = false
+    scriptVars["timeSinceTeleport"] = 0.0
+    scriptVars["teleportIndex"] = 0
+    scriptVars["timeSinceProgressUpdate"] = 0.0
+    
+    // Define predefined teleport locations
+    // These should be coordinates within your current room
+    scriptVars["teleportLocations"] = [
+        [74.0, 75.0, 0.0],
+        [13.0, 77.0, 0.0],
+        [84.0, 10.0, 0.0],
+        [11.0, 7.0, 0.0]
+    ]
+}
+
+doExplosion := func() {
+	currentNearby := getNearbyEntities(myEntityId)
+	for i := 0; i < len(currentNearby); i++ {
+		if isEnemyOfEntity(myEntityId, currentNearby[i].id) {
+            maxHealth := float(getPoints(currentNearby[i].id, "hp", "max"))
+            damageToDeal := int(maxHealth * 0.4)
+            attackEntity(myEntityId,  currentNearby[i].id, damageToDeal, -99)
+            log(damageToDeal)
+		}
+	}
+}
+
+if is_undefined(scriptVars["timeSinceSpawn"]) {
+    resetVars()
+}
+
+if isDead && !scriptVars["hasDied"] {
+    doExplosion()
+    say(myEntityId, "Tower Destroyed")
+    scriptVars["hasDied"] = true
+}
+
+if !isDead {
+    scriptVars["timeSinceSpawn"] += delta
+    scriptVars["lastSummonTime"] += delta
+    scriptVars["timeSinceTeleport"] += delta
+    scriptVars["timeSinceProgressUpdate"] += delta
+    
+    // Check if it's time to teleport (every 25 seconds)
+    if scriptVars["timeSinceTeleport"] >= 35.0 {
+        // Reset the timer
+        scriptVars["timeSinceTeleport"] = 0.0
+        
+        // Move to the next location in the predefined list
+        scriptVars["teleportIndex"] = (scriptVars["teleportIndex"] + 1) % len(scriptVars["teleportLocations"])
+        
+        // Get the new position
+        newPosition := positionInCurrentRoom(myEntityId, scriptVars["teleportLocations"][scriptVars["teleportIndex"]])
+        
+        // Teleport the entity to the new position
+        setPosition(myEntityId, newPosition)
+        
+    }
+
+    if scriptVars["timeSinceSpawn"] > 5.0 {
+        useAbilityAtPosition(myEntityId, "Spawn Minions Two", entityPosition(myEntityId))
+        scriptVars["timeSinceSpawn"] = 0.0
+    }
+
+    if scriptVars["timeSinceProgressUpdate"] > 0.5 {
+        healthPct := float(getPoints(myEntityId, "hp", "current")) / float(getPoints(myEntityId, "hp", "max"))
+        setProgressBar(myEntityId, "towertwo", "Tower Two Health", healthPct)
+        scriptVars["timeSinceProgressUpdate"] = 0.0
+    }
+}
+
+---ability_Spawn Minions Two---
+Script :: SpawnMinionsTwo
+
+---script_SpawnMinionsTwo_Cast---
+if frameNum == 0 {
+    rand := import("rand")
+    entityTypes := ["collectorbombtwo"]
+    selectedType := entityTypes[rand.intn(len(entityTypes))]
+    
+    spawnPositions := [
+        randomPositionNearby(myEntityId, [20.0, 25.0], 3.0)
+    ]
+    
+    for i := 0; i < len(spawnPositions); i++ {
+       newEntityId := summonEntity(selectedType, spawnPositions[i], monsterLevel(myEntityId), true, {bossId: myEntityId})
+       killEntityIfEntityDies(newEntityId, myEntityId)
+    }
+}
+
+
+---ability_Spawn Tower Two---
+Script :: SpawnTowerTwo
+
+---script_SpawnTowerTwo_Cast---
+if frameNum == 0 {
+    rand := import("rand")
+    entityTypes := ["raidexplosiontowertwo"]
+    selectedType := entityTypes[rand.intn(len(entityTypes))]
+    
+    spawnPositions := [
+         positionInCurrentRoom(myEntityId,[74.0, 75.0, 0.0]),
+         positionInCurrentRoom(myEntityId,[13.0, 77.0, 0.0]),
+         positionInCurrentRoom(myEntityId,[84.0, 10.0, 0.0]),
+         positionInCurrentRoom(myEntityId,[11.0, 7.0, 0.0])
+    ]   
+    
+    // Randomly select one position from the array
+    randomIndex := rand.intn(len(spawnPositions))
+    randomPosition := spawnPositions[randomIndex]
+    
+    // Summon only one entity at the randomly chosen position
+    newEntityId := summonEntity(selectedType, randomPosition, monsterLevel(myEntityId))
+    killEntityIfEntityDies(newEntityId, myEntityId)
+
+}
+
+---script_collectorbombtwo_Monster---
+if is_undefined(scriptVars["bossId"]) {
+    nearby := getNearbyEntities(myEntityId)
+    for i := 0; i < len(nearby); i++ {
+        if nearby[i].mobid == "raidexplosiontowertwo" {
+            scriptVars["bossId"] = nearby[i].id
+            break
+        }
+    }
+}
+
+if is_undefined(scriptVars["didDie"]) {
+    scriptVars["didDie"] = false
+}
+
+// Only proceed if we found a boss and haven't already died
+if !is_undefined(scriptVars["bossId"]) && !scriptVars["didDie"] {
+    
+    // Check if the boss is dead - if so, explode and die
+    if isEntityDead(scriptVars["bossId"]) {
+        useAbilityAtPosition(myEntityId, "Spider Bomb Raid", entityPosition(myEntityId))
+        scriptVars["didDie"] = true
+        killEntity(myEntityId)
+    } else {
+        // Boss is still alive, so move toward it
+        bossPos := entityPosition(scriptVars["bossId"])
+        pathTo(myEntityId, bossPos)
+        
+        // Explode if we get close enough to the boss
+        if distToPoint(myEntityId, bossPos) < 3.0 {
+            useAbilityAtPosition(myEntityId, "Spider Bomb Raid", entityPosition(myEntityId))
+            scriptVars["didDie"] = true
+            killEntity(myEntityId)
+        }
+    }
+}
+
+---mobdefinition_Collector Bomb Three---
+ID :: collectorbombthree
+Prefab :: bombbot
+Range Behavior :: Ignore Targets
+Abilities :: [[Spider Burst Attack]] [[Spider Wave Attack]] [[Spider Bomb Raid]]
+Bounding Box :: 0.0 0.5 1.2 1.0
+Speed :: 100
+Type :: Normal
+Options :: manualpathing nodeathsmoke
+
+---mobdefinition_Raid Explosion Tower Three---
+ID :: raidexplosiontowerthree
+Range Behavior :: [[Stationary]]
+Abilities :: [[Spawn Minions Three]]
+Bounding Box :: 0 2.73 2.5 3.0
+Type :: Elite
+Speed :: 0
+
+---ability_Spawn Minions Three---
+Script :: SpawnMinionsThree
+
+---script_SpawnMinionsThree_Cast---
+if frameNum == 0 {
+    rand := import("rand")
+    entityTypes := ["collectorbombthree"]
+    selectedType := entityTypes[rand.intn(len(entityTypes))]
+    
+    spawnPositions := [
+        randomPositionNearby(myEntityId, [20.0, 25.0], 3.0)
+    ]
+    
+    for i := 0; i < len(spawnPositions); i++ {
+       newEntityId := summonEntity(selectedType, spawnPositions[i], monsterLevel(myEntityId))
+       killEntityIfEntityDies(newEntityId, myEntityId)
+    }
+}
+
+---ability_Spawn Tower Three---
+Script :: SpawnTowerThree
+
+---script_SpawnTowerThree_Cast---
+if frameNum == 0 {
+    rand := import("rand")
+    entityTypes := ["raidexplosiontowerthree"]
+    selectedType := entityTypes[rand.intn(len(entityTypes))]
+    
+    spawnPositions := [
+         positionInCurrentRoom(myEntityId,[25.0, 44.0, 0.0])
+    ]
+    
+    for i := 0; i < len(spawnPositions); i++ {
+       newEntityId := summonEntity(selectedType, spawnPositions[i], monsterLevel(myEntityId))
+       killEntityIfEntityDies(newEntityId, myEntityId)
+    }
+}
+
+---script_collectorbombthree_Monster---
+if is_undefined(scriptVars["bossId"]) {
+    nearby := getNearbyEntities(myEntityId)
+    for i := 0; i < len(nearby); i++ {
+        if nearby[i].mobid == "raidexplosiontowerthree" {
+            scriptVars["bossId"] = nearby[i].id
+            break
+        }
+    }
+}
+
+if is_undefined(scriptVars["didDie"]) {
+	scriptVars["didDie"] = false
+}
+
+if !is_undefined(scriptVars["bossId"]) && !isEntityDead(scriptVars["bossId"]) {
+    bossPos := entityPosition(scriptVars["bossId"])
+    
+    
+    pathTo(myEntityId, bossPos)
+    
+    
+    if distToPoint(myEntityId, bossPos) < 2.0 && !scriptVars["didDie"] {
+        useAbilityAtPosition(myEntityId, "Spider Bomb Raid", entityPosition(myEntityId))
+        scriptVars["didDie"] = true
+        killEntity(myEntityId)
+    }
+}
+
+if targetEntityId > 0 {
+    if castingAction == 0 {
+        rand := import("rand")
+        attackRoll := rand.float()
+        
+        if attackRoll < 0.3 {
+            useAbilityAtTarget(myEntityId, "Spider Burst Attack", targetEntityId, 1.0)
+        } else if attackRoll < 0.6 {
+            useAbilityAtTarget(myEntityId, "Spider Wave Attack", targetEntityId, 1.0)
+        }
+    }
+}
+
+---script_raidexplosiontowerthree_Monster---
+resetVars := func() {
+    scriptVars["firstFrame"] = true
+    scriptVars["timeSinceSpawn"] = 0.0
+    scriptVars["lastSummonTime"] = 0.0
+    scriptVars["hasDied"] = false
+}
+
+doExplosion := func() {
+	currentNearby := getNearbyEntities(myEntityId)
+	for i := 0; i < len(currentNearby); i++ {
+		if isEnemyOfEntity(myEntityId, currentNearby[i].id) {
+            maxHealth := float(getPoints(currentNearby[i].id, "hp", "max"))
+            damageToDeal := int(maxHealth * 0.4)
+            attackEntity(myEntityId,  currentNearby[i].id, damageToDeal, -99)
+            log(damageToDeal)
+		}
+	}
+}
+
+if is_undefined(scriptVars["timeSinceSpawn"]) {
+    resetVars()
+}
+
+if isDead && !scriptVars["hasDied"] {
+    doExplosion()
+    scriptVars["hasDied"] = true
+}
+
+if !isDead {
+    scriptVars["timeSinceSpawn"] += delta
+    scriptVars["lastSummonTime"] += delta
+}
+
+---mobdefinition_Collector Bomb Four---
+ID :: collectorbombfour
+Prefab :: bombbot
+Range Behavior :: Ignore Targets
+Abilities :: [[Spider Burst Attack]] [[Spider Wave Attack]] [[Spider Bomb Raid]]
+Bounding Box :: 0.0 0.5 1.2 1.0
+Speed :: 100
+Type :: Normal
+Options :: manualpathing nodeathsmoke
+
+---mobdefinition_Raid Explosion Tower Four---
+ID :: raidexplosiontowerfour
+Range Behavior :: [[Stationary]]
+Abilities :: [[Spawn Minions Four]]
+Bounding Box :: 0 2.73 2.5 3.0
+Type :: Elite
+Speed :: 0
+
+---ability_Spawn Minions Four---
+Script :: SpawnMinionsFour
+
+---script_SpawnMinionsFour_Cast---
+if frameNum == 0 {
+    rand := import("rand")
+    entityTypes := ["collectorbombfour"]
+    selectedType := entityTypes[rand.intn(len(entityTypes))]
+    
+    spawnPositions := [
+        randomPositionNearby(myEntityId, [20.0, 25.0], 3.0)
+    ]
+    
+    for i := 0; i < len(spawnPositions); i++ {
+       newEntityId := summonEntity(selectedType, spawnPositions[i], monsterLevel(myEntityId))
+       killEntityIfEntityDies(newEntityId, myEntityId)
+    }
+}
+
+---ability_Spawn Tower Four---
+Script :: SpawnTowerFour
+
+---script_SpawnTowerFour_Cast---
+if frameNum == 0 {
+    rand := import("rand")
+    entityTypes := ["raidexplosiontowerfour"]
+    selectedType := entityTypes[rand.intn(len(entityTypes))]
+    
+    spawnPositions := [
+         positionInCurrentRoom(myEntityId,[48.0, 55.0, 0.0])
+    ]
+    
+    for i := 0; i < len(spawnPositions); i++ {
+       newEntityId := summonEntity(selectedType, spawnPositions[i], monsterLevel(myEntityId))
+       killEntityIfEntityDies(newEntityId, myEntityId)
+    }
+}
+
+---script_collectorbombfour_Monster---
+if is_undefined(scriptVars["bossId"]) {
+    nearby := getNearbyEntities(myEntityId)
+    for i := 0; i < len(nearby); i++ {
+        if nearby[i].mobid == "raidexplosiontowerfour" {
+            scriptVars["bossId"] = nearby[i].id
+            break
+        }
+    }
+}
+
+if is_undefined(scriptVars["didDie"]) {
+	scriptVars["didDie"] = false
+}
+
+if !is_undefined(scriptVars["bossId"]) && !isEntityDead(scriptVars["bossId"]) {
+    bossPos := entityPosition(scriptVars["bossId"])
+    
+    
+    pathTo(myEntityId, bossPos)
+    
+    
+    if distToPoint(myEntityId, bossPos) < 1.5 && !scriptVars["didDie"] {
+        useAbilityAtPosition(myEntityId, "Spider Bomb Raid", entityPosition(myEntityId))
+        scriptVars["didDie"] = true
+        killEntity(myEntityId)
+    }
+}
+
+if targetEntityId > 0 {
+    if castingAction == 0 {
+        rand := import("rand")
+        attackRoll := rand.float()
+        
+        if attackRoll < 0.3 {
+            useAbilityAtTarget(myEntityId, "Spider Burst Attack", targetEntityId, 1.0)
+        } else if attackRoll < 0.6 {
+            useAbilityAtTarget(myEntityId, "Spider Wave Attack", targetEntityId, 1.0)
+        }
+    }
+}
+
+---script_raidexplosiontowerfour_Monster---
+resetVars := func() {
+    scriptVars["firstFrame"] = true
+    scriptVars["timeSinceSpawn"] = 0.0
+    scriptVars["lastSummonTime"] = 0.0
+    scriptVars["hasDied"] = false
+}
+
+doExplosion := func() {
+	currentNearby := getNearbyEntities(myEntityId)
+	for i := 0; i < len(currentNearby); i++ {
+		if isEnemyOfEntity(myEntityId, currentNearby[i].id) {
+            maxHealth := float(getPoints(currentNearby[i].id, "hp", "max"))
+            damageToDeal := int(maxHealth * 0.4)
+            attackEntity(myEntityId,  currentNearby[i].id, damageToDeal, -99)
+            log(damageToDeal)
+		}
+	}
+}
+
+if is_undefined(scriptVars["timeSinceSpawn"]) {
+    resetVars()
+}
+
+if isDead && !scriptVars["hasDied"] {
+    doExplosion()
+    scriptVars["hasDied"] = true
+}
+
+if !isDead {
+    scriptVars["timeSinceSpawn"] += delta
+    scriptVars["lastSummonTime"] += delta
+}
+
+---ability_Spider Bomb Raid---
+Bullet Definition :: [[spiderbombraid]]
+Lock Time :: 1.0
+VFX Cast :: trigger:Dig
+
+---bulletdef_spiderbombraid---
+sprite CirclePool 7
+potency 1000
+fire 0 relative 0
+	aoeexplosion
+	damageFriendly
+	radius 2
+	timedFill 3
+	damageEvery 3
+	wait 1
+	vfx BombExplosion 5
+	wait 1
+	vfx ShakeLarge 5
+	vanish
+sprite Invisible
+potency 300
+fire 0 relative 0
+	aoeexplosion
+	radius 2
+	damageEvery 3
+	wait 4
+	vanish
+
+---script_echodeathraidbomb_Monster---
+if is_undefined(scriptVars["hasSpawnedDoomCircle"]) {
+    scriptVars["hasSpawnedDoomCircle"] = false
+    scriptVars["timeTillDoomCircle"] = 0
+    scriptVars["timeSinceDoomCircle"] = 0
+    scriptVars["timeSinceSpawned"] = 0
+    scriptVars["timeSinceProgress"] = 0.0
+}
+
+doExplosion := func() {
+	currentNearby := getNearbyEntities(myEntityId)
+	for i := 0; i < len(currentNearby); i++ {
+		if isEnemyOfEntity(myEntityId, currentNearby[i].id) {
+            maxHealth := float(getPoints(currentNearby[i].id, "hp", "max"))
+            damageToDeal := int(maxHealth * 0.4)
+            attackEntity(myEntityId,  currentNearby[i].id, damageToDeal, -99)
+            log(damageToDeal)
+		}
+	}
+}
+
+if isDead {    
+    // Clear all bullets
+    clearBulletsForEntity(myEntityId)
+}
+
+if !isDead {
+
+    scriptVars["timeTillDoomCircle"] += delta
+    scriptVars["timeSinceSpawned"] += delta
+    scriptVars["timeSinceProgress"] += delta
+
+    // Cast Doom Circle immediately upon spawning
+    if !scriptVars["hasSpawnedDoomCircle"] && scriptVars["timeTillDoomCircle"] >= 1 {
+        useAbilityAtPosition(myEntityId, "Echoblight Doom Circle", entityPosition(myEntityId))
+        scriptVars["hasSpawnedDoomCircle"] = true
+    }
+
+    if  scriptVars["timeSinceSpawned"] >= 25.0 {
+        doExplosion()
+        say(myEntityId, "Bomb Exploded")
+        scriptVars["didDie"] = true
+        killEntity(myEntityId)
+    }
+    
+    // Add an aura to check for invulnerability
+    if len(getAurasOnEntity(myEntityId)) == 0 {
+        addAuraToEntity(myEntityId, "Bomb Immunity", 0, myEntityId)
+    }
+
+    if scriptVars["timeSinceProgress"] > 0.5 {
+        scriptVars["timeSinceProgress"] = 0.0
+        setProgressBar(myEntityId, "bomb", "Bomb Timer", 1.0 - (scriptVars["timeSinceSpawned"] / 25.0))
+    }
+}
+
+---aura_Bomb Immunity---
+Type :: Buff
+Duration :: -1
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:BombImmunity]]
+
+---script_BombImmunity_IncomingDamage---
+// Check if the damage sender has the Bomb Attacker
+hasBombBuff := false
+senderAuras := getAurasOnEntity(damageSenderId)
+
+for i := 0; i < len(senderAuras); i++ {
+    if senderAuras[i]["name"] == "Bomb Attacker" {
+        hasBombBuff = true
+        break
+    }
+}
+
+// If the player doesn't have the bomb buff, make the entity invulnerable
+if !hasBombBuff {
+    additionalDamage = -1 * damage
+    
+    // Optional: Display a visual effect to show immunity
+    showVfxAtPosition(myEntityId, "Shield", entityPosition(myEntityId))
+}
+
+---script_echodeathvictor_Monster---
+// Function to check if an entity has an aura with the given name
+hasAuraByName := func(entityId, auraName) {
+    auras := getAurasOnEntity(entityId)
+    for i := 0; i < len(auras); i++ {
+        if auras[i]["name"] == auraName {
+            return true
+        }
+    }
+    return false
+}
+
+resetVars := func() {
+    scriptVars["firstFrame"] = true
+    scriptVars["timeSinceSpawn"] = 2.0
+    scriptVars["lastSummonTime"] = 0.0
+    scriptVars["toweronespawn"] = true
+    scriptVars["towertwospawn"] = true
+    scriptVars["doomCircleTimer"] = 0.0
+    scriptVars["hasCastDoomCircle"] = false
+    scriptVars["bombSpawnTimer"] = 33.0
+    scriptVars["astralConvergenceTimer"] = 0.0
+    scriptVars["astralNodeTimer"] = 0.0
+    scriptVars["fractureWaveTimer"] = 0.0
+    scriptVars["minionSpawnTimer"] = 3.0
+    scriptVars["timeSinceBombBuff"] = 68.0
+    scriptVars["timeSinceBigAttack"] = 0.0
+
+    scriptVars["inPhaseTransition"] = false
+    scriptVars["phaseTransitionTimer"] = 0.0
+    scriptVars["phaseTransitionDuration"] = 3.0  // 3 seconds of invulnerability during transitions
+
+    // Phase tracking
+    scriptVars["currentPhase"] = 1
+    scriptVars["phaseChangeHP"] = 0.5  // 50% health triggers phase 2
+    
+    // Phase 2 specific variables - initialize but leave empty
+    scriptVars["phase2FirstFrame"] = true
+    scriptVars["phase2Timer"] = 0.0
+    
+    // Phase 3 specific variables
+    scriptVars["phase3FirstFrame"] = true
+    scriptVars["phase3Timer"] = 0.0
+}
+
+doExplosion := func() {
+	currentNearby := getNearbyEntities(myEntityId)
+	for i := 0; i < len(currentNearby); i++ {
+		if isEnemyOfEntity(myEntityId, currentNearby[i].id) {
+            maxHealth := float(getPoints(currentNearby[i].id, "hp", "max"))
+            damageToDeal := int(maxHealth * 0.4)
+            attackEntity(myEntityId,  currentNearby[i].id, damageToDeal, -99)
+            log(damageToDeal)
+		}
+	}
+}
+
+// Function to check if any raid bombs are active in the game
+hasActiveRaidBomb := func() {
+    nearby := getNearbyEntities(myEntityId)
+    for i := 0; i < len(nearby); i++ {
+        if nearby[i].mobid == "echodeathraidbomb" && !isEntityDead(nearby[i].id) {
+            return true
+        }
+    }
+    return false
+}
+
+if !isDead {
+    if is_undefined(scriptVars["timeSinceSpawn"]) {
+        resetVars()
+    }
+
+    // Check if any raid bombs are active
+    hasActiveBomb := hasActiveRaidBomb()
+    
+    // Apply or remove invulnerability based on whether bombs are active
+    if hasActiveBomb {
+        // Make ONLY the boss invulnerable when bombs are active
+        if !hasAuraByName(myEntityId, "Sovereign Invulnerability") {
+            // Only add immunity to the boss (this entity), not players
+            addAuraToEntity(myEntityId, "Sovereign Invulnerability", 0, myEntityId)
+        }
+    } else {
+        // Remove invulnerability when no bombs are active
+        if hasAuraByName(myEntityId, "Sovereign Invulnerability") {
+            dispelAuraOnEntity(myEntityId, "Sovereign Invulnerability")
+        }
+    }
+
+
+
+    if scriptVars["firstFrame"] {
+        setPosition(myEntityId, positionInCurrentRoom(myEntityId, [48.0, 44.0, 0.0]))
+        scriptVars["firstFrame"] = false
+    }
+
+    if targetEntityId > 0 {
+
+        scriptVars["timeSinceBombBuff"] += delta
+        scriptVars["timeSinceSpawn"] += delta
+        scriptVars["lastSummonTime"] += delta
+        scriptVars["doomCircleTimer"] += delta
+        scriptVars["bombSpawnTimer"] += delta
+        scriptVars["minionSpawnTimer"] += delta
+        scriptVars["astralConvergenceTimer"] += delta
+        scriptVars["astralNodeTimer"] += delta
+        scriptVars["fractureWaveTimer"] += delta
+        scriptVars["timeSinceBigAttack"] += delta
+        
+        // Check for phase transitions
+        currentHealth := float(getPoints(myEntityId, "hp", "current"))
+        maxHealth := float(getPoints(myEntityId, "hp", "max"))
+        healthPercent := currentHealth / maxHealth
+
+        // Phase transition logic - transition at 2/3 and 1/3 health
+        if healthPercent <= 0.67 && scriptVars["currentPhase"] == 1 {
+            // Transition to phase 2 when boss loses first third of health
+            scriptVars["currentPhase"] = 2
+            scriptVars["phase2FirstFrame"] = true
+            
+            // Start phase transition state
+            scriptVars["inPhaseTransition"] = true
+            scriptVars["phaseTransitionTimer"] = 0.0
+            
+            // Add invulnerability
+            addAuraToEntity(myEntityId, "Sovereign Invulnerability", 0, myEntityId)
+            
+            // Clear all bullets to give players a clean slate for phase 2
+            clearBulletsForEntity(myEntityId)
+            
+            // Optionally announce the phase change to players
+            say(myEntityId, "You think you can defeat me? Now witness my true power!")
+        } else if healthPercent <= 0.33 && scriptVars["currentPhase"] == 2 {
+            // Transition to phase 3 when boss loses second third of health
+            scriptVars["currentPhase"] = 3
+            scriptVars["phase3FirstFrame"] = true
+            
+            // Start phase transition state
+            scriptVars["inPhaseTransition"] = true
+            scriptVars["phaseTransitionTimer"] = 0.0
+            
+            // Add invulnerability
+            addAuraToEntity(myEntityId, "Sovereign Invulnerability", 0, myEntityId)
+            
+            // Clear all bullets again for phase 3
+            clearBulletsForEntity(myEntityId)
+            
+            // Optionally announce the phase 3 transition
+            say(myEntityId, "My final form shall be your doom!")
+        }
+
+        if scriptVars["currentPhase"] == 1 {
+            // Phase 1 logic
+            if scriptVars["fractureWaveTimer"] >= 6.0 {
+                useAbilityAtPosition(myEntityId, "Fracture Wave", entityPosition(myEntityId))
+                scriptVars["fractureWaveTimer"] = 0.0
+                say(myEntityId, "Fracture Wave!")
+            }
+            
+            if scriptVars["timeSinceSpawn"] >= 4.0 {
+                
+                // First row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [10.0, 10.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [19.0, 10.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [28.0, 10.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [37.0, 10.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [46.0, 10.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [55.0, 10.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [64.0, 10.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [73.0, 10.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [82.0, 10.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [91.0, 10.0, 0.0]))
+
+                // Second row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [10.0, 18.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [19.0, 18.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [28.0, 18.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [37.0, 18.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [46.0, 18.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [55.0, 18.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [64.0, 18.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [73.0, 18.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [82.0, 18.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [91.0, 18.0, 0.0]))
+
+                // Third row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [10.0, 26.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [19.0, 26.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [28.0, 26.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [37.0, 26.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [46.0, 26.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [55.0, 26.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [64.0, 26.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [73.0, 26.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [82.0, 26.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [91.0, 26.0, 0.0]))
+
+                // Fourth row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [10.0, 34.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [19.0, 34.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [28.0, 34.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [37.0, 34.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [46.0, 34.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [55.0, 34.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [64.0, 34.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [73.0, 34.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [82.0, 34.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [91.0, 34.0, 0.0]))
+
+                // Fifth row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [10.0, 42.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [19.0, 42.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [28.0, 42.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [37.0, 42.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [46.0, 42.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [55.0, 42.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [64.0, 42.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [73.0, 42.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [82.0, 42.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [91.0, 42.0, 0.0]))
+
+                // Sixth row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [10.0, 50.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [19.0, 50.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [28.0, 50.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [37.0, 50.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [46.0, 50.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [55.0, 50.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [64.0, 50.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [73.0, 50.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [82.0, 50.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [91.0, 50.0, 0.0]))
+
+                // Seventh row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [10.0, 58.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [19.0, 58.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [28.0, 58.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [37.0, 58.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [46.0, 58.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [55.0, 58.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [64.0, 58.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [73.0, 58.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [82.0, 58.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [91.0, 58.0, 0.0]))
+
+                // Eighth row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [10.0, 66.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [19.0, 66.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [28.0, 66.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [37.0, 66.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [46.0, 66.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [55.0, 66.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [64.0, 66.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [73.0, 66.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [82.0, 66.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [91.0, 66.0, 0.0]))
+
+                // Ninth row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [10.0, 74.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [19.0, 74.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [28.0, 74.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [37.0, 74.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [46.0, 74.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [55.0, 74.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [64.0, 74.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [73.0, 74.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [82.0, 74.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [91.0, 74.0, 0.0]))
+
+                // Tenth row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [10.0, 82.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [19.0, 82.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [28.0, 82.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [37.0, 82.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [46.0, 82.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [55.0, 82.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [64.0, 82.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [73.0, 82.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [82.0, 82.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [91.0, 82.0, 0.0]))
+            
+                
+                scriptVars["timeSinceSpawn"] = 0.0
+            }
+        }
+
+         if scriptVars["currentPhase"] == 2 {
+            if scriptVars["astralConvergenceTimer"] >= 8.0 {
+                useAbilityAtPosition(myEntityId, "Astral Convergence", entityPosition(myEntityId))
+                scriptVars["astralConvergenceTimer"] = 0.0
+                say(myEntityId, "Astral Convergence!")
+            }
+
+            if scriptVars["fractureWaveTimer"] >= 6.0 {
+                useAbilityAtPosition(myEntityId, "Fracture Wave", entityPosition(myEntityId))
+                scriptVars["fractureWaveTimer"] = 0.0
+                say(myEntityId, "Fracture Wave!")
+            }
+
+            if scriptVars["timeSinceSpawn"] >= 3.5 {
+                // First row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [10.0, 10.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [19.0, 10.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [28.0, 10.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [37.0, 10.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [46.0, 10.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [55.0, 10.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [64.0, 10.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [73.0, 10.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [82.0, 10.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [91.0, 10.0, 0.0]))
+
+                // Second row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [10.0, 18.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [19.0, 18.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [28.0, 18.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [37.0, 18.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [46.0, 18.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [55.0, 18.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [64.0, 18.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [73.0, 18.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [82.0, 18.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [91.0, 18.0, 0.0]))
+
+                // Third row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [10.0, 26.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [19.0, 26.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [28.0, 26.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [37.0, 26.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [46.0, 26.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [55.0, 26.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [64.0, 26.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [73.0, 26.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [82.0, 26.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [91.0, 26.0, 0.0]))
+
+                // Fourth row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [10.0, 34.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [19.0, 34.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [28.0, 34.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [37.0, 34.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [46.0, 34.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [55.0, 34.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [64.0, 34.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [73.0, 34.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [82.0, 34.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [91.0, 34.0, 0.0]))
+
+                // Fifth row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [10.0, 42.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [19.0, 42.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [28.0, 42.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [37.0, 42.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [46.0, 42.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [55.0, 42.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [64.0, 42.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [73.0, 42.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [82.0, 42.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [91.0, 42.0, 0.0]))
+
+                // Sixth row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [10.0, 50.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [19.0, 50.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [28.0, 50.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [37.0, 50.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [46.0, 50.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [55.0, 50.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [64.0, 50.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [73.0, 50.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [82.0, 50.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [91.0, 50.0, 0.0]))
+
+                // Seventh row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [10.0, 58.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [19.0, 58.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [28.0, 58.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [37.0, 58.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [46.0, 58.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [55.0, 58.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [64.0, 58.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [73.0, 58.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [82.0, 58.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [91.0, 58.0, 0.0]))
+
+                // Eighth row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [10.0, 66.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [19.0, 66.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [28.0, 66.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [37.0, 66.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [46.0, 66.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [55.0, 66.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [64.0, 66.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [73.0, 66.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [82.0, 66.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [91.0, 66.0, 0.0]))
+
+                // Ninth row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [10.0, 74.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [19.0, 74.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [28.0, 74.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [37.0, 74.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [46.0, 74.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [55.0, 74.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [64.0, 74.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [73.0, 74.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [82.0, 74.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [91.0, 74.0, 0.0]))
+
+                // Tenth row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [10.0, 82.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [19.0, 82.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [28.0, 82.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [37.0, 82.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [46.0, 82.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [55.0, 82.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [64.0, 82.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [73.0, 82.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [82.0, 82.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [91.0, 82.0, 0.0]))
+
+                scriptVars["timeSinceSpawn"] = 0.0
+            }
+        }
+
+        if scriptVars["currentPhase"] == 3 {
+            // Phase 3 logic
+            if scriptVars["timeSinceSpawn"] >= 4.0 {
+                if scriptVars["astralConvergenceTimer"] >= 8.0 {
+                    useAbilityAtPosition(myEntityId, "Astral Convergence", entityPosition(myEntityId))
+                    scriptVars["astralConvergenceTimer"] = 0.0
+                    say(myEntityId, "Astral Convergence!")
+                }
+
+                if scriptVars["fractureWaveTimer"] >= 6.0 {
+                    useAbilityAtPosition(myEntityId, "Fracture Wave", entityPosition(myEntityId))
+                    scriptVars["fractureWaveTimer"] = 0.0
+                    say(myEntityId, "Fracture Wave!")
+                }
+
+                if scriptVars["astralNodeTimer"] >= 12.0 {
+                    useAbilityAtPosition(myEntityId, "Astral Node", entityPosition(myEntityId))
+                    scriptVars["fractureWaveTimer"] = 0.0
+                    say(myEntityId, "Astral Node!")
+                }
+
+
+                // First row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [10.0, 10.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [19.0, 10.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [28.0, 10.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [37.0, 10.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [46.0, 10.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [55.0, 10.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [64.0, 10.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [73.0, 10.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [82.0, 10.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [91.0, 10.0, 0.0]))
+
+                // Second row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [10.0, 18.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [19.0, 18.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [28.0, 18.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [37.0, 18.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [46.0, 18.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [55.0, 18.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [64.0, 18.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [73.0, 18.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [82.0, 18.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [91.0, 18.0, 0.0]))
+
+                // Third row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [10.0, 26.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [19.0, 26.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [28.0, 26.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [37.0, 26.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [46.0, 26.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [55.0, 26.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [64.0, 26.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [73.0, 26.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [82.0, 26.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [91.0, 26.0, 0.0]))
+
+                // Fourth row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [10.0, 34.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [19.0, 34.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [28.0, 34.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [37.0, 34.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [46.0, 34.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [55.0, 34.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [64.0, 34.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [73.0, 34.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [82.0, 34.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [91.0, 34.0, 0.0]))
+
+                // Fifth row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [10.0, 42.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [19.0, 42.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [28.0, 42.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [37.0, 42.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [46.0, 42.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [55.0, 42.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [64.0, 42.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [73.0, 42.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [82.0, 42.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [91.0, 42.0, 0.0]))
+
+                // Sixth row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [10.0, 50.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [19.0, 50.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [28.0, 50.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [37.0, 50.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [46.0, 50.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [55.0, 50.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [64.0, 50.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [73.0, 50.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [82.0, 50.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [91.0, 50.0, 0.0]))
+
+                // Seventh row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [10.0, 58.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [19.0, 58.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [28.0, 58.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [37.0, 58.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [46.0, 58.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [55.0, 58.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [64.0, 58.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [73.0, 58.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [82.0, 58.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [91.0, 58.0, 0.0]))
+
+                // Eighth row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [10.0, 66.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [19.0, 66.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [28.0, 66.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [37.0, 66.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [46.0, 66.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [55.0, 66.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [64.0, 66.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [73.0, 66.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [82.0, 66.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [91.0, 66.0, 0.0]))
+
+                // Ninth row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [10.0, 74.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [19.0, 74.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [28.0, 74.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [37.0, 74.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [46.0, 74.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [55.0, 74.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [64.0, 74.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [73.0, 74.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [82.0, 74.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [91.0, 74.0, 0.0]))
+
+                // Tenth row (10 pools)
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [10.0, 82.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [19.0, 82.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [28.0, 82.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [37.0, 82.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [46.0, 82.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [55.0, 82.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [64.0, 82.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 2", positionInCurrentRoom(myEntityId, [73.0, 82.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 3", positionInCurrentRoom(myEntityId, [82.0, 82.0, 0.0]))
+                useAbilityAtPosition(myEntityId, "Room Catastrophe Circle Pool 1", positionInCurrentRoom(myEntityId, [91.0, 82.0, 0.0]))
+                
+                scriptVars["timeSinceSpawn"] = 0.0
+            }
+        }
+
+        if scriptVars["timeSinceBombBuff"] >= 70.0 {
+            log("RANDOM BOMB BUFF")
+            useAbilityAtPosition(myEntityId, "Random Bomb Buff", entityPosition(myEntityId))
+            scriptVars["timeSinceBombBuff"] = 0
+        }
+
+        // Function to check if a specific tower type exists and is alive in the game
+        checkForTower := func(towerName) {
+            nearby := getNearbyEntities(myEntityId)
+            towerExists := false
+            
+            for i := 0; i < len(nearby); i++ {
+                entity := nearby[i]
+                
+                // Check if this entity matches our tower name AND is still alive
+                if entity.mobid == towerName && !isEntityDead(entity.id) {
+                    towerExists = true
+                    break
+                }
+            }
+            
+            return towerExists
+        }
+
+        // Check for Tower One and spawn if it doesn't exist or is dead
+        if !checkForTower("raidexplosiontowerone") {
+           // log("Spawning Tower One")
+           useAbilityAtPosition(myEntityId, "Spawn Tower One", entityPosition(myEntityId))
+        } 
+
+        // Check for Tower Two and spawn if it doesn't exist or is dead
+        if !checkForTower("raidexplosiontowertwo") {
+           // log("Spawning Tower Two")
+           useAbilityAtPosition(myEntityId, "Spawn Tower Two", entityPosition(myEntityId))
+        } 
+
+        
+        // Bomb Spawn logic - spawn a bomb every 35 seconds
+        if scriptVars["bombSpawnTimer"] >= 35.0 {
+            useAbilityAtPosition(myEntityId, "Spawn Bomb", entityPosition(myEntityId))
+            scriptVars["bombSpawnTimer"] = 0.0
+        }
+
+        if scriptVars["timeSinceBigAttack"] > 12.0 {
+            useAbilityAtPosition(myEntityId, "Ethereal Convergence", entityPosition(myEntityId))
+            scriptVars["timeSinceBigAttack"] = 0.0
+        }
+        
+    }
+}

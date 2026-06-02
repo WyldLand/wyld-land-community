@@ -1,0 +1,120 @@
+---spike_Random Bombs---
+Auras :: [[Random Bombs]]
+Rarity :: Legendary
+Archetypes :: [[ExplosiveLauncher]]
+
+---aura_Random Bombs---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:PoolSpawner]]
+
+---script_PoolSpawner_DamageDealt---
+rand := import("rand")
+
+if auraAbilityId == abilityId {
+    // 30% chance to spawn pools
+    if rand.float() < 0.30 {
+        // Get the position of the enemy that was hit
+        enemyPosition := entityPosition(damageSenderId)
+        
+        // Spawn multiple small circle pools around the enemy position
+        useAbilityAtPosition(myEntityId, "Spawn Pool 1", enemyPosition, enemyPosition)
+        useAbilityAtPosition(myEntityId, "Spawn Pool 2", enemyPosition, enemyPosition)
+        useAbilityAtPosition(myEntityId, "Spawn Pool 3", enemyPosition, enemyPosition)
+        useAbilityAtPosition(myEntityId, "Spawn Pool 4", enemyPosition, enemyPosition)
+        useAbilityAtPosition(myEntityId, "Spawn Pool 5", enemyPosition, enemyPosition)
+    }
+}
+
+---ability_Spawn Pool 1---
+Bullet Definition :: [[smallpool1]]
+Cast Time :: 0.0
+Lock Time :: 0.0
+Max Range :: 100.0
+
+---ability_Spawn Pool 2---
+Bullet Definition :: [[smallpool2]]
+Cast Time :: 0.0
+Lock Time :: 0.0
+Max Range :: 100.0
+
+---ability_Spawn Pool 3---
+Bullet Definition :: [[smallpool3]]
+Cast Time :: 0.0
+Lock Time :: 0.0
+Max Range :: 100.0
+
+---ability_Spawn Pool 4---
+Bullet Definition :: [[smallpool4]]
+Cast Time :: 0.0
+Lock Time :: 0.0
+Max Range :: 100.0
+
+---ability_Spawn Pool 5---
+Bullet Definition :: [[smallpool5]]
+Cast Time :: 0.0
+Lock Time :: 0.0
+Max Range :: 100.0
+
+---bulletdef_smallpool1---
+sprite CirclePool 0.5
+potency 150
+fire 5 absolute 0
+	aoeexplosion
+	radius 0.5
+	timedFill 15
+	damageEvery 15
+	wait 15
+	vfx BombExplosion 3
+	vanish
+
+---bulletdef_smallpool2---
+sprite CirclePool 0.5
+potency 150
+fire 5 absolute 72
+	aoeexplosion
+	radius 0.5
+	timedFill 15
+	damageEvery 15
+	wait 15
+	vfx BombExplosion 3
+	vanish
+
+---bulletdef_smallpool3---
+sprite CirclePool 0.5
+potency 150
+fire 5 absolute 144
+	aoeexplosion
+	radius 0.5
+	timedFill 15
+	damageEvery 15
+	wait 15
+	vfx BombExplosion 3
+	vanish
+
+---bulletdef_smallpool4---
+sprite CirclePool 0.5
+potency 150
+fire 5 absolute 216
+	aoeexplosion
+	radius 0.5
+	timedFill 15
+	damageEvery 15
+	wait 15
+	vfx BombExplosion 3
+	vanish
+
+---bulletdef_smallpool5---
+sprite CirclePool 0.5
+potency 150
+fire 5 absolute 288
+	aoeexplosion
+	radius 0.5
+	timedFill 15
+	damageEvery 15
+	wait 15
+	vfx BombExplosion 3
+	vanish

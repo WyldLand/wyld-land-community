@@ -1,0 +1,14 @@
+---achievement_Voltage Victory---
+Kill :: [[Mobs/Voltage Vanguard|Voltage Vanguard]]@1
+XP :: 50
+
+Defeat the Voltage Vanguard and its devastating electrical attacks.
+
+---achievement_Perfect Circuit---
+Kill :: [[Mobs/Voltage Vanguard|Voltage Vanguard]]@1
+Tags :: NoDamage
+Title :: Circuit Breaker
+XP :: 50
+ResetOnDeath :: False
+
+Take out the Voltage Vanguard without taking any damage.

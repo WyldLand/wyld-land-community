@@ -1,0 +1,120 @@
+---mob_Tutorial Text 1---
+Prefab :: tutorialtext1
+Range Behavior :: Stationary
+Bounding Box :: 0.0 0.6 1.0 1.2
+Type :: Normal
+Loot ::
+Options :: fastrespawn noaggronearby manualpathing
+
+---prefab_tutorialtext1---
+
+Components :: [[TutorialText1]] [[Monster]]
+
+---prefabcomponent_TutorialText1---
+
+Component :: Text
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "shape": "text",
+    "color": "#ffffff",
+    "text": "WASD to Move"
+}
+
+---mob_Tutorial Text 2---
+Prefab :: tutorialtext2
+Range Behavior :: Stationary
+Bounding Box :: 0.0 0.6 1.0 1.2
+Type :: Normal
+Loot ::
+Options :: fastrespawn noaggronearby manualpathing
+
+---prefab_tutorialtext2---
+
+Components :: [[TutorialText2]] [[Monster]]
+
+---prefabcomponent_TutorialText2---
+
+Component :: Text
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "shape": "text",
+    "color": "#ffffff",
+    "layer": "ui",
+    "text": "Press F<br/>to Skip Tutorial"
+}
+
+---mob_Tutorial Text 3---
+Prefab :: tutorialtext3
+Range Behavior :: Stationary
+Bounding Box :: 0.0 0.6 1.0 1.2
+Type :: Normal
+Loot ::
+Options :: fastrespawn noaggronearby manualpathing
+
+---prefab_tutorialtext3---
+
+Components :: [[TutorialText3]] [[Monster]]
+
+---prefabcomponent_TutorialText3---
+
+Component :: Text
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "shape": "text",
+    "color": "#ffffff",
+    "text": "Right-Click to Dash<br/>Dashing dodges bullets"
+}
+
+---mob_Tutorial Text 4---
+Prefab :: tutorialtext4
+Range Behavior :: Stationary
+Bounding Box :: 0.0 0.6 1.0 1.2
+Type :: Normal
+Loot ::
+Options :: fastrespawn noaggronearby manualpathing
+
+---prefab_tutorialtext4---
+
+Components :: [[TutorialText4]] [[Monster]]
+
+---prefabcomponent_TutorialText4---
+
+Component :: Text
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "shape": "text",
+    "color": "#ffffff",
+    "text": "Left-Click to Shoot<br/>Kill the enemy, take the loot"
+}
+
+---mob_Tutorial Text 5---
+Prefab :: tutorialtext5
+Range Behavior :: Stationary
+Bounding Box :: 0.0 0.6 1.0 1.2
+Type :: Normal
+Loot ::
+Options :: fastrespawn noaggronearby manualpathing
+
+---prefab_tutorialtext5---
+
+Components :: [[TutorialText5]] [[Monster]]
+
+---prefabcomponent_TutorialText5---
+
+Component :: Text
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "shape": "text",
+    "color": "#ffffff",
+    "text": "Low on health?<br/>Press F to Recall to Haven"
+}

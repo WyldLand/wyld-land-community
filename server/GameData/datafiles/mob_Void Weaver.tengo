@@ -1,0 +1,137 @@
+---mob_Void Weaver---
+Prefab :: wraith
+ID :: voidweaver
+Range Behavior :: Medium Ranged
+Abilities :: [[Void Web]] [[Void Scatter]] [[Weaver Teleport]]
+Bounding Box :: 0.0 0.75 1.0 1.5
+Type :: Elite
+
+---ability_Void Web---
+Bullet Definition :: [[voidweb]]
+Cooldown :: 1.5
+VFX Charging :: trigger:Attack*
+Cast Time :: 0.75
+Lock Time :: 0.50
+
+---bulletdef_voidweb---
+sprite Custom11
+color 4
+potency 120
+repeat bullets:8 angleChange:45 angle:0 directionType:relative speed:6
+	wait 40
+	fire voidwebnode
+	wait 40
+	wait 200
+	vanish
+
+---bulletdef_voidwebnode---
+sprite Basic
+color 4
+potency 90
+nway speed:4 bullets:3 spread:30 angle:0 directionType:relative
+	wait 60
+	fire voidwebsparkle
+	speed 4
+	wait 120
+	vanish
+
+---bulletdef_voidwebsparkle---
+sprite Custom10
+color 4
+potency 75
+radial bullets:4 speed:3 angle:45 directionType:absolute
+	wait 60
+	vanish
+
+---ability_Void Scatter---
+Bullet Definition :: [[voidscatter]]
+Cooldown :: 1.0
+VFX Cast :: trigger:Attack*
+Lock Time :: 0.25
+
+---bulletdef_voidscatter---
+sprite Custom11
+color 4
+potency 100
+nway speed:7 bullets:12 spread:180 angle:0 directionType:relative
+wait 3
+nway speed:5 bullets:6 spread:90 angle:0 directionType:relative bulletShift:2
+wait 3
+nway speed:6 bullets:4 spread:45 angle:0 directionType:relative bulletShift:4
+
+---ability_Weaver Teleport---
+Bullet Definition :: [[weaverappear]]
+Cooldown :: 3.0
+VFX Cast :: trigger:Appear*
+Lock Time :: 1.0
+Cast Time :: 0.2
+Script :: WeaverTeleport
+
+---bulletdef_weaverappear---
+sprite PurplePool 2
+potency 150
+fire 0 relative 0
+	aoeexplosion
+	radius 2
+	timedFill 15
+	damageEvery 15
+	wait 15
+	vfx BloodySlamExplosion 5
+	wait 1
+	vanish
+wait 15
+sprite Basic
+color 4
+potency 100
+radial bullets:16 speed:6 angle:0 directionType:absolute
+	wait 60
+	vanish
+
+---script_WeaverTeleport_Cast---
+setSpeed(myEntityId, 0.0) //so we don't move while we're casting this
+
+if frameNum == 2 {
+	setPosition(myEntityId, randomPositionInCurrentRoom(myEntityId, 2.0))
+}
+
+---ability_Death Weave---
+Bullet Definition :: [[deathweave]]
+Max Range :: 100.0
+
+---bulletdef_deathweave---
+sprite PurplePool 3
+potency 100
+fire 0 relative 0
+	aoeexplosion
+	radius 3
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vfx VoidPool
+	wait 1
+	vanish
+wait 20
+sprite Basic
+color 4
+potency 90
+radial bullets:36 speed:6 angle:0 directionType:absolute
+	wait 60
+	vanish
+wait 3
+radial bullets:24 speed:5 angle:7.5 directionType:absolute
+	wait 60
+	vanish
+wait 3
+radial bullets:18 speed:4 angle:15 directionType:absolute
+	wait 60
+	vanish
+
+---script_voidweaver_Monster---
+if is_undefined(scriptVars["didExplode"]) {
+	scriptVars["didExplode"] = false
+}
+
+if isDead && !scriptVars["didExplode"] {
+	scriptVars["didExplode"] = true
+	useAbilityAtPosition(myEntityId, "Death Weave", entityPosition(myEntityId))
+}

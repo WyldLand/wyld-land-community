@@ -1,0 +1,643 @@
+---mobdefinition_Great Wyrm---
+Prefab :: greatwyrm
+Range Behavior :: Short Ranged
+Abilities :: [[Burrow Strike]] [[Magma Breath]] [[Earth Shatter]] [[Wing Gust]] [[Spine Storm]] [[Tail Lash]] [[Quake Wave]] [[Ground Rupture]] [[Converging Rings]] [[Phase Transition]] [[Sky Fire]]
+Type :: Boss
+Speed :: 500
+Loot :: [[GreatWyrm]]
+
+---prefab_greatwyrm---
+
+Components :: [[GreatWyrmSprite]] [[GreatWyrmCollider]] [[Monster]] [[Nameplate]] [[BGMGreatWyrm]]
+
+---prefabcomponent_GreatWyrmCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+	"position": [0.0, 2.0],
+    "size": [3.0, 4.0]
+}
+
+---prefabcomponent_GreatWyrmSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.32,
+    "pivotY": 1.0,
+    "sprite": "greatwyrm/greatwyrm",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ],
+	"transitions": [
+		{
+			"from": "Disappear",
+			"to": "*",
+			"animation": "_hide"
+		},
+		{
+			"from": "*",
+			"to": "Appear",
+			"animation": "_show"
+		}
+	]
+}
+
+---prefab_sfxgreatwyrmAppear---
+
+Components :: [[SFXGreatWyrmAppear]]
+
+---prefabcomponent_SFXGreatWyrmAppear---
+
+Component :: Sound
+
+{
+    "sources": ["greatwyrm/greatwyrmAppear.wav"],
+	"spatial": true
+}
+
+---prefab_sfxgreatwyrmAttack---
+
+Components :: [[SFXGreatWyrmAttack]]
+
+---prefabcomponent_SFXGreatWyrmAttack---
+
+Component :: Sound
+
+{
+    "sources": ["greatwyrm/greatwyrmAttack.wav"],
+	"spatial": true
+}
+
+---prefab_sfxgreatwyrmDisappear---
+
+Components :: [[SFXGreatWyrmDisappear]]
+
+---prefabcomponent_SFXGreatWyrmDisappear---
+
+Component :: Sound
+
+{
+    "sources": ["greatwyrm/greatwyrmDisappear.wav"],
+	"spatial": true
+}
+
+---prefabcomponent_BGMGreatWyrm---
+
+Component :: Sound
+{
+	"sources": ["greatwyrm/bgm1.wav", "greatwyrm/bgm2.wav", "greatwyrm/bgm3.wav", "greatwyrm/bgm4.wav"],
+	"channel": "bgm",
+	"loop": true,
+	"select": "random",
+	"priority": 2,
+	"combatOnly": true
+}
+
+---ability_Converging Rings---
+Bullet Definition :: [[convergingrings]]
+
+---bulletdef_convergingrings---
+sprite Custom11
+color 2
+potency 125
+repeat bullets:36 speed:8 angle:0 angleChange:10 directionType:relative
+	wait 45
+	speed -16
+	wait 45
+	vanish
+wait 10
+repeat bullets:36 speed:7 angle:5 angleChange:10 directionType:relative
+	wait 40
+	speed -14
+	wait 40
+	vanish
+wait 10
+repeat bullets:36 speed:6 angle:10 angleChange:10 directionType:relative
+	wait 35
+	speed -12
+	wait 35
+	vanish
+
+---ability_Burrow Strike---
+Bullet Definition :: [[burrowstrike]]
+VFX Charging :: trigger:Disappear*
+VFX Cast :: trigger:Appear*
+Lock Time :: 2.0
+Cast Time :: 5.0
+Script :: BurrowStrike
+
+---ability_Magma Breath---
+Bullet Definition :: [[magmabreath]]
+VFX Cast :: trigger:Attack*
+Lock Time :: 1.0
+
+---ability_Earth Shatter---
+Bullet Definition :: [[earthshatter]]
+VFX Cast :: trigger:Attack*
+Lock Time :: 1.0
+Max Range :: 100.0
+
+---ability_Wing Gust---
+Bullet Definition :: [[winggust]]
+VFX Cast :: trigger:Attack*
+Lock Time :: 0.75
+
+---ability_Spine Storm---
+Bullet Definition :: [[spinestorm]]
+VFX Cast :: trigger:Attack*
+Lock Time :: 1.0
+Auras :: [[Shock]]
+
+---ability_Tail Lash---
+Bullet Definition :: [[taillash]]
+VFX Cast :: trigger:Attack*
+Lock Time :: 0.75
+
+---ability_Quake Wave---
+Bullet Definition :: [[quakewave]]
+VFX Cast :: trigger:Attack*
+Lock Time :: 1.0
+
+---ability_Ground Rupture---
+Bullet Definition :: [[groundrupture]]
+VFX Cast :: trigger:Attack*
+Lock Time :: 1.0
+Max Range :: 100.0
+
+---ability_Sky Fire---
+Bullet Definition :: [[skyfire]]
+VFX Cast :: trigger:Attack*
+Lock Time :: 1.5
+Max Range :: 100.0
+Auras :: [[Shock]]
+
+---bulletdef_skyfire---
+sprite Custom7
+color 1
+potency 100
+repeat bullets:12 speed:10 angle:0 maxAngle:360 delay:3 directionType:absolute
+	wait 60
+	vanish
+wait 15
+repeat bullets:12 speed:9 angle:15 maxAngle:360 delay:3 directionType:absolute
+	wait 60
+	vanish
+
+---bulletdef_burrowstrike---
+sprite CirclePool 8
+potency 350
+fire 0 relative 0
+	aoeexplosion
+	radius 4
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vfx BombExplosion 5
+	wait 1
+	vfx ShakeLarge 5
+	vanish
+wait 2
+sprite Basic
+potency 100
+radial bullets:48 speed:8
+wait 3
+radial bullets:48 speed:7 angle:3.75 directionType:absolute
+wait 3
+radial bullets:48 speed:6 angle:7.5 directionType:absolute
+
+---bulletdef_magmabreath---
+sprite Custom7
+color 1
+potency 120
+nway speed:10 bullets:8 spread:40 angle:0 directionType:relative
+wait 2
+nway speed:9 bullets:8 spread:40 angle:-60 directionType:relative
+wait 2
+nway speed:8 bullets:8 spread:40 angle:60 directionType:relative
+
+---bulletdef_magmapool---
+sprite CirclePool 1.5
+potency 100
+fire 0 relative 0
+	aoedot
+	radius 1.5
+	damageEvery 5
+	wait 45
+	vanish
+
+---bulletdef_earthshatter---
+sprite CirclePool 3
+potency 100
+fire 0 relative 0
+	aoeexplosion
+	radius 3
+	timedFill 20
+	damageEvery 20
+	wait 20
+	vfx BombExplosion 5
+	wait 1
+	fire earthspikes
+	wait 1
+	vanish
+
+---bulletdef_earthspikes---
+sprite Custom11
+color 2
+potency 100
+nway speed:7 bullets:12 spread:360 angle:0 directionType:absolute
+	lifetime 80
+wait 3
+nway speed:6 bullets:12 spread:360 angle:15 directionType:absolute
+	lifetime 80
+
+---bulletdef_winggust---
+sprite Basic
+color 1
+potency 150
+repeat bullets:25 speed:4 angle:-60 angleChange:6 directionType:relative
+	wait 80
+	vanish
+wait 1
+repeat bullets:25 speed:4 angle:60 angleChange:-6 directionType:relative
+	wait 80
+	vanish
+
+---bulletdef_spinestorm---
+sprite Shock
+color 1
+potency 150
+repeat bullets:180 speed:5 angle:0 angleChange:8 delay:1 directionType:relative
+	wait 5
+	speed 0
+	wait 10
+	speed 15
+	wait 20
+	vanish
+
+---bulletdef_taillash---
+sprite Custom10
+color 1
+potency 125
+repeat bullets:40 speed:7 angle:-45 angleChange:2 directionType:relative
+	wait 45
+	vanish
+nway speed:10 bullets:28 spread:120 angle:0 directionType:relative
+
+---bulletdef_quakewave---
+sprite Custom11
+color 1
+potency 125
+repeat bullets:10 angleChange:36 angle:0 directionType:relative speed:8 delay:1
+	wait 10
+	fire quakeline
+
+---bulletdef_quakeline---
+sprite Custom11
+color 1
+potency 100
+nway speed:10 bullets:24 spread:120 angle:0 directionType:relative
+
+---bulletdef_groundrupture---
+sprite CirclePool 3
+potency 225
+repeat bullets:8 angleChange:45 angle:0 directionType:relative speed:8
+	aoedot
+	damageEvery 10
+	wait 10
+	speed 0
+	fire rupturepool
+	wait 1
+	vanish
+
+---bulletdef_rupturepool---
+sprite CirclePool 3
+potency 225
+fire 0 relative 0
+	aoedot
+	radius 3
+	damageEvery 10
+	vfx ShockPool
+	wait 30
+	fire ruptureburst
+	wait 30
+	vanish
+
+---bulletdef_ruptureburst---
+sprite Custom10
+potency 125
+nway speed:4 bullets:8 spread:360 angle:0 directionType:absolute
+	lifetime 60
+
+---ability_Phase Transition---
+Bullet Definition :: [[phasetransition]]
+Max Range :: 100.0
+VFX Cast :: trigger:Buff*
+Lock Time :: 3.0
+
+---bulletdef_phasetransition---
+sprite Basic
+color 1
+potency 125
+radial bullets:48 speed:8
+wait 3
+radial bullets:48 speed:7 angle:3.75 directionType:absolute
+wait 3
+radial bullets:48 speed:6 angle:7.5 directionType:absolute
+
+---aura_Phase Transition Immunity---
+Type :: Buff
+Duration :: 5.0
+Icon :: statusicons_36
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:PhaseTransitionImmunity]]
+
+---script_PhaseTransitionImmunity_IncomingDamage---
+// Negate all damage during phase transition
+additionalDamage = -1 * damage
+
+---script_BurrowStrike_Cast---
+setSpeed(myEntityId, 0.0)
+
+if frameNum == 25 {
+	setCollisionLayer(myEntityId, CollisionLayerDynamic)
+}
+
+if frameNum == 90 {
+	targetPos := entityPosition(randomTargetEntityId(myEntityId, 100.0))
+	setPosition(myEntityId, targetPos)
+	setCollisionLayer(myEntityId, CollisionLayerMonster)
+}
+
+---ability_Corner Shotgun---
+Cast Time :: 0.0
+Script :: CornerShotgun
+
+---script_CornerShotgun_Cast---
+log("Corner Shotgun Cast frame ", frameNum)
+if frameNum == 0 {
+	roomCorners := [
+		positionInCurrentRoom(myEntityId, [4.0, 4.0, 0.0]),
+		positionInCurrentRoom(myEntityId, [28.0, 4.0, 0.0]),
+		positionInCurrentRoom(myEntityId, [4.0, 28.0, 0.0]),
+		positionInCurrentRoom(myEntityId, [28.0, 28.0, 0.0])
+	]
+	
+	targetPos := positionInCurrentRoom(myEntityId, [14.0, 14.0, 0.0])
+	
+	for i := 0; i < len(roomCorners); i++ {
+		useAbilityAtPosition(myEntityId, "Corner Shotgun Fire", roomCorners[i], targetPos)
+	}
+}
+
+---ability_Corner Shotgun Fire---
+Bullet Definition :: [[cornershotgunfire]]
+Max Range :: 100.0
+
+---bulletdef_cornershotgunfire---
+sprite Custom10
+color 2
+potency 100
+nway speed:10 bullets:5 spread:30 angle:0 directionType:relative
+wait 3
+nway speed:9 bullets:4 spread:20 angle:0 directionType:relative bulletShift:2
+wait 3
+nway speed:8 bullets:3 spread:10 angle:0 directionType:relative bulletShift:4
+
+---loottable_GreatWyrm---
+[[186 Wyrmscale Fragment]] @ 67.0
+[[103 Gravity Collapse]] @ 2.0
+[[98 Void Embrace]] @ 2.0
+[[113 Dark Rabbit]] @ 5.0
+[[702 Speed Pulse]] @ 15.0
+[[123 Wyrm Egg]] @ 500.0 @ qf_epicQuestPhaseTwoItems
+
+---script_greatwyrm_Monster---
+resetVars := func() {
+	scriptVars["phase"] = 1
+	// Phase 1 timers
+	scriptVars["timeSinceBurrow"] = 0.0
+	scriptVars["timeSinceEarthShatter"] = 0.0
+	scriptVars["timeSinceQuakeWave"] = 0.0
+	// Phase 2 timers
+	scriptVars["timeSinceMagmaBreath"] = 0.0
+	scriptVars["timeSinceWingGust"] = 0.0
+	// Phase 3 timers
+	scriptVars["timeSinceSpineStorm"] = 0.0
+	scriptVars["timeSinceTailLash"] = 0.0
+	scriptVars["timeSinceRupture"] = 0.0
+	// Phase 4 timers
+	scriptVars["timeSinceSkyFire"] = 0.0
+
+	scriptVars["timeSinceCornerGuns"] = 0.0
+	scriptVars["saidIntroPhrase"] = false
+	scriptVars["saidDeathPhrase"] = false
+	scriptVars["didPhase2Transition"] = false
+	scriptVars["didPhase3Transition"] = false
+	scriptVars["didPhase4Transition"] = false
+	scriptVars["inTransition"] = false
+	scriptVars["transitionTimer"] = 0.0
+}
+
+if isDead && !scriptVars["saidDeathPhrase"] {
+	say(myEntityId, "At least my children...had enough time to escape...")
+	scriptVars["saidDeathPhrase"] = true
+}
+
+if !isDead {
+	if is_undefined(scriptVars["phase"]) {
+		resetVars()
+	}
+
+	if targetEntityId > 0 {
+		// Check if intro phrase has been said
+		if !is_undefined(scriptVars["saidIntroPhrase"]) && !scriptVars["saidIntroPhrase"] {
+			say(myEntityId, "A Runner? What a nice snack for my offspring.")
+			scriptVars["saidIntroPhrase"] = true
+		}
+		
+		currentHealth := float(getPoints(myEntityId, "hp", "current"))
+		maxHealth := float(getPoints(myEntityId, "hp", "max"))
+		
+		// Phase transitions
+		if currentHealth < maxHealth * 0.75 && scriptVars["phase"] == 1 {
+			if !scriptVars["inTransition"] && !scriptVars["didPhase2Transition"] {
+				// Start phase transition and add invulnerability
+				say(myEntityId, "This snack likes to be played with it seems!")
+				addAuraToEntity(myEntityId, "Phase Transition Immunity", 0, myEntityId)
+				scriptVars["inTransition"] = true
+				scriptVars["transitionTimer"] = 0.0
+				clearBulletsForEntity(myEntityId)
+				useAbilityAtPosition(myEntityId, "Phase Transition", entityPosition(myEntityId))
+				
+				// Visual effect to indicate invulnerability
+				showVfxAtPosition(myEntityId, "Shield", entityPosition(myEntityId))
+			}
+		}
+		
+		// Phase 2 to Phase 3 transition at 50% health
+		if currentHealth < maxHealth * 0.5 && scriptVars["phase"] == 2 {
+			if !scriptVars["inTransition"] && !scriptVars["didPhase3Transition"] {
+				// Start phase transition and add invulnerability
+				say(myEntityId, "The mighty often make the best meal...")
+				addAuraToEntity(myEntityId, "Phase Transition Immunity", 0, myEntityId)
+				scriptVars["inTransition"] = true
+				scriptVars["transitionTimer"] = 0.0
+				clearBulletsForEntity(myEntityId)
+				useAbilityAtPosition(myEntityId, "Phase Transition", entityPosition(myEntityId))
+				
+				// Visual effect to indicate invulnerability
+				showVfxAtPosition(myEntityId, "Shield", entityPosition(myEntityId))
+			}
+		}
+		
+		// Phase 3 to Phase 4 transition at 25% health
+		if currentHealth < maxHealth * 0.25 && scriptVars["phase"] == 3 {
+			if !scriptVars["inTransition"] && !scriptVars["didPhase4Transition"] {
+				// Start phase transition and add invulnerability
+				say(myEntityId, "Enough playing with my food, it's time to end this.")
+				addAuraToEntity(myEntityId, "Phase Transition Immunity", 0, myEntityId)
+				scriptVars["inTransition"] = true
+				scriptVars["transitionTimer"] = 0.0
+				clearBulletsForEntity(myEntityId)
+				useAbilityAtPosition(myEntityId, "Phase Transition", entityPosition(myEntityId))
+				
+				// Visual effect to indicate invulnerability
+				showVfxAtPosition(myEntityId, "Shield", entityPosition(myEntityId))
+			}
+		}
+		
+		// Handle phase transition
+		if scriptVars["inTransition"] {
+			scriptVars["transitionTimer"] += delta
+			
+			// After 3 seconds, complete the transition
+			if scriptVars["transitionTimer"] >= 3.0 {
+				scriptVars["inTransition"] = false
+				
+				if !scriptVars["didPhase2Transition"] {
+					scriptVars["didPhase2Transition"] = true
+					scriptVars["phase"] = 2
+				} else if !scriptVars["didPhase3Transition"] {
+					scriptVars["didPhase3Transition"] = true
+					scriptVars["phase"] = 3
+				} else if !scriptVars["didPhase4Transition"] {
+					scriptVars["didPhase4Transition"] = true
+					scriptVars["phase"] = 4
+				}
+				
+				// Reset all timers after phase transition
+				scriptVars["timeSinceBurrow"] = 0.0
+				scriptVars["timeSinceEarthShatter"] = 0.0
+				scriptVars["timeSinceQuakeWave"] = 0.0
+				scriptVars["timeSinceMagmaBreath"] = 0.0
+				scriptVars["timeSinceWingGust"] = 0.0
+				scriptVars["timeSinceSpineStorm"] = 0.0
+				scriptVars["timeSinceTailLash"] = 0.0
+				scriptVars["timeSinceRupture"] = 0.0
+				scriptVars["timeSinceSkyFire"] = 0.0
+
+				triggerAnimation(myEntityId, "Appear"); //make sure we are visible
+			}
+			
+			// Don't perform any other actions while in transition
+			// Skip the rest of the function execution
+		} else {
+			// Update all timers
+			scriptVars["timeSinceBurrow"] += delta
+			scriptVars["timeSinceEarthShatter"] += delta
+			scriptVars["timeSinceQuakeWave"] += delta
+			scriptVars["timeSinceMagmaBreath"] += delta
+			scriptVars["timeSinceWingGust"] += delta
+			scriptVars["timeSinceSpineStorm"] += delta
+			scriptVars["timeSinceTailLash"] += delta
+			scriptVars["timeSinceRupture"] += delta
+			scriptVars["timeSinceSkyFire"] += delta
+			scriptVars["timeSinceCornerGuns"] += delta
+			
+			if castingAction == 0 {
+				if scriptVars["phase"] == 1 {
+					// Ground Phase - Aggressive earth attacks
+					if scriptVars["timeSinceBurrow"] > 13.0 {
+						useAbilityAtPosition(myEntityId, "Converging Rings", entityPosition(myEntityId))
+						useAbilityAtPosition(myEntityId, "Burrow Strike", entityPosition(myEntityId))
+						scriptVars["timeSinceBurrow"] = 0.0
+					} else if scriptVars["timeSinceEarthShatter"] > 2.5 {
+						for i := 0; i < 3; i++ {
+							useAbilityAtPosition(myEntityId, "Earth Shatter", randomPositionInCurrentRoom(myEntityId, 3.0))
+						}
+						scriptVars["timeSinceEarthShatter"] = 0.0
+					} else if scriptVars["timeSinceQuakeWave"] > 3.5 {
+						useAbilityAtPosition(myEntityId, "Quake Wave", entityPosition(myEntityId))
+						scriptVars["timeSinceQuakeWave"] = 0.0
+					}
+				} else if scriptVars["phase"] == 2 {
+					// Breath Phase - Rapid breath and wing combos
+					if scriptVars["timeSinceBurrow"] > 11.0 {
+						useAbilityAtPosition(myEntityId, "Converging Rings", entityPosition(myEntityId))
+						useAbilityAtPosition(myEntityId, "Burrow Strike", entityPosition(myEntityId))
+						scriptVars["timeSinceBurrow"] = 0.0
+					} else if scriptVars["timeSinceEarthShatter"] > 2.5 {
+						for i := 0; i < 3; i++ {
+							useAbilityAtPosition(myEntityId, "Earth Shatter", randomPositionInCurrentRoom(myEntityId, 3.0))
+						}
+						scriptVars["timeSinceEarthShatter"] = 0.0
+					}
+					if scriptVars["timeSinceWingGust"] > 1.5 {
+						useAbilityAtTarget(myEntityId, "Wing Gust", targetEntityId, 1.0)
+						scriptVars["timeSinceWingGust"] = 0.0
+					}
+				} else if scriptVars["phase"] == 3 {
+					// Storm Phase - Constant bullet pressure
+					if scriptVars["timeSinceBurrow"] > 11.0 {
+						useAbilityAtPosition(myEntityId, "Converging Rings", entityPosition(myEntityId))
+						useAbilityAtPosition(myEntityId, "Burrow Strike", entityPosition(myEntityId))
+						scriptVars["timeSinceBurrow"] = 0.0
+					} else if scriptVars["timeSinceSpineStorm"] > 5.0 {
+						useAbilityAtPosition(myEntityId, "Spine Storm", entityPosition(myEntityId))
+						scriptVars["timeSinceSpineStorm"] = 0.0
+					} else if scriptVars["timeSinceTailLash"] > 2.5 {
+						useAbilityAtTarget(myEntityId, "Tail Lash", targetEntityId, 1.0)
+						scriptVars["timeSinceTailLash"] = 0.0
+					} else if scriptVars["timeSinceRupture"] > 3.0 {
+						useAbilityAtPosition(myEntityId, "Ground Rupture", randomPositionInCurrentRoom(myEntityId, 3.0))
+						useAbilityAtPosition(myEntityId, "Ground Rupture", randomPositionInCurrentRoom(myEntityId, 3.0))
+						scriptVars["timeSinceRupture"] = 0.0
+					}
+				} else {
+					// Final Phase - Relentless attack combinations
+					if scriptVars["timeSinceBurrow"] > 11.0 {
+						useAbilityAtPosition(myEntityId, "Converging Rings", entityPosition(myEntityId))
+						useAbilityAtPosition(myEntityId, "Burrow Strike", entityPosition(myEntityId))
+						scriptVars["timeSinceBurrow"] = 0.0
+					} else if scriptVars["timeSinceSpineStorm"] > 5.0 {
+						useAbilityAtPosition(myEntityId, "Spine Storm", entityPosition(myEntityId))
+						scriptVars["timeSinceSpineStorm"] = 0.0
+					} else if scriptVars["timeSinceWingGust"] > 3.0 {
+						useAbilityAtTarget(myEntityId, "Wing Gust", targetEntityId, 1.0)
+						scriptVars["timeSinceWingGust"] = 0.0
+					} else if scriptVars["timeSinceRupture"] > 1.75 {
+						useAbilityAtPosition(myEntityId, "Ground Rupture", randomPositionInCurrentRoom(myEntityId, 3.0))
+						scriptVars["timeSinceRupture"] = 0.0
+					} else if scriptVars["timeSinceEarthShatter"] > 2.5 {
+						for i := 0; i < 2; i++ {
+							useAbilityAtPosition(myEntityId, "Earth Shatter", randomPositionInCurrentRoom(myEntityId, 3.0))
+						}
+						scriptVars["timeSinceEarthShatter"] = 0.0
+					}
+				}
+			}
+		}
+	}
+}

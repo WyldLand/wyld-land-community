@@ -1,0 +1,15 @@
+---prefab_SpawnEnemy---
+
+Components :: [[SpawnEnemySprite]]
+
+---prefabcomponent_SpawnEnemySprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "vfx/SpawnEnemy",
+    "play": "default"
+     
+}

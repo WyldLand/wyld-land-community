@@ -1,0 +1,133 @@
+---item_105 Chronoshift Marksman---
+Type :: Gun
+Slot :: Gun
+Gun Definition :: [[Chronoshift Marksman]]
+Rarity :: Exotic
+Durability :: 5
+
+Hits store bonus bullets. Last shot in clip fires all stored bullets. Misses reset bonus bullets.
+
+Accuracy creates a cascade of chronoshifted projectiles.
+
+---gundef_Chronoshift Marksman---
+Fire Speed :: 1.0
+Bullets In Chamber :: 5
+Reload Speed :: 2.0
+Sprite :: weapons_105
+Fire Event :: rifleb
+Reload Event :: riflereload
+Bullet Definition :: [[chronoshift]]
+Archetype :: LongRangeRifle
+Muzzle VFX :: Muzzle 0.60
+Fire Type :: SemiAuto
+Bullet Lifetime :: 1.2
+Innate Spikes :: [[Chronoshift]]
+
+---bulletdef_chronoshift---
+sprite Rifle14
+color 3
+potency 280
+fire 40 relative -1 1
+
+---spike_Chronoshift---
+Auras :: [[Chronoshift]]
+
+Each hit stores a bonus bullet. Last shot fires all bonus bullets. Misses reset bonus bullets.
+
+---aura_Chronoshift---
+Type :: Buff
+Duration :: -1
+Icon :: 
+Max Stacks :: 1
+Time Per Tick :: 1.0
+Definitions :: [[Custom:Chronoshift]]
+
+---ability_Chronoshift Bonus Shot---
+Bullet Definition :: [[chronoshiftbonus]]
+Max Range :: 100.0
+Cooldown :: 0.0
+
+---bulletdef_chronoshiftbonus---
+sprite Rifle14
+color 5
+potency 75
+fire 40 relative -2 2
+
+---ability_Chronoshift Bonus ShotTwo---
+Bullet Definition :: [[chronoshiftbonustwo]]
+Max Range :: 100.0
+Cooldown :: 0.0
+
+---bulletdef_chronoshiftbonustwo---
+sprite Rifle14
+color 5
+potency 60
+wait 2
+fire 40 relative -2 2
+
+---ability_Chronoshift Bonus ShotThree---
+Bullet Definition :: [[chronoshiftbonusthree]]
+Max Range :: 100.0
+Cooldown :: 0.0
+
+---bulletdef_chronoshiftbonusthree---
+sprite Rifle14
+color 5
+potency 70
+wait 4
+fire 40 relative -2 2
+
+---ability_Chronoshift Bonus ShotFour---
+Bullet Definition :: [[chronoshiftbonusfour]]
+Max Range :: 100.0
+Cooldown :: 0.0
+
+---bulletdef_chronoshiftbonusfour---
+sprite Rifle14
+color 5
+potency 80
+wait 6
+fire 40 relative -2 2
+
+---script_Chronoshift_DamageDealt---
+if abilityId == auraAbilityId {
+    if is_undefined(scriptVars["bonusBullets"]) {
+        scriptVars["bonusBullets"] = 0
+    }
+    scriptVars["bonusBullets"] += 1
+}
+
+---script_Chronoshift_BulletHit---
+if abilityId == auraAbilityId && hitLayer == CollisionLayerStatic {
+	if is_undefined(scriptVars["bonusBullets"]) {
+        scriptVars["bonusBullets"] = 0
+    }
+    scriptVars["bonusBullets"] -= 1
+}
+
+---script_Chronoshift_FireWeapon---
+if abilityId == auraAbilityId {
+    if gunState["BulletsFired"] == gunState["BulletsInChamber"] - 1 {  // Last bullet
+        if !is_undefined(scriptVars["bonusBullets"]) && scriptVars["bonusBullets"] > 0 {
+            if scriptVars["bonusBullets"] >= 1 {
+                useAbilityAtPosition(myEntityId, "Chronoshift Bonus Shot", [0.0,0.0,0.0], positionAddDegreesDistance(entityPosition(myEntityId, true), aimingAngle, 2.0)) //using at [0,0,0] means use at my current position
+            }
+			if scriptVars["bonusBullets"] >= 2 {
+                useAbilityAtPosition(myEntityId, "Chronoshift Bonus ShotTwo", [0.0,0.0,0.0], positionAddDegreesDistance(entityPosition(myEntityId, true), aimingAngle, 2.0)) //using at [0,0,0] means use at my current position
+            }
+			if scriptVars["bonusBullets"] >= 3 {
+                useAbilityAtPosition(myEntityId, "Chronoshift Bonus ShotThree", [0.0,0.0,0.0], positionAddDegreesDistance(entityPosition(myEntityId, true), aimingAngle, 2.0)) //using at [0,0,0] means use at my current position
+            }
+			if scriptVars["bonusBullets"] >= 4 {
+                useAbilityAtPosition(myEntityId, "Chronoshift Bonus ShotFour", [0.0,0.0,0.0], positionAddDegreesDistance(entityPosition(myEntityId, true), aimingAngle, 2.0)) //using at [0,0,0] means use at my current position
+            }
+            scriptVars["bonusBullets"] = 0
+        }
+    }
+}
+
+---script_Chronoshift_ReloadWeapon---
+
+if abilityId == auraAbilityId {
+    scriptVars["bonusBullets"] = 0
+}

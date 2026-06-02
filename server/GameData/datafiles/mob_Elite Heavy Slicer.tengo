@@ -1,0 +1,141 @@
+---mob_Elite Heavy Slicer---
+Prefab :: eliteheavyslicer
+Range Behavior :: Medium Ranged
+Abilities :: [[Apex Slice]] [[Whirling Blades]] [[Blade Charge]]
+Bounding Box :: 0 1.0 1.5 2.2
+Type :: Elite
+Speed :: 500
+
+---prefab_eliteheavyslicer---
+
+Components :: [[EliteHeavySlicerSprite]] [[EliteHeavySlicerCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_EliteHeavySlicerCollider---
+
+Component :: Collider
+
+{
+	"layer": "Enemy",
+	"position": [0.0, 1.0],
+	"size": [1.5, 2.2]
+}
+
+---prefabcomponent_EliteHeavySlicerSprite---
+
+Component :: Sprite
+
+{
+	"pivotX": 0.33,
+	"pivotY": 1.0,
+	"sprite": "darkforest3/eliteheavyslicer",
+	"animations": [
+		{
+			"name": "idle"
+		},
+		{
+			"name": "move",
+			"property": "Speed",
+			"condition": ">",
+			"value": 0.1
+		}
+	]
+}
+
+---prefab_sfxeliteheavyslicerAttack---
+
+Components :: [[SFXHeavySlicerAttack]]
+
+---ability_Apex Slice---
+Bullet Definition :: [[apexslice]]
+Cooldown :: 1.8
+VFX Charging :: trigger:Attack*
+Lock Time :: 0.6
+Cast Time :: 0.3
+
+---bulletdef_apexslice---
+potency 115
+nway speed:7 bullets:10 spread:100 angle:0 directionType:relative
+wait 5
+nway speed:9 bullets:8 spread:60 angle:0 directionType:relative bulletShift:1
+wait 8
+nway speed:10 bullets:6 spread:30 angle:0 directionType:relative bulletShift:2
+
+---ability_Whirling Blades---
+Bullet Definition :: [[whirlingblades]]
+Cooldown :: 4.0
+VFX Charging :: trigger:Attack*
+Lock Time :: 1.0
+Cast Time :: 0.5
+
+---bulletdef_whirlingblades---
+sprite Custom11
+potency 100
+radial bullets:10 speed:7 angle:0 directionType:absolute
+	wait 60
+	vanish
+wait 3
+radial bullets:10 speed:5 angle:7.5 directionType:absolute
+	wait 60
+	vanish
+wait 3
+radial bullets:10 speed:4.5 angle:15 directionType:absolute
+	wait 60
+	vanish
+
+---ability_Blade Charge---
+Bullet Definition :: [[bladecharge]]
+Cooldown :: 6.0
+VFX Charging :: trigger:Attack*
+Lock Time :: 1.2
+
+---bulletdef_bladecharge---
+sprite CirclePool 2
+potency 115
+fire 0 relative 0
+	aoeexplosion
+	radius 2
+	timedFill 15
+	damageEvery 15
+	wait 15
+	vfx BombExplosion 2
+	wait 1
+	fire bladechargewave
+	vanish
+
+---bulletdef_bladechargewave---
+sprite Custom10
+potency 100
+radial bullets:12 speed:7 angle:0 directionType:absolute
+	wait 45
+	vanish
+
+---script_eliteheavyslicer_Monster---
+if is_undefined(scriptVars["timeSinceWhirling"]) {
+	scriptVars["timeSinceWhirling"] = 0.0
+	scriptVars["timeSinceCharge"] = 0.0
+	scriptVars["timeSinceBasicAttack"] = 0.0
+}
+
+if !isDead && targetEntityId > 0 && castingAction == 0 {
+	// Update all timers
+	scriptVars["timeSinceWhirling"] += delta
+	scriptVars["timeSinceCharge"] += delta
+	scriptVars["timeSinceBasicAttack"] += delta
+	
+	// Check distance to target for different attack patterns
+	distanceToTarget := distToEntity(myEntityId, targetEntityId)
+	
+	if distanceToTarget < 4.0 && scriptVars["timeSinceCharge"] > 6.0 {
+		// Use blade charge when close
+		useAbilityAtTarget(myEntityId, "Blade Charge", targetEntityId, 1.0)
+		scriptVars["timeSinceCharge"] = 0.0
+	} else if scriptVars["timeSinceWhirling"] > 5.0 {
+		// Use whirling blades periodically
+		useAbilityAtPosition(myEntityId, "Whirling Blades", entityPosition(myEntityId))
+		scriptVars["timeSinceWhirling"] = 0.0
+	} else if scriptVars["timeSinceBasicAttack"] > 2.0 {
+		// Use basic apex slice attack
+		useAbilityAtTarget(myEntityId, "Apex Slice", targetEntityId, 1.0)
+		scriptVars["timeSinceBasicAttack"] = 0.0
+	}
+}

@@ -1,0 +1,71 @@
+---mob_Shadow of Storms---
+Prefab :: shadowofstorms
+Range Behavior :: Long Ranged
+Abilities :: [[Shadow of Storms]]
+Type :: Normal
+
+---prefab_shadowofstorms---
+
+Components :: [[ShadowOfStormsSprite]] [[ShadowOfStormsCollider]] [[Monster]] [[Nameplate]]
+
+---prefabcomponent_ShadowOfStormsCollider---
+
+Component :: Collider
+
+{
+    "layer": "Enemy",
+    "position": [0, 0.75],
+    "size": [1.0, 1.5]
+}
+
+---prefabcomponent_ShadowOfStormsSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.4,
+    "pivotY": 0.95,
+    "sprite": "darkforest4/shadowofstorms",
+    "animations": [
+        {
+            "name": "idle"
+        },
+        {
+            "name": "move",
+            "property": "Speed",
+            "condition": ">",
+            "value": 0.1
+        }
+    ]
+}
+
+---prefab_sfxshadowofstormsSpin---
+
+Components :: [[SFXShadowOfStormsSpin]]
+
+---prefabcomponent_SFXShadowOfStormsSpin---
+
+Component :: Sound
+
+{
+    "sources": ["darkforest4/shadowofstormsSpin1.wav", "darkforest4/shadowofstormsSpin2.wav", "darkforest4/shadowofstormsSpin3.wav"],
+    "select": "all",
+    "delay": [0.0, 0.90, 1.30],
+	"spatial": true
+}
+
+---ability_Shadow of Storms---
+Bullet Definition :: [[shadowofstorms]]
+Cooldown :: 3.0
+VFX Charging :: trigger:Spin*
+Lock Time :: 0.75
+Cast Time :: 0.25
+
+---bulletdef_shadowofstorms---
+potency 120
+nway speed:5 bullets:5 spread:90 angle:0 directionType:relative
+wait 10
+nway speed:5 bullets:5 spread:50 angle:10 directionType:relative
+wait 15
+radial bullets:36 speed:6
+

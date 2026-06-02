@@ -1,0 +1,15 @@
+---prefab_BigHit---
+
+Components :: [[BigHitSprite]]
+
+---prefabcomponent_BigHitSprite---
+
+Component :: Sprite
+
+{
+    "pivotX": 0.5,
+    "pivotY": 0.5,
+    "sprite": "vfx/bighit",
+    "play": "default"
+    
+}

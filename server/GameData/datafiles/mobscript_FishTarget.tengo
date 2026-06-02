@@ -1,0 +1,56 @@
+---script_fishtarget_Monster---
+
+if !scriptVars.isInitialized {
+    scriptVars.isInitialized = true
+    scriptVars.initialPosition = entityPosition(myEntityId)
+    scriptVars.targetPosition = randomPositionNearby(myEntityId, [25.0, 35.0], 0.0, false)
+    scriptVars.arcHeight = 15.0 // Adjust for desired arc height
+    scriptVars.progress = 0.0
+    scriptVars.moveDuration = 3.0 // Seconds to complete the arc
+    //Make sure only our spawning player can actually damage us
+    //Pretend liek this aura is coming FROM the player who is fishing and applied to US
+    addAuraToEntity(scriptVars.playerEntityId, "OnlyTakeDamageFromSource", 0, myEntityId)
+}
+
+// Calculate progress
+scriptVars.progress += delta / scriptVars.moveDuration
+
+if isDead && !scriptVars.sawDead {
+    scriptVars.sawDead = true
+    showVfxAtPosition(myEntityId, "CatchFish", entityPosition(myEntityId))
+    prefabName := getPrefabNameOfEntity(myEntityId)
+    if prefabName == "fishgrouper" {
+        giveItemToPlayer(scriptVars.playerEntityId, 145)
+    } else if prefabName == "fishcatfish" {
+        giveItemToPlayer(scriptVars.playerEntityId, 146)
+    } else if prefabName == "fishsunfish" {
+        giveItemToPlayer(scriptVars.playerEntityId, 147)
+    } else if prefabName == "fishcarp" {
+        giveItemToPlayer(scriptVars.playerEntityId, 148)
+    } else if prefabName == "fishvolcanotrout" {
+        giveItemToPlayer(scriptVars.playerEntityId, 149)
+    }
+}
+
+if scriptVars.progress >= 1.0 {
+    //Die
+    scriptVars.sawDead = true
+    killEntity(myEntityId)
+} else {
+
+    // Linear interpolation for X and Z
+    currentX := scriptVars.initialPosition[0] + (scriptVars.targetPosition[0] - scriptVars.initialPosition[0]) * scriptVars.progress
+    currentZ := scriptVars.initialPosition[2] + (scriptVars.targetPosition[2] - scriptVars.initialPosition[2]) * scriptVars.progress
+
+    // Parabolic movement for Y (height)
+    // Y = initialY + progress * (targetY - initialY) - 4 * arcHeight * progress * (progress - 1)
+    // Since we want it to land at the same height as target, targetY effectively becomes initialY for the arc calculation part
+    // The vertical position of targetPosition is used as the landing height.
+    arcY := -4 * scriptVars.arcHeight * scriptVars.progress * (scriptVars.progress - 1)
+    currentY := scriptVars.initialPosition[1] + (scriptVars.targetPosition[1] - scriptVars.initialPosition[1]) * scriptVars.progress + arcY
+
+    newPos := [currentX, currentY, currentZ]
+    setTargetPosition(myEntityId, newPos)
+
+}
+
