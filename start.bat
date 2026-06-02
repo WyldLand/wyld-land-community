@@ -3,7 +3,13 @@ REM Wyld Land - private/self-host launcher (Windows)
 REM Double-click this file, then enter a name + password in the browser.
 cd /d "%~dp0"
 
-REM Optional: set ADMIN to your username to grant yourself GM (admin).
+REM Stop any previous run still running, so your settings (and the ports) start clean.
+taskkill /F /IM wyld-local-windows.exe >nul 2>&1
+taskkill /F /IM gns-modified-windows.exe >nul 2>&1
+
+REM Optional GM/admin. Set this to a username BEFORE that account is first created:
+REM whoever first logs in with this name becomes GM, permanently. Setting or changing
+REM it later does NOT promote an account that already exists.
 set ADMIN=
 
 echo Starting Wyld Land (local)...

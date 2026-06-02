@@ -38,6 +38,51 @@ To give yourself GM powers (admin commands), open the launcher script in a text 
 and set the `ADMIN` line to your name, e.g. `ADMIN="Nulleq"`, then start the game and
 log in with that name. Everyone else stays a normal player.
 
+Once you're a GM, type these into the in-game **chat**:
+
+**Yourself**
+- `/toggleinvuln` — toggle invulnerability
+- `/toggleinvis` — toggle invisibility to enemies
+- `/levelup` — play the level-up effect
+- `/clearinv` — empty your inventory
+- `/clearechoes` — reset your Echo (skill-tree) nodes
+- `/setechopoints <n>` — set your banked Echo points
+- `/clearcollections` — reset your unlocked collections
+
+**Items**
+- `/giveitem <itemId> [tier]` — give an item (optionally rolled at a tier)
+- `/givestack <itemId> [count]` — give multiple of one item
+- `/givekit [10|13|15]` — give a preset gear kit for that level
+- `/giverecipe <recipe name>` — give a recipe's ingredients
+- `/addaura <aura name>` — apply an aura to yourself
+
+**Spawning & combat**
+- `/spawn <mob name> [level] [cursed]` — spawn a monster (`cursed` = `true`/`false`)
+- `/spawndungeon <dungeon name|random> [level]` — spawn a dungeon entrance (a level above 10 adds corruption)
+- `/spawnevent <event name>` — start a world event where you stand
+- `/spawnshard <level> <dungeon name>` — give a dungeon shard
+- `/killnearby` — kill nearby enemies
+- `/killall` — kill all non-boss monsters in the zone
+- `/damagenearby <amount>` — damage nearby entities
+- `/scalemobs [level]` — set every monster's level (default 10)
+
+**Teleport**
+- `/teleport <x> <y>` — teleport to coordinates
+- `/goto <prefab name>` — teleport to a named object/entity
+
+**World & progress**
+- `/pvar <flag> <true|false>` — set a quest flag
+- `/pvarlist` — list your quest flags
+- `/resetpvars` — clear all your quest flags
+- `/zvar <name> <true|false|number>` — set a zone-wide variable
+- `/weeklykill <mob name>` — add a mob to your weekly kills
+- `/clearlockout` — clear your weekly dungeon lockouts
+
+**Admin**
+- `/broadcast <message>` — send a system message to everyone (and force a save)
+- `/clone <characterId> [player name]` — copy a character's inventory onto a player (defaults to you)
+- `/menu [echoes]` — open a menu (e.g. the Echoes screen)
+
 ## Modding
 
 There is support for modding the game to extend it, change things about the existing content, etc.

@@ -221,40 +221,30 @@ func handleAuthSubmit(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleMatchmaker(w http.ResponseWriter, r *http.Request) {
-	// Path: /matchmaker/queue/{server}/{queue}/{mmToken}/{accountToken}
+	// Path: /matchmaker/queue/{server}/{queue}/{queueToken}/{accountToken}
 	parts := strings.Split(strings.TrimPrefix(r.URL.Path, "/matchmaker/queue/"), "/")
 	queue := ""
 	if len(parts) >= 2 {
 		queue = parts[1]
 	}
-	nowMS := time.Now().UnixMilli()
+	queueToken := "" // present on zone transitions; signed by the game server
+	if len(parts) >= 4 {
+		queueToken = parts[2]
+	}
 
+	// Boss editor playtest: guest, a fresh ephemeral Arena each time. The boss being
+	// authored is sent in the login frame, not the token. Arena isn't persisted, so no
+	// session/password is needed.
 	if queue == "Arena" {
-		// Boss editor playtest: guest, a fresh ephemeral Arena each time. The
-		// boss being authored is sent in the login frame, not the token. Arena
-		// is not persisted, so no session/password is needed.
-		claims := map[string]any{
-			"accountid":       2,
-			"matchid":         hex.EncodeToString(randBytes(8)),
-			"levelToLoad":     "Arena",
-			"dungeonLevel":    0,
-			"corruptionLevel": 0,
-			"mutations":       []string{},
-			"screenname":      "Editor",
-			"returnWorldPos":  []float64{0, 0},
-			"expires":         nowMS + 24*60*60*1000,
-			"iat":             time.Now().Unix() - 300,
-		}
-		token, err := signHS256(claims)
-		if err != nil {
-			http.Error(w, "token signing failed", http.StatusInternalServerError)
-			return
-		}
-		writeJSON(w, map[string]any{"status": "found", "serverAddress": "localhost-0", "token": token, "accountId": "2"})
+		respondFound(w, map[string]any{
+			"accountid": 2, "matchid": hex.EncodeToString(randBytes(8)), "levelToLoad": "Arena",
+			"dungeonLevel": 0, "corruptionLevel": 0, "mutations": []string{},
+			"screenname": "Editor", "returnWorldPos": []float64{0, 0},
+		})
 		return
 	}
 
-	// World: requires a logged-in (username/password) session.
+	// Everything else requires a logged-in session (account token = last path segment).
 	sid := lastSegment(r.URL.Path)
 	sessMu.Lock()
 	s := sessions[sid]
@@ -264,29 +254,103 @@ func handleMatchmaker(w http.ResponseWriter, r *http.Request) {
 		io.WriteString(w, "invalidnonce")
 		return
 	}
-	claims := map[string]any{
-		"accountid":       s.AccountID,
-		"matchid":         "1", // shared world match
-		"levelToLoad":     "World",
-		"dungeonLevel":    0,
-		"corruptionLevel": 0,
-		"mutations":       []string{},
-		"screenname":      s.Username,
-		"returnWorldPos":  []float64{0, 0},
-		"expires":         nowMS + 24*60*60*1000,
-		"iat":             time.Now().Unix() - 300,
+
+	if queue == "World" {
+		// Overworld. Returning from a zone carries a returnWorldPos in the queue token.
+		var pos any = []float64{0, 0}
+		if claims, err := decodeHS256(queueToken); err == nil && claims["returnWorldPos"] != nil {
+			pos = claims["returnWorldPos"]
+		}
+		respondFound(w, map[string]any{
+			"accountid": s.AccountID, "matchid": "1", "levelToLoad": "World",
+			"dungeonLevel": 0, "corruptionLevel": 0, "mutations": []string{},
+			"screenname": s.Username, "returnWorldPos": pos,
+		})
+		return
 	}
+
+	// Zone transition (dungeon, etc.): the destination is in the game-server-signed
+	// queue token. Decode it and mint a match token for that zone.
+	claims, err := decodeHS256(queueToken)
+	if err != nil {
+		cors(w)
+		io.WriteString(w, "invalidqueuetoken")
+		return
+	}
+	respondFound(w, map[string]any{
+		"accountid":       s.AccountID,
+		"matchid":         asMatchID(claims["matchId"]), // server requires matchid to be a string
+		"levelToLoad":     claims["levelName"],
+		"dungeonLevel":    orDefault(claims["dungeonLevel"], 0),
+		"corruptionLevel": orDefault(claims["corruptionLevel"], 0),
+		"mutations":       orDefault(claims["mutations"], []string{}),
+		"screenname":      s.Username,
+		"returnWorldPos":  orDefault(claims["returnWorldPos"], []float64{0, 0}),
+	})
+}
+
+// respondFound stamps expiry/iat, signs the match JWT, and writes the matchmaker reply.
+func respondFound(w http.ResponseWriter, claims map[string]any) {
+	claims["expires"] = time.Now().UnixMilli() + 24*60*60*1000
+	claims["iat"] = time.Now().Unix() - 300
 	token, err := signHS256(claims)
 	if err != nil {
 		http.Error(w, "token signing failed", http.StatusInternalServerError)
 		return
 	}
-	writeJSON(w, map[string]any{
-		"status":        "found",
-		"serverAddress": "localhost-0",
-		"token":         token,
-		"accountId":     strconv.Itoa(s.AccountID),
-	})
+	acct := "1"
+	switch v := claims["accountid"].(type) {
+	case int:
+		acct = strconv.Itoa(v)
+	case float64:
+		acct = strconv.Itoa(int(v))
+	}
+	writeJSON(w, map[string]any{"status": "found", "serverAddress": "localhost-0", "token": token, "accountId": acct})
+}
+
+// decodeHS256 verifies an HS256 token with the shared secret and returns its claims.
+func decodeHS256(token string) (map[string]any, error) {
+	parts := strings.Split(token, ".")
+	if len(parts) != 3 {
+		return nil, errors.New("malformed token")
+	}
+	mac := hmac.New(sha256.New, jwtSecret)
+	mac.Write([]byte(parts[0] + "." + parts[1]))
+	if !hmac.Equal([]byte(base64.RawURLEncoding.EncodeToString(mac.Sum(nil))), []byte(parts[2])) {
+		return nil, errors.New("bad signature")
+	}
+	payload, err := base64.RawURLEncoding.DecodeString(parts[1])
+	if err != nil {
+		return nil, err
+	}
+	var claims map[string]any
+	if err := json.Unmarshal(payload, &claims); err != nil {
+		return nil, err
+	}
+	return claims, nil
+}
+
+// orDefault guards a passed-through claim so a missing/null value can't trip the
+// server's required-field check.
+func orDefault(v, def any) any {
+	if v == nil {
+		return def
+	}
+	return v
+}
+
+// asMatchID coerces a queue token's matchId to a string (the server requires the
+// match token's "matchid" to be a string). JSON numbers decode to float64, so an
+// integer matchId like 982212 must be formatted without a decimal point.
+func asMatchID(v any) string {
+	switch x := v.(type) {
+	case string:
+		return x
+	case float64:
+		return strconv.FormatFloat(x, 'f', -1, 64)
+	default:
+		return fmt.Sprintf("%v", x)
+	}
 }
 
 // ---- persistence (encrypted with the session's password-derived key) ----
