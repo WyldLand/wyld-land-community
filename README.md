@@ -2,6 +2,8 @@
 
 **Wyld Land** is a bullet hell MMORPG inspired by games like Realm of the Mad God and Enter the Gungeon and developed by Bag of Holding, Inc. Development ended in 2026, before the game was officially released out of Beta. However, we think it's important, when possible, for games to have a life after their official support ends. In that spirit, we're releasing the Community Edition of Wyld Land.
 
+![Wyld Land gameplay](assets/gameplay.png)
+
 This is the same game that was available to play during the pre-release Beta Tests. You can easily play it on your local machine, and it's also possible (with some effort and technical know-how) to host a server that your friends can play on as well (i.e., to run a private server of the game).
 
 Note that this is a release that is free as in beer: this means you can download it, play it, modify the game data files, host a server for others, etc. But the game is not being released as open source, so the copyright to the assets still belong to their original owners. For example, you would not legally be able to decompile the built binaries to extract the art assets and use them in a different game.
