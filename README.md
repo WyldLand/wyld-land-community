@@ -12,11 +12,13 @@ As this game is no longer supported, it is being provided for free with no suppo
 
 ## Play
 
-1. **macOS** — double-click **`start.command`**
+1. Download this repo (you can click on green "Code" button in the top-right and hit "Download Zip").
+2. **macOS** — double-click **`start.command`**
    **Windows** — double-click **`start.bat`**
    **Linux** — run **`./start.sh`**
-2. Your browser opens to the game. Click **"Login"**, enter a **name** and **password**, and play.
-3. To stop: close the launcher window (macOS/Linux: `Ctrl+C` in the terminal; Windows: close the two popup windows).
+3. **Note:** You may get warnings (for example on Windows, it will say it is by an unknown publisher, and wants to access devices on your network), this is normal. This is an unsigned binary so Windows and Mac will complain.
+4. Your browser opens to the game. Click **"Login"**, enter a **name** and **password**, and play.
+5. To stop: close the launcher window (macOS/Linux: `Ctrl+C` in the terminal; Windows: close the two popup windows).
 
 > **macOS first launch:** Gatekeeper may block it ("unidentified developer").
 > Right-click `start.command` → **Open**, or allow it in System Settings → Privacy & Security.
@@ -31,6 +33,41 @@ As this game is no longer supported, it is being provided for free with no suppo
   again. Please, don't reuse a password from something else.
 - Saves live in the **`saves/`** folder. Back up that folder to keep your
   characters; delete a file there to remove a character.
+
+## Modding
+
+There is support for modding the game to extend it, change things about the existing content, etc.
+
+All game content lives in **`server/GameData/datafiles/`** as `.tengo` text files —
+guns, enemies, bosses, loot tables, auras, achievements, and more. Edit them and
+restart the server to see your changes.
+
+- Content that **reuses existing art and sounds** works (new stats, new bullet
+  patterns, new enemy behavior, new loot, reskins).
+- **Brand-new art or audio is not possible** — the client is a compiled build and its
+  assets are fixed.
+
+### Boss Editor
+
+A boss-authoring / playtest sandbox is included for modders. With the game running,
+open **`http://localhost:3000/editor.html`** and click **"Login as Guest"**. It drops
+you into an Arena where boss definitions can be playtested in isolation.
+
+## Playing with friends
+
+Others on your **local network** (same Wi-Fi/LAN) can join your game — each person gets
+their own name + password and their own character:
+
+1. Start the game on your machine (you're the host).
+2. Find your machine's local IP address, e.g. `192.168.1.100`.
+   (macOS: System Settings → Wi-Fi → Details; Windows: run `ipconfig`; Linux: `ip addr`.)
+3. Friends open **`http://<your-ip>:3000/dev.html`** in their browser and log in.
+4. Make sure your firewall allows incoming connections on ports **3000** and **2054**.
+
+**Security note:** on a local network, names/passwords are sent **unencrypted** over the
+wire — fine for a trusted home network, not for the public internet. Hosting the server
+safely over the **internet** additionally needs real TLS certificates (see DEPLOYMENT.md for details).
+
 
 ## Admin / GM (optional)
 
@@ -82,42 +119,6 @@ Once you're a GM, type these into the in-game **chat**:
 - `/broadcast <message>` — send a system message to everyone (and force a save)
 - `/clone <characterId> [player name]` — copy a character's inventory onto a player (defaults to you)
 - `/menu [echoes]` — open a menu (e.g. the Echoes screen)
-
-## Modding
-
-There is support for modding the game to extend it, change things about the existing content, etc.
-
-All game content lives in **`server/GameData/datafiles/`** as `.tengo` text files —
-guns, enemies, bosses, loot tables, auras, achievements, and more. Edit them and
-restart the server to see your changes.
-
-- Content that **reuses existing art and sounds** works (new stats, new bullet
-  patterns, new enemy behavior, new loot, reskins).
-- **Brand-new art or audio is not possible** — the client is a compiled build and its
-  assets are fixed.
-
-### Boss Editor
-
-A boss-authoring / playtest sandbox is included for modders. With the game running,
-open **`http://localhost:3000/editor.html`** and click **"Login as Guest"**. It drops
-you into an Arena where boss definitions can be playtested in isolation.
-
-## Playing with friends
-
-Others on your **local network** (same Wi-Fi/LAN) can join your game — each person gets
-their own name + password and their own character:
-
-1. Start the game on your machine (you're the host).
-2. Find your machine's local IP address, e.g. `192.168.1.100`.
-   (macOS: System Settings → Wi-Fi → Details; Windows: run `ipconfig`; Linux: `ip addr`.)
-3. Friends open **`http://<your-ip>:3000/dev.html`** in their browser and log in.
-4. Make sure your firewall allows incoming connections on ports **3000** and **2054**.
-
-**Security note:** on a local network, names/passwords are sent **unencrypted** over the
-wire — fine for a trusted home network, not for the public internet. Hosting the server
-safely over the **internet** additionally needs real TLS certificates (e.g. a reverse
-proxy like [Caddy](https://caddyserver.com) in front) so traffic is encrypted — that's
-the "some effort and technical know-how" part, and is left as an advanced exercise.
 
 ## What's in here
 
