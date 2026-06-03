@@ -17,7 +17,7 @@ As this game is no longer supported, it is being provided for free with no suppo
    **Windows** — double-click **`start.bat`**
    **Linux** — run **`./start.sh`**
 3. **Note:** You may get warnings (for example on Windows, it will say it is by an unknown publisher, and wants to access devices on your network), this is normal. This is an unsigned binary so Windows and Mac will complain.
-4. Your browser opens to the game. Click **"Login"**, enter a **name** and **password**, and play.
+4. Your browser opens to the game. Click **"Login"**, enter a **name** and **password** (you can choose anything), and play.
 5. To stop: close the launcher window (macOS/Linux: `Ctrl+C` in the terminal; Windows: close the two popup windows).
 
 > **macOS first launch:** Gatekeeper may block it ("unidentified developer").
