@@ -20,8 +20,7 @@ As this game is no longer supported, it is being provided for free with no suppo
 4. Your browser opens to the game. Click **"Login"**, enter a **name** and **password** (you can choose anything), and play.
 5. To stop: close the launcher window (macOS/Linux: `Ctrl+C` in the terminal; Windows: close the two popup windows).
 
-> **macOS first launch:** Gatekeeper may block it ("unidentified developer").
-> Right-click `start.command` → **Open**, or allow it in System Settings → Privacy & Security.
+**Mac First Time Launch**: You will have to manually allow the game to run because it is an unsigned binary. Video Walkthrough: https://youtu.be/8bRTLs14UBo
 
 ## Accounts & saves
 
